@@ -14,7 +14,7 @@ import {
 } from '../../data/interiorItems';
 import { canPlaceItem, canPlacePath, canPlaceTree } from '../../utils/farmPlacement';
 import type {
-  PlacedBuilding, PlacedItem, PlacedPath, PlacedTree,
+  PlacedBuilding, PlacedItem, PlacedPath, PlacedTree, CropZone,
   InteriorLayout, PathType, TreeType, TapperType, TileRect,
 } from '../../types/save';
 import type { BuildingDef, Item, TreeDef } from '../../types/game';
@@ -49,6 +49,7 @@ export function InteriorEditor({
     items: interior.items ?? [],
     paths: interior.paths ?? [],
     trees: interior.trees ?? [],
+    zones: interior.zones ?? [],
   }));
 
   // ── Tool / UI state ───────────────────────────────────────────────────────────
@@ -68,7 +69,7 @@ export function InteriorEditor({
   // ── Synthetic FarmLayout for FarmCanvas ──────────────────────────────────────
   const farmLayout = useMemo(() => ({
     season: 'spring' as const,
-    zones: [],
+    zones: localInterior.zones ?? [],
     buildings: [],
     paths: localInterior.paths,
     items: localInterior.items,
@@ -153,15 +154,49 @@ export function InteriorEditor({
     }));
   }, []);
 
+  // ── Zone mutations ────────────────────────────────────────────────────────────
+
+  const createZone = useCallback((name: string): string => {
+    const id = crypto.randomUUID();
+    const newZone: CropZone = { id, name, rects: [], crops: {} };
+    setLocalInterior(prev => ({ ...prev, zones: [...(prev.zones ?? []), newZone] }));
+    return id;
+  }, []);
+
+  const addZoneRect = useCallback((zoneId: string, rect: TileRect) => {
+    setLocalInterior(prev => ({
+      ...prev,
+      zones: (prev.zones ?? []).map(z =>
+        z.id === zoneId ? { ...z, rects: [...z.rects, rect] } : z,
+      ),
+    }));
+  }, []);
+
+  const removeZone = useCallback((zoneId: string) => {
+    setLocalInterior(prev => ({
+      ...prev,
+      zones: (prev.zones ?? []).filter(z => z.id !== zoneId),
+    }));
+  }, []);
+
+  const handleNewZone = useCallback(() => {
+    const zones = localInterior.zones ?? [];
+    const name = window.prompt('Zone name:', `Zone ${zones.length + 1}`);
+    if (!name) return;
+    const id = createZone(name);
+    setToolState({ tool: 'zone', itemId: id });
+  }, [createZone, localInterior.zones]);
+
   // ── Commit ────────────────────────────────────────────────────────────────────
 
   const handleCommit = useCallback((rect: DrawRect) => {
     const { tool } = toolState;
-    if      (tool === 'place-item'  && toolState.itemId)    placeItemRect(rect, toolState.itemId);
-    else if (tool === 'path-draw'   && toolState.pathType)  paintPathRect(rect, toolState.pathType as PathType);
-    else if (tool === 'place-tree'  && toolState.treeType)  placeTreeRect(rect, toolState.treeType as TreeType, toolState.tapperType);
-    else if (tool === 'erase')                              eraseRect(rect);
-  }, [toolState, placeItemRect, paintPathRect, placeTreeRect, eraseRect]);
+    if      (tool === 'zone'         && toolState.itemId)    addZoneRect(toolState.itemId, rect);
+    else if (tool === 'place-item'   && toolState.itemId)    placeItemRect(rect, toolState.itemId);
+    else if (tool === 'path-draw'    && toolState.pathType)  paintPathRect(rect, toolState.pathType as PathType);
+    else if (tool === 'place-tree'   && toolState.treeType)  placeTreeRect(rect, toolState.treeType as TreeType, toolState.tapperType);
+    else if (tool === 'erase')                               eraseRect(rect);
+  }, [toolState, addZoneRect, placeItemRect, paintPathRect, placeTreeRect, eraseRect]);
 
   // ── Grid hook ─────────────────────────────────────────────────────────────────
 
@@ -291,12 +326,12 @@ export function InteriorEditor({
       <FarmSidebar
         season="spring"
         onSeasonChange={() => {}}
-        zones={[]}
+        zones={localInterior.zones ?? []}
         treeDefs={treeDefs}
         toolState={toolState}
         onToolChange={setToolState}
-        onNewZone={() => {}}
-        onRemoveZone={() => {}}
+        onNewZone={handleNewZone}
+        onRemoveZone={removeZone}
         showSprinklerRanges={false}
         onToggleSprinklerRanges={() => {}}
         showScarecrowRanges={false}

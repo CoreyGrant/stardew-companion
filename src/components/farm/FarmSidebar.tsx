@@ -159,14 +159,20 @@ export function FarmSidebar({
 }: Props) {
   const { data } = useGameData();
 
-  const [activeTab, setActiveTab] = useState<Tab>(() => interiorMode ? 'machines' : 'farming');
+  const [activeTab, setActiveTab] = useState<Tab>(() =>
+    interiorContext === 'greenhouse' ? 'farming' : interiorMode ? 'machines' : 'farming',
+  );
   const [search, setSearch]       = useState('');
   const [expandedZoneId, setExpandedZoneId] = useState<string | null>(null);
   const [tapperOption, setTapperOption]     = useState<TapperType | null>(null);
   const [optimalMachineId, setOptimalMachineId] = useState('');
 
-  // Per-tab open section — accordion, one open at a time
-  const [openSections, setOpenSections] = useState<Record<Tab, string>>(DEFAULT_OPEN);
+  // Per-tab open section — accordion, one open at a time.
+  // In greenhouse interior, default to crop zones section open.
+  const [openSections, setOpenSections] = useState<Record<Tab, string>>(() => ({
+    ...DEFAULT_OPEN,
+    farming: interiorContext === 'greenhouse' ? 'zones' : DEFAULT_OPEN.farming,
+  }));
 
   const q = search.toLowerCase();
   const curSection = openSections[activeTab];
@@ -175,11 +181,13 @@ export function FarmSidebar({
   const visibleTabs = useMemo(() => {
     if (!interiorMode) return ALL_TABS;
     return ALL_TABS.filter(t => {
-      if (t.id === 'farming' || t.id === 'buildings') return false;
+      if (t.id === 'buildings') return false;
+      // Show farming tab in greenhouse (for crop zones); hide it elsewhere
+      if (t.id === 'farming' && interiorContext !== 'greenhouse') return false;
       if (t.id === 'trees' && !interiorTreesAllowed) return false;
       return true;
     });
-  }, [interiorMode, interiorTreesAllowed]);
+  }, [interiorMode, interiorContext, interiorTreesAllowed]);
 
   const robinBuildings  = (data?.buildingDefs ?? []).filter(b => b.builder === 'Robin' && (!b.familyLevel || b.familyLevel === 0));
   const wizardBuildings = (data?.buildingDefs ?? []).filter(b => b.builder === 'Wizard');
@@ -279,49 +287,53 @@ export function FarmSidebar({
       <div className="planner-sidebar__content">
 
         {/* ── Farming tab ───────────────────────────────────────────────────── */}
-        {activeTab === 'farming' && !interiorMode && (
+        {activeTab === 'farming' && (!interiorMode || interiorContext === 'greenhouse') && (
           <>
-            <SidebarSection {...sp('sprinklers')} label="Sprinklers">
-              <label className="planner-toggle" style={{ width: '100%' }}>
-                <input type="checkbox" checked={showSprinklerRanges} onChange={onToggleSprinklerRanges} />
-                Show ranges
-              </label>
-              {SPRINKLERS.filter(s => !q || s.label.toLowerCase().includes(q)).map((spr) => {
-                const itemDef = sprinklerItems.find(i => i.cheatId === spr.cheatId);
-                return (
-                  <button
-                    key={spr.id}
-                    className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: spr.id }) ? ' planner-chip--active' : ''}`}
-                    onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: spr.id }) ? { tool: 'select' } : { tool: 'place-item', itemId: spr.id })}
-                  >
-                    {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined &&
-                      <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} size={13} />}
-                    <span>{spr.label}</span>
-                  </button>
-                );
-              })}
-            </SidebarSection>
+            {!interiorMode && (
+              <>
+                <SidebarSection {...sp('sprinklers')} label="Sprinklers">
+                  <label className="planner-toggle" style={{ width: '100%' }}>
+                    <input type="checkbox" checked={showSprinklerRanges} onChange={onToggleSprinklerRanges} />
+                    Show ranges
+                  </label>
+                  {SPRINKLERS.filter(s => !q || s.label.toLowerCase().includes(q)).map((spr) => {
+                    const itemDef = sprinklerItems.find(i => i.cheatId === spr.cheatId);
+                    return (
+                      <button
+                        key={spr.id}
+                        className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: spr.id }) ? ' planner-chip--active' : ''}`}
+                        onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: spr.id }) ? { tool: 'select' } : { tool: 'place-item', itemId: spr.id })}
+                      >
+                        {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined &&
+                          <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} size={13} />}
+                        <span>{spr.label}</span>
+                      </button>
+                    );
+                  })}
+                </SidebarSection>
 
-            <SidebarSection {...sp('scarecrows')} label="Scarecrows">
-              <label className="planner-toggle" style={{ width: '100%' }}>
-                <input type="checkbox" checked={showScarecrowRanges} onChange={onToggleScarecrowRanges} />
-                Show ranges
-              </label>
-              {SCARECROWS.filter(s => !q || s.label.toLowerCase().includes(q)).map((sc) => {
-                const itemDef = scarecrowItems.find(i => i.cheatId === sc.cheatId);
-                return (
-                  <button
-                    key={sc.id}
-                    className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: sc.id }) ? ' planner-chip--active' : ''}`}
-                    onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: sc.id }) ? { tool: 'select' } : { tool: 'place-item', itemId: sc.id })}
-                  >
-                    {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined &&
-                      <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} isBigCraftable={itemDef.isBigCraftable} size={13} />}
-                    <span>{sc.label}</span>
-                  </button>
-                );
-              })}
-            </SidebarSection>
+                <SidebarSection {...sp('scarecrows')} label="Scarecrows">
+                  <label className="planner-toggle" style={{ width: '100%' }}>
+                    <input type="checkbox" checked={showScarecrowRanges} onChange={onToggleScarecrowRanges} />
+                    Show ranges
+                  </label>
+                  {SCARECROWS.filter(s => !q || s.label.toLowerCase().includes(q)).map((sc) => {
+                    const itemDef = scarecrowItems.find(i => i.cheatId === sc.cheatId);
+                    return (
+                      <button
+                        key={sc.id}
+                        className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: sc.id }) ? ' planner-chip--active' : ''}`}
+                        onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: sc.id }) ? { tool: 'select' } : { tool: 'place-item', itemId: sc.id })}
+                      >
+                        {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined &&
+                          <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} isBigCraftable={itemDef.isBigCraftable} size={13} />}
+                        <span>{sc.label}</span>
+                      </button>
+                    );
+                  })}
+                </SidebarSection>
+              </>
+            )}
 
             <SidebarSection {...sp('zones')} label="Crop Zones" colBody>
               {zones.length === 0 && <p className="planner-hint">Draw zones to assign crops per season.</p>}

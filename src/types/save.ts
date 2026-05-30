@@ -73,6 +73,7 @@ export interface InteriorLayout {
   items: PlacedItem[];
   paths: PlacedPath[];
   trees?: PlacedTree[];
+  zones?: CropZone[];
 }
 
 export interface FarmLayout {

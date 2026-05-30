@@ -8,7 +8,7 @@
  * loading indicator before invoking and hide it afterwards.
  */
 
-import type { GameData } from '../types/game';
+import type { Crop, GameData } from '../types/game';
 import type {
   CropZone,
   FarmLayout,
@@ -622,11 +622,13 @@ function parseInteriorLayout(
   plannerBcIds: Set<string>,
   plannerObjIds: Set<string>,
   buildingType: string,
+  cropByHarvestId?: Map<string, Crop>,
 ): InteriorLayout {
   const origin = INTERIOR_ORIGIN[buildingType] ?? { x: 0, y: 0 };
   const { items, paths } = parseLocationObjects(indoorsEl, plannerBcIds, plannerObjIds);
   const trees: PlacedTree[] = [];
   const isGreenhouse = buildingType === 'Greenhouse';
+  const hoeDirtByCropId = new Map<string, { cropId: string; cropName: string; seasons: Season[]; tiles: { x: number; y: number }[] }>();
 
   // Interior terrain features: flooring + trees (greenhouse only)
   for (const item of chs(ch(indoorsEl, 'terrainFeatures'), 'item')) {
@@ -670,13 +672,61 @@ function parseInteriorLayout(
       if (type === 'FruitTree') {
         const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
         if (growthStage < 4) continue;
+
+        // SDV 1.6+: treeId format "(FT)cherry"
+        const rawTreeId = txt(tfEl, 'treeId');
+        if (rawTreeId) {
+          const key = rawTreeId.replace(/^\(FT\)/i, '').toLowerCase() as TreeType;
+          const VALID_FRUIT_TYPES: TreeType[] = ['cherry', 'apricot', 'orange', 'peach', 'pomegranate', 'apple', 'banana', 'mango'];
+          if (VALID_FRUIT_TYPES.includes(key)) {
+            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: key });
+            continue;
+          }
+        }
+        // Fallback: pre-1.6 itemId approach
         const rawItemId = txt(tfEl, 'itemId');
         const cheatId   = rawItemId ? stripQualifier(rawItemId) : '';
         const treeType  = FRUIT_TREE_CHEAT_MAP[cheatId];
         if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
         continue;
       }
+
+      // HoeDirt with an active crop → group for CropZone creation (greenhouse only)
+      if (type === 'HoeDirt' && isGreenhouse && cropByHarvestId) {
+        const cropEl = ch(tfEl, 'crop');
+        if (!cropEl) continue;
+        const harvestId = txt(cropEl, 'indexOfHarvest');
+        if (!harvestId || harvestId === '-1' || harvestId === '0') continue;
+        const cropDef = cropByHarvestId.get(harvestId);
+        if (!cropDef) continue;
+
+        const existing = hoeDirtByCropId.get(cropDef.id);
+        if (existing) {
+          existing.tiles.push({ x: coord.x, y: coord.y });
+        } else {
+          hoeDirtByCropId.set(cropDef.id, {
+            cropId:   cropDef.id,
+            cropName: cropDef.name,
+            seasons:  cropDef.seasons,
+            tiles:    [{ x: coord.x, y: coord.y }],
+          });
+        }
+        continue;
+      }
     }
+  }
+
+  // Convert grouped HoeDirt tiles into CropZones
+  const zones: CropZone[] = [];
+  for (const { cropId, cropName, seasons: cropSeasons, tiles } of hoeDirtByCropId.values()) {
+    const crops: Partial<Record<Season, string>> = {};
+    for (const s of cropSeasons) crops[s] = cropId;
+    zones.push({
+      id:    crypto.randomUUID(),
+      name:  cropName,
+      rects: tiles.map(t => ({ x: t.x - origin.x, y: t.y - origin.y, w: 1, h: 1 })),
+      crops,
+    });
   }
 
   // Translate save-file map-space coordinates → 0-based planner coordinates
@@ -689,6 +739,9 @@ function parseInteriorLayout(
   };
   if (trees.length > 0) {
     result.trees = trees.map(t => ({ ...t, x: t.x - ox, y: t.y - oy }));
+  }
+  if (zones.length > 0) {
+    result.zones = zones;
   }
   return result;
 }
@@ -827,8 +880,13 @@ function parseLayout(
   if (ghStaticBuilding) {
     const ghLoc = findLocation(root, 'Greenhouse');
     if (ghLoc) {
-      const ghInterior = parseInteriorLayout(ghLoc, plannerBcIds, plannerObjIds, 'Greenhouse');
-      if (ghInterior.items.length > 0 || ghInterior.paths.length > 0 || (ghInterior.trees?.length ?? 0) > 0) {
+      const ghInterior = parseInteriorLayout(ghLoc, plannerBcIds, plannerObjIds, 'Greenhouse', cropByHarvestId);
+      if (
+        ghInterior.items.length > 0 ||
+        ghInterior.paths.length > 0 ||
+        (ghInterior.trees?.length ?? 0) > 0 ||
+        (ghInterior.zones?.length ?? 0) > 0
+      ) {
         interiors[ghStaticBuilding.id] = ghInterior;
       }
     }
@@ -914,7 +972,18 @@ function parseLayout(
       if (type === 'FruitTree') {
         const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
         if (growthStage < 4) continue;
-        // 1.6 stores the fruit item's qualified ID in <itemId>
+
+        // SDV 1.6+: treeId format "(FT)cherry"
+        const rawTreeId = txt(tfEl, 'treeId');
+        if (rawTreeId) {
+          const key = rawTreeId.replace(/^\(FT\)/i, '').toLowerCase() as TreeType;
+          const VALID_FRUIT_TYPES: TreeType[] = ['cherry', 'apricot', 'orange', 'peach', 'pomegranate', 'apple', 'banana', 'mango'];
+          if (VALID_FRUIT_TYPES.includes(key)) {
+            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: key });
+            continue;
+          }
+        }
+        // Fallback: pre-1.6 itemId approach
         const rawItemId = txt(tfEl, 'itemId');
         const cheatId   = rawItemId ? stripQualifier(rawItemId) : '';
         const treeType  = FRUIT_TREE_CHEAT_MAP[cheatId];

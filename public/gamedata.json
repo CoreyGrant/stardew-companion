@@ -38757,7 +38757,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 0,
       "isFruitTree": true
     },
@@ -38767,7 +38767,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 80,
       "isFruitTree": true
     },
@@ -38777,7 +38777,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 160,
       "isFruitTree": true
     },
@@ -38787,7 +38787,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 240,
       "isFruitTree": true
     },
@@ -38797,7 +38797,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 320,
       "isFruitTree": true
     },
@@ -38807,7 +38807,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 400,
       "isFruitTree": true
     },
@@ -38817,7 +38817,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 560,
       "isFruitTree": true
     },
@@ -38827,7 +38827,7 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 64,
+      "iconX": 208,
       "iconY": 640,
       "isFruitTree": true
     }
