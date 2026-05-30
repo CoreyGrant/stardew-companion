@@ -3,6 +3,7 @@ import { useNPCList, type NPCSortBy } from '../hooks/useNPCList';
 import { ViewToggle } from '../components/common/ViewToggle';
 import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useUserData } from '../contexts/UserDataContext';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -17,6 +18,8 @@ export function NPCListPage() {
   const { npcs, loading, error, filters, setSearch, setMarriageableOnly, setSortBy } =
     useNPCList();
   const [viewMode, setViewMode] = useViewMode('npcs', 'tile');
+  const { activeSave } = useUserData();
+  const heartLevels = activeSave?.heartLevels;
 
   if (loading) return <div className="page-loading">Loading characters…</div>;
   if (error) return <div className="page-error">{error}</div>;
@@ -92,6 +95,12 @@ export function NPCListPage() {
                     {npc.marriageable && (
                       <span className="npc-card__badge">Marriageable</span>
                     )}
+                    {heartLevels?.[npc.id] !== undefined && (
+                      <span className="npc-card__hearts" aria-label={`${heartLevels[npc.id]} hearts`}>
+                        {'♥'.repeat(heartLevels[npc.id])}
+                        {'♡'.repeat(Math.max(0, (npc.marriageable ? 10 : 8) - heartLevels[npc.id]))}
+                      </span>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -126,6 +135,9 @@ export function NPCListPage() {
                   </span>
                   <span className="npc-row__status">
                     {npc.marriageable ? <span className="npc-row__badge">Marriageable</span> : '—'}
+                    {heartLevels?.[npc.id] !== undefined && (
+                      <span className="npc-row__hearts">{heartLevels[npc.id]}♥</span>
+                    )}
                   </span>
                 </Link>
               ))}

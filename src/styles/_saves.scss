@@ -220,6 +220,168 @@
   }
 }
 
+// ── Game-save file upload ─────────────────────────────────────────────────────
+.sdv-upload {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  // Hide the native file input; its <label> acts as the button
+  &__file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  &__hint {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin: 0;
+  }
+
+  &__paths {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin: 0;
+    padding-left: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+
+    code {
+      font-family: monospace;
+      font-size: 0.7rem;
+      background: var(--surface-dark);
+      padding: 1px 4px;
+      border-radius: 2px;
+      color: var(--text-mid);
+      word-break: break-all;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  // Spinner
+  &__spinner {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    padding: $space-3 0;
+  }
+
+  &__spinner-anim {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(var(--border-rgb, 0,0,0), 0.15);
+    border-top-color: $color-gold;
+    border-radius: 50%;
+    animation: sdv-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes sdv-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  // Error
+  &__error {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    background: rgba($color-danger, 0.08);
+    border: 1px solid rgba($color-danger, 0.35);
+    padding: $space-3 $space-4;
+    font-size: 0.8rem;
+    color: $color-danger;
+
+    span:first-child { flex-shrink: 0; font-weight: 700; }
+    span:nth-child(2) { flex: 1; }
+  }
+
+  // Success
+  &__success {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    font-size: 0.8rem;
+    color: var(--link);
+    flex-wrap: wrap;
+  }
+
+  // Preview
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    background: var(--surface-mid);
+    border: 2px solid $color-brown;
+    padding: $space-4;
+  }
+
+  &__preview-title {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: var(--text-mid);
+
+    em { font-style: normal; color: var(--text); }
+  }
+
+  &__preview-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $space-1 $space-4;
+    align-items: baseline;
+  }
+
+  &__preview-label {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  &__preview-value {
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  &__warnings {
+    font-size: 0.75rem;
+    color: var(--text-light);
+
+    summary {
+      cursor: pointer;
+      color: var(--text-mid);
+      &:hover { color: var(--text); }
+    }
+
+    ul {
+      margin: $space-2 0 0;
+      padding-left: $space-4;
+      display: flex;
+      flex-direction: column;
+      gap: $space-1;
+    }
+  }
+
+  &__preview-actions {
+    display: flex;
+    gap: $space-3;
+    flex-wrap: wrap;
+    margin-top: $space-1;
+  }
+}
+
 // ── Save form ─────────────────────────────────────────────────────────────────
 .save-form-panel {
   margin-bottom: $space-4;

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGameData } from '../contexts/GameDataContext';
+import { useUserData } from '../contexts/UserDataContext';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { GameLink } from '../components/common/GameLink';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -38,8 +39,15 @@ const SOURCE_COLORS: Record<RecipeSourceType, string> = {
 export function RecipesPage() {
   usePageTitle('Cooking Recipes');
   const { data, loading, error } = useGameData();
+  const { activeSave } = useUserData();
   const [filter, setFilter] = useState<FilterId>('all');
   const [search, setSearch] = useState('');
+  const [knownOnly, setKnownOnly] = useState(false);
+
+  const learnedSet = useMemo(
+    () => new Set(activeSave?.learnedCookingRecipes ?? []),
+    [activeSave],
+  );
 
   const itemMap = useMemo(
     () => new Map((data?.items ?? []).map(i => [i.cheatId, i])),
@@ -55,6 +63,7 @@ export function RecipesPage() {
   const recipes = useMemo(() => {
     let list = data?.recipes ?? [];
     if (filter !== 'all') list = list.filter(r => r.sourceType === filter);
+    if (knownOnly && learnedSet.size > 0) list = list.filter(r => learnedSet.has(r.id));
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       list = list.filter(r =>
@@ -65,7 +74,7 @@ export function RecipesPage() {
       );
     }
     return list;
-  }, [data, filter, search]);
+  }, [data, filter, search, knownOnly, learnedSet]);
 
   const counts = useMemo(() => {
     const all = data?.recipes ?? [];
@@ -100,7 +109,7 @@ export function RecipesPage() {
         ))}
       </div>
 
-      {/* Search */}
+      {/* Search + known filter */}
       <div className="recipe-search-bar">
         <input
           type="search"
@@ -109,6 +118,16 @@ export function RecipesPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
+        {learnedSet.size > 0 && (
+          <label className="recipe-search-bar__known-toggle">
+            <input
+              type="checkbox"
+              checked={knownOnly}
+              onChange={e => setKnownOnly(e.target.checked)}
+            />
+            Known only ({learnedSet.size})
+          </label>
+        )}
       </div>
 
       {/* Recipe grid */}
@@ -116,7 +135,7 @@ export function RecipesPage() {
         {recipes.map(recipe => {
           const resultItem = itemMap.get(recipe.resultItemId);
           return (
-            <div key={recipe.id} className="recipe-card">
+            <div key={recipe.id} className={`recipe-card${learnedSet.has(recipe.id) ? ' recipe-card--known' : ''}`}>
               {/* Header: result item */}
               <div className="recipe-card__header">
                 <div className="recipe-card__icon">
@@ -138,12 +157,17 @@ export function RecipesPage() {
                   ) : (
                     <span className="recipe-card__name">{recipe.resultItemName}</span>
                   )}
-                  <span
-                    className="recipe-card__source-badge"
-                    style={{ background: SOURCE_COLORS[recipe.sourceType] }}
-                  >
-                    {SOURCE_LABELS[recipe.sourceType]}
-                  </span>
+                  <div className="recipe-card__badges">
+                    <span
+                      className="recipe-card__source-badge"
+                      style={{ background: SOURCE_COLORS[recipe.sourceType] }}
+                    >
+                      {SOURCE_LABELS[recipe.sourceType]}
+                    </span>
+                    {learnedSet.has(recipe.id) && (
+                      <span className="recipe-card__known-badge">✓ Known</span>
+                    )}
+                  </div>
                 </div>
               </div>
 

@@ -69,6 +69,13 @@
     padding: 1px 4px;
     background: rgba($color-loved, 0.08);
   }
+
+  &__hearts {
+    font-size: 0.6rem;
+    color: $color-loved;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
 }
 
 // ── NPC detail hero ───────────────────────────────────────────────────────────
@@ -124,6 +131,21 @@
   &__birthday, &__home {
     font-size: 0.8rem;
     color: $color-parchment-mid;
+  }
+
+  &__hearts {
+    font-size: 0.85rem;
+    color: $color-loved;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  &__hearts-label {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: var(--text-light);
   }
 }
 
@@ -256,7 +278,14 @@
     text-transform: capitalize;
   }
 
-  &__status { font-size: 0.75rem; color: var(--text-light); }
+  &__status {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+  }
 
   &__badge {
     display: inline-block;
@@ -266,5 +295,11 @@
     border: 1px solid $color-loved;
     padding: 1px $space-1;
     background: rgba($color-loved, 0.08);
+  }
+
+  &__hearts {
+    font-size: 0.7rem;
+    color: $color-loved;
+    letter-spacing: 0.5px;
   }
 }

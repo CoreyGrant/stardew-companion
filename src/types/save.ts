@@ -115,6 +115,18 @@ export interface SaveFile {
   farmLayout: FarmLayout;
   /** Ginger Island farm layout — optional, only present once the player has unlocked the island. */
   islandFarmLayout?: FarmLayout;
+
+  // ── Fields populated by game-save import ──────────────────────────────────
+  /** NPC kebab-case id → heart level (0–14). Only present when imported from a game save file. */
+  heartLevels?: Record<string, number>;
+  /** Kebab-case cooking recipe IDs the player has learned. */
+  learnedCookingRecipes?: string[];
+  /** Current gold on hand (display only). */
+  money?: number;
+  /** Deepest mine level reached. */
+  deepestMineLevel?: number;
+  /** Golden walnuts found on Ginger Island. */
+  goldenWalnuts?: number;
 }
 
 export interface AppSettings {

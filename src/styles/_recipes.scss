@@ -63,9 +63,14 @@
 // Search bar
 .recipe-search-bar {
   margin: $space-4 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-3;
 
   &__input {
-    width: 100%;
+    flex: 1;
+    min-width: 180px;
     max-width: 400px;
     padding: $space-2 $space-3;
     border: 2px solid $color-brown;
@@ -84,6 +89,18 @@
     &::placeholder {
       color: var(--text-light);
     }
+  }
+
+  &__known-toggle {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    white-space: nowrap;
+
+    input { cursor: pointer; }
   }
 }
 
@@ -155,6 +172,14 @@
     }
   }
 
+  // Wrap the source badge + known badge
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+  }
+
   &__source-badge {
     display: inline-block;
     padding: 1px 7px;
@@ -165,6 +190,23 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     width: fit-content;
+  }
+
+  &__known-badge {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: rgba($color-green, 0.15);
+    color: $color-green;
+    border: 1px solid rgba($color-green, 0.4);
+    white-space: nowrap;
+  }
+
+  // Highlight border for known recipes
+  &--known {
+    border-color: rgba($color-green, 0.45);
   }
 
   // Source detail line (NPC name, skill, etc.)

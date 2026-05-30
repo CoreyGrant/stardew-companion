@@ -40,6 +40,7 @@ export function NPCDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { npc, gifts, loading, error, isMarried } = useNPCDetail(id);
   const { activeSave } = useUserData();
+  const heartLevel = npc && activeSave?.heartLevels ? activeSave.heartLevels[npc.id] : undefined;
   const base = import.meta.env.BASE_URL;
   usePageTitle(npc?.name ?? 'Character');
 
@@ -84,6 +85,13 @@ export function NPCDetailPage() {
             </strong>
           </p>
           <p className="npc-hero__home">Lives at: {npc.address}</p>
+          {heartLevel !== undefined && (
+            <p className="npc-hero__hearts" aria-label={`${heartLevel} hearts`}>
+              {'♥'.repeat(heartLevel)}
+              {'♡'.repeat(Math.max(0, (npc.marriageable ? 10 : 8) - heartLevel))}
+              <span className="npc-hero__hearts-label">{heartLevel}/{npc.marriageable ? 10 : 8}</span>
+            </p>
+          )}
           {npc.marriageable && <span className="badge badge--marriageable">Marriageable</span>}
         </div>
       </div>

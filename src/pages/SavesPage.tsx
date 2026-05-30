@@ -5,6 +5,7 @@ import { useUserData } from '../contexts/UserDataContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { Panel } from '../components/common/Panel';
 import { StardewDateInput } from '../components/common/StardewDateInput';
+import { SaveFileUpload } from '../components/saves/SaveFileUpload';
 import { encodeSave, decodeSave } from '../utils/saveCodec';
 import type { FarmType, SaveFile, Skill } from '../types/save';
 import type { Season } from '../types/game';
@@ -294,6 +295,15 @@ export function SavesPage() {
                     <span className="save-card__skills">
                       {SKILLS.map((s) => `${s.charAt(0).toUpperCase()}: ${save.skills[s]}`).join(' · ')}
                     </span>
+                    {(save.money != null || save.deepestMineLevel != null || save.goldenWalnuts != null) && (
+                      <span className="save-card__meta save-card__meta--extra">
+                        {save.money        != null ? `${save.money.toLocaleString()}g` : null}
+                        {save.deepestMineLevel != null && save.deepestMineLevel > 0
+                          ? ` · Mine floor ${save.deepestMineLevel}` : null}
+                        {save.goldenWalnuts != null && save.goldenWalnuts > 0
+                          ? ` · ${save.goldenWalnuts} 🌰` : null}
+                      </span>
+                    )}
                   </div>
                   <div className="save-card__actions">
                     {activeSave?.id !== save.id && (
@@ -344,6 +354,10 @@ export function SavesPage() {
           )}
         </>
       )}
+
+      <Panel title="Import from Game Save File" className="save-import-panel">
+        <SaveFileUpload />
+      </Panel>
 
       <ImportSection />
     </div>
