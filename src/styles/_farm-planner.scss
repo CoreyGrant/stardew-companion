@@ -28,15 +28,13 @@
     flex-shrink: 0;
   }
 
-  // scrollable tab content
+  // Tab content — flex column, sections scroll individually
   &__content {
     flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
     min-height: 0;
-
-    &::-webkit-scrollbar { width: 4px; }
-    &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   &__actions {
@@ -163,6 +161,75 @@
   }
 }
 
+// ── Collapsible sidebar sections ──────────────────────────────────────────────
+
+.planner-section {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  min-height: 0;
+
+  // The open section fills remaining space
+  &--open {
+    flex: 1;
+    min-height: 0;
+  }
+
+  // Section header — always visible
+  &__hdr {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px $space-3;
+    border: none;
+    border-top: 1px solid rgba($color-brown, 0.4);
+    background: rgba(0, 0, 0, 0.18);
+    color: $color-parchment-dark;
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    user-select: none;
+    text-align: left;
+    flex-shrink: 0;
+    line-height: 1.6;
+
+    &:hover { color: $color-gold; background: rgba($color-brown, 0.25); }
+  }
+
+  // Caret indicator
+  &__caret {
+    font-size: 0.45rem;
+    opacity: 0.65;
+    flex-shrink: 0;
+  }
+
+  // Section body — scrolls when open
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+    padding: $space-2 $space-3;
+    align-content: flex-start;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+
+    // Column layout variant (zones, optimal fill, etc.)
+    &--col {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-content: stretch;
+    }
+  }
+}
+
 // ── Tab content body ──────────────────────────────────────────────────────────
 
 .planner-tab-body {
@@ -205,7 +272,7 @@
     gap: $space-1;
     font-size: 0.6rem;
     font-family: $font-pixel;
-    color: var(--text);
+    color: $color-parchment-dark;
     cursor: pointer;
     user-select: none;
 
@@ -495,6 +562,7 @@
   text-align: left;
   font-size: 0.65rem;
   font-family: $font-pixel;
+  line-height: 1;
   padding: $space-1 $space-2;
   border-color: $color-brown-mid;
   color: $color-parchment;

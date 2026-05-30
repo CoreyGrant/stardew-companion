@@ -52,6 +52,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100px;
+    line-height: 1;
   }
 }
 
@@ -168,6 +169,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.2;
   }
 
   // ── Arrow ──────────────────────────────────────────────────────────────

@@ -9,6 +9,39 @@ import type { InteriorContext } from '../../data/interiorItems';
 
 type Tab = 'farming' | 'buildings' | 'misc' | 'machines' | 'trees';
 
+// ── Collapsible section (defined outside FarmSidebar for stable identity) ─────
+
+interface SectionProps {
+  id: string;
+  label: string;
+  isOpen: boolean;
+  onOpen: () => void;
+  children: React.ReactNode;
+  colBody?: boolean;
+}
+
+function SidebarSection({ label, isOpen, onOpen, children, colBody = false }: SectionProps) {
+  return (
+    <div className={`planner-section${isOpen ? ' planner-section--open' : ''}`}>
+      <button
+        className="planner-section__hdr"
+        onClick={onOpen}
+        aria-expanded={isOpen}
+      >
+        {label}
+        <span className="planner-section__caret">{isOpen ? '▲' : '▼'}</span>
+      </button>
+      {isOpen && (
+        <div className={`planner-section__body${colBody ? ' planner-section__body--col' : ''}`}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Constants ─────────────────────────────────────────────────────────────────
+
 const SEASONS: { id: Season; label: string }[] = [
   { id: 'spring', label: 'Spr' },
   { id: 'summer', label: 'Sum' },
@@ -64,6 +97,17 @@ const SCARECROWS = [
   { id: '167', label: 'Deluxe',     cheatId: '167' },
 ];
 
+/** Default open section key per tab. */
+const DEFAULT_OPEN: Record<Tab, string> = {
+  farming:   'sprinklers',
+  buildings: 'robin',
+  misc:      'paths',
+  machines:  'machines',
+  trees:     'trees',
+};
+
+// ── Props ─────────────────────────────────────────────────────────────────────
+
 interface Props {
   season: Season;
   onSeasonChange: (s: Season) => void;
@@ -83,25 +127,20 @@ interface Props {
   onUndo: () => void;
   onRedo: () => void;
   onFitView: () => void;
-  /** When true, hides the season selector and shows a tropical year-round label instead. */
+  /** When true, shows a tropical year-round label instead of season selector. */
   isIsland?: boolean;
 
   // ── Interior mode ────────────────────────────────────────────────────────────
-  /** When true, shows a back button instead of season selector and filters tabs. */
   interiorMode?: boolean;
-  /** Callback for the Back button in interior mode. */
   onBackToFarm?: () => void;
-  /** Building name shown in the back button label. */
   interiorBuildingName?: string;
-  /** When false, the Trees tab is hidden in interior mode. */
   interiorTreesAllowed?: boolean;
-  /** Used to filter the machines list to only context-valid items. */
   interiorContext?: InteriorContext;
-  /** When set, shows the Optimal Fill section at the bottom of the Machines tab. */
   interiorShedDims?: { w: number; h: number; corridor: number; count: number } | null;
-  /** Called when the user clicks "Fill optimally" with the chosen machine cheatId. */
   onOptimalFill?: (machineId: string) => void;
 }
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export function FarmSidebar({
   season, onSeasonChange,
@@ -120,16 +159,19 @@ export function FarmSidebar({
 }: Props) {
   const { data } = useGameData();
 
-  // Default to 'machines' in interior mode, 'farming' otherwise
   const [activeTab, setActiveTab] = useState<Tab>(() => interiorMode ? 'machines' : 'farming');
-  const [search, setSearch] = useState('');
+  const [search, setSearch]       = useState('');
   const [expandedZoneId, setExpandedZoneId] = useState<string | null>(null);
-  const [tapperOption, setTapperOption] = useState<TapperType | null>(null);
+  const [tapperOption, setTapperOption]     = useState<TapperType | null>(null);
   const [optimalMachineId, setOptimalMachineId] = useState('');
 
-  const q = search.toLowerCase();
+  // Per-tab open section — accordion, one open at a time
+  const [openSections, setOpenSections] = useState<Record<Tab, string>>(DEFAULT_OPEN);
 
-  // Tabs visible in current mode
+  const q = search.toLowerCase();
+  const curSection = openSections[activeTab];
+  const setSection = (key: string) => setOpenSections(prev => ({ ...prev, [activeTab]: key }));
+
   const visibleTabs = useMemo(() => {
     if (!interiorMode) return ALL_TABS;
     return ALL_TABS.filter(t => {
@@ -139,34 +181,20 @@ export function FarmSidebar({
     });
   }, [interiorMode, interiorTreesAllowed]);
 
-  const robinBuildings = (data?.buildingDefs ?? []).filter(
-    (b) => b.builder === 'Robin' && (!b.familyLevel || b.familyLevel === 0),
-  );
-  const wizardBuildings = (data?.buildingDefs ?? []).filter(
-    (b) => b.builder === 'Wizard',
-  );
+  const robinBuildings  = (data?.buildingDefs ?? []).filter(b => b.builder === 'Robin' && (!b.familyLevel || b.familyLevel === 0));
+  const wizardBuildings = (data?.buildingDefs ?? []).filter(b => b.builder === 'Wizard');
 
-  // In interior mode: show all BigCraftables valid for the context.
-  // On the main farm: show items with category=machine (excluding scarecrows).
   const machines = useMemo(() => {
     const allItems = data?.items ?? [];
     if (interiorMode && interiorContext) {
-      return allItems
-        .filter(i => isItemAllowedInInterior(i.cheatId, interiorContext, i.isBigCraftable))
-        .sort((a, b) => a.name.localeCompare(b.name));
+      return allItems.filter(i => isItemAllowedInInterior(i.cheatId, interiorContext, i.isBigCraftable)).sort((a, b) => a.name.localeCompare(b.name));
     }
     return allItems.filter(i => i.category === 'machine' && !['8', '167'].includes(i.cheatId));
   }, [data, interiorMode, interiorContext]);
 
-  const signItems = (data?.items ?? []).filter(
-    (i) => i.category === 'decoration',
-  );
-  const sprinklerItems = (data?.items ?? []).filter(
-    (i) => ['599','621','645'].includes(i.cheatId),
-  );
-  const scarecrowItems = (data?.items ?? []).filter(
-    (i) => ['8','110','113','126','136','137','138','139','140','167'].includes(i.cheatId) && i.isBigCraftable,
-  );
+  const signItems     = (data?.items ?? []).filter(i => i.category === 'decoration');
+  const sprinklerItems = (data?.items ?? []).filter(i => ['599','621','645'].includes(i.cheatId));
+  const scarecrowItems = (data?.items ?? []).filter(i => ['8','110','113','126','136','137','138','139','140','167'].includes(i.cheatId) && i.isBigCraftable);
 
   const isActive = (t: ToolState) =>
     t.tool === toolState.tool &&
@@ -178,7 +206,6 @@ export function FarmSidebar({
   const handleTapperChange = (type: TapperType) => {
     const next = tapperOption === type ? null : type;
     setTapperOption(next);
-    // Propagate into current tool state if already placing a tree
     if (toolState.tool === 'place-tree' && toolState.treeType) {
       onToolChange({ ...toolState, tapperType: next ?? undefined });
     }
@@ -186,14 +213,13 @@ export function FarmSidebar({
 
   const switchTab = (tab: Tab) => { setActiveTab(tab); setSearch(''); };
 
-  /** Crops available for a given season, sorted alphabetically. */
-  const cropsForSeason = (s: Season) =>
-    (data?.crops ?? []).filter((c) => c.seasons.includes(s));
-
-  /** Seasons to show in the zone crop picker. Island uses only summer, labeled year-round. */
+  const cropsForSeason = (s: Season) => (data?.crops ?? []).filter(c => c.seasons.includes(s));
   const zoneSeasonsRows: { id: Season; label: string }[] = isIsland
     ? [{ id: 'summer', label: 'Year-round' }]
     : SEASONS;
+
+  // Helper to create a section's open/onOpen props
+  const sp = (id: string) => ({ id, isOpen: curSection === id, onOpen: () => setSection(id) });
 
   return (
     <aside className="planner-sidebar">
@@ -201,10 +227,7 @@ export function FarmSidebar({
       {/* Season selector / back button / tropical label */}
       <div className="planner-sidebar__seasons">
         {interiorMode ? (
-          <button
-            className="btn btn--sm planner-back-btn"
-            onClick={() => onBackToFarm?.()}
-          >
+          <button className="btn btn--sm planner-back-btn" onClick={() => onBackToFarm?.()}>
             ← {interiorBuildingName ?? 'Farm'}
           </button>
         ) : isIsland ? (
@@ -252,291 +275,222 @@ export function FarmSidebar({
         />
       </div>
 
-      {/* Tab content — scrollable */}
+      {/* Tab content — collapsible sections, one open at a time */}
       <div className="planner-sidebar__content">
 
+        {/* ── Farming tab ───────────────────────────────────────────────────── */}
         {activeTab === 'farming' && !interiorMode && (
-          <div className="planner-tab-body">
-            <div className="planner-group-label">Sprinklers</div>
-            <label className="planner-toggle">
-              <input type="checkbox" checked={showSprinklerRanges} onChange={onToggleSprinklerRanges} />
-              Show ranges
-            </label>
-            {SPRINKLERS.filter((s) => !q || s.label.toLowerCase().includes(q)).map((spr) => {
-              const itemDef = sprinklerItems.find((i) => i.cheatId === spr.cheatId);
-              return (
-                <button
-                  key={spr.id}
-                  className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: spr.id }) ? ' planner-chip--active' : ''}`}
-                  onClick={() => onToolChange(
-                    isActive({ tool: 'place-item', itemId: spr.id })
-                      ? { tool: 'select' }
-                      : { tool: 'place-item', itemId: spr.id },
-                  )}
-                >
-                  {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined ? (
-                    <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} size={13} />
-                  ) : null}
-                  <span>{spr.label}</span>
-                </button>
-              );
-            })}
+          <>
+            <SidebarSection {...sp('sprinklers')} label="Sprinklers">
+              <label className="planner-toggle" style={{ width: '100%' }}>
+                <input type="checkbox" checked={showSprinklerRanges} onChange={onToggleSprinklerRanges} />
+                Show ranges
+              </label>
+              {SPRINKLERS.filter(s => !q || s.label.toLowerCase().includes(q)).map((spr) => {
+                const itemDef = sprinklerItems.find(i => i.cheatId === spr.cheatId);
+                return (
+                  <button
+                    key={spr.id}
+                    className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: spr.id }) ? ' planner-chip--active' : ''}`}
+                    onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: spr.id }) ? { tool: 'select' } : { tool: 'place-item', itemId: spr.id })}
+                  >
+                    {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined &&
+                      <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} size={13} />}
+                    <span>{spr.label}</span>
+                  </button>
+                );
+              })}
+            </SidebarSection>
 
-            <div className="planner-group-label">Scarecrows</div>
-            <label className="planner-toggle">
-              <input type="checkbox" checked={showScarecrowRanges} onChange={onToggleScarecrowRanges} />
-              Show ranges
-            </label>
-            {SCARECROWS.filter((s) => !q || s.label.toLowerCase().includes(q)).map((sc) => {
-              const itemDef = scarecrowItems.find((i) => i.cheatId === sc.cheatId);
-              return (
-                <button
-                  key={sc.id}
-                  className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: sc.id }) ? ' planner-chip--active' : ''}`}
-                  onClick={() => onToolChange(
-                    isActive({ tool: 'place-item', itemId: sc.id })
-                      ? { tool: 'select' }
-                      : { tool: 'place-item', itemId: sc.id },
-                  )}
-                >
-                  {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined ? (
-                    <SpriteIcon
-                      spriteSheet={itemDef.spriteSheet}
-                      spriteIndex={itemDef.spriteIndex}
-                      isBigCraftable={itemDef.isBigCraftable}
-                      size={13}
-                    />
-                  ) : null}
-                  <span>{sc.label}</span>
-                </button>
-              );
-            })}
+            <SidebarSection {...sp('scarecrows')} label="Scarecrows">
+              <label className="planner-toggle" style={{ width: '100%' }}>
+                <input type="checkbox" checked={showScarecrowRanges} onChange={onToggleScarecrowRanges} />
+                Show ranges
+              </label>
+              {SCARECROWS.filter(s => !q || s.label.toLowerCase().includes(q)).map((sc) => {
+                const itemDef = scarecrowItems.find(i => i.cheatId === sc.cheatId);
+                return (
+                  <button
+                    key={sc.id}
+                    className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: sc.id }) ? ' planner-chip--active' : ''}`}
+                    onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: sc.id }) ? { tool: 'select' } : { tool: 'place-item', itemId: sc.id })}
+                  >
+                    {itemDef?.spriteSheet && itemDef.spriteIndex !== undefined &&
+                      <SpriteIcon spriteSheet={itemDef.spriteSheet} spriteIndex={itemDef.spriteIndex} isBigCraftable={itemDef.isBigCraftable} size={13} />}
+                    <span>{sc.label}</span>
+                  </button>
+                );
+              })}
+            </SidebarSection>
 
-            <div className="planner-group-label">Farmland Zones</div>
-            {zones.length === 0 && (
-              <p className="planner-hint">Draw zones to assign crops per season.</p>
-            )}
-            {zones.map((z) => {
-              const isExpanded = expandedZoneId === z.id;
-              return (
-                <div
-                  key={z.id}
-                  className={`planner-zone-chip${toolState.tool === 'zone' && toolState.itemId === z.id ? ' planner-zone-chip--active' : ''}`}
-                >
-                  {/* Zone chip header row */}
-                  <div className="planner-zone-chip__header">
-                    <button
-                      className="planner-zone-chip__name"
-                      onClick={() => onToolChange({ tool: 'zone', itemId: z.id })}
-                    >
-                      {z.name}
-                    </button>
-                    {onSetZoneCrop && (
-                      <button
-                        className="planner-zone-chip__expand"
-                        onClick={() => setExpandedZoneId(isExpanded ? null : z.id)}
-                        aria-label={isExpanded ? 'Collapse crop picker' : 'Expand crop picker'}
-                        title="Assign crops per season"
-                      >
-                        {isExpanded ? '▲' : '▼'}
+            <SidebarSection {...sp('zones')} label="Crop Zones" colBody>
+              {zones.length === 0 && <p className="planner-hint">Draw zones to assign crops per season.</p>}
+              {zones.map((z) => {
+                const isExpanded = expandedZoneId === z.id;
+                return (
+                  <div
+                    key={z.id}
+                    className={`planner-zone-chip${toolState.tool === 'zone' && toolState.itemId === z.id ? ' planner-zone-chip--active' : ''}`}
+                  >
+                    <div className="planner-zone-chip__header">
+                      <button className="planner-zone-chip__name" onClick={() => onToolChange({ tool: 'zone', itemId: z.id })}>
+                        {z.name}
                       </button>
-                    )}
-                    <button
-                      className="planner-zone-chip__remove"
-                      onClick={() => { onRemoveZone(z.id); if (expandedZoneId === z.id) setExpandedZoneId(null); }}
-                      aria-label={`Remove zone ${z.name}`}
-                    >
-                      ×
-                    </button>
-                  </div>
-
-                  {/* Crop picker — shown when expanded */}
-                  {isExpanded && onSetZoneCrop && (
-                    <div className="planner-zone-crop-picker">
-                      {zoneSeasonsRows.map(({ id: sid, label: slabel }) => {
-                        const assignedId = z.crops[sid] ?? '';
-                        const crops      = cropsForSeason(sid);
-                        return (
+                      {onSetZoneCrop && (
+                        <button
+                          className="planner-zone-chip__expand"
+                          onClick={() => setExpandedZoneId(isExpanded ? null : z.id)}
+                          aria-label={isExpanded ? 'Collapse crop picker' : 'Expand crop picker'}
+                        >
+                          {isExpanded ? '▲' : '▼'}
+                        </button>
+                      )}
+                      <button
+                        className="planner-zone-chip__remove"
+                        onClick={() => { onRemoveZone(z.id); if (expandedZoneId === z.id) setExpandedZoneId(null); }}
+                        aria-label={`Remove zone ${z.name}`}
+                      >×</button>
+                    </div>
+                    {isExpanded && onSetZoneCrop && (
+                      <div className="planner-zone-crop-picker">
+                        {zoneSeasonsRows.map(({ id: sid, label: slabel }) => (
                           <div key={sid} className={`planner-zone-crop-row planner-zone-crop-row--${sid}`}>
                             <span className="planner-zone-crop-row__label">{slabel}</span>
                             <select
                               className="planner-zone-crop-row__select"
-                              value={assignedId}
-                              onChange={(e) =>
-                                onSetZoneCrop(z.id, sid, e.target.value || null)
-                              }
+                              value={z.crops[sid] ?? ''}
+                              onChange={(e) => onSetZoneCrop(z.id, sid, e.target.value || null)}
                             >
                               <option value="">— none —</option>
-                              {crops.map((c) => (
-                                <option key={c.id} value={c.id}>{c.name}</option>
-                              ))}
+                              {cropsForSeason(sid).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                           </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-            <button className="btn btn--sm btn--primary" onClick={onNewZone}>+ New Zone</button>
-          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              <button className="btn btn--sm btn--primary" onClick={onNewZone}>+ New Zone</button>
+            </SidebarSection>
+          </>
         )}
 
+        {/* ── Buildings tab ─────────────────────────────────────────────────── */}
         {activeTab === 'buildings' && !interiorMode && (
-          <div className="planner-tab-body">
-            <div className="planner-group-label">Robin</div>
-            {robinBuildings
-              .filter((b) => !q || b.name.toLowerCase().includes(q))
-              .map((b) => (
+          <>
+            <SidebarSection {...sp('robin')} label="Robin">
+              {robinBuildings.filter(b => !q || b.name.toLowerCase().includes(q)).map(b => (
                 <button
                   key={b.id}
                   className={`planner-chip${isActive({ tool: 'place-building', buildingId: b.id }) ? ' planner-chip--active' : ''}`}
-                  onClick={() => onToolChange(
-                    isActive({ tool: 'place-building', buildingId: b.id })
-                      ? { tool: 'select' }
-                      : { tool: 'place-building', buildingId: b.id },
-                  )}
+                  onClick={() => onToolChange(isActive({ tool: 'place-building', buildingId: b.id }) ? { tool: 'select' } : { tool: 'place-building', buildingId: b.id })}
                   title={`${b.name} (${b.width}×${b.height})`}
                 >
                   {b.name}
                 </button>
               ))}
+            </SidebarSection>
 
-            <div className="planner-group-label">Wizard</div>
-            {wizardBuildings.length === 0 && !q && (
-              <span className="planner-empty">None found</span>
-            )}
-            {wizardBuildings
-              .filter((b) => !q || b.name.toLowerCase().includes(q))
-              .map((b) => (
+            <SidebarSection {...sp('wizard')} label="Wizard">
+              {wizardBuildings.length === 0 && !q && <span className="planner-empty">None found</span>}
+              {wizardBuildings.filter(b => !q || b.name.toLowerCase().includes(q)).map(b => (
                 <button
                   key={b.id}
                   className={`planner-chip${isActive({ tool: 'place-building', buildingId: b.id }) ? ' planner-chip--active' : ''}`}
-                  onClick={() => onToolChange(
-                    isActive({ tool: 'place-building', buildingId: b.id })
-                      ? { tool: 'select' }
-                      : { tool: 'place-building', buildingId: b.id },
-                  )}
+                  onClick={() => onToolChange(isActive({ tool: 'place-building', buildingId: b.id }) ? { tool: 'select' } : { tool: 'place-building', buildingId: b.id })}
                   title={`${b.name} (${b.width}×${b.height})`}
                 >
                   {b.name}
                 </button>
               ))}
-          </div>
+            </SidebarSection>
+          </>
         )}
 
+        {/* ── Misc tab ──────────────────────────────────────────────────────── */}
         {activeTab === 'misc' && (
-          <div className="planner-tab-body">
-            <div className="planner-group-label">Paths &amp; Floors</div>
-            {PATH_TYPES.filter(({ label }) => !q || label.toLowerCase().includes(q)).map(({ type, label, spriteIndex }) => (
-              <button
-                key={type}
-                className={`planner-chip planner-chip--sprite${isActive({ tool: 'path-draw', pathType: type }) ? ' planner-chip--active' : ''}`}
-                onClick={() => onToolChange(
-                  isActive({ tool: 'path-draw', pathType: type })
-                    ? { tool: 'select' }
-                    : { tool: 'path-draw', pathType: type },
-                )}
-              >
-                <SpriteIcon spriteSheet="springobjects" spriteIndex={spriteIndex} size={13} />
-                <span>{label}</span>
-              </button>
-            ))}
-
-            <div className="planner-group-label">Fences &amp; Gates</div>
-            {FENCE_TYPES.filter(({ label }) => !q || label.toLowerCase().includes(q)).map(({ type, label, spriteIndex }) => (
-              <button
-                key={type}
-                className={`planner-chip planner-chip--sprite${isActive({ tool: 'path-draw', pathType: type }) ? ' planner-chip--active' : ''}`}
-                onClick={() => onToolChange(
-                  isActive({ tool: 'path-draw', pathType: type })
-                    ? { tool: 'select' }
-                    : { tool: 'path-draw', pathType: type },
-                )}
-              >
-                <SpriteIcon spriteSheet="springobjects" spriteIndex={spriteIndex} size={13} />
-                <span>{label}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'machines' && (
-          <div className="planner-tab-body">
-            {machines
-              .slice()
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .filter((item) => !q || item.name.toLowerCase().includes(q))
-              .map((item) => (
+          <>
+            <SidebarSection {...sp('paths')} label="Paths &amp; Floors">
+              {PATH_TYPES.filter(({ label }) => !q || label.toLowerCase().includes(q)).map(({ type, label, spriteIndex }) => (
                 <button
-                  key={item.cheatId}
-                  className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
-                  onClick={() => onToolChange(
-                    isActive({ tool: 'place-item', itemId: item.cheatId })
-                      ? { tool: 'select' }
-                      : { tool: 'place-item', itemId: item.cheatId },
-                  )}
-                  title={item.description || item.name}
+                  key={type}
+                  className={`planner-chip planner-chip--sprite${isActive({ tool: 'path-draw', pathType: type }) ? ' planner-chip--active' : ''}`}
+                  onClick={() => onToolChange(isActive({ tool: 'path-draw', pathType: type }) ? { tool: 'select' } : { tool: 'path-draw', pathType: type })}
                 >
-                  {item.spriteSheet && item.spriteIndex !== undefined ? (
-                    <SpriteIcon
-                      spriteSheet={item.spriteSheet}
-                      spriteIndex={item.spriteIndex}
-                      isBigCraftable={item.isBigCraftable}
-                      size={13}
-                    />
-                  ) : null}
-                  <span>{item.name}</span>
+                  <SpriteIcon spriteSheet="springobjects" spriteIndex={spriteIndex} size={13} />
+                  <span>{label}</span>
                 </button>
               ))}
+            </SidebarSection>
 
-            {/* Signs — main farm only */}
-            {!interiorMode && signItems.filter((item) => !q || item.name.toLowerCase().includes(q)).length > 0 && (
-              <>
-                <div className="planner-group-label">Signs</div>
-                {signItems
-                  .slice()
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .filter((item) => !q || item.name.toLowerCase().includes(q))
-                  .map((item) => (
-                    <button
-                      key={item.cheatId}
-                      className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
-                      onClick={() => onToolChange(
-                        isActive({ tool: 'place-item', itemId: item.cheatId })
-                          ? { tool: 'select' }
-                          : { tool: 'place-item', itemId: item.cheatId },
-                      )}
-                      title={item.description || item.name}
-                    >
-                      {item.spriteSheet && item.spriteIndex !== undefined ? (
-                        <SpriteIcon
-                          spriteSheet={item.spriteSheet}
-                          spriteIndex={item.spriteIndex}
-                          isBigCraftable={item.isBigCraftable}
-                          size={13}
-                        />
-                      ) : null}
-                      <span>{item.name}</span>
-                    </button>
-                  ))}
-              </>
-            )}
+            <SidebarSection {...sp('fences')} label="Fences &amp; Gates">
+              {FENCE_TYPES.filter(({ label }) => !q || label.toLowerCase().includes(q)).map(({ type, label, spriteIndex }) => (
+                <button
+                  key={type}
+                  className={`planner-chip planner-chip--sprite${isActive({ tool: 'path-draw', pathType: type }) ? ' planner-chip--active' : ''}`}
+                  onClick={() => onToolChange(isActive({ tool: 'path-draw', pathType: type }) ? { tool: 'select' } : { tool: 'path-draw', pathType: type })}
+                >
+                  <SpriteIcon spriteSheet="springobjects" spriteIndex={spriteIndex} size={13} />
+                  <span>{label}</span>
+                </button>
+              ))}
+            </SidebarSection>
+          </>
+        )}
+
+        {/* ── Machines tab ──────────────────────────────────────────────────── */}
+        {activeTab === 'machines' && (
+          <>
+            <SidebarSection {...sp('machines')} label="Machines">
+              {machines
+                .slice().sort((a, b) => a.name.localeCompare(b.name))
+                .filter(item => !q || item.name.toLowerCase().includes(q))
+                .map(item => (
+                  <button
+                    key={item.cheatId}
+                    className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
+                    onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: item.cheatId }) ? { tool: 'select' } : { tool: 'place-item', itemId: item.cheatId })}
+                    title={item.description || item.name}
+                  >
+                    {item.spriteSheet && item.spriteIndex !== undefined &&
+                      <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} isBigCraftable={item.isBigCraftable} size={13} />}
+                    <span>{item.name}</span>
+                  </button>
+                ))}
+
+              {/* Signs — main farm only */}
+              {!interiorMode && signItems.filter(item => !q || item.name.toLowerCase().includes(q)).length > 0 && (
+                <>
+                  <div className="planner-group-label">Signs</div>
+                  {signItems.slice().sort((a, b) => a.name.localeCompare(b.name))
+                    .filter(item => !q || item.name.toLowerCase().includes(q))
+                    .map(item => (
+                      <button
+                        key={item.cheatId}
+                        className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
+                        onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: item.cheatId }) ? { tool: 'select' } : { tool: 'place-item', itemId: item.cheatId })}
+                        title={item.description || item.name}
+                      >
+                        {item.spriteSheet && item.spriteIndex !== undefined &&
+                          <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} isBigCraftable={item.isBigCraftable} size={13} />}
+                        <span>{item.name}</span>
+                      </button>
+                    ))}
+                </>
+              )}
+            </SidebarSection>
 
             {/* Optimal fill — sheds only, interior mode */}
             {interiorMode && interiorShedDims && (
-              <div className="planner-optimal">
-                <div className="planner-group-label">Optimal Fill</div>
+              <SidebarSection {...sp('optimal-fill')} label="Optimal Fill" colBody>
                 <select
                   className="planner-optimal__select"
                   value={optimalMachineId}
                   onChange={(e) => setOptimalMachineId(e.target.value)}
                 >
                   <option value="">— pick a machine —</option>
-                  {machines.map((item) => (
-                    <option key={item.cheatId} value={item.cheatId}>{item.name}</option>
-                  ))}
+                  {machines.map(item => <option key={item.cheatId} value={item.cheatId}>{item.name}</option>)}
                 </select>
                 <button
                   className="btn btn--sm btn--primary planner-optimal__btn"
@@ -545,14 +499,15 @@ export function FarmSidebar({
                 >
                   Fill ({interiorShedDims.count})
                 </button>
-              </div>
+              </SidebarSection>
             )}
-          </div>
+          </>
         )}
 
+        {/* ── Trees tab ─────────────────────────────────────────────────────── */}
         {activeTab === 'trees' && (
-          <div className="planner-tab-body">
-            {/* Tapper options */}
+          <>
+            {/* Tapper options — pinned above sections */}
             <div className="planner-tapper-opts">
               <label className="planner-tapper-opts__label">
                 <input
@@ -572,39 +527,41 @@ export function FarmSidebar({
               </label>
             </div>
 
-            {(['wild', 'fruit'] as const).map((group) => {
-              const defs = treeDefs.filter((td) =>
-                (group === 'fruit' ? td.isFruitTree : !td.isFruitTree) &&
-                (!q || td.name.toLowerCase().includes(q)),
-              );
-              if (defs.length === 0) return null;
-              return (
-                <div key={group}>
-                  <p className="planner-section-label">
-                    {group === 'wild' ? 'Wild Trees' : 'Fruit Trees'}
-                  </p>
-                  {defs.map((td) => {
-                    const treeType = td.type as TreeType;
-                    const active   = isActive({ tool: 'place-tree', treeType });
-                    return (
-                      <button
-                        key={treeType}
-                        className={`planner-chip${active ? ' planner-chip--active' : ''}`}
-                        onClick={() => onToolChange(
-                          active
-                            ? { tool: 'select' }
-                            : { tool: 'place-tree', treeType, tapperType: tapperOption ?? undefined },
-                        )}
-                        title={td.name}
-                      >
-                        {td.name.replace(/ Tree$/i, '')}
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
+            <SidebarSection {...sp('trees')} label="Trees">
+              {(['wild', 'fruit'] as const).map((group) => {
+                const defs = treeDefs.filter(td =>
+                  (group === 'fruit' ? td.isFruitTree : !td.isFruitTree) &&
+                  (!q || td.name.toLowerCase().includes(q)),
+                );
+                if (defs.length === 0) return null;
+                return (
+                  <div key={group} style={{ width: '100%' }}>
+                    <p className="planner-section-label">
+                      {group === 'wild' ? 'Wild Trees' : 'Fruit Trees'}
+                    </p>
+                    {defs.map((td) => {
+                      const treeType = td.type as TreeType;
+                      const active   = isActive({ tool: 'place-tree', treeType });
+                      return (
+                        <button
+                          key={treeType}
+                          className={`planner-chip${active ? ' planner-chip--active' : ''}`}
+                          onClick={() => onToolChange(
+                            active
+                              ? { tool: 'select' }
+                              : { tool: 'place-tree', treeType, tapperType: tapperOption ?? undefined },
+                          )}
+                          title={td.name}
+                        >
+                          {td.name.replace(/ Tree$/i, '')}
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </SidebarSection>
+          </>
         )}
 
       </div>

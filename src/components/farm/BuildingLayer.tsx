@@ -8,6 +8,11 @@ const SHEET_COLS = 24;
 const SHEET_W    = SHEET_COLS * 16;
 const SHEET_H    = 39 * 16;
 
+// Objects_2 sheet dimensions (8 cols × 20 rows × 16px)
+const O2_COLS = 8;
+const O2_W    = O2_COLS * 16;
+const O2_H    = 20 * 16;
+
 interface Props {
   buildings: PlacedBuilding[];
   buildingDefs: Map<string, BuildingDef>;
@@ -47,24 +52,33 @@ export function BuildingLayer({
         // ── Fish pond fish icon ──────────────────────────────────────────────
         const isFishPond = b.buildingId === 'Fish Pond';
         const fishItem   = isFishPond && b.fishId ? itemMap.get(b.fishId) : null;
-        const fishSprite = (fishItem && fishItem.spriteSheet === 'springobjects' && fishItem.spriteIndex !== undefined)
-          ? (() => {
-              const col    = fishItem.spriteIndex! % SHEET_COLS;
-              const row    = Math.floor(fishItem.spriteIndex! / SHEET_COLS);
-              const iconPx = tileSize * 2;
-              return { col, row, iconPx, cx: px + pw / 2, cy: py + ph / 2 };
-            })()
-          : null;
+        const fishSprite = (() => {
+          if (!fishItem || fishItem.spriteIndex === undefined) return null;
+          const iconPx = tileSize * 2;
+          const cx = px + pw / 2;
+          const cy = py + ph / 2;
+          if (fishItem.spriteSheet === 'springobjects') {
+            const col = fishItem.spriteIndex % SHEET_COLS;
+            const row = Math.floor(fishItem.spriteIndex / SHEET_COLS);
+            return { sheet: 'springobjects', col, row, iconPx, cx, cy, sheetW: SHEET_W, sheetH: SHEET_H };
+          }
+          if (fishItem.spriteSheet === 'Objects_2') {
+            const col = fishItem.spriteIndex % O2_COLS;
+            const row = Math.floor(fishItem.spriteIndex / O2_COLS);
+            return { sheet: 'Objects_2', col, row, iconPx, cx, cy, sheetW: O2_W, sheetH: O2_H };
+          }
+          return null;
+        })();
 
         const fillColor   = isRuin ? FILL_RUIN : isStatic ? FILL_STATIC : FILL_FB;
         const strokeColor = sel ? '#FFD700' : isStatic ? STROKE_STA : STROKE;
         const strokeDash  = isRuin ? '3 2' : isStatic ? '5 3' : undefined;
 
-        // Label: fish pond shows fish name, others show building name
+        // Label: fish pond shows fish name when sprite not available, others show building name
         const fs        = Math.max(5, Math.min(10, (pw / (def.name.length + 1)) | 0));
-        const labelText = fishItem
-          ? (b.label || '')
-          : (b.label || (isFishPond ? 'Fish Pond' : def.name)) + (isRuin ? ' (ruin)' : '');
+        const labelText = isFishPond
+          ? (b.label || (fishSprite ? '' : (fishItem?.name ?? (b.fishId ? b.fishId : 'Fish Pond'))))
+          : (b.label || def.name) + (isRuin ? ' (ruin)' : '');
 
         return (
           <g
@@ -104,7 +118,7 @@ export function BuildingLayer({
               />
             )}
 
-            {/* ── Fish sprite for Fish Ponds (16×16 item sprite — works fine) ── */}
+            {/* ── Fish sprite for Fish Ponds ── */}
             {fishSprite && (
               <svg
                 x={fishSprite.cx - fishSprite.iconPx / 2}
@@ -115,9 +129,9 @@ export function BuildingLayer({
                 style={{ pointerEvents: 'none' }}
               >
                 <image
-                  href={`${BASE}sprites/springobjects.png`}
+                  href={`${BASE}sprites/${fishSprite.sheet === 'Objects_2' ? 'Objects_2' : 'springobjects'}.png`}
                   x={0} y={0}
-                  width={SHEET_W} height={SHEET_H}
+                  width={fishSprite.sheetW} height={fishSprite.sheetH}
                   imageRendering="pixelated"
                 />
               </svg>

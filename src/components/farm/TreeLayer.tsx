@@ -44,8 +44,8 @@ export function TreeLayer({
         // to fit inside the tile square via a viewBox (same as every other sprite).
         // The sprite region starts at (iconX, iconY) and is 16 wide × 32 tall.
         const tapperSpr = tree.tapper ? TAPPER_SPRITE[tree.tapper] : null;
-        // Tapper sits on the trunk, which maps to the lower half of the scaled sprite.
-        const tapperSize = Math.round(tileSize * 0.5);
+        // Tapper: kept small so the tree sprite remains visible behind it.
+        const tapperSize = Math.round(tileSize * 0.34);
 
         return (
           <svg
@@ -79,11 +79,11 @@ export function TreeLayer({
               <rect x={0} y={0} width={tileSize} height={tileSize} fill="rgba(30,80,30,0.8)" />
             )}
 
-            {/* Tapper sprite overlay — positioned on the lower (trunk) half of the tile. */}
+            {/* Tapper sprite overlay — small icon near top of tile so tree is still visible. */}
             {tapperSpr && (
               <svg
                 x={Math.round((tileSize - tapperSize) / 2)}
-                y={Math.round(tileSize * 0.38)}
+                y={Math.round(tileSize * 0.04)}
                 width={tapperSize}
                 height={tapperSize * 2}
                 viewBox={`${tapperSpr.col * 16} ${tapperSpr.row * 32} 16 32`}
