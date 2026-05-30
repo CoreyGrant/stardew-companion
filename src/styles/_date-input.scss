@@ -71,11 +71,12 @@
 
     &:hover { background: var(--surface-dark); }
 
-    &--spring.sdi__season--active { background: rgba($color-spring, 0.18); border-color: $color-spring; color: #335107; }
-    &--summer.sdi__season--active { background: rgba($color-summer, 0.18); border-color: $color-summer; color: #6b4600; }
-    &--fall.sdi__season--active   { background: rgba($color-fall,   0.18); border-color: $color-fall;   color: #7a2e06; }
-    &--winter.sdi__season--active { background: rgba($color-winter, 0.18); border-color: $color-winter; color: #0a57c2; }
-    &--all.sdi__season--active    { background: rgba($color-brown,  0.15); border-color: $color-brown-mid; color: var(--text); }
+    // Active states — solid season colours with clearly contrasting text
+    &--spring.sdi__season--active { background: $color-spring;  border-color: darken($color-spring,  12%); color: #1a3800; }
+    &--summer.sdi__season--active { background: $color-summer;  border-color: darken($color-summer,  12%); color: #3d1800; }
+    &--fall.sdi__season--active   { background: $color-fall;    border-color: darken($color-fall,    10%); color: #fff;    }
+    &--winter.sdi__season--active { background: $color-winter;  border-color: darken($color-winter,  18%); color: #0a2a5c; }
+    &--all.sdi__season--active    { background: $color-brown-mid; border-color: $color-brown-dark;        color: $color-parchment; }
 
     &-emoji { font-size: 0.95rem; line-height: 1; }
     &-label { font-size: 0.65rem; }
