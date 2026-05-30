@@ -23,7 +23,11 @@ export interface MachineProductionRef {
 interface ItemDetailState {
   item: Item | null;
   crop: Crop | null;
+  /** For seed pages: the item that the seed grows into. Null on crop/other pages. */
+  cropHarvestItem: Item | null;
   seedItem: Item | null;
+  /** Cheapest shop price for the seed (from this item if it's a seed, else from seedItem). */
+  seedCost: number | null;
   lovedByNPCs: NPC[];
   likedByNPCs: NPC[];
   usedInRecipes: Recipe[];
@@ -32,6 +36,8 @@ interface ItemDetailState {
   machineProduction: MachineProductionRef[];
   /** Machines that output this item (what produces it?) */
   machineSource: MachineProductionRef[];
+  /** MachineDef matching this item (populated when viewing a machine item page). */
+  machineDef: MachineDef | null;
   /** Fish pond entry for this fish, if one exists */
   fishPondEntry: FishPondEntry | null;
   farmingLevel: number;
@@ -57,6 +63,22 @@ export function useItemDetail(id: string | undefined): ItemDetailState {
     () => (crop ? (data?.items.find((i) => i.id === crop.seedItemId) ?? null) : null),
     [data, crop]
   );
+
+  /** The harvest item — only relevant on seed pages where the current item IS the seed. */
+  const cropHarvestItem = useMemo(() => {
+    if (!crop || !data) return null;
+    return data.items.find((i) => i.id === crop.harvestItemId) ?? null;
+  }, [data, crop]);
+
+  /** Cheapest shop price for seeds (from this item if it's a seed, from seedItem otherwise). */
+  const seedCost = useMemo(() => {
+    const src = item?.category === 'seed' ? item : seedItem;
+    if (!src?.soldBy?.length) return null;
+    const prices = src.soldBy
+      .map((e) => e.price)
+      .filter((p): p is number => p != null && p > 0);
+    return prices.length > 0 ? Math.min(...prices) : null;
+  }, [item, seedItem]);
 
   const lovedByNPCs = useMemo(
     () => (id ? (data?.npcs.filter((n) => n.gifts.loved.some((r) => r.id === id)) ?? []) : []),
@@ -144,6 +166,12 @@ export function useItemDetail(id: string | undefined): ItemDetailState {
     return refs;
   }, [data, item]);
 
+  /** The MachineDef for this item (when viewing a machine item page) */
+  const machineDef = useMemo<MachineDef | null>(() => {
+    if (!item || !data?.machineDefs) return null;
+    return data.machineDefs.find((m) => m.itemId === item.id) ?? null;
+  }, [data, item]);
+
   /** Fish pond entry for fish items */
   const fishPondEntry = useMemo<FishPondEntry | null>(() => {
     if (!item || !data?.fishPondData) return null;
@@ -151,8 +179,9 @@ export function useItemDetail(id: string | undefined): ItemDetailState {
   }, [data, item]);
 
   return {
-    item, crop, seedItem, lovedByNPCs, likedByNPCs,
+    item, crop, cropHarvestItem, seedItem, seedCost,
+    lovedByNPCs, likedByNPCs,
     usedInRecipes, neededInBundles, machineProduction, machineSource,
-    fishPondEntry, farmingLevel, loading, error,
+    machineDef, fishPondEntry, farmingLevel, loading, error,
   };
 }
