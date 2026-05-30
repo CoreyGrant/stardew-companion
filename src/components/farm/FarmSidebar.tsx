@@ -172,7 +172,7 @@ export function FarmSidebar({
   // In greenhouse interior, default to crop zones section open.
   const [openSections, setOpenSections] = useState<Record<Tab, string>>(() => ({
     ...DEFAULT_OPEN,
-    farming: interiorContext === 'greenhouse' ? 'zones' : DEFAULT_OPEN.farming,
+    farming: interiorMode ? 'zones' : DEFAULT_OPEN.farming,
   }));
 
   const q = search.toLowerCase();
@@ -183,12 +183,10 @@ export function FarmSidebar({
     if (!interiorMode) return ALL_TABS;
     return ALL_TABS.filter(t => {
       if (t.id === 'buildings') return false;
-      // Show farming tab in greenhouse (for crop zones); hide it elsewhere
-      if (t.id === 'farming' && interiorContext !== 'greenhouse') return false;
       if (t.id === 'trees' && !interiorTreesAllowed) return false;
       return true;
     });
-  }, [interiorMode, interiorContext, interiorTreesAllowed]);
+  }, [interiorMode, interiorTreesAllowed]);
 
   const robinBuildings  = (data?.buildingDefs ?? []).filter(b => b.builder === 'Robin' && (!b.familyLevel || b.familyLevel === 0));
   const wizardBuildings = (data?.buildingDefs ?? []).filter(b => b.builder === 'Wizard');
@@ -294,7 +292,7 @@ export function FarmSidebar({
       <div className="planner-sidebar__content">
 
         {/* ── Farming tab ───────────────────────────────────────────────────── */}
-        {activeTab === 'farming' && (!interiorMode || interiorContext === 'greenhouse') && (
+        {activeTab === 'farming' && (
           <>
             {!interiorMode && (
               <>

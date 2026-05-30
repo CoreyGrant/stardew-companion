@@ -727,7 +727,47 @@ function parseInteriorLayout(
     }
   }
 
-  // Convert grouped HoeDirt tiles into CropZones
+  // Garden pots (IndoorPot = BC 62) with planted crops → CropZones for any interior
+  if (cropByHarvestId) {
+    for (const item of chs(ch(indoorsEl, 'objects'), 'item')) {
+      const coord = vecCoord(ch(item, 'key'));
+      const objEl = dictVal(ch(item, 'value'));
+      if (!coord || !objEl) continue;
+
+      // Identify as IndoorPot by xsi:type or itemId
+      const rawItemId = txt(objEl, 'itemId');
+      if (!rawItemId) continue;
+      const isIndoorPot = stripQualifier(rawItemId) === '62' || xsiType(objEl) === 'IndoorPot';
+      if (!isIndoorPot) continue;
+
+      // Navigate: <hoeDirt> (SDV 1.6 field name) or <soil> (older name)
+      const hoeDirtWrapper = ch(objEl, 'hoeDirt') ?? ch(objEl, 'soil');
+      if (!hoeDirtWrapper) continue;
+      // The wrapper may contain a <HoeDirt> child element, or be the HoeDirt itself
+      const hoeDirtEl = hoeDirtWrapper.firstElementChild ?? hoeDirtWrapper;
+
+      const cropEl = ch(hoeDirtEl, 'crop');
+      if (!cropEl) continue;
+      const harvestId = txt(cropEl, 'indexOfHarvest');
+      if (!harvestId || harvestId === '-1' || harvestId === '0') continue;
+      const cropDef = cropByHarvestId.get(harvestId);
+      if (!cropDef) continue;
+
+      const existing = hoeDirtByCropId.get(cropDef.id);
+      if (existing) {
+        existing.tiles.push({ x: coord.x, y: coord.y });
+      } else {
+        hoeDirtByCropId.set(cropDef.id, {
+          cropId:   cropDef.id,
+          cropName: cropDef.name,
+          seasons:  cropDef.seasons,
+          tiles:    [{ x: coord.x, y: coord.y }],
+        });
+      }
+    }
+  }
+
+  // Convert grouped HoeDirt / IndoorPot tiles into CropZones
   const zones: CropZone[] = [];
   for (const { cropId, cropName, seasons: cropSeasons, tiles } of hoeDirtByCropId.values()) {
     const crops: Partial<Record<Season, string>> = {};
@@ -861,8 +901,12 @@ function parseLayout(
     // Parse indoor contents (Shed, Barn, Coop, etc.)
     const indoorsEl = ch(bEl, 'indoors');
     if (indoorsEl) {
-      const interior = parseInteriorLayout(indoorsEl, plannerBcIds, plannerObjIds, buildingType);
-      if (interior.items.length > 0 || interior.paths.length > 0) {
+      const interior = parseInteriorLayout(indoorsEl, plannerBcIds, plannerObjIds, buildingType, cropByHarvestId);
+      if (
+        interior.items.length > 0 ||
+        interior.paths.length > 0 ||
+        (interior.zones?.length ?? 0) > 0
+      ) {
         interiors[id] = interior;
       }
     }

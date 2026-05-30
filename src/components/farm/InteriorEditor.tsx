@@ -18,6 +18,7 @@ import type {
   PlacedBuilding, PlacedItem, PlacedPath, PlacedTree, CropZone,
   InteriorLayout, PathType, TreeType, TapperType, TileRect,
 } from '../../types/save';
+import type { Season } from '../../types/game';
 import type { BuildingDef, Item, TreeDef } from '../../types/game';
 
 interface CtxMenuState {
@@ -184,6 +185,19 @@ export function InteriorEditor({
     setLocalInterior(prev => ({
       ...prev,
       zones: (prev.zones ?? []).filter(z => z.id !== zoneId),
+    }));
+  }, []);
+
+  const setZoneCrop = useCallback((zoneId: string, season: Season, cropId: string | null) => {
+    setLocalInterior(prev => ({
+      ...prev,
+      zones: (prev.zones ?? []).map(z => {
+        if (z.id !== zoneId) return z;
+        const crops = { ...z.crops };
+        if (cropId) crops[season] = cropId;
+        else delete crops[season];
+        return { ...z, crops };
+      }),
     }));
   }, []);
 
@@ -361,6 +375,7 @@ export function InteriorEditor({
         onToolChange={setToolState}
         onNewZone={handleNewZone}
         onRemoveZone={removeZone}
+        onSetZoneCrop={setZoneCrop}
         showSprinklerRanges={false}
         onToggleSprinklerRanges={() => {}}
         showScarecrowRanges={false}
