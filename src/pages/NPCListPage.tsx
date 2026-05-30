@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useNPCList, type NPCSortBy } from '../hooks/useNPCList';
+import { ViewToggle } from '../components/common/ViewToggle';
+import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const BASE = import.meta.env.BASE_URL;
@@ -14,6 +16,7 @@ export function NPCListPage() {
   usePageTitle('Characters');
   const { npcs, loading, error, filters, setSearch, setMarriageableOnly, setSortBy } =
     useNPCList();
+  const [viewMode, setViewMode] = useViewMode('npcs', 'tile');
 
   if (loading) return <div className="page-loading">Loading characters…</div>;
   if (error) return <div className="page-error">{error}</div>;
@@ -51,45 +54,84 @@ export function NPCListPage() {
             </button>
           ))}
         </div>
+        <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
       {npcs.length === 0 ? (
         <p className="empty-state">No characters match your filters.</p>
       ) : (
-        <div className="npc-grid">
-          {npcs.map((npc) => (
-            <Link key={npc.id} to={`/characters/${npc.id}`} className="npc-card">
-              <div className="npc-card__portrait" aria-hidden="true">
-                {npc.portrait ? (
-                  <img
-                    src={`${BASE}sprites/portraits/${npc.portrait}`}
-                    alt=""
-                    style={{
-                      width: 64,
-                      height: 64,
-                      imageRendering: 'pixelated',
-                      objectFit: 'none',
-                      objectPosition: '0 0',
-                    }}
-                  />
-                ) : (
-                  npc.name.charAt(0)
-                )}
+        <>
+          {viewMode === 'tile' && (
+            <div className="npc-grid">
+              {npcs.map((npc) => (
+                <Link key={npc.id} to={`/characters/${npc.id}`} className="npc-card">
+                  <div className="npc-card__portrait" aria-hidden="true">
+                    {npc.portrait ? (
+                      <img
+                        src={`${BASE}sprites/portraits/${npc.portrait}`}
+                        alt=""
+                        style={{
+                          width: 64,
+                          height: 64,
+                          imageRendering: 'pixelated',
+                          objectFit: 'none',
+                          objectPosition: '0 0',
+                        }}
+                      />
+                    ) : (
+                      npc.name.charAt(0)
+                    )}
+                  </div>
+                  <div className="npc-card__info">
+                    <span className="npc-card__name">{npc.name}</span>
+                    <span className="npc-card__birthday">
+                      <span aria-hidden="true">🎂</span>{' '}
+                      {npc.birthday.season.charAt(0).toUpperCase() + npc.birthday.season.slice(1)}{' '}
+                      {npc.birthday.day}
+                    </span>
+                    {npc.marriageable && (
+                      <span className="npc-card__badge">Marriageable</span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {viewMode === 'table' && (
+            <div className="npc-table">
+              <div className="npc-table__header">
+                <span>Name</span>
+                <span>Birthday</span>
+                <span>Status</span>
               </div>
-              <div className="npc-card__info">
-                <span className="npc-card__name">{npc.name}</span>
-                <span className="npc-card__birthday">
-                  <span aria-hidden="true">🎂</span>{' '}
-                  {npc.birthday.season.charAt(0).toUpperCase() + npc.birthday.season.slice(1)}{' '}
-                  {npc.birthday.day}
-                </span>
-                {npc.marriageable && (
-                  <span className="npc-card__badge">Marriageable</span>
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
+              {npcs.map((npc) => (
+                <Link key={npc.id} to={`/characters/${npc.id}`} className="npc-row">
+                  <div className="npc-row__name">
+                    <div className="npc-row__portrait">
+                      {npc.portrait ? (
+                        <img
+                          src={`${BASE}sprites/portraits/${npc.portrait}`}
+                          alt=""
+                          style={{ width: 28, height: 28, imageRendering: 'pixelated', objectFit: 'none', objectPosition: '0 0' }}
+                        />
+                      ) : (
+                        npc.name.charAt(0)
+                      )}
+                    </div>
+                    {npc.name}
+                  </div>
+                  <span className="npc-row__birthday">
+                    {npc.birthday.season.charAt(0).toUpperCase() + npc.birthday.season.slice(1)} {npc.birthday.day}
+                  </span>
+                  <span className="npc-row__status">
+                    {npc.marriageable ? <span className="npc-row__badge">Marriageable</span> : '—'}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -4,6 +4,9 @@ import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { SeasonSelector } from '../components/common/SeasonSelector';
+import { SeasonPips } from '../components/common/SeasonPips';
+import { ViewToggle } from '../components/common/ViewToggle';
+import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Season } from '../types/game';
 
@@ -64,6 +67,7 @@ export function CropsPage() {
   const { activeSave, settings } = useUserData();
   const [season, setSeason] = useState<SeasonFilter>('spring');
   const [sort, setSort]     = useState<SortKey>('name');
+  const [viewMode, setViewMode] = useViewMode('crops', 'table');
 
   // Active save context for "remaining harvests" column
   const saveContext = useMemo(() => {
@@ -130,158 +134,201 @@ export function CropsPage() {
             {label}
           </button>
         ))}
+        <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
-      {/* Crop table */}
-      <div className={`crop-table${saveContext ? ' crop-table--with-harvests' : ''}`}>
-        <div className="crop-table__header">
-          <span className="crop-table__col-name">Crop</span>
-          <span className="crop-table__col-seasons">Seasons</span>
-          <span className="crop-table__col-growth">Growth (28-day season)</span>
-          <span className="crop-table__col-sell">Sell</span>
-          <span className="crop-table__col-gpd" title="Net gold per day (after seed cost)">g/Day*</span>
-          {saveContext && (
-            <span className="crop-table__col-harvests" title={`Harvests remaining in ${saveContext.season} (planted on day ${saveContext.day})`}>
-              Left
-            </span>
-          )}
-        </div>
-
-        {crops.map((crop) => {
-          const harvestItem = itemMap.get(crop.harvestItemId);
-          const seedItem    = itemMap.get(crop.seedItemId);
-          const growPct     = Math.min(crop.growDays / SEASON_DAYS * 100, 100);
-          const regrowPct   = crop.regrowDays
-            ? Math.min(crop.regrowDays / SEASON_DAYS * 100, 100)
-            : 0;
-
-          // Net gold per day (revenue minus seed cost)
-          const avgHarvest = (crop.harvestCountMin + crop.harvestCountMax) / 2;
-          const seedBuyPrice = seedItem?.soldBy?.[0]?.price ?? 0;
-          const gpd = harvestItem
-            ? netGoldPerDay(harvestItem.sellValue, avgHarvest, crop.growDays, crop.regrowDays, seedBuyPrice).toFixed(1)
-            : null;
-
-          // Remaining harvests for this season (only when save context active + matching season)
-          const harvestsLeft = (saveContext && crop.seasons.includes(saveContext.season))
-            ? remainingHarvests(crop.growDays, crop.regrowDays, saveContext.day)
-            : null;
-
-          // Primary season for row color (first listed season)
-          const primarySeason = crop.seasons[0] ?? 'spring';
-
-          return (
-            <div key={crop.id} className={`crop-row crop-row--${primarySeason}${harvestsLeft === 0 ? ' crop-row--cant-plant' : ''}`}>
-
-              {/* Name + badges column */}
-              <div className="crop-row__name">
-                {harvestItem?.spriteSheet && harvestItem.spriteIndex !== undefined ? (
-                  <div className="crop-row__icon">
-                    <SpriteIcon
-                      spriteSheet={harvestItem.spriteSheet}
-                      spriteIndex={harvestItem.spriteIndex}
-                      size={28}
-                    />
+      {/* ── Tile view ── */}
+      {viewMode === 'tile' && (
+        <div className="crop-grid">
+          {crops.map((crop) => {
+            const harvestItem = itemMap.get(crop.harvestItemId);
+            const seedItem    = itemMap.get(crop.seedItemId);
+            const avgHarvest  = (crop.harvestCountMin + crop.harvestCountMax) / 2;
+            const seedBuyPrice = seedItem?.soldBy?.[0]?.price ?? 0;
+            const gpd = harvestItem
+              ? netGoldPerDay(harvestItem.sellValue, avgHarvest, crop.growDays, crop.regrowDays, seedBuyPrice).toFixed(1)
+              : null;
+            const primarySeason = crop.seasons[0] ?? 'spring';
+            return (
+              <div key={crop.id} className={`crop-tile crop-tile--${primarySeason}`}>
+                <div className="crop-tile__header">
+                  <div className="crop-tile__sprite">
+                    {harvestItem?.spriteSheet && harvestItem.spriteIndex !== undefined ? (
+                      <SpriteIcon
+                        spriteSheet={harvestItem.spriteSheet}
+                        spriteIndex={harvestItem.spriteIndex}
+                        size={28}
+                      />
+                    ) : <span className="crop-tile__sprite--ph">?</span>}
                   </div>
-                ) : (
-                  <div className="crop-row__icon crop-row__icon--placeholder">?</div>
-                )}
-                <div className="crop-row__name-body">
-                  <Link to={`/items/${harvestItem?.id ?? crop.id}`} className="crop-row__link">
+                  <Link to={`/items/${harvestItem?.id ?? crop.id}`} className="crop-tile__name">
                     {crop.name}
                   </Link>
-                  <div className="crop-row__meta">
-                    {seedItem && (
-                      <>
-                        <Link to={`/items/${seedItem.id}`} className="crop-row__seed">
-                          {seedItem.name}
-                        </Link>
-                        {seedBuyPrice > 0 && (
-                          <span className="crop-row__seed-price">{seedBuyPrice}g</span>
-                        )}
-                      </>
-                    )}
-                    {crop.seasons.length > 1 && <span className="crop-badge crop-badge--multi">Multi-season</span>}
-                    {crop.trellisCrop  && <span className="crop-badge crop-badge--trellis">Trellis</span>}
-                    {crop.canBeGiantCrop && <span className="crop-badge crop-badge--giant">Giant</span>}
-                    {crop.isPaddyCrop  && <span className="crop-badge crop-badge--paddy">Paddy</span>}
+                </div>
+                <SeasonPips seasons={crop.seasons} />
+                <div className="crop-tile__stats">
+                  <span className="crop-tile__days">{crop.growDays}d{crop.regrowDays ? ` +${crop.regrowDays}d` : ''}</span>
+                  <span className="crop-tile__sell">{harvestItem?.sellValue ?? '—'}g</span>
+                  {gpd && <span className="crop-tile__gpd">{gpd}g/d</span>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ── Table view ── */}
+      {viewMode === 'table' && (
+        <div className={`crop-table${saveContext ? ' crop-table--with-harvests' : ''}`}>
+          <div className="crop-table__header">
+            <span className="crop-table__col-name">Crop</span>
+            <span className="crop-table__col-seasons">Seasons</span>
+            <span className="crop-table__col-growth">Growth (28-day season)</span>
+            <span className="crop-table__col-sell">Sell</span>
+            <span className="crop-table__col-gpd" title="Net gold per day (after seed cost)">g/Day*</span>
+            {saveContext && (
+              <span className="crop-table__col-harvests" title={`Harvests remaining in ${saveContext.season} (planted on day ${saveContext.day})`}>
+                Left
+              </span>
+            )}
+          </div>
+
+          {crops.map((crop) => {
+            const harvestItem = itemMap.get(crop.harvestItemId);
+            const seedItem    = itemMap.get(crop.seedItemId);
+            const growPct     = Math.min(crop.growDays / SEASON_DAYS * 100, 100);
+            const regrowPct   = crop.regrowDays
+              ? Math.min(crop.regrowDays / SEASON_DAYS * 100, 100)
+              : 0;
+
+            // Net gold per day (revenue minus seed cost)
+            const avgHarvest = (crop.harvestCountMin + crop.harvestCountMax) / 2;
+            const seedBuyPrice = seedItem?.soldBy?.[0]?.price ?? 0;
+            const gpd = harvestItem
+              ? netGoldPerDay(harvestItem.sellValue, avgHarvest, crop.growDays, crop.regrowDays, seedBuyPrice).toFixed(1)
+              : null;
+
+            // Remaining harvests for this season (only when save context active + matching season)
+            const harvestsLeft = (saveContext && crop.seasons.includes(saveContext.season))
+              ? remainingHarvests(crop.growDays, crop.regrowDays, saveContext.day)
+              : null;
+
+            // Primary season for row color (first listed season)
+            const primarySeason = crop.seasons[0] ?? 'spring';
+
+            return (
+              <div key={crop.id} className={`crop-row crop-row--${primarySeason}${harvestsLeft === 0 ? ' crop-row--cant-plant' : ''}`}>
+
+                {/* Name + badges column */}
+                <div className="crop-row__name">
+                  {harvestItem?.spriteSheet && harvestItem.spriteIndex !== undefined ? (
+                    <div className="crop-row__icon">
+                      <SpriteIcon
+                        spriteSheet={harvestItem.spriteSheet}
+                        spriteIndex={harvestItem.spriteIndex}
+                        size={28}
+                      />
+                    </div>
+                  ) : (
+                    <div className="crop-row__icon crop-row__icon--placeholder">?</div>
+                  )}
+                  <div className="crop-row__name-body">
+                    <Link to={`/items/${harvestItem?.id ?? crop.id}`} className="crop-row__link">
+                      {crop.name}
+                    </Link>
+                    <div className="crop-row__meta">
+                      {seedItem && (
+                        <>
+                          <Link to={`/items/${seedItem.id}`} className="crop-row__seed">
+                            {seedItem.name}
+                          </Link>
+                          {seedBuyPrice > 0 && (
+                            <span className="crop-row__seed-price">{seedBuyPrice}g</span>
+                          )}
+                        </>
+                      )}
+                      {crop.seasons.length > 1 && <span className="crop-badge crop-badge--multi">Multi-season</span>}
+                      {crop.trellisCrop  && <span className="crop-badge crop-badge--trellis">Trellis</span>}
+                      {crop.canBeGiantCrop && <span className="crop-badge crop-badge--giant">Giant</span>}
+                      {crop.isPaddyCrop  && <span className="crop-badge crop-badge--paddy">Paddy</span>}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Seasons dots */}
-              <div className="crop-row__seasons">
-                {(['spring','summer','fall','winter'] as Season[]).map((s) => (
-                  <span
-                    key={s}
-                    className={`season-pip season-pip--${s}${crop.seasons.includes(s) ? ' season-pip--on' : ''}`}
-                    title={s}
-                  />
-                ))}
-              </div>
-
-              {/* Growth bar */}
-              <div className="crop-row__growth">
-                <div className="grow-bar">
-                  <div
-                    className="grow-bar__initial"
-                    style={{ width: `${growPct}%` }}
-                    title={`${crop.growDays} days to first harvest`}
-                  />
-                  {regrowPct > 0 && (
-                    <div
-                      className="grow-bar__regrow"
-                      style={{ left: `${growPct}%`, width: `${Math.min(regrowPct, 100 - growPct)}%` }}
-                      title={`Regrows every ${crop.regrowDays} days`}
+                {/* Seasons dots */}
+                <div className="crop-row__seasons">
+                  {(['spring','summer','fall','winter'] as Season[]).map((s) => (
+                    <span
+                      key={s}
+                      className={`season-pip season-pip--${s}${crop.seasons.includes(s) ? ' season-pip--on' : ''}`}
+                      title={s}
                     />
-                  )}
+                  ))}
                 </div>
-                <span className="grow-bar__label">
-                  {crop.growDays}d
-                  {crop.regrowDays && ` +${crop.regrowDays}d`}
-                </span>
-              </div>
 
-              {/* Sell value */}
-              <div className="crop-row__sell">
-                {harvestItem ? (
-                  <>
-                    <strong>{harvestItem.sellValue}g</strong>
-                    {crop.harvestCountMin > 1 && (
-                      <span className="crop-row__multi">
-                        {crop.harvestCountMin === crop.harvestCountMax
-                          ? ` ×${crop.harvestCountMin}`
-                          : ` ×${crop.harvestCountMin}–${crop.harvestCountMax}`}
-                      </span>
+                {/* Growth bar */}
+                <div className="crop-row__growth">
+                  <div className="grow-bar">
+                    <div
+                      className="grow-bar__initial"
+                      style={{ width: `${growPct}%` }}
+                      title={`${crop.growDays} days to first harvest`}
+                    />
+                    {regrowPct > 0 && (
+                      <div
+                        className="grow-bar__regrow"
+                        style={{ left: `${growPct}%`, width: `${Math.min(regrowPct, 100 - growPct)}%` }}
+                        title={`Regrows every ${crop.regrowDays} days`}
+                      />
                     )}
-                  </>
-                ) : '—'}
-              </div>
-
-              {/* Gold per day */}
-              <div className="crop-row__gpd">
-                {gpd ? <strong>{gpd}g</strong> : '—'}
-              </div>
-
-              {/* Remaining harvests (save-aware) */}
-              {saveContext && (
-                <div className="crop-row__harvests">
-                  {harvestsLeft === null
-                    ? <span className="crop-row__harvests--na">—</span>
-                    : harvestsLeft === 0
-                      ? <span className="crop-row__harvests--zero">✗</span>
-                      : <strong>{harvestsLeft}</strong>
-                  }
+                  </div>
+                  <span className="grow-bar__label">
+                    {crop.growDays}d
+                    {crop.regrowDays && ` +${crop.regrowDays}d`}
+                  </span>
                 </div>
-              )}
-            </div>
-          );
-        })}
 
-        {crops.length === 0 && (
-          <p className="page-empty">No crops available this season.</p>
-        )}
-      </div>
+                {/* Sell value */}
+                <div className="crop-row__sell">
+                  {harvestItem ? (
+                    <>
+                      <strong>{harvestItem.sellValue}g</strong>
+                      {crop.harvestCountMin > 1 && (
+                        <span className="crop-row__multi">
+                          {crop.harvestCountMin === crop.harvestCountMax
+                            ? ` ×${crop.harvestCountMin}`
+                            : ` ×${crop.harvestCountMin}–${crop.harvestCountMax}`}
+                        </span>
+                      )}
+                    </>
+                  ) : '—'}
+                </div>
+
+                {/* Gold per day */}
+                <div className="crop-row__gpd">
+                  {gpd ? <strong>{gpd}g</strong> : '—'}
+                </div>
+
+                {/* Remaining harvests (save-aware) */}
+                {saveContext && (
+                  <div className="crop-row__harvests">
+                    {harvestsLeft === null
+                      ? <span className="crop-row__harvests--na">—</span>
+                      : harvestsLeft === 0
+                        ? <span className="crop-row__harvests--zero">✗</span>
+                        : <strong>{harvestsLeft}</strong>
+                    }
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {crops.length === 0 && (
+            <p className="page-empty">No crops available this season.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

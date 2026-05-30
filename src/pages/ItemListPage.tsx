@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { useItemList } from '../hooks/useItemList';
 import type { ItemSortKey } from '../hooks/useItemList';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
+import { ViewToggle } from '../components/common/ViewToggle';
+import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { ItemCategory } from '../types/game';
 
@@ -20,6 +22,7 @@ export function ItemListPage() {
   usePageTitle('Items');
   const { items, loading, error, search, setSearch, category, setCategory,
           sort, setSort, hasEnergy } = useItemList();
+  const [viewMode, setViewMode] = useViewMode('items', 'tile');
 
   if (loading) return <div className="page-loading">Loading items…</div>;
   if (error) return <div className="page-error">{error}</div>;
@@ -66,6 +69,7 @@ export function ItemListPage() {
             </button>
           )
         ))}
+        <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
       {items.length === 0 ? (
@@ -76,30 +80,65 @@ export function ItemListPage() {
           </button>
         </div>
       ) : (
-        <div className="item-grid">
-          {items.map((item) => (
-            <Link key={item.id} to={`/items/${item.id}`} className="item-card">
-              <div className="item-card__sprite" aria-hidden="true">
-                {item.spriteSheet && item.spriteIndex !== undefined ? (
-                  <SpriteIcon
-                    spriteSheet={item.spriteSheet}
-                    spriteIndex={item.spriteIndex}
-                    isBigCraftable={item.isBigCraftable}
-                    size={item.isBigCraftable ? 20 : 32}
-                  />
-                ) : item.name.charAt(0)}
+        <>
+          {viewMode === 'tile' && (
+            <div className="item-grid">
+              {items.map((item) => (
+                <Link key={item.id} to={`/items/${item.id}`} className="item-card">
+                  <div className="item-card__sprite" aria-hidden="true">
+                    {item.spriteSheet && item.spriteIndex !== undefined ? (
+                      <SpriteIcon
+                        spriteSheet={item.spriteSheet}
+                        spriteIndex={item.spriteIndex}
+                        isBigCraftable={item.isBigCraftable}
+                        size={item.isBigCraftable ? 20 : 32}
+                      />
+                    ) : item.name.charAt(0)}
+                  </div>
+                  <div className="item-card__info">
+                    <span className="item-card__name">{item.name}</span>
+                    <span className="item-card__category">{item.category.replace('_', ' ')}</span>
+                    <span className="item-card__value">{item.sellValue}g</span>
+                    {item.energy !== undefined && (
+                      <span className="item-card__energy">⚡ +{item.energy}</span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {viewMode === 'table' && (
+            <div className="item-table">
+              <div className="item-table__header">
+                <span>Item</span>
+                <span>Category</span>
+                <span>Sell Value</span>
+                {hasEnergy && <span>Energy</span>}
               </div>
-              <div className="item-card__info">
-                <span className="item-card__name">{item.name}</span>
-                <span className="item-card__category">{item.category.replace('_', ' ')}</span>
-                <span className="item-card__value">{item.sellValue}g</span>
-                {item.energy !== undefined && (
-                  <span className="item-card__energy">⚡ +{item.energy}</span>
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
+              {items.map((item) => (
+                <Link key={item.id} to={`/items/${item.id}`} className="item-row">
+                  <div className="item-row__name">
+                    <div className="item-row__sprite">
+                      {item.spriteSheet && item.spriteIndex !== undefined ? (
+                        <SpriteIcon
+                          spriteSheet={item.spriteSheet}
+                          spriteIndex={item.spriteIndex}
+                          isBigCraftable={item.isBigCraftable}
+                          size={item.isBigCraftable ? 16 : 20}
+                        />
+                      ) : <span>{item.name.charAt(0)}</span>}
+                    </div>
+                    <span>{item.name}</span>
+                  </div>
+                  <span className="item-row__category">{item.category.replace('_', ' ')}</span>
+                  <span className="item-row__value">{item.sellValue}g</span>
+                  {hasEnergy && <span className="item-row__energy">{item.energy !== undefined ? `⚡ +${item.energy}` : '—'}</span>}
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

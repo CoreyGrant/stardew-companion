@@ -189,3 +189,82 @@
 .schedule-section {
   margin-top: $space-2;
 }
+
+// ── NPC table view ────────────────────────────────────────────────────────────
+
+.npc-table {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 150px 130px;
+    gap: $space-3;
+    padding: $space-2 $space-3;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    border-bottom: 2px solid $color-brown;
+    background: var(--surface-mid);
+  }
+}
+
+.npc-row {
+  display: grid;
+  grid-template-columns: 1fr 150px 130px;
+  gap: $space-3;
+  align-items: center;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid rgba($color-brown, 0.2);
+  background: var(--surface);
+  transition: background 0.1s;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover { background: var(--surface-mid); }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  &__portrait {
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    overflow: hidden;
+    background: $color-brown-dark;
+    border: 1px solid $color-brown;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: $color-gold;
+  }
+
+  &__birthday {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    text-transform: capitalize;
+  }
+
+  &__status { font-size: 0.75rem; color: var(--text-light); }
+
+  &__badge {
+    display: inline-block;
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: $color-loved;
+    border: 1px solid $color-loved;
+    padding: 1px $space-1;
+    background: rgba($color-loved, 0.08);
+  }
+}

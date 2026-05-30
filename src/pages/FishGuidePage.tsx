@@ -2,12 +2,15 @@ import { useMemo, useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { GameLink } from '../components/common/GameLink';
 import { SeasonSelector } from '../components/common/SeasonSelector';
+import { SeasonPips } from '../components/common/SeasonPips';
+import { ViewToggle } from '../components/common/ViewToggle';
+import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Season } from '../types/game';
 
 type SeasonFilter = Season | 'all';
 type WeatherFilter = 'any' | 'sunny' | 'rainy';
-type SortKey = 'name' | 'difficulty' | 'level' | 'value';
+type SortKey = 'name' | 'difficulty' | 'value';
 
 const WEATHER_FILTERS: { id: WeatherFilter; label: string; icon: string }[] = [
   { id: 'any',   label: 'Any Weather', icon: '🌤️' },
@@ -50,7 +53,7 @@ export function FishGuidePage() {
   const [search, setSearch]   = useState('');
   const [showTrap, setShowTrap] = useState(true);
   const [showLegendary, setShowLegendary] = useState(true);
-  const [maxLevel, setMaxLevel] = useState<number>(10); // 10 = show all
+  const [viewMode, setViewMode] = useViewMode('fish', 'table');
 
   const itemMap = useMemo(
     () => new Map((data?.items ?? []).map((i) => [i.id, i])),
@@ -66,7 +69,6 @@ export function FishGuidePage() {
     if (!showTrap && f.trapFish) return false;
     if (!showLegendary && f.legendary) return false;
     if (search && !f.name.toLowerCase().includes(search.toLowerCase())) return false;
-    if (maxLevel < 10 && f.minFishingLevel > maxLevel) return false;
     if (season !== 'all') {
       if (!f.seasons.includes('all' as Season) && !f.seasons.includes(season as Season)) return false;
     }
@@ -78,7 +80,6 @@ export function FishGuidePage() {
 
   const sorted = [...filtered].sort((a, b) => {
     if (sort === 'difficulty') return b.difficulty - a.difficulty;
-    if (sort === 'level')      return a.minFishingLevel - b.minFishingLevel;
     if (sort === 'value') {
       const av = itemMap.get(a.itemId)?.sellValue ?? 0;
       const bv = itemMap.get(b.itemId)?.sellValue ?? 0;
@@ -132,135 +133,171 @@ export function FishGuidePage() {
         ))}
       </div>
 
-      {/* ── Sort + Level filter ── */}
+      {/* ── Sort bar ── */}
       <div className="fish-sort-bar">
         <span className="fish-sort-bar__label">Sort:</span>
-        {(['name', 'difficulty', 'level', 'value'] as SortKey[]).map((k) => (
+        {(['name', 'difficulty', 'value'] as SortKey[]).map((k) => (
           <button
             key={k}
             className={`fish-sort-btn${sort === k ? ' fish-sort-btn--active' : ''}`}
             onClick={() => setSort(k)}
           >
-            {k === 'name' ? 'Name' : k === 'difficulty' ? 'Difficulty' : k === 'level' ? 'Min Level' : 'Sell Value'}
+            {k === 'name' ? 'Name' : k === 'difficulty' ? 'Difficulty' : 'Sell Value'}
           </button>
         ))}
-        <span className="fish-sort-bar__sep" />
-        <span className="fish-sort-bar__label">Max Fishing Level:</span>
-        {[0,1,2,3,4,5,6,7,8,9,10].map(lvl => (
-          <button
-            key={lvl}
-            className={`fish-sort-btn${maxLevel === lvl ? ' fish-sort-btn--active' : ''}`}
-            onClick={() => setMaxLevel(lvl)}
-            title={lvl === 10 ? 'Show all fish' : `Only fish catchable at level ${lvl} or below`}
-          >
-            {lvl === 10 ? 'All' : lvl}
-          </button>
-        ))}
+        <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
-      {/* ── Fish table ── */}
-      <div className="fish-table">
-        <div className="fish-table__header">
-          <span>Fish</span>
-          <span>Seasons</span>
-          <span>Weather</span>
-          <span>Time</span>
-          <span>Location</span>
-          <span>Difficulty</span>
-          <span>Sell</span>
-        </div>
-
-        {sorted.map((f) => {
-          const item = itemMap.get(f.itemId);
-          const val  = item?.sellValue ?? '—';
-          const seasonsAll = f.seasons.includes('all' as Season);
-
-          return (
-            <div key={f.id} className={`fish-row${f.legendary ? ' fish-row--legendary' : ''}${f.trapFish ? ' fish-row--trap' : ''}`}>
-              {/* Name + sprite */}
-              <div className="fish-row__name">
-                {item?.spriteIndex !== undefined && (
-                  <div className="fish-row__icon">
-                    <svg
-                      width={24} height={24}
-                      viewBox={`${(item.spriteIndex % 24) * 16} ${Math.floor(item.spriteIndex / 24) * 16} 16 16`}
-                      style={{ display: 'block' }}
-                    >
-                      <image
-                        href={`${import.meta.env.BASE_URL}sprites/springobjects.png`}
-                        x={0} y={0}
-                        width={24 * 16} height={39 * 16}
-                        imageRendering="pixelated"
-                      />
-                    </svg>
+      {/* ── Tile grid view ── */}
+      {viewMode === 'tile' && (
+        <div className="fish-grid">
+          {sorted.map((f) => {
+            const item = itemMap.get(f.itemId);
+            const val  = item?.sellValue ?? '—';
+            return (
+              <div
+                key={f.id}
+                className={`fish-tile${f.legendary ? ' fish-tile--legendary' : ''}${f.trapFish ? ' fish-tile--trap' : ''}`}
+              >
+                <div className="fish-tile__header">
+                  {item?.spriteIndex !== undefined && (
+                    <div className="fish-tile__sprite">
+                      <svg
+                        width={32} height={32}
+                        viewBox={`${(item.spriteIndex % 24) * 16} ${Math.floor(item.spriteIndex / 24) * 16} 16 16`}
+                        style={{ display: 'block' }}
+                      >
+                        <image
+                          href={`${import.meta.env.BASE_URL}sprites/springobjects.png`}
+                          x={0} y={0}
+                          width={24 * 16} height={39 * 16}
+                          imageRendering="pixelated"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                  <div className="fish-tile__name">
+                    <GameLink type="item" id={f.itemId}>{f.name}</GameLink>
+                    {f.legendary && <span className="fish-badge fish-badge--legendary">Legendary</span>}
+                    {f.trapFish  && <span className="fish-badge fish-badge--trap">Crab Pot</span>}
                   </div>
-                )}
-                <div className="fish-row__name-body">
-                  <GameLink type="item" id={f.itemId}>{f.name}</GameLink>
-                  {f.legendary && <span className="fish-badge fish-badge--legendary">Legendary</span>}
-                  {f.trapFish  && <span className="fish-badge fish-badge--trap">Crab Pot</span>}
+                </div>
+                <div className="fish-tile__meta">
+                  <SeasonPips seasons={f.seasons} />
+                  {!f.trapFish && (
+                    <span className="fish-tile__weather">
+                      {f.weather === 'sunny' ? '☀️' : f.weather === 'rainy' ? '🌧️' : '🌤️'}
+                    </span>
+                  )}
+                </div>
+                <div className="fish-tile__footer">
+                  <DifficultyBar value={f.difficulty} />
+                  <span className="fish-tile__sell">{val}g</span>
                 </div>
               </div>
+            );
+          })}
+        </div>
+      )}
 
-              {/* Season pips */}
-              <div className="fish-row__seasons">
-                {(['spring','summer','fall','winter'] as Season[]).map((s) => (
-                  <span
-                    key={s}
-                    className={`season-pip season-pip--${s}${(seasonsAll || f.seasons.includes(s)) ? ' season-pip--on' : ''}`}
-                    title={s}
-                  />
-                ))}
-              </div>
-
-              {/* Weather */}
-              <div className="fish-row__weather">
-                {f.trapFish ? '—' :
-                  f.weather === 'sunny' ? '☀️' :
-                  f.weather === 'rainy' ? '🌧️' : '🌤️'}
-              </div>
-
-              {/* Time */}
-              <div className="fish-row__time">
-                {f.trapFish || !f.times?.length ? '—' :
-                  f.times.map((t, i) => (
-                    <span key={i} className="fish-row__time-slot">
-                      {formatTime(t.start)}–{formatTime(t.end)}
-                    </span>
-                  ))
-                }
-              </div>
-
-              {/* Location */}
-              <div className="fish-row__location">
-                {f.locations.length > 0
-                  ? f.locations.join(', ')
-                  : '—'}
-              </div>
-
-              {/* Difficulty */}
-              <div className="fish-row__difficulty">
-                {f.trapFish ? <span className="fish-row__trap-label">Trap</span> : <DifficultyBar value={f.difficulty} />}
-              </div>
-
-              {/* Sell value */}
-              <div className="fish-row__sell">{val}g</div>
-            </div>
-          );
-        })}
-
-        {sorted.length === 0 && (
-          <div className="empty-state" style={{ padding: '24px 16px' }}>
-            <p>No fish match your filters.</p>
-            <button className="btn" onClick={() => {
-              setSeason('all'); setWeather('any'); setSearch('');
-              setShowTrap(true); setShowLegendary(true); setMaxLevel(10);
-            }}>
-              Clear filters
-            </button>
+      {/* ── Fish table view ── */}
+      {viewMode === 'table' && (
+        <div className="fish-table">
+          <div className="fish-table__header">
+            <span>Fish</span>
+            <span>Seasons</span>
+            <span>Weather</span>
+            <span>Time</span>
+            <span>Location</span>
+            <span>Difficulty</span>
+            <span>Sell</span>
           </div>
-        )}
-      </div>
+
+          {sorted.map((f) => {
+            const item = itemMap.get(f.itemId);
+            const val  = item?.sellValue ?? '—';
+
+            return (
+              <div key={f.id} className={`fish-row${f.legendary ? ' fish-row--legendary' : ''}${f.trapFish ? ' fish-row--trap' : ''}`}>
+                {/* Name + sprite */}
+                <div className="fish-row__name">
+                  {item?.spriteIndex !== undefined && (
+                    <div className="fish-row__icon">
+                      <svg
+                        width={24} height={24}
+                        viewBox={`${(item.spriteIndex % 24) * 16} ${Math.floor(item.spriteIndex / 24) * 16} 16 16`}
+                        style={{ display: 'block' }}
+                      >
+                        <image
+                          href={`${import.meta.env.BASE_URL}sprites/springobjects.png`}
+                          x={0} y={0}
+                          width={24 * 16} height={39 * 16}
+                          imageRendering="pixelated"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                  <div className="fish-row__name-body">
+                    <GameLink type="item" id={f.itemId}>{f.name}</GameLink>
+                    {f.legendary && <span className="fish-badge fish-badge--legendary">Legendary</span>}
+                    {f.trapFish  && <span className="fish-badge fish-badge--trap">Crab Pot</span>}
+                  </div>
+                </div>
+
+                {/* Season pips */}
+                <div className="fish-row__seasons">
+                  <SeasonPips seasons={f.seasons} />
+                </div>
+
+                {/* Weather */}
+                <div className="fish-row__weather">
+                  {f.trapFish ? '—' :
+                    f.weather === 'sunny' ? '☀️' :
+                    f.weather === 'rainy' ? '🌧️' : '🌤️'}
+                </div>
+
+                {/* Time */}
+                <div className="fish-row__time">
+                  {f.trapFish || !f.times?.length ? '—' :
+                    f.times.map((t, i) => (
+                      <span key={i} className="fish-row__time-slot">
+                        {formatTime(t.start)}–{formatTime(t.end)}
+                      </span>
+                    ))
+                  }
+                </div>
+
+                {/* Location */}
+                <div className="fish-row__location">
+                  {f.locations.length > 0
+                    ? f.locations.join(', ')
+                    : '—'}
+                </div>
+
+                {/* Difficulty */}
+                <div className="fish-row__difficulty">
+                  {f.trapFish ? <span className="fish-row__trap-label">Trap</span> : <DifficultyBar value={f.difficulty} />}
+                </div>
+
+                {/* Sell value */}
+                <div className="fish-row__sell">{val}g</div>
+              </div>
+            );
+          })}
+
+          {sorted.length === 0 && (
+            <div className="empty-state" style={{ padding: '24px 16px' }}>
+              <p>No fish match your filters.</p>
+              <button className="btn" onClick={() => {
+                setSeason('all'); setWeather('any'); setSearch('');
+                setShowTrap(true); setShowLegendary(true);
+              }}>
+                Clear filters
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

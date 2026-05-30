@@ -156,6 +156,13 @@
     color: var(--text-light);
   }
 
+  &__avail {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    justify-content: center;
+  }
+
   &__avail-note {
     font-family: $font-pixel;
     font-size: 0.5rem;

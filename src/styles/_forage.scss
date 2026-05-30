@@ -171,3 +171,73 @@
   gap: 3px;
   align-items: center;
 }
+
+.season-pips {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+
+// ── Forage table view ─────────────────────────────────────────────────────────
+
+.forage-table {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 72px 110px 60px;
+    gap: $space-3;
+    padding: $space-2 $space-3;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    border-bottom: 2px solid $color-brown;
+    background: var(--surface-mid);
+  }
+}
+
+.forage-row {
+  display: grid;
+  grid-template-columns: 1fr 72px 110px 60px;
+  gap: $space-3;
+  align-items: center;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid rgba($color-brown, 0.2);
+  background: var(--surface);
+  transition: background 0.1s;
+
+  &:hover { background: var(--surface-mid); }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-width: 0;
+    font-size: 0.85rem;
+    color: var(--text);
+
+    a { color: inherit; text-decoration: none; @include truncate; &:hover { color: $color-green; } }
+  }
+
+  &__seasons { display: flex; align-items: center; }
+
+  &__loc {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: #fff;
+    padding: 1px $space-1;
+    border-radius: 2px;
+    @include truncate;
+    display: block;
+  }
+
+  &__sell {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: $color-gold;
+    text-align: right;
+  }
+}

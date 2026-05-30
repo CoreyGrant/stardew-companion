@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { GameLink } from '../components/common/GameLink';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
+import { SeasonPips } from '../components/common/SeasonPips';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Item, ShopEntry } from '../types/game';
 
@@ -39,20 +40,6 @@ const SHOP_EMOJI: Record<string, string> = {
 interface ShopItemEntry {
   item: Item;
   entry: ShopEntry;
-}
-
-function seasonLabel(season: string): string {
-  return season.split(',')
-    .map((s) => s.trim().charAt(0).toUpperCase() + s.trim().slice(1))
-    .join(', ');
-}
-
-function availabilityNote(entry: ShopEntry): string {
-  const parts: string[] = [];
-  if (entry.season)  parts.push(seasonLabel(entry.season));
-  if (entry.day)     parts.push(`${entry.day}s only`);
-  if (entry.yearMin) parts.push(`Year ${entry.yearMin}+`);
-  return parts.join(' · ');
 }
 
 export function ShopsPage() {
@@ -154,7 +141,6 @@ export function ShopsPage() {
         </div>
 
         {activeItems.map(({ item, entry }, idx) => {
-          const avail = availabilityNote(entry);
           return (
             <div key={`${item.id}-${idx}`} className="shop-row">
               <div className="shop-row__item">
@@ -195,9 +181,15 @@ export function ShopsPage() {
               </div>
 
               <div className="shop-row__avail">
-                {avail ? (
-                  <span className="shop-row__avail-note">{avail}</span>
-                ) : (
+                {entry.season && (
+                  <SeasonPips seasons={entry.season.split(',').map(s => s.trim())} />
+                )}
+                {(entry.day || entry.yearMin) ? (
+                  <span className="shop-row__avail-note">
+                    {[entry.day && `${entry.day}s`, entry.yearMin && `Yr ${entry.yearMin}+`].filter(Boolean).join(' · ')}
+                  </span>
+                ) : null}
+                {!entry.season && !entry.day && !entry.yearMin && (
                   <span className="shop-row__avail-always">Always</span>
                 )}
               </div>
