@@ -65,21 +65,23 @@ const SEND_MESSAGES_BIT = String(1 << 11);
  * @param {number}  position
  * @param {boolean} readOnly  If true, deny @everyone from sending messages.
  */
-async function createChannel(name, topic, position, readOnly = false) {
-  const permissionOverwrites = readOnly
-    ? [{ id: guildId, type: 0 /* role */, deny: SEND_MESSAGES_BIT }]
-    : [];
-
+async function createChannel(name, topic, position) {
   const ch = await api('POST', `/guilds/${guildId}/channels`, {
     name,
     type: 0, // GUILD_TEXT
     topic,
     position,
-    permission_overwrites: permissionOverwrites,
   });
 
   console.log(`  ✓ #${ch.name}  (id: ${ch.id})`);
   return ch;
+}
+
+/** Lock a channel so @everyone can read but not send messages. Call AFTER posting. */
+async function lockChannel(channelId) {
+  await api('PATCH', `/channels/${channelId}`, {
+    permission_overwrites: [{ id: guildId, type: 0 /* role */, deny: SEND_MESSAGES_BIT }],
+  });
 }
 
 async function postMessage(channelId, content) {
@@ -193,10 +195,11 @@ async function main() {
     }
   }
 
-  // 2. Create channels in the desired display order
+  // 2. Create channels in the desired display order (no restrictions yet — bot must be
+  //    able to post into them; we lock the read-only ones after posting is done)
   console.log('\nCreating channels…');
-  const welcome         = await createChannel('welcome',          'Welcome to Stardew Companion — read me first!',                 0, true);
-  /* updates */           await createChannel('updates',          'New features and changes — follow here to stay up to date',     1, true);
+  const welcome         = await createChannel('welcome',          'Welcome to Stardew Companion — read me first!',                 0);
+  const updates         = await createChannel('updates',          'New features and changes — follow here to stay up to date',     1);
   const chat            = await createChannel('chat',             'Chat about the app or anything Stardew Valley related',         2);
   const featureRequests = await createChannel('feature-requests', 'Suggest new features — see the pinned template before posting', 3);
   const bugReports      = await createChannel('bug-reports',      'Report bugs — see the pinned template before posting',          4);
@@ -217,7 +220,14 @@ async function main() {
   await pinMessage(bugReports.id, brMsg.id);
   console.log('  ✓ Bug report template posted + pinned');
 
-  // 6. Create the permanent invite
+  // 6. Lock #welcome and #updates so only admins can post
+  console.log('\nLocking read-only channels…');
+  await lockChannel(welcome.id);
+  console.log('  ✓ #welcome locked (read-only)');
+  await lockChannel(updates.id);
+  console.log('  ✓ #updates locked (read-only)');
+
+  // 7. Create the permanent invite
   console.log('\nCreating permanent invite…');
   const invite    = await createPermanentInvite(welcome.id);
   const inviteUrl = `https://discord.gg/${invite.code}`;
