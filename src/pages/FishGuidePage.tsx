@@ -1,20 +1,13 @@
 import { useMemo, useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { GameLink } from '../components/common/GameLink';
+import { SeasonSelector } from '../components/common/SeasonSelector';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Season } from '../types/game';
 
 type SeasonFilter = Season | 'all';
 type WeatherFilter = 'any' | 'sunny' | 'rainy';
 type SortKey = 'name' | 'difficulty' | 'level' | 'value';
-
-const SEASON_FILTERS: { id: SeasonFilter; label: string }[] = [
-  { id: 'all',    label: 'All Seasons' },
-  { id: 'spring', label: 'Spring' },
-  { id: 'summer', label: 'Summer' },
-  { id: 'fall',   label: 'Fall' },
-  { id: 'winter', label: 'Winter' },
-];
 
 const WEATHER_FILTERS: { id: WeatherFilter; label: string; icon: string }[] = [
   { id: 'any',   label: 'Any Weather', icon: '🌤️' },
@@ -118,22 +111,14 @@ export function FishGuidePage() {
         </label>
       </div>
 
-      <div className="filter-bar" role="group" aria-label="Filter by season and weather">
-        {SEASON_FILTERS.map(({ id, label }) => (
-          <button
-            key={id}
-            className={[
-              'category-btn',
-              id !== 'all' ? `category-btn--${id}` : '',
-              season === id ? 'category-btn--active' : '',
-            ].filter(Boolean).join(' ')}
-            onClick={() => setSeason(id)}
-            aria-pressed={season === id}
-          >
-            {label}
-          </button>
-        ))}
-        <span style={{ flex: 1 }} />
+      {/* Season selector */}
+      <SeasonSelector
+        value={season}
+        onChange={(v) => setSeason(v as SeasonFilter)}
+      />
+
+      {/* Weather filter */}
+      <div className="filter-bar filter-bar--weather" role="group" aria-label="Filter by weather">
         {WEATHER_FILTERS.map(({ id, label, icon }) => (
           <button
             key={id}

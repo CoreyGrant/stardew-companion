@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
+import { SeasonSelector } from '../components/common/SeasonSelector';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Season } from '../types/game';
 
@@ -37,13 +38,6 @@ const FESTIVALS: Record<Season, Festival[]> = {
     { name: 'Feast of the Winter Star',emoji: '🎁', days: [25] },
   ],
 };
-
-const SEASON_TABS: { id: Season; label: string; emoji: string }[] = [
-  { id: 'spring', label: 'Spring', emoji: '🌱' },
-  { id: 'summer', label: 'Summer', emoji: '☀️' },
-  { id: 'fall',   label: 'Fall',   emoji: '🍂' },
-  { id: 'winter', label: 'Winter', emoji: '❄️' },
-];
 
 /** Last planting day = 28 - growDays + 1, min 1. Only for single-season crops. */
 function lastPlantDay(growDays: number): number {
@@ -121,21 +115,13 @@ export function SeasonalCalendarPage() {
       <h1 className="page__title">Seasonal Calendar</h1>
       <p className="page__subtitle">Festivals, birthdays, and crop planting deadlines for every season.</p>
 
-      {/* Season tabs */}
-      <div className="filter-bar">
-        {SEASON_TABS.map(({ id, label, emoji }) => (
-          <button
-            key={id}
-            className={[
-              'category-btn',
-              `category-btn--${id}`,
-              season === id ? 'category-btn--active' : '',
-            ].filter(Boolean).join(' ')}
-            onClick={() => setSeason(id)}
-          >
-            {emoji} {label}
-          </button>
-        ))}
+      {/* Season selector */}
+      <div className="season-selector-row">
+        <SeasonSelector
+          value={season}
+          onChange={(v) => setSeason(v as Season)}
+          includeAll={false}
+        />
         {activeSave?.season && activeSave?.day && (
           <button
             className="btn btn--sm"

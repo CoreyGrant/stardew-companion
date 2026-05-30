@@ -36,7 +36,7 @@
   &--winter.forage-season-tab--active { background: $color-winter;  border-color: $color-winter; color: #fff; }
 
   &__count {
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     opacity: 0.8;
     background: rgba(0, 0, 0, 0.12);
     padding: 1px 4px;
@@ -48,7 +48,7 @@
 
 .forage-loc-btn {
   @include btn-base;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   padding: $space-1 $space-2;
 
   &--active {
@@ -63,7 +63,7 @@
 
 .forage-result-count {
   font-family: $font-pixel;
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   color: var(--text-light);
   margin-bottom: $space-2;
 }
@@ -127,7 +127,7 @@
 
   &__loc {
     font-family: $font-pixel;
-    font-size: 0.45rem;
+    font-size: 0.65rem;
     color: #fff;
     padding: 1px 5px;
     border-radius: 2px;
@@ -136,7 +136,7 @@
 
   &__yr-badge {
     font-family: $font-pixel;
-    font-size: 0.45rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     border: 1px solid $color-parchment-dark;
     padding: 1px 5px;
@@ -154,7 +154,7 @@
 
   &__sell {
     font-family: $font-pixel;
-    font-size: 0.55rem;
+    font-size: 0.7rem;
     color: $color-gold;
   }
 }

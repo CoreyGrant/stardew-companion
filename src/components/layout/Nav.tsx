@@ -88,8 +88,14 @@ function drawerItemClass({ isActive }: { isActive: boolean }) {
 
 const CLOSE_DELAY_MS = 500;
 
-function NavGroupComponent({ group }: { group: NavGroup }) {
-  const [open, setOpen] = useState(false);
+interface NavGroupProps {
+  group: NavGroup;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
+function NavGroupComponent({ group, isOpen, onOpen, onClose }: NavGroupProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearTimer = () => {
@@ -101,16 +107,16 @@ function NavGroupComponent({ group }: { group: NavGroup }) {
 
   const handleEnter = () => {
     clearTimer();
-    setOpen(true);
+    onOpen();
   };
 
   const handleLeave = () => {
-    timerRef.current = setTimeout(() => setOpen(false), CLOSE_DELAY_MS);
+    timerRef.current = setTimeout(() => onClose(), CLOSE_DELAY_MS);
   };
 
-  // Keyboard: open on focus-in, close immediately on focus-out of whole group
-  const handleFocus = () => { clearTimer(); setOpen(true); };
-  const handleBlur  = () => { timerRef.current = setTimeout(() => setOpen(false), 100); };
+  // Keyboard: open on focus-in, close after brief delay on focus-out of whole group
+  const handleFocus = () => { clearTimer(); onOpen(); };
+  const handleBlur  = () => { timerRef.current = setTimeout(() => onClose(), 100); };
 
   // Clean up on unmount
   useEffect(() => () => clearTimer(), []);
@@ -124,13 +130,13 @@ function NavGroupComponent({ group }: { group: NavGroup }) {
       onBlur={handleBlur}
     >
       <button
-        className={`nav-group__trigger${open ? ' nav-group__trigger--active' : ''}`}
+        className={`nav-group__trigger${isOpen ? ' nav-group__trigger--active' : ''}`}
         aria-haspopup="true"
-        aria-expanded={open}
+        aria-expanded={isOpen}
       >
         {group.label}
       </button>
-      {open && (
+      {isOpen && (
         <div className="nav-group__dropdown" role="menu">
           {group.items.map((item) => (
             <NavLink
@@ -138,7 +144,7 @@ function NavGroupComponent({ group }: { group: NavGroup }) {
               to={item.to}
               className={linkClass}
               role="menuitem"
-              onClick={() => setOpen(false)}
+              onClick={() => onClose()}
             >
               <span className="nav-group__item__icon">{item.icon}</span>
               {item.label}
@@ -153,10 +159,18 @@ function NavGroupComponent({ group }: { group: NavGroup }) {
 // ── Inline nav groups (rendered inside <header>) ───────────────────────────────
 
 export function InlineNavGroups() {
+  const [openId, setOpenId] = useState<string | null>(null);
+
   return (
     <>
       {NAV_GROUPS.map((group) => (
-        <NavGroupComponent key={group.id} group={group} />
+        <NavGroupComponent
+          key={group.id}
+          group={group}
+          isOpen={openId === group.id}
+          onOpen={() => setOpenId(group.id)}
+          onClose={() => setOpenId(null)}
+        />
       ))}
 
       {NAV_STANDALONE.map((item) => (

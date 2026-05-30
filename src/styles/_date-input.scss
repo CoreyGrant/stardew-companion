@@ -1,6 +1,40 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+// ── Season selector (shared component used across filter pages) ──────────────
+// Wraps a row of .sdi__season buttons outside the full date-input widget.
+
+.season-selector {
+  display: flex;
+  gap: $space-1;
+  flex-wrap: wrap;
+  margin-bottom: $space-3;
+
+  // Optional count badge next to the season label
+  &__count {
+    font-family: $font-body;
+    font-size: 0.65rem;
+    opacity: 0.75;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0 4px;
+    border-radius: 2px;
+    margin-left: 2px;
+  }
+}
+
+// Row that holds a SeasonSelector + optional action buttons side-by-side
+.season-selector-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-3;
+
+  .season-selector {
+    margin-bottom: 0; // row handles the spacing
+  }
+}
+
 // ── Stardew Date Input ────────────────────────────────────────────────────────
 // Compact, icon-first date/weather selector used in ScheduleViewerPage,
 // NPCDetailPage, etc.
@@ -41,6 +75,7 @@
     &--summer.sdi__season--active { background: rgba($color-summer, 0.18); border-color: $color-summer; color: #6b4600; }
     &--fall.sdi__season--active   { background: rgba($color-fall,   0.18); border-color: $color-fall;   color: #7a2e06; }
     &--winter.sdi__season--active { background: rgba($color-winter, 0.18); border-color: $color-winter; color: #0a57c2; }
+    &--all.sdi__season--active    { background: rgba($color-brown,  0.15); border-color: $color-brown-mid; color: var(--text); }
 
     &-emoji { font-size: 0.95rem; line-height: 1; }
     &-label { font-size: 0.65rem; }

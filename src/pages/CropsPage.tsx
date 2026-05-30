@@ -3,19 +3,12 @@ import { Link } from 'react-router-dom';
 import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
+import { SeasonSelector } from '../components/common/SeasonSelector';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Season } from '../types/game';
 
 type SeasonFilter = Season | 'all';
 type SortKey = 'name' | 'value' | 'days' | 'gpd';
-
-const SEASON_FILTERS: { id: SeasonFilter; label: string }[] = [
-  { id: 'all',    label: 'All Seasons' },
-  { id: 'spring', label: 'Spring' },
-  { id: 'summer', label: 'Summer' },
-  { id: 'fall',   label: 'Fall' },
-  { id: 'winter', label: 'Winter' },
-];
 
 const SORT_OPTIONS: { id: SortKey; label: string }[] = [
   { id: 'name',  label: 'Name' },
@@ -119,22 +112,11 @@ export function CropsPage() {
       <h1 className="page__title">Crops</h1>
       <p className="page__subtitle">Planting windows, grow times, sell values, and gold-per-day for every crop.</p>
 
-      {/* Season filter */}
-      <div className="filter-bar">
-        {SEASON_FILTERS.map(({ id, label }) => (
-          <button
-            key={id}
-            className={[
-              'category-btn',
-              id !== 'all' ? `category-btn--${id}` : '',
-              season === id ? 'category-btn--active' : '',
-            ].filter(Boolean).join(' ')}
-            onClick={() => setSeason(id)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {/* Season selector */}
+      <SeasonSelector
+        value={season}
+        onChange={(v) => setSeason(v as SeasonFilter)}
+      />
 
       {/* Sort controls */}
       <div className="fish-sort-bar">

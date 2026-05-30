@@ -37,17 +37,19 @@ export function AppShell({ children }: Props) {
           <InlineNavGroups />
         </div>
 
-        {/* Search — flex:1, pushes everything after it to the right */}
-        <GlobalSearch />
+        {/* Right group — search + theme + save badge, all pushed to the right */}
+        <div className="app-header__right">
+          <GlobalSearch />
 
-        {/* Theme dropdown — hidden on mobile, flex at $bp-nav+ */}
-        <div className="app-header__theme" aria-label="Theme selector">
-          <ThemeDropdown />
+          {/* Theme dropdown — hidden on mobile, flex at $bp-nav+ */}
+          <div className="app-header__theme">
+            <ThemeDropdown />
+          </div>
+
+          {settings.tailorToSave && activeSave && (
+            <span className="app-header__save-badge">{activeSave.name}</span>
+          )}
         </div>
-
-        {settings.tailorToSave && activeSave && (
-          <span className="app-header__save-badge">{activeSave.name}</span>
-        )}
       </header>
 
       {/* Mobile side drawer — only visible when open, hidden at $bp-nav+ */}

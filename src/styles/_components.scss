@@ -33,7 +33,7 @@
 .gift-tag {
   display: inline-block;
   font-family: $font-pixel;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   padding: 2px $space-2;
   border: 1px solid transparent;
 
@@ -53,7 +53,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: var(--text-light);
     min-width: 60px;
   }
@@ -74,7 +74,7 @@
 
   &__value {
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: var(--text-mid);
     min-width: 36px;
     text-align: right;
@@ -118,7 +118,7 @@
 
   &--sm {
     padding: $space-1 $space-2;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -165,7 +165,7 @@
 .category-btn,
 .sort-btn {
   @include btn-base;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 
   &--active {
     background: $color-brown-mid;
@@ -230,7 +230,7 @@
   flex-direction: column;
   gap: $space-1;
   font-family: $font-pixel;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--text-mid);
 
   input, select {
@@ -483,14 +483,14 @@
 
   &__date {
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     white-space: nowrap;
   }
 
   &__countdown {
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     white-space: nowrap;
     min-width: 56px;
@@ -498,7 +498,6 @@
 
     &--today {
       color: $color-text;  // was $color-gold (~1.9:1 on warm-yellow today-row bg)
-      font-size: 0.55rem;
     }
   }
 }

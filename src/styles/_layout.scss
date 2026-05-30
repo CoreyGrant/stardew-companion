@@ -83,6 +83,17 @@ body {
     }
   }
 
+  // ── Right group: search + theme + save badge ──
+  // margin-left: auto pushes this group to the far right of the header flex row.
+  &__right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
   // ── Theme buttons (shown only at bp-nav+) ──
   &__theme {
     display: none;

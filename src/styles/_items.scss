@@ -49,7 +49,7 @@
 
   &__name {
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: var(--text);
     @include truncate;
   }
@@ -207,7 +207,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.52rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -250,7 +250,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -278,7 +278,7 @@
 
 .crop-subsection-title {
   font-family: $font-pixel;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--text-mid);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -289,7 +289,7 @@
     color: var(--text-light);
     text-transform: none;
     letter-spacing: normal;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -350,7 +350,7 @@
 
 .fert-tab {
   @include btn-base;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   padding: $space-1 $space-3;
   color: var(--text-mid);
 
@@ -403,7 +403,7 @@
 
   th {
     font-family: $font-pixel;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     color: $color-gold;
     background: $color-brown-dark;
     padding: $space-2 $space-3;
@@ -418,7 +418,7 @@
     text-align: right;
     color: var(--text-mid);
 
-    &:first-child { text-align: left; font-family: $font-pixel; font-size: 0.6rem; }
+    &:first-child { text-align: left; font-family: $font-pixel; font-size: 0.7rem; }
   }
 
   &__row--active td {
@@ -533,7 +533,7 @@
 
   &__time {
     font-family: $font-pixel;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     background: var(--surface-dark);
     border: 1px solid $color-parchment-mid;
@@ -555,11 +555,12 @@
     gap: $space-3;
     padding: $space-2 $space-3;
     font-family: $font-pixel;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-light);
     border-bottom: 2px solid $color-brown;
+    background: var(--surface-mid);
   }
 
   &--with-harvests &__header { grid-template-columns: 1fr 64px 1fr 72px 60px 44px; }
@@ -572,6 +573,7 @@
   align-items: center;
   padding: $space-3;
   border-bottom: 1px solid rgba($color-brown, 0.25);
+  background: var(--surface);
   transition: background 0.1s;
 
   .crop-table--with-harvests & { grid-template-columns: 1fr 64px 1fr 72px 60px 44px; }
@@ -656,7 +658,7 @@
 
   &__seed-price {
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     background: rgba($color-brown, 0.1);
     border: 1px solid rgba($color-brown, 0.2);
@@ -750,7 +752,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     white-space: nowrap;
   }
@@ -761,7 +763,7 @@
 .crop-badge {
   display: inline-block;
   font-family: $font-pixel;
-  font-size: 0.48rem;
+  font-size: 0.6rem;
   padding: 1px $space-1;
   border-radius: 2px;
   letter-spacing: 0.03em;
@@ -800,7 +802,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     margin-right: $space-1;
   }
@@ -816,7 +818,7 @@
 
 .fish-sort-btn {
   @include btn-base;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 
   &--active {
     background: $color-brown-mid;
@@ -836,13 +838,11 @@
     gap: $space-2;
     padding: $space-2 $space-3;
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-light);
     border-bottom: 2px solid $color-brown;
-
-    @include sm { font-size: 0.55rem; }
   }
 }
 
@@ -907,7 +907,7 @@
   }
 
   &__time-slot {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: var(--text-mid);
     white-space: nowrap;
   }
@@ -921,7 +921,7 @@
 
   &__trap-label {
     font-family: $font-pixel;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     color: var(--text-light);
   }
 
@@ -936,7 +936,7 @@
 .fish-badge {
   display: inline-block;
   font-family: $font-pixel;
-  font-size: 0.45rem;
+  font-size: 0.6rem;
   padding: 1px $space-1;
   border-radius: 2px;
   border: 1px solid;
@@ -968,7 +968,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.48rem;
+    font-size: 0.6rem;
     color: var(--text-mid);
     min-width: 20px;
     text-align: right;
@@ -990,13 +990,13 @@
     align-items: center;
     gap: $space-2;
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: $color-green;
     margin-bottom: $space-2;
   }
 
   &__duration {
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     color: var(--text-light);
     background: var(--surface-dark);
     border: 1px solid rgba($color-brown, 0.3);
@@ -1068,7 +1068,7 @@
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.45rem;
+    font-size: 0.6rem;
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -1076,7 +1076,7 @@
 
   &__val {
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--text);
   }

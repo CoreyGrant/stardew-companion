@@ -2,18 +2,11 @@ import { useMemo, useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { GameLink } from '../components/common/GameLink';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
+import { SeasonSelector } from '../components/common/SeasonSelector';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Item, Season } from '../types/game';
 
 type SeasonTab = Season | 'all';
-
-const SEASON_TABS: { id: SeasonTab; label: string; emoji: string }[] = [
-  { id: 'all',    label: 'All',    emoji: '🗓️' },
-  { id: 'spring', label: 'Spring', emoji: '🌸' },
-  { id: 'summer', label: 'Summer', emoji: '☀️' },
-  { id: 'fall',   label: 'Fall',   emoji: '🍂' },
-  { id: 'winter', label: 'Winter', emoji: '❄️' },
-];
 
 type LocationFilter = 'all' | 'outdoor' | 'beach' | 'cave' | 'desert' | 'island';
 
@@ -169,23 +162,12 @@ export function ForagingPage() {
         {forageItems.length} forageable items — wild plants, mushrooms, shells, and more
       </p>
 
-      {/* Season tabs */}
-      <div className="forage-season-tabs">
-        {SEASON_TABS.map(({ id, label, emoji }) => (
-          <button
-            key={id}
-            className={[
-              'forage-season-tab',
-              id !== 'all' ? `forage-season-tab--${id}` : '',
-              seasonTab === id ? 'forage-season-tab--active' : '',
-            ].filter(Boolean).join(' ')}
-            onClick={() => setSeasonTab(id)}
-          >
-            {emoji} {label}
-            <span className="forage-season-tab__count">{seasonCounts[id]}</span>
-          </button>
-        ))}
-      </div>
+      {/* Season selector */}
+      <SeasonSelector
+        value={seasonTab}
+        onChange={setSeasonTab}
+        counts={seasonCounts}
+      />
 
       {/* Location + search filters */}
       <div className="filter-bar filter-bar--top-gap">
@@ -215,7 +197,7 @@ export function ForagingPage() {
       {/* Result count */}
       <p className="forage-result-count" role="status" aria-live="polite">
         {filtered.length} item{filtered.length !== 1 ? 's' : ''}
-        {seasonTab !== 'all' && ` in ${SEASON_TABS.find(t => t.id === seasonTab)?.label}`}
+        {seasonTab !== 'all' && ` in ${seasonTab.charAt(0).toUpperCase() + seasonTab.slice(1)}`}
         {locationFilter !== 'all' && ` · ${LOCATION_FILTERS.find(l => l.id === locationFilter)?.label}`}
       </p>
 

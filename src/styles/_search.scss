@@ -48,14 +48,14 @@
   outline: none;
   color: $color-parchment;
   font-family: $font-pixel;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   min-width: 0;
   height: 100%;
 
   &::placeholder {
     color: $color-brown-light;
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 
   // Remove default search clear button on WebKit
@@ -98,7 +98,7 @@
 
 .gsearch__group-label {
   font-family: $font-pixel;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   color: var(--text-light);
   padding: $space-2 $space-3 $space-1;
   text-transform: uppercase;
