@@ -57,7 +57,7 @@ export function FarmPlannerPage() {
     else if (tool === 'path-draw' && toolState.pathType)  paintPathRect(rect, toolState.pathType as PathType);
     else if (tool === 'path-erase')                       paintPathRect(rect, null);
     else if (tool === 'place-item' && toolState.itemId)   placeItemRect(rect, toolState.itemId);
-    else if (tool === 'place-tree' && toolState.treeType) placeTreeRect(rect, toolState.treeType as TreeType);
+    else if (tool === 'place-tree' && toolState.treeType) placeTreeRect(rect, toolState.treeType as TreeType, toolState.tapperType);
     else if (tool === 'erase')                            eraseRect(rect);
   }, [toolState, addZoneRect, paintPathRect, placeItemRect, placeTreeRect, eraseRect]);
 

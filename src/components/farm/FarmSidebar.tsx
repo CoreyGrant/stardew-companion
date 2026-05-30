@@ -3,7 +3,7 @@ import { useGameData } from '../../contexts/GameDataContext';
 import { SpriteIcon } from './SpriteIcon';
 import type { ToolState } from './HoverLayer';
 import type { Season, TreeDef } from '../../types/game';
-import type { CropZone, PathType, TreeType } from '../../types/save';
+import type { CropZone, PathType, TapperType, TreeType } from '../../types/save';
 
 type Tab = 'farming' | 'buildings' | 'misc' | 'machines' | 'trees';
 
@@ -89,6 +89,7 @@ export function FarmSidebar({
   const [activeTab, setActiveTab] = useState<Tab>('farming');
   const [search, setSearch] = useState('');
   const [expandedZoneId, setExpandedZoneId] = useState<string | null>(null);
+  const [tapperOption, setTapperOption] = useState<TapperType | null>(null);
 
   const q = search.toLowerCase();
 
@@ -115,7 +116,17 @@ export function FarmSidebar({
     t.tool === toolState.tool &&
     t.buildingId === toolState.buildingId &&
     t.pathType === toolState.pathType &&
-    t.itemId === toolState.itemId;
+    t.itemId === toolState.itemId &&
+    t.treeType === toolState.treeType;
+
+  const handleTapperChange = (type: TapperType) => {
+    const next = tapperOption === type ? null : type;
+    setTapperOption(next);
+    // Propagate into current tool state if already placing a tree
+    if (toolState.tool === 'place-tree' && toolState.treeType) {
+      onToolChange({ ...toolState, tapperType: next ?? undefined });
+    }
+  };
 
   const switchTab = (tab: Tab) => { setActiveTab(tab); setSearch(''); };
 
@@ -453,6 +464,26 @@ export function FarmSidebar({
 
         {activeTab === 'trees' && (
           <div className="planner-tab-body">
+            {/* Tapper options */}
+            <div className="planner-tapper-opts">
+              <label className="planner-tapper-opts__label">
+                <input
+                  type="checkbox"
+                  checked={tapperOption === 'tapper'}
+                  onChange={() => handleTapperChange('tapper')}
+                />
+                Tapper
+              </label>
+              <label className="planner-tapper-opts__label">
+                <input
+                  type="checkbox"
+                  checked={tapperOption === 'heavy-tapper'}
+                  onChange={() => handleTapperChange('heavy-tapper')}
+                />
+                Heavy Tapper
+              </label>
+            </div>
+
             {(['wild', 'fruit'] as const).map((group) => {
               const defs = treeDefs.filter((td) =>
                 (group === 'fruit' ? td.isFruitTree : !td.isFruitTree) &&
@@ -466,14 +497,15 @@ export function FarmSidebar({
                   </p>
                   {defs.map((td) => {
                     const treeType = td.type as TreeType;
+                    const active   = isActive({ tool: 'place-tree', treeType });
                     return (
                       <button
                         key={treeType}
-                        className={`planner-chip${isActive({ tool: 'place-tree', treeType }) ? ' planner-chip--active' : ''}`}
+                        className={`planner-chip${active ? ' planner-chip--active' : ''}`}
                         onClick={() => onToolChange(
-                          isActive({ tool: 'place-tree', treeType })
+                          active
                             ? { tool: 'select' }
-                            : { tool: 'place-tree', treeType },
+                            : { tool: 'place-tree', treeType, tapperType: tapperOption ?? undefined },
                         )}
                         title={td.name}
                       >

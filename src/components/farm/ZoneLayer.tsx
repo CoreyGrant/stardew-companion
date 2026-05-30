@@ -44,53 +44,60 @@ export function ZoneLayer({ zones, tileSize, season, selectedZoneId, cropMap, it
         const sel    = zone.id === selectedZoneId;
         const cropId = zone.crops[season];
 
-        // Look up the harvest-item sprite for the assigned crop
+        // Resolve harvest-item sprite for the assigned crop
         const crop        = cropId ? cropMap?.get(cropId) : undefined;
         const harvestItem = crop ? itemMap?.get(crop.harvestItemId) : undefined;
         const hasSpr      = !!(harvestItem?.spriteSheet && harvestItem.spriteIndex !== undefined);
 
-        return zone.rects.map((rect, ri) => {
-          const cx = (rect.x + rect.w / 2) * tileSize;
-          const cy = (rect.y + rect.h / 2) * tileSize;
+        // Pre-compute sprite values so they aren't recalculated per-cell
+        const sprSheet  = harvestItem?.spriteSheet ?? '';
+        const sprIdx    = harvestItem?.spriteIndex ?? 0;
+        const sprCols   = SHEET_COLS[sprSheet] ?? 24;
+        const sprRows   = SHEET_ROWS[sprSheet] ?? 39;
+        const sprCol    = sprIdx % sprCols;
+        const sprRow    = Math.floor(sprIdx / sprCols);
+        const sprUrl    = hasSpr ? `${base}sprites/${sprSheet}.png` : '';
+        const iconSize  = Math.max(8, Math.min(tileSize * 0.75, 14));
 
-          // Crop icon: render in the first rect only
-          let cropNode: React.ReactNode = null;
-          if (ri === 0 && cropId) {
-            if (hasSpr) {
-              const sheet    = harvestItem!.spriteSheet!;
-              const idx      = harvestItem!.spriteIndex!;
-              const cols     = SHEET_COLS[sheet] ?? 24;
-              const rows     = SHEET_ROWS[sheet] ?? 39;
-              const col      = idx % cols;
-              const row      = Math.floor(idx / cols);
-              const iconSize = Math.max(8, Math.min(tileSize * 0.75, 14));
-              cropNode = (
-                <svg
-                  x={cx - iconSize / 2} y={cy - iconSize / 2}
-                  width={iconSize} height={iconSize}
-                  overflow="hidden"
-                  style={{ pointerEvents: 'none' }}
-                >
-                  <image
-                    href={`${base}sprites/${sheet}.png`}
-                    x={-col * 16} y={-row * 16}
-                    width={cols * 16} height={rows * 16}
-                    imageRendering="pixelated"
-                  />
-                </svg>
-              );
-            } else {
-              // Fallback: text abbreviation when no sprite is available
-              cropNode = (
-                <text
-                  x={cx} y={cy}
-                  textAnchor="middle" dominantBaseline="middle"
-                  fill="white" fontSize={7}
-                  style={{ pointerEvents: 'none', fontFamily: 'monospace' }}
-                >
-                  {crop?.name.slice(0, 6) ?? cropId.slice(0, 6)}
-                </text>
-              );
+        return zone.rects.map((rect, ri) => {
+          // Render an icon in every cell of this rect
+          const icons: React.ReactNode[] = [];
+          if (cropId) {
+            for (let dy = 0; dy < rect.h; dy++) {
+              for (let dx = 0; dx < rect.w; dx++) {
+                const cx = (rect.x + dx + 0.5) * tileSize;
+                const cy = (rect.y + dy + 0.5) * tileSize;
+                if (hasSpr) {
+                  icons.push(
+                    <svg
+                      key={`${ri}-${dx}-${dy}`}
+                      x={cx - iconSize / 2} y={cy - iconSize / 2}
+                      width={iconSize} height={iconSize}
+                      overflow="hidden"
+                      style={{ pointerEvents: 'none' }}
+                    >
+                      <image
+                        href={sprUrl}
+                        x={-sprCol * 16} y={-sprRow * 16}
+                        width={sprCols * 16} height={sprRows * 16}
+                        imageRendering="pixelated"
+                      />
+                    </svg>,
+                  );
+                } else {
+                  icons.push(
+                    <text
+                      key={`${ri}-${dx}-${dy}`}
+                      x={cx} y={cy}
+                      textAnchor="middle" dominantBaseline="middle"
+                      fill="white" fontSize={7}
+                      style={{ pointerEvents: 'none', fontFamily: 'monospace' }}
+                    >
+                      {crop?.name.slice(0, 1) ?? '?'}
+                    </text>,
+                  );
+                }
+              }
             }
           }
 
@@ -103,7 +110,7 @@ export function ZoneLayer({ zones, tileSize, season, selectedZoneId, cropMap, it
                 stroke={sel ? '#FFD700' : stroke}
                 strokeWidth={sel ? 1.5 : 0.75}
               />
-              {cropNode}
+              {icons}
             </g>
           );
         });

@@ -21,6 +21,7 @@ import type {
   PlacedTree,
   SaveFile,
   Skill,
+  TapperType,
   TreeType,
 } from '../types/save';
 import { DEFAULT_FARM_LAYOUT, STATIC_BUILDING_IDS } from '../types/save';
@@ -107,6 +108,12 @@ const WILD_TREE_MAP: Record<number, TreeType> = {
   7: 'mushroom',
   8: 'mahogany',
   9: 'magic',
+};
+
+/** BigCraftable cheatId → TapperType for overlaidItem detection */
+const TAPPER_ITEM_IDS: Record<string, TapperType> = {
+  '105': 'tapper',
+  '264': 'heavy-tapper',
 };
 
 /** SDV FruitTree fruit item cheatId → our TreeType */
@@ -706,7 +713,12 @@ function parseLayout(
         if (growthStage < 5) continue;
         const treeTypeInt = parseInt(txt(tfEl, 'treeType') || '0', 10);
         const treeType    = WILD_TREE_MAP[treeTypeInt];
-        if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
+        if (!treeType) continue;
+        // Detect tapper: SDV stores it as <overlaidItem> on the tree element
+        const overlaidEl = ch(tfEl, 'overlaidItem');
+        const tapperRaw  = overlaidEl ? stripQualifier(txt(overlaidEl, 'itemId')) : '';
+        const tapper     = TAPPER_ITEM_IDS[tapperRaw] as TapperType | undefined;
+        trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType, ...(tapper ? { tapper } : {}) });
         continue;
       }
 

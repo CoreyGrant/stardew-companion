@@ -1,4 +1,5 @@
 import type { ZoneType, BuildingDef } from '../../types/game';
+import type { TapperType } from '../../types/save';
 import { canPlaceBuilding, canPlaceItem } from '../../utils/farmPlacement';
 
 export interface ToolState {
@@ -7,6 +8,7 @@ export interface ToolState {
   pathType?: string;
   itemId?: string;
   treeType?: string;
+  tapperType?: TapperType | null;
 }
 
 interface Props {

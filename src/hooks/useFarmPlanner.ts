@@ -57,7 +57,7 @@ interface FarmPlannerState {
   updateInterior: (buildingId: string, interior: InteriorLayout) => void;
   placeTree: (treeType: TreeType, x: number, y: number) => void;
   /** Fill a rectangle with trees, skipping occupied tiles, in a single undo step. */
-  placeTreeRect: (rect: TileRect, treeType: TreeType) => void;
+  placeTreeRect: (rect: TileRect, treeType: TreeType, tapperType?: TapperType | null) => void;
   removeTree: (id: string) => void;
   setTreeTapper: (id: string, tapper: TapperType | null) => void;
 }
@@ -338,7 +338,7 @@ export function useFarmPlanner(): FarmPlannerState {
       pushState({ ...layout, items: [...layout.items, ...newItems] });
   }, [layout, pushState, buildingDefMap, zoneMap, farmBaseType, gridWidth, gridHeight]);
 
-  const placeTreeRect = useCallback((rect: TileRect, treeType: TreeType) => {
+  const placeTreeRect = useCallback((rect: TileRect, treeType: TreeType, tapperType?: TapperType | null) => {
     const bOcc   = getBuildingOccupancy(layout.buildings, buildingDefMap);
     const iOcc   = getItemOccupancy(layout.items);
     const tOcc   = getTreeOccupancy(layout.trees);
@@ -352,7 +352,7 @@ export function useFarmPlanner(): FarmPlannerState {
         if (!added.has(key) &&
             canPlaceTree(tx, ty, zoneMap, farmBaseType, gridWidth, gridHeight, bOcc, iOcc, tOcc, tpSet)) {
           added.add(key);
-          newTrees.push({ id: crypto.randomUUID(), treeType, x: tx, y: ty });
+          newTrees.push({ id: crypto.randomUUID(), treeType, x: tx, y: ty, ...(tapperType ? { tapper: tapperType } : {}) });
         }
       }
     }
