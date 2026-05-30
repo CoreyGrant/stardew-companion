@@ -27,6 +27,11 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # Set VITE_DISCORD_INVITE as a repository variable (not secret) in
+          # Settings → Secrets and variables → Actions → Variables tab.
+          # The Discord icon in the navbar only appears when this is set.
+          VITE_DISCORD_INVITE: ${{ vars.VITE_DISCORD_INVITE }}
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4

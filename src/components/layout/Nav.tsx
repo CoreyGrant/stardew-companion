@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTheme, type Theme } from '../../contexts/ThemeContext';
 
+const DISCORD_INVITE = import.meta.env.VITE_DISCORD_INVITE as string | undefined;
+
 // ── Navigation data ────────────────────────────────────────────────────────────
 
 interface NavItem {
@@ -370,6 +372,18 @@ export function MobileDrawer({ isOpen, onClose }: DrawerProps) {
               </button>
             ))}
           </div>
+
+          {DISCORD_INVITE && (
+            <a
+              href={DISCORD_INVITE}
+              className="nav-drawer__discord-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+            >
+              Join the Discord
+            </a>
+          )}
         </div>
       </div>
     </div>

@@ -395,6 +395,27 @@
       span { color: $color-gold; }
     }
   }
+
+  // Discord link in the mobile drawer footer
+  &__discord-link {
+    display: block;
+    margin-top: $space-3;
+    padding: $space-2 $space-3;
+    text-align: center;
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: #5865f2;
+    border: 1px solid rgba(#5865f2, 0.35);
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: background 0.15s, border-color 0.15s;
+
+    &:hover {
+      background: rgba(#5865f2, 0.1);
+      border-color: rgba(#5865f2, 0.6);
+    }
+  }
 }
 
 @keyframes drawer-slide-in {
