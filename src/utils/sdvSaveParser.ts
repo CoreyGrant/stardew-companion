@@ -10,10 +10,13 @@
 
 import type { GameData } from '../types/game';
 import type {
+  CropZone,
   FarmLayout,
   FarmType,
+  InteriorLayout,
   PathType,
   PlacedBuilding,
+  PlacedItem,
   PlacedPath,
   PlacedTree,
   SaveFile,
@@ -513,6 +516,61 @@ function seedStaticBuildings(
   }));
 }
 
+/** Parse objects from a location element into planner items and fence paths. */
+function parseLocationObjects(
+  locEl: Element,
+  plannerItemCheatIds: Set<string>,
+): { items: PlacedItem[]; paths: PlacedPath[] } {
+  const items: PlacedItem[] = [];
+  const paths: PlacedPath[] = [];
+
+  for (const item of chs(ch(locEl, 'objects'), 'item')) {
+    const coord = vecCoord(ch(item, 'key'));
+    const value = ch(item, 'value');
+    if (!coord || !value) continue;
+
+    // Fences → path
+    const objName  = txt(value, 'name');
+    const pathType = FENCE_NAME_MAP[objName];
+    if (pathType) {
+      paths.push({ x: coord.x, y: coord.y, pathType });
+      continue;
+    }
+
+    // Planner-relevant items (BigCraftables + sprinklers)
+    const rawItemId = txt(value, 'itemId');
+    if (!rawItemId) continue;
+    const cheatId = stripQualifier(rawItemId);
+    if (plannerItemCheatIds.has(cheatId)) {
+      items.push({ id: crypto.randomUUID(), itemId: cheatId, x: coord.x, y: coord.y });
+    }
+  }
+
+  return { items, paths };
+}
+
+/** Parse the interior (indoors element) of a building into an InteriorLayout. */
+function parseInteriorLayout(
+  indoorsEl: Element,
+  plannerItemCheatIds: Set<string>,
+): InteriorLayout {
+  const { items, paths } = parseLocationObjects(indoorsEl, plannerItemCheatIds);
+
+  // Interior flooring
+  for (const item of chs(ch(indoorsEl, 'terrainFeatures'), 'item')) {
+    const coord = vecCoord(ch(item, 'key'));
+    const value = ch(item, 'value');
+    if (!coord || !value) continue;
+    if (xsiType(value) === 'Flooring') {
+      const floorIdx = parseInt(txt(value, 'whichFloor') || '0', 10);
+      const pathType = FLOOR_TO_PATH[floorIdx];
+      if (pathType) paths.push({ x: coord.x, y: coord.y, pathType });
+    }
+  }
+
+  return { items, paths };
+}
+
 function parseLayout(
   root: Element,
   locationType: string,
@@ -526,8 +584,21 @@ function parseLayout(
 
   const validBuildingIds = new Set(gameData.buildingDefs.map(b => b.id));
 
+  // Set of cheatIds we want to add as PlacedItems:
+  //   - All curated BigCraftables (isBigCraftable: true in our data)
+  //   - Sprinklers (regular objects, cheatIds 599/621/645)
+  const plannerItemCheatIds = new Set(
+    gameData.items
+      .filter(i => i.isBigCraftable || ['599', '621', '645'].includes(i.cheatId))
+      .map(i => i.cheatId),
+  );
+
+  // Map from harvest item cheatId → Crop (for HoeDirt → CropZone grouping)
+  const cropByHarvestId = new Map(gameData.crops.map(c => [c.harvestItemId, c]));
+
   // ── Buildings ──────────────────────────────────────────────────────────────
   const userBuildings: PlacedBuilding[] = [];
+  const interiors: Record<string, InteriorLayout> = {};
   let greenhouseRepaired = false;
 
   for (const bEl of chs(ch(loc, 'buildings'), 'Building').concat(
@@ -540,12 +611,22 @@ function parseLayout(
     if (!buildingType) continue;
 
     if (buildingType === 'Greenhouse') { greenhouseRepaired = true; continue; }
-    if (STATIC_BUILDING_IDS.has(buildingType))   continue;
-    if (!validBuildingIds.has(buildingType))       continue;
+    if (STATIC_BUILDING_IDS.has(buildingType)) continue;
+    if (!validBuildingIds.has(buildingType))    continue;
 
-    const x = parseInt(txt(bEl, 'tileX') || '0', 10);
-    const y = parseInt(txt(bEl, 'tileY') || '0', 10);
-    userBuildings.push({ id: crypto.randomUUID(), buildingId: buildingType, x, y });
+    const x   = parseInt(txt(bEl, 'tileX') || '0', 10);
+    const y   = parseInt(txt(bEl, 'tileY') || '0', 10);
+    const id  = crypto.randomUUID();
+    userBuildings.push({ id, buildingId: buildingType, x, y });
+
+    // Parse indoor contents (Shed, Barn, Coop, etc.)
+    const indoorsEl = ch(bEl, 'indoors');
+    if (indoorsEl) {
+      const interior = parseInteriorLayout(indoorsEl, plannerItemCheatIds);
+      if (interior.items.length > 0 || interior.paths.length > 0) {
+        interiors[id] = interior;
+      }
+    }
   }
 
   const buildings: PlacedBuilding[] = [
@@ -555,10 +636,12 @@ function parseLayout(
     ...userBuildings,
   ];
 
-  // ── Terrain features: flooring + trees ─────────────────────────────────────
+  // ── Terrain features: flooring + trees + HoeDirt crops ────────────────────
   const paths: PlacedPath[] = [];
   const trees: PlacedTree[]  = [];
-  const terrainFeaturesEl    = ch(loc, 'terrainFeatures');
+  // Accumulate HoeDirt tile coords grouped by crop ID
+  const hoeDirtByCropId = new Map<string, { cropId: string; seasons: Season[]; tiles: { x: number; y: number }[] }>();
+  const terrainFeaturesEl = ch(loc, 'terrainFeatures');
 
   if (terrainFeaturesEl) {
     for (const item of chs(terrainFeaturesEl, 'item')) {
@@ -597,27 +680,56 @@ function parseLayout(
         if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
         continue;
       }
+
+      // HoeDirt with an active crop → group for CropZone creation
+      if (type === 'HoeDirt') {
+        const cropEl = ch(value, 'crop');
+        if (!cropEl) continue;
+        const harvestId = txt(cropEl, 'indexOfHarvest');
+        if (!harvestId || harvestId === '-1' || harvestId === '0') continue;
+        const cropDef = cropByHarvestId.get(harvestId);
+        if (!cropDef) continue;
+
+        const existing = hoeDirtByCropId.get(cropDef.id);
+        if (existing) {
+          existing.tiles.push({ x: coord.x, y: coord.y });
+        } else {
+          hoeDirtByCropId.set(cropDef.id, {
+            cropId:  cropDef.id,
+            seasons: cropDef.seasons,
+            tiles:   [{ x: coord.x, y: coord.y }],
+          });
+        }
+        continue;
+      }
     }
   }
 
-  // ── Objects: fences ────────────────────────────────────────────────────────
-  for (const item of chs(ch(loc, 'objects'), 'item')) {
-    const coord = vecCoord(ch(item, 'key'));
-    const value = ch(item, 'value');
-    if (!coord || !value) continue;
-
-    const objName  = txt(value, 'name');
-    const pathType = FENCE_NAME_MAP[objName];
-    if (pathType) paths.push({ x: coord.x, y: coord.y, pathType });
+  // Convert grouped HoeDirt tiles into CropZones (one zone per unique crop type)
+  const zones: CropZone[] = [];
+  for (const { cropId, seasons: cropSeasons, tiles } of hoeDirtByCropId.values()) {
+    const cropDef = gameData.crops.find(c => c.id === cropId);
+    const crops: Partial<Record<Season, string>> = {};
+    for (const s of cropSeasons) crops[s] = cropId;
+    zones.push({
+      id:    crypto.randomUUID(),
+      name:  cropDef?.name ?? cropId,
+      rects: tiles.map(t => ({ x: t.x, y: t.y, w: 1, h: 1 })),
+      crops,
+    });
   }
+
+  // ── Objects: fences + planner items ───────────────────────────────────────
+  const { items, paths: objPaths } = parseLocationObjects(loc, plannerItemCheatIds);
+  paths.push(...objPaths);
 
   return {
     season,
-    zones:     [],
+    zones,
     buildings,
     paths,
-    items:     [],
+    items,
     trees,
-    interiors: {},
+    interiors,
   };
 }

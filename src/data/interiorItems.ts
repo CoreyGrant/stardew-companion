@@ -10,12 +10,13 @@
 
 export type InteriorContext = 'coop' | 'barn' | 'shed' | 'slime_hutch' | 'greenhouse' | 'cabin' | 'any';
 
-/** Machine cheatIds (BigCraftables) valid in any building interior. */
+/** Machine/decoration cheatIds (BigCraftables) valid in any building interior. */
 export const MACHINE_IDS = new Set([
   '9','10','12','13','15','16','17','19','20','21','24','25',
   '105','128','130','154','163','165','182','211','231','232','256','264','272',
   '104',
   'BaitMaker','BigChest','Dehydrator','FishSmoker','MushroomLog',
+  '37','38','39','TextSign',  // Signs (Wood, Stone, Dark, Text)
 ]);
 
 /** Items valid in animal buildings (coop & barn families). */

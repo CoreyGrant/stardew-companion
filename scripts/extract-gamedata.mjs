@@ -645,7 +645,11 @@ const PLANNER_CRAFTABLES = new Set([
   '104', // Heater
   '8','167',   // Scarecrow, Deluxe Scarecrow
   'BaitMaker','BigChest','Dehydrator','FishSmoker','MushroomLog', // string-keyed 1.6 items
+  '37','38','39','TextSign',  // Signs (Wood, Stone, Dark, Text)
 ]);
+
+// BigCraftable IDs that get category 'decoration' instead of 'machine'
+const DECORATION_CRAFTABLES = new Set(['37', '38', '39', 'TextSign']);
 
 function extractBigCraftables() {
   const data  = readData('BigCraftables.json');
@@ -659,7 +663,7 @@ function extractBigCraftables() {
     items.push({
       id:          toId(name),
       name,
-      category:    'machine',
+      category:    DECORATION_CRAFTABLES.has(id) ? 'decoration' : 'machine',
       description: resolveLocalizedText(obj.Description) ?? '',
       sellValue:   obj.Price ?? 0,
       cheatId:     id,

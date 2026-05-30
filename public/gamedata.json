@@ -20887,6 +20887,18 @@
       "spriteIndex": 929
     },
     {
+      "id": "",
+      "name": "???",
+      "category": "other",
+      "description": "???",
+      "sellValue": 0,
+      "cheatId": "930",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "springobjects",
+      "spriteIndex": 930
+    },
+    {
       "id": "far-away-stone",
       "name": "Far Away Stone",
       "category": "other",
@@ -21980,6 +21992,45 @@
       "isBigCraftable": true
     },
     {
+      "id": "wood-sign",
+      "name": "Wood Sign",
+      "category": "decoration",
+      "description": "Use an item on this to change what's displayed. The item won't be consumed.",
+      "sellValue": 5,
+      "cheatId": "37",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 37,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-sign",
+      "name": "Stone Sign",
+      "category": "decoration",
+      "description": "Use an item on this to change what's displayed. The item won't be consumed.",
+      "sellValue": 5,
+      "cheatId": "38",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 38,
+      "isBigCraftable": true
+    },
+    {
+      "id": "dark-sign",
+      "name": "Dark Sign",
+      "category": "decoration",
+      "description": "Use an item on this to change what's displayed. The item won't be consumed.",
+      "sellValue": 5,
+      "cheatId": "39",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 39,
+      "isBigCraftable": true
+    },
+    {
       "id": "heater",
       "name": "Heater",
       "category": "machine",
@@ -22156,6 +22207,19 @@
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 272,
+      "isBigCraftable": true
+    },
+    {
+      "id": "text-sign",
+      "name": "Text Sign",
+      "category": "decoration",
+      "description": "You can write a custom message on this sign.",
+      "sellValue": 50,
+      "cheatId": "TextSign",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 281,
       "isBigCraftable": true
     },
     {
@@ -25931,45 +25995,6 @@
       "canBeGiantCrop": false,
       "trellisCrop": false,
       "spriteIndex": 51
-    },
-    {
-      "id": "fiber-seeds-crop",
-      "name": "Fiber Seeds",
-      "seedItemId": "885",
-      "harvestItemId": "771",
-      "seasons": [
-        "spring",
-        "summer",
-        "fall",
-        "winter"
-      ],
-      "growDays": 7,
-      "regrowDays": null,
-      "harvestCountMin": 1,
-      "harvestCountMax": 3,
-      "qualityByLevel": {
-        "0": {
-          "normal": 1,
-          "silver": 0,
-          "gold": 0,
-          "iridium": 0
-        },
-        "5": {
-          "normal": 1,
-          "silver": 0,
-          "gold": 0,
-          "iridium": 0
-        },
-        "10": {
-          "normal": 1,
-          "silver": 0,
-          "gold": 0,
-          "iridium": 0
-        }
-      },
-      "canBeGiantCrop": false,
-      "trellisCrop": false,
-      "spriteIndex": 0
     }
   ],
   "fish": [

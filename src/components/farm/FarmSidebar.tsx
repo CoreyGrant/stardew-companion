@@ -101,6 +101,9 @@ export function FarmSidebar({
   const machines = (data?.items ?? []).filter(
     (i) => i.category === 'machine' && !['8', '167'].includes(i.cheatId),
   );
+  const signItems = (data?.items ?? []).filter(
+    (i) => i.category === 'decoration',
+  );
   const sprinklerItems = (data?.items ?? []).filter(
     (i) => ['599','621','645'].includes(i.cheatId),
   );
@@ -413,6 +416,38 @@ export function FarmSidebar({
                   <span>{item.name}</span>
                 </button>
               ))}
+
+            {signItems.filter((item) => !q || item.name.toLowerCase().includes(q)).length > 0 && (
+              <>
+                <div className="planner-group-label">Signs</div>
+                {signItems
+                  .slice()
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .filter((item) => !q || item.name.toLowerCase().includes(q))
+                  .map((item) => (
+                    <button
+                      key={item.cheatId}
+                      className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
+                      onClick={() => onToolChange(
+                        isActive({ tool: 'place-item', itemId: item.cheatId })
+                          ? { tool: 'select' }
+                          : { tool: 'place-item', itemId: item.cheatId },
+                      )}
+                      title={item.description || item.name}
+                    >
+                      {item.spriteSheet && item.spriteIndex !== undefined ? (
+                        <SpriteIcon
+                          spriteSheet={item.spriteSheet}
+                          spriteIndex={item.spriteIndex}
+                          isBigCraftable={item.isBigCraftable}
+                          size={13}
+                        />
+                      ) : null}
+                      <span>{item.name}</span>
+                    </button>
+                  ))}
+              </>
+            )}
           </div>
         )}
 

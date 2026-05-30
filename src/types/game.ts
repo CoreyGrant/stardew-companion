@@ -24,6 +24,7 @@ export type ItemCategory =
   | 'animal_product'
   | 'flower'
   | 'machine'
+  | 'decoration'
   | 'book'
   | 'other';
 
