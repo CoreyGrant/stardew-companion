@@ -84,50 +84,27 @@ function drawerItemClass({ isActive }: { isActive: boolean }) {
   return `nav-drawer__item${isActive ? ' nav-drawer__item--active' : ''}`;
 }
 
-// ── Single nav group with hover-delay close ────────────────────────────────────
-
-const CLOSE_DELAY_MS = 500;
+// ── Single nav group (stateless — timer lives in parent) ──────────────────────
 
 interface NavGroupProps {
   group: NavGroup;
   isOpen: boolean;
-  onOpen: () => void;
+  /** Mouse/focus entered this group — parent should cancel the close timer */
+  onEnter: () => void;
+  /** Mouse/focus left this group — parent should schedule a close */
+  onLeave: () => void;
+  /** Immediate close (used when a link is clicked) */
   onClose: () => void;
 }
 
-function NavGroupComponent({ group, isOpen, onOpen, onClose }: NavGroupProps) {
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const clearTimer = () => {
-    if (timerRef.current !== null) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  };
-
-  const handleEnter = () => {
-    clearTimer();
-    onOpen();
-  };
-
-  const handleLeave = () => {
-    timerRef.current = setTimeout(() => onClose(), CLOSE_DELAY_MS);
-  };
-
-  // Keyboard: open on focus-in, close after brief delay on focus-out of whole group
-  const handleFocus = () => { clearTimer(); onOpen(); };
-  const handleBlur  = () => { timerRef.current = setTimeout(() => onClose(), 100); };
-
-  // Clean up on unmount
-  useEffect(() => () => clearTimer(), []);
-
+function NavGroupComponent({ group, isOpen, onEnter, onLeave, onClose }: NavGroupProps) {
   return (
     <div
       className="nav-group"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      onFocus={onEnter}
+      onBlur={onLeave}
     >
       <button
         className={`nav-group__trigger${isOpen ? ' nav-group__trigger--active' : ''}`}
@@ -144,7 +121,7 @@ function NavGroupComponent({ group, isOpen, onOpen, onClose }: NavGroupProps) {
               to={item.to}
               className={linkClass}
               role="menuitem"
-              onClick={() => onClose()}
+              onClick={onClose}
             >
               <span className="nav-group__item__icon">{item.icon}</span>
               {item.label}
@@ -157,9 +134,33 @@ function NavGroupComponent({ group, isOpen, onOpen, onClose }: NavGroupProps) {
 }
 
 // ── Inline nav groups (rendered inside <header>) ───────────────────────────────
+//
+// The close timer lives HERE (not per-group) so that entering ANY group always
+// cancels a pending close that was started by a DIFFERENT group. Without this,
+// moving from group A → B leaves A's stale 500ms timer running; it would fire
+// and close B's dropdown even though the mouse is still inside B.
+
+const CLOSE_DELAY_MS = 300;
 
 export function InlineNavGroups() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimerRef.current = setTimeout(() => setOpenId(null), CLOSE_DELAY_MS);
+  };
+
+  const closeNow = () => { cancelClose(); setOpenId(null); };
+
+  useEffect(() => () => cancelClose(), []);
 
   return (
     <>
@@ -168,8 +169,9 @@ export function InlineNavGroups() {
           key={group.id}
           group={group}
           isOpen={openId === group.id}
-          onOpen={() => setOpenId(group.id)}
-          onClose={() => setOpenId(null)}
+          onEnter={() => { cancelClose(); setOpenId(group.id); }}
+          onLeave={scheduleClose}
+          onClose={closeNow}
         />
       ))}
 
