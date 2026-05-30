@@ -699,6 +699,31 @@ function parseLayout(
     }
   }
 
+  // ── Pre-scan objects to locate tappers ───────────────────────────────────
+  // In many SDV saves the Tapper/Heavy Tapper is stored as an ordinary Object in
+  // the location's objects dictionary, co-located with the tapped tree, rather
+  // than as overlaidItem on the TerrainFeature.  Build a tile → TapperType map
+  // now so the tree loop below can look it up.
+  const tapperAtTile = new Map<string, TapperType>();
+  for (const objItem of chs(ch(loc, 'objects'), 'item')) {
+    const coord = vecCoord(ch(objItem, 'key'));
+    const objEl = dictVal(ch(objItem, 'value'));
+    if (!coord || !objEl) continue;
+
+    // Primary: check name (stable across all save formats)
+    const objName = txt(objEl, 'name');
+    if (objName === 'Tapper') {
+      tapperAtTile.set(`${coord.x},${coord.y}`, 'tapper');
+    } else if (objName === 'Heavy Tapper') {
+      tapperAtTile.set(`${coord.x},${coord.y}`, 'heavy-tapper');
+    } else {
+      // Fallback: itemId (with or without "(BC)" qualifier) or parentSheetIndex
+      const rawId = stripQualifier(txt(objEl, 'itemId') || txt(objEl, 'parentSheetIndex'));
+      const t = TAPPER_ITEM_IDS[rawId];
+      if (t) tapperAtTile.set(`${coord.x},${coord.y}`, t);
+    }
+  }
+
   // ── Terrain features: flooring + trees + HoeDirt crops ────────────────────
   const paths: PlacedPath[] = [];
   const trees: PlacedTree[]  = [];
@@ -730,10 +755,22 @@ function parseLayout(
         const treeTypeInt = parseInt(txt(tfEl, 'treeType') || '0', 10);
         const treeType    = WILD_TREE_MAP[treeTypeInt];
         if (!treeType) continue;
-        // Detect tapper: SDV stores it as <overlaidItem> on the tree element
+
+        // Tapper detection: try overlaidItem on the tree element first (newer saves),
+        // then fall back to the pre-scanned objects map (older/alternative format).
+        let tapper: TapperType | undefined;
         const overlaidEl = ch(tfEl, 'overlaidItem');
-        const tapperRaw  = overlaidEl ? stripQualifier(txt(overlaidEl, 'itemId')) : '';
-        const tapper     = TAPPER_ITEM_IDS[tapperRaw] as TapperType | undefined;
+        if (overlaidEl) {
+          const rawId  = stripQualifier(txt(overlaidEl, 'itemId') || txt(overlaidEl, 'parentSheetIndex'));
+          tapper = TAPPER_ITEM_IDS[rawId];
+          if (!tapper) {
+            const n = txt(overlaidEl, 'name');
+            if (n === 'Tapper') tapper = 'tapper';
+            else if (n === 'Heavy Tapper') tapper = 'heavy-tapper';
+          }
+        }
+        if (!tapper) tapper = tapperAtTile.get(`${coord.x},${coord.y}`);
+
         trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType, ...(tapper ? { tapper } : {}) });
         continue;
       }

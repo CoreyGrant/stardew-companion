@@ -69,16 +69,21 @@ export function ZoneLayer({ zones, tileSize, season, selectedZoneId, cropMap, it
                 const cy = (rect.y + dy + 0.5) * tileSize;
                 if (hasSpr) {
                   icons.push(
+                    // Use viewBox to select the 16×16 sprite cell and scale it
+                    // to fit the iconSize×iconSize display area.  Without viewBox
+                    // the SVG coordinate space is 1:1 and the 16×16 sprite gets
+                    // clipped at the smaller iconSize boundary.
                     <svg
                       key={`${ri}-${dx}-${dy}`}
                       x={cx - iconSize / 2} y={cy - iconSize / 2}
                       width={iconSize} height={iconSize}
-                      overflow="hidden"
+                      viewBox={`${sprCol * 16} ${sprRow * 16} 16 16`}
                       style={{ pointerEvents: 'none' }}
+                      overflow="hidden"
                     >
                       <image
                         href={sprUrl}
-                        x={-sprCol * 16} y={-sprRow * 16}
+                        x={0} y={0}
                         width={sprCols * 16} height={sprRows * 16}
                         imageRendering="pixelated"
                       />
