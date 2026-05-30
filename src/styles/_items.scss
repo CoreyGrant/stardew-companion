@@ -62,7 +62,7 @@
 
   &__value {
     font-size: 0.75rem;
-    color: $color-gold;
+    color: var(--gold);        // monetary sell value — use themed gold
   }
 
   &__energy {
@@ -151,13 +151,13 @@
     text-decoration: none;
     white-space: nowrap;
 
-    a#{&}, &:is(a) { color: $color-green-dark; &:hover { text-decoration: underline; } }
+    a#{&}, &:is(a) { color: var(--link); &:hover { text-decoration: underline; } } // was $color-green-dark
   }
 
   &__price {
     font-family: $font-pixel;
     font-size: 0.58rem;
-    color: $color-gold;
+    color: var(--gold);        // monetary seed price — use themed gold
     background: rgba($color-gold, 0.1);
     border: 1px solid rgba($color-gold, 0.25);
     border-radius: 2px;
@@ -219,7 +219,7 @@
     font-weight: 600;
 
     &--muted { color: var(--text-light); font-weight: normal; }
-    &--gold  { color: $color-gold; }
+    &--gold  { color: var(--gold); }  // monetary sell value — use themed gold
   }
 }
 
@@ -376,7 +376,7 @@
 
 .machine-inline-link {
   font-size: 0.75rem;
-  color: $color-green-dark;
+  color: var(--link);          // was $color-green-dark — invisible on dark surface
   text-decoration: none;
 
   &:hover { text-decoration: underline; }
@@ -485,11 +485,11 @@
 
   &__name {
     font-weight: 600;
-    color: $color-brown-dark;
+    color: var(--text);        // was $color-brown-dark — invisible on dark surface
     text-decoration: none;
     flex-shrink: 0;
 
-    &:hover { color: $color-brown; text-decoration: underline; }
+    &:hover { color: var(--link); text-decoration: underline; } // was $color-brown
   }
 
   &__source,
@@ -511,11 +511,11 @@
 
   &__machine {
     font-weight: 600;
-    color: $color-brown-dark;
+    color: var(--text);        // was $color-brown-dark — invisible on dark surface
     text-decoration: none;
     flex-shrink: 0;
 
-    &:hover { color: $color-brown; text-decoration: underline; }
+    &:hover { color: var(--link); text-decoration: underline; } // was $color-brown
   }
 
   &__arrow {

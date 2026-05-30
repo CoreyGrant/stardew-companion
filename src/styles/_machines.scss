@@ -208,7 +208,7 @@
 
   &__out-item-name {
     font-size: 0.8rem;
-    color: $color-green-dark;
+    color: var(--text);        // was $color-green-dark — invisible on dark surface
     font-weight: 600;
   }
 
@@ -216,7 +216,7 @@
   &__input-name.game-link {
     font-size: 0.8rem;
     font-weight: 600;
-    color: $color-green-dark;
+    color: var(--link);        // was $color-green-dark — invisible on dark surface
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -227,7 +227,7 @@
   &__out-sell {
     font-family: $font-pixel;
     font-size: 0.55rem;
-    color: $color-gold;
+    color: var(--gold);        // monetary amount — use themed gold
     font-weight: 700;
   }
 
@@ -250,16 +250,13 @@
   }
 
   &__out-price-formula {
-    font-size: 0.7rem;
-    color: var(--text-mid);
-    font-style: italic;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--gold);        // formula describes a monetary amount — always gold
 
     &--calc {
-      font-family: $font-pixel;
-      font-size: 0.65rem;
-      font-style: normal;
-      font-weight: 700;
-      color: $color-gold;
+      // Specific calculated value (e.g. "525g") — inherits gold styling above
     }
   }
 

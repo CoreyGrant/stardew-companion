@@ -125,7 +125,7 @@
     color: var(--text);
     text-decoration: none;
     @include truncate;
-    &:hover { color: $color-brown-mid; text-decoration: underline; }
+    &:hover { color: var(--link); text-decoration: underline; } // was $color-brown-mid
   }
 
   &__category {
@@ -141,7 +141,7 @@
   &__gold {
     font-family: $font-pixel;
     font-size: 0.7rem;
-    color: $color-gold;
+    color: var(--gold);        // monetary buy price
   }
 
   &__barter {

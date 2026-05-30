@@ -89,11 +89,11 @@ function RuleOutput({ rule, spriteOf, itemRefOf, sellValueOf, inputSellValue }: 
     );
   }
 
-  // Random output (Bone Mill)
+  // Random output (Recycling Machine, Bone Mill, etc.)
   if (rule.isRandomOutput && rule.outputItems) {
     return (
       <div className="mrule__out-random">
-        <div className="mrule__out-random-label">🎲 Random fertilizer</div>
+        <div className="mrule__out-random-label">🎲 One of:</div>
         <ul className="mrule__out-random-list">
           {rule.outputItems.map(out => {
             const sp  = spriteOf(out.itemId);

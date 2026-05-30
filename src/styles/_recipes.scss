@@ -145,12 +145,12 @@
   &__name {
     font-size: 0.95rem;
     font-weight: 700;
-    color: $color-brown-dark;
+    color: var(--text);        // was $color-brown-dark — invisible on dark surface
     text-decoration: none;
     line-height: 1.2;
 
     &:hover {
-      color: $color-brown;
+      color: var(--link);      // was $color-brown — broken in dark mode
       text-decoration: underline;
     }
   }
@@ -215,7 +215,7 @@
 
   &__ing-qty {
     font-weight: 700;
-    color: $color-brown;
+    color: var(--text-mid);    // was $color-brown — poor contrast in dark mode; quantity = text-mid
     min-width: 22px;
   }
 

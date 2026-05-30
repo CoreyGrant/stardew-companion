@@ -115,7 +115,7 @@
     color: var(--text);
     font-weight: 600;
     text-decoration: none;
-    &:hover { color: $color-brown-mid; text-decoration: underline; }
+    &:hover { color: var(--link); text-decoration: underline; } // was $color-brown-mid
   }
 
   &__meta {
@@ -155,7 +155,7 @@
   &__sell {
     font-family: $font-pixel;
     font-size: 0.7rem;
-    color: $color-gold;
+    color: var(--gold);        // monetary sell value
   }
 }
 
@@ -237,7 +237,7 @@
   &__sell {
     font-family: $font-pixel;
     font-size: 0.7rem;
-    color: $color-gold;
+    color: var(--gold);        // monetary sell value
     text-align: right;
   }
 }

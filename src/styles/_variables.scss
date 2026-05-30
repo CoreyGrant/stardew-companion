@@ -89,6 +89,8 @@ $bp-nav: 1000px;
   --link:          #2d6b42;   // 5.2:1 on --surface
   // Muted labels rendered directly on --body-bg (not inside panels)
   --label-muted:   #{$color-parchment-dark};
+  // Gold — monetary amounts; adapts per theme so it stays readable
+  --gold:          #{$color-gold};       // #daa520 on parchment (warm accent, acceptable)
 }
 
 [data-theme="light"] {
@@ -104,6 +106,7 @@ $bp-nav: 1000px;
   --border:        #94a3b8;
   --link:          #166534;
   --label-muted:   #374151;
+  --gold:          #8c6600;   // darker amber — 5.0:1 on white
 }
 
 [data-theme="dark"] {
@@ -119,4 +122,5 @@ $bp-nav: 1000px;
   --border:        #354060;
   --link:          #4ade80;   // bright green readable on dark surfaces
   --label-muted:   #9ea6b4;
+  --gold:          #{$color-gold-light}; // #f5c842 — bright gold, 9.5:1 on dark surface
 }

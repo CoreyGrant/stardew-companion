@@ -478,7 +478,7 @@
     font-weight: 600;
     color: var(--text);
     text-decoration: none;
-    &:hover { color: $color-brown-mid; text-decoration: underline; }
+    &:hover { color: var(--link); text-decoration: underline; } // was $color-brown-mid
   }
 
   &__date {
