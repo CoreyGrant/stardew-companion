@@ -27,6 +27,8 @@ export function useItemList(): ItemListState {
   const items = useMemo(() => {
     if (!data) return [];
     const filtered = data.items.filter((item) => {
+      // Strip internal game placeholders that have no valid id or a ??? name
+      if (!item.id || item.name === '???') return false;
       if (category !== 'all' && item.category !== category) return false;
       if (search && !item.name.toLowerCase().includes(search.toLowerCase())) return false;
       return true;

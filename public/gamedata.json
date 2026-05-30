@@ -20887,18 +20887,6 @@
       "spriteIndex": 929
     },
     {
-      "id": "",
-      "name": "???",
-      "category": "other",
-      "description": "???",
-      "sellValue": 0,
-      "cheatId": "930",
-      "likedBy": [],
-      "lovedBy": [],
-      "spriteSheet": "springobjects",
-      "spriteIndex": 930
-    },
-    {
       "id": "far-away-stone",
       "name": "Far Away Stone",
       "category": "other",
