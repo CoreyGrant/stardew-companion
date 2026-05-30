@@ -169,6 +169,21 @@ function deep(el: Element | null | undefined, ...tags: string[]): string {
   return cur?.textContent?.trim() ?? '';
 }
 
+/**
+ * Unwrap a serialized dictionary <value> element.
+ *
+ * SDV's XmlSerializer wraps each dictionary value in a plain <value> element
+ * whose first (and only) child is the actual typed element, e.g.:
+ *   <value><TerrainFeature xsi:type="Tree">…</TerrainFeature></value>
+ *   <value><Object xsi:type="Chest">…</Object></value>
+ *
+ * Returns that inner element, or null if the wrapper is missing/empty.
+ */
+function dictVal(valueEl: Element | null | undefined): Element | null {
+  if (!valueEl) return null;
+  return Array.from(valueEl.children)[0] ?? null;
+}
+
 /** Parse a <Vector2><X>…</X><Y>…</Y></Vector2> key element into integer coords. */
 function vecCoord(keyEl: Element | null | undefined): { x: number; y: number } | null {
   const vec = ch(keyEl, 'Vector2');
@@ -525,12 +540,13 @@ function parseLocationObjects(
   const paths: PlacedPath[] = [];
 
   for (const item of chs(ch(locEl, 'objects'), 'item')) {
-    const coord = vecCoord(ch(item, 'key'));
-    const value = ch(item, 'value');
-    if (!coord || !value) continue;
+    const coord  = vecCoord(ch(item, 'key'));
+    // SDV wraps each dict value as <value><Object ...>fields</Object></value>
+    const objEl  = dictVal(ch(item, 'value'));
+    if (!coord || !objEl) continue;
 
     // Fences → path
-    const objName  = txt(value, 'name');
+    const objName  = txt(objEl, 'name');
     const pathType = FENCE_NAME_MAP[objName];
     if (pathType) {
       paths.push({ x: coord.x, y: coord.y, pathType });
@@ -538,7 +554,7 @@ function parseLocationObjects(
     }
 
     // Planner-relevant items (BigCraftables + sprinklers)
-    const rawItemId = txt(value, 'itemId');
+    const rawItemId = txt(objEl, 'itemId');
     if (!rawItemId) continue;
     const cheatId = stripQualifier(rawItemId);
     if (plannerItemCheatIds.has(cheatId)) {
@@ -559,10 +575,11 @@ function parseInteriorLayout(
   // Interior flooring
   for (const item of chs(ch(indoorsEl, 'terrainFeatures'), 'item')) {
     const coord = vecCoord(ch(item, 'key'));
-    const value = ch(item, 'value');
-    if (!coord || !value) continue;
-    if (xsiType(value) === 'Flooring') {
-      const floorIdx = parseInt(txt(value, 'whichFloor') || '0', 10);
+    // SDV wraps each dict value as <value><TerrainFeature xsi:type="...">
+    const tfEl  = dictVal(ch(item, 'value'));
+    if (!coord || !tfEl) continue;
+    if (xsiType(tfEl) === 'Flooring') {
+      const floorIdx = parseInt(txt(tfEl, 'whichFloor') || '0', 10);
       const pathType = FLOOR_TO_PATH[floorIdx];
       if (pathType) paths.push({ x: coord.x, y: coord.y, pathType });
     }
@@ -646,14 +663,15 @@ function parseLayout(
   if (terrainFeaturesEl) {
     for (const item of chs(terrainFeaturesEl, 'item')) {
       const coord = vecCoord(ch(item, 'key'));
-      const value = ch(item, 'value');
-      if (!coord || !value) continue;
+      // SDV wraps each dict value as <value><TerrainFeature xsi:type="...">fields</TerrainFeature></value>
+      const tfEl  = dictVal(ch(item, 'value'));
+      if (!coord || !tfEl) continue;
 
-      const type = xsiType(value);
+      const type = xsiType(tfEl);
 
       // Flooring → path
       if (type === 'Flooring') {
-        const floorIdx = parseInt(txt(value, 'whichFloor') || '0', 10);
+        const floorIdx = parseInt(txt(tfEl, 'whichFloor') || '0', 10);
         const pathType = FLOOR_TO_PATH[floorIdx];
         if (pathType) paths.push({ x: coord.x, y: coord.y, pathType });
         continue;
@@ -661,9 +679,9 @@ function parseLayout(
 
       // Wild tree (fully grown: stage 5)
       if (type === 'Tree') {
-        const growthStage = parseInt(txt(value, 'growthStage') || '0', 10);
+        const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
         if (growthStage < 5) continue;
-        const treeTypeInt = parseInt(txt(value, 'treeType') || '0', 10);
+        const treeTypeInt = parseInt(txt(tfEl, 'treeType') || '0', 10);
         const treeType    = WILD_TREE_MAP[treeTypeInt];
         if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
         continue;
@@ -671,10 +689,10 @@ function parseLayout(
 
       // Fruit tree (mature: stage 4)
       if (type === 'FruitTree') {
-        const growthStage = parseInt(txt(value, 'growthStage') || '0', 10);
+        const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
         if (growthStage < 4) continue;
         // 1.6 stores the fruit item's qualified ID in <itemId>
-        const rawItemId = txt(value, 'itemId');
+        const rawItemId = txt(tfEl, 'itemId');
         const cheatId   = rawItemId ? stripQualifier(rawItemId) : '';
         const treeType  = FRUIT_TREE_CHEAT_MAP[cheatId];
         if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
@@ -683,7 +701,7 @@ function parseLayout(
 
       // HoeDirt with an active crop → group for CropZone creation
       if (type === 'HoeDirt') {
-        const cropEl = ch(value, 'crop');
+        const cropEl = ch(tfEl, 'crop');
         if (!cropEl) continue;
         const harvestId = txt(cropEl, 'indexOfHarvest');
         if (!harvestId || harvestId === '-1' || harvestId === '0') continue;
