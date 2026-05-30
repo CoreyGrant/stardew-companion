@@ -3,6 +3,15 @@
 
 // ── Inline nav groups (inside .app-header at bp-nav+) ────────────────────────
 
+// Wrapper that carries the onMouseLeave for the entire nav block.
+// Individual groups only have onMouseEnter so moving between them never
+// starts the close timer.
+.nav-groups-container {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
 // Each group has a trigger button + absolute dropdown
 .nav-group {
   position: relative;

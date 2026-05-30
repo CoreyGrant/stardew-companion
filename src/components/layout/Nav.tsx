@@ -84,27 +84,24 @@ function drawerItemClass({ isActive }: { isActive: boolean }) {
   return `nav-drawer__item${isActive ? ' nav-drawer__item--active' : ''}`;
 }
 
-// ── Single nav group (stateless — timer lives in parent) ──────────────────────
+// ── Single nav group ──────────────────────────────────────────────────────────
+// No mouse-leave handler here. The leave event lives on the shared container
+// in InlineNavGroups so that moving between groups never triggers the timer.
 
 interface NavGroupProps {
   group: NavGroup;
   isOpen: boolean;
-  /** Mouse/focus entered this group — parent should cancel the close timer */
+  /** Called when mouse enters this group — opens it and cancels any pending close */
   onEnter: () => void;
-  /** Mouse/focus left this group — parent should schedule a close */
-  onLeave: () => void;
-  /** Immediate close (used when a link is clicked) */
+  /** Called when a dropdown link is clicked — closes immediately */
   onClose: () => void;
 }
 
-function NavGroupComponent({ group, isOpen, onEnter, onLeave, onClose }: NavGroupProps) {
+function NavGroupComponent({ group, isOpen, onEnter, onClose }: NavGroupProps) {
   return (
     <div
       className="nav-group"
       onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      onFocus={onEnter}
-      onBlur={onLeave}
     >
       <button
         className={`nav-group__trigger${isOpen ? ' nav-group__trigger--active' : ''}`}
@@ -135,10 +132,13 @@ function NavGroupComponent({ group, isOpen, onEnter, onLeave, onClose }: NavGrou
 
 // ── Inline nav groups (rendered inside <header>) ───────────────────────────────
 //
-// The close timer lives HERE (not per-group) so that entering ANY group always
-// cancels a pending close that was started by a DIFFERENT group. Without this,
-// moving from group A → B leaves A's stale 500ms timer running; it would fire
-// and close B's dropdown even though the mouse is still inside B.
+// KEY DESIGN: onMouseLeave lives on a SINGLE wrapper div, not on individual
+// groups. This means moving the mouse from group A to group B never leaves the
+// wrapper, so the close timer is never started. The timer only fires when the
+// mouse leaves the entire nav area (goes to the title, search bar, page, etc.).
+//
+// Individual group onMouseEnter calls cancelClose() so that re-entering the nav
+// from outside also reliably clears any pending timer.
 
 const CLOSE_DELAY_MS = 300;
 
@@ -163,24 +163,31 @@ export function InlineNavGroups() {
   useEffect(() => () => cancelClose(), []);
 
   return (
-    <>
+    // onMouseLeave is on the WRAPPER, not on individual groups.
+    // Moving A → B stays inside the wrapper → timer never starts.
+    // Only leaving the entire nav block starts the close delay.
+    <div className="nav-groups-container" onMouseLeave={scheduleClose}>
       {NAV_GROUPS.map((group) => (
         <NavGroupComponent
           key={group.id}
           group={group}
           isOpen={openId === group.id}
           onEnter={() => { cancelClose(); setOpenId(group.id); }}
-          onLeave={scheduleClose}
           onClose={closeNow}
         />
       ))}
 
       {NAV_STANDALONE.map((item) => (
-        <NavLink key={item.to} to={item.to} className={standaloneClass}>
+        <NavLink
+          key={item.to}
+          to={item.to}
+          className={standaloneClass}
+          onMouseEnter={closeNow}
+        >
           {item.label}
         </NavLink>
       ))}
-    </>
+    </div>
   );
 }
 
