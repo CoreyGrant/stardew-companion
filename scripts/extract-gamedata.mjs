@@ -636,16 +636,29 @@ function extractItems() {
   return deduped;
 }
 
-// Farm-planner-relevant BigCraftables (cheatId → true)
-// Excludes: Tapper (105), Heavy Tapper (264) — go on trees, not placed standalone
-// Excludes: Cask (163) — cellar-only, not valid on farm
-const PLANNER_CRAFTABLES = new Set([
-  '9','10','12','13','15','16','17','19','20','21','24','25',  // artisan/smelting
-  '128','130','154','165','182','211','231','232','256','272',
-  '104', // Heater
-  '8','167',   // Scarecrow, Deluxe Scarecrow
-  'BaitMaker','BigChest','Dehydrator','FishSmoker','MushroomLog', // string-keyed 1.6 items
-  '37','38','39','TextSign',  // Signs (Wood, Stone, Dark, Text)
+// BigCraftables that are NOT farm-planner-relevant (exclusion list).
+// Kept intentionally small — new content is included by default.
+const EXCLUDED_CRAFTABLES = new Set([
+  // Go on trees, not placed standalone
+  '105', '264',
+  // Cellar-only
+  '163',
+  // Auto-placed inside animal buildings — not manually positioned
+  '99', '101',
+  // Mine/combat item — not placed on farm
+  '71',
+  // World map props (rocks, doors) — not player-placed
+  '78', '79', '80', '81', '82',
+  '118','119','120','121','122','123','124','125', // Barrels/Crates
+  '174','175','262','263',                         // more Barrels/Crates
+  // Debug / unobtainable items (names start with ??)
+  '155', '161', '162',
+  // Litter / mob drops — not placeables
+  '56',   // Slime Ball
+  '96',   // Strange Capsule (event object)
+  '98',   // Empty Capsule
+  // Pure indoor furniture — table pieces, chairs, etc.
+  '22','23','26','27',
 ]);
 
 // BigCraftable IDs that get category 'decoration' instead of 'machine'
@@ -656,9 +669,10 @@ function extractBigCraftables() {
   const items = [];
 
   for (const [id, obj] of Object.entries(data)) {
-    if (!PLANNER_CRAFTABLES.has(id)) continue;
+    if (EXCLUDED_CRAFTABLES.has(id)) continue;
     const name = obj.Name ?? '';
-    if (!name) continue;
+    // Skip empty, localized-text placeholders, and error items
+    if (!name || name.startsWith('[') || name === 'Error Item') continue;
 
     items.push({
       id:          toId(name),

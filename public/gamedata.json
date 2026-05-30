@@ -3,8 +3,8 @@
   "universalGifts": {
     "loved": [
       {
-        "id": "prismatic-shard",
-        "name": "Prismatic Shard"
+        "id": "bonfire",
+        "name": "Bonfire"
       },
       {
         "id": "rabbits-foot",
@@ -25,8 +25,8 @@
     ],
     "liked": [
       {
-        "id": "diamond",
-        "name": "Diamond"
+        "id": "tall-torch",
+        "name": "Tall Torch"
       },
       {
         "id": "coffee",
@@ -87,12 +87,12 @@
         "name": "Driftwood"
       },
       {
-        "id": "wheat-flour",
-        "name": "Wheat Flour"
+        "id": "coffee-maker",
+        "name": "Coffee Maker"
       },
       {
-        "id": "oil",
-        "name": "Oil"
+        "id": "sewing-machine",
+        "name": "Sewing Machine"
       },
       {
         "id": "void-egg",
@@ -157,32 +157,36 @@
     ],
     "hated": [
       {
+        "id": "house-plant",
+        "name": "House Plant"
+      },
+      {
         "id": "sap",
         "name": "Sap"
       },
       {
-        "id": "rusty-spoon",
-        "name": "Rusty Spoon"
+        "id": "rarecrow",
+        "name": "Rarecrow"
       },
       {
-        "id": "rusty-spur",
-        "name": "Rusty Spur"
+        "id": "decorative-pitcher",
+        "name": "Decorative Pitcher"
       },
       {
-        "id": "rusty-cog",
-        "name": "Rusty Cog"
+        "id": "dried-sunflowers",
+        "name": "Dried Sunflowers"
       },
       {
         "id": "carp",
         "name": "Carp"
       },
       {
-        "id": "seaweed",
-        "name": "Seaweed"
+        "id": "wood-lamp-post",
+        "name": "Wood Lamp-post"
       },
       {
-        "id": "green-algae",
-        "name": "Green Algae"
+        "id": "iron-lamp-post",
+        "name": "Iron Lamp-post"
       },
       {
         "id": "white-algae",
@@ -261,8 +265,8 @@
         "name": "Void Mayonnaise"
       },
       {
-        "id": "seafoam-pudding",
-        "name": "Seafoam Pudding"
+        "id": "deconstructor",
+        "name": "Deconstructor"
       },
       {
         "id": "radioactive-ore",
@@ -289,8 +293,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
             "id": "mushroom-box",
@@ -345,8 +349,8 @@
             "name": "Sugar"
           },
           {
-            "id": "wheat-flour",
-            "name": "Wheat Flour"
+            "id": "coffee-maker",
+            "name": "Coffee Maker"
           }
         ],
         "disliked": [
@@ -734,8 +738,8 @@
             "name": "Field Snack"
           },
           {
-            "id": "dinosaur-egg",
-            "name": "Dinosaur Egg"
+            "id": "plush-bunny",
+            "name": "Plush Bunny"
           }
         ],
         "neutral": [
@@ -1063,16 +1067,16 @@
             "name": "Fire Quartz"
           },
           {
-            "id": "frozen-tear",
-            "name": "Frozen Tear"
+            "id": "wicked-statue",
+            "name": "Wicked Statue"
           },
           {
-            "id": "octopus",
-            "name": "Octopus"
+            "id": "skull-brazier",
+            "name": "Skull Brazier"
           },
           {
-            "id": "squid",
-            "name": "Squid"
+            "id": "marble-brazier",
+            "name": "Marble Brazier"
           },
           {
             "id": "beer",
@@ -1445,24 +1449,24 @@
             "name": "Emerald"
           },
           {
-            "id": "aquamarine",
-            "name": "Aquamarine"
+            "id": "garden-pot",
+            "name": "Garden Pot"
           },
           {
-            "id": "ruby",
-            "name": "Ruby"
+            "id": "bookcase",
+            "name": "Bookcase"
           },
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
-            "id": "topaz",
-            "name": "Topaz"
+            "id": "grandfather-clock",
+            "name": "Grandfather Clock"
           },
           {
-            "id": "jade",
-            "name": "Jade"
+            "id": "dead-tree",
+            "name": "Dead Tree"
           },
           {
             "id": "survival-burger",
@@ -1487,20 +1491,20 @@
             "name": "Fire Quartz"
           },
           {
-            "id": "frozen-tear",
-            "name": "Frozen Tear"
+            "id": "wicked-statue",
+            "name": "Wicked Statue"
           },
           {
-            "id": "earth-crystal",
-            "name": "Earth Crystal"
+            "id": "sloth-skeleton-m",
+            "name": "Sloth Skeleton M"
           },
           {
-            "id": "salad",
-            "name": "Salad"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
-            "id": "vegetable-medley",
-            "name": "Vegetable Medley"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
             "id": "bean-hotpot",
@@ -1855,8 +1859,8 @@
             "name": "Stone Chest"
           },
           {
-            "id": "cranberry-sauce",
-            "name": "Cranberry Sauce"
+            "id": "mini-obelisk",
+            "name": "Mini-Obelisk"
           },
           {
             "id": "blueberry-tart",
@@ -1871,16 +1875,16 @@
             "name": "Rhubarb Pie"
           },
           {
-            "id": "pink-cake",
-            "name": "Pink Cake"
+            "id": "item-pedestal",
+            "name": "Item Pedestal"
           },
           {
             "id": "chocolate-cake",
             "name": "Chocolate Cake"
           },
           {
-            "id": "bread",
-            "name": "Bread"
+            "id": "mini-fridge",
+            "name": "Mini-Fridge"
           },
           {
             "id": "wood-chipper",
@@ -1891,8 +1895,8 @@
             "name": "Hashbrowns"
           },
           {
-            "id": "glazed-yams",
-            "name": "Glazed Yams"
+            "id": "workbench",
+            "name": "Workbench"
           },
           {
             "id": "pizza",
@@ -2286,8 +2290,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "pink-cake",
-            "name": "Pink Cake"
+            "id": "item-pedestal",
+            "name": "Item Pedestal"
           },
           {
             "id": "sunflower",
@@ -2298,8 +2302,8 @@
             "name": "Fruit Salad"
           },
           {
-            "id": "coconut",
-            "name": "Coconut"
+            "id": "standing-geode",
+            "name": "Standing Geode"
           }
         ],
         "liked": [
@@ -2312,20 +2316,20 @@
             "name": "Emerald"
           },
           {
-            "id": "aquamarine",
-            "name": "Aquamarine"
+            "id": "garden-pot",
+            "name": "Garden Pot"
           },
           {
-            "id": "ruby",
-            "name": "Ruby"
+            "id": "bookcase",
+            "name": "Bookcase"
           },
           {
-            "id": "jade",
-            "name": "Jade"
+            "id": "dead-tree",
+            "name": "Dead Tree"
           },
           {
-            "id": "coconut",
-            "name": "Coconut"
+            "id": "standing-geode",
+            "name": "Standing Geode"
           },
           {
             "id": "rhubarb-pie",
@@ -2372,8 +2376,8 @@
             "name": "Clay"
           },
           {
-            "id": "prismatic-shard",
-            "name": "Prismatic Shard"
+            "id": "bonfire",
+            "name": "Bonfire"
           }
         ],
         "hated": []
@@ -2675,12 +2679,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "salad",
-            "name": "Salad"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
-            "id": "vegetable-medley",
-            "name": "Vegetable Medley"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
             "id": "wine",
@@ -2729,22 +2733,22 @@
             "name": "Crocus"
           },
           {
-            "id": "earth-crystal",
-            "name": "Earth Crystal"
+            "id": "sloth-skeleton-m",
+            "name": "Sloth Skeleton M"
           }
         ],
         "neutral": [
           {
-            "id": "seaweed",
-            "name": "Seaweed"
+            "id": "wood-lamp-post",
+            "name": "Wood Lamp-post"
           },
           {
             "id": "clay",
             "name": "Clay"
           },
           {
-            "id": "pink-cake",
-            "name": "Pink Cake"
+            "id": "item-pedestal",
+            "name": "Item Pedestal"
           },
           {
             "id": "cookie",
@@ -2767,8 +2771,8 @@
             "name": "Survival Burger"
           },
           {
-            "id": "carp-surprise",
-            "name": "Carp Surprise"
+            "id": "mini-jukebox",
+            "name": "Mini-Jukebox"
           },
           {
             "id": "fried-egg",
@@ -2793,8 +2797,8 @@
             "name": "Pizza"
           },
           {
-            "id": "bread",
-            "name": "Bread"
+            "id": "mini-fridge",
+            "name": "Mini-Fridge"
           }
         ],
         "hated": []
@@ -3060,8 +3064,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
             "id": "cheese-cauliflower",
@@ -3110,24 +3114,24 @@
         ],
         "liked": [
           {
-            "id": "aquamarine",
-            "name": "Aquamarine"
+            "id": "garden-pot",
+            "name": "Garden Pot"
           },
           {
-            "id": "ruby",
-            "name": "Ruby"
+            "id": "bookcase",
+            "name": "Bookcase"
           },
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
-            "id": "topaz",
-            "name": "Topaz"
+            "id": "grandfather-clock",
+            "name": "Grandfather Clock"
           },
           {
-            "id": "jade",
-            "name": "Jade"
+            "id": "dead-tree",
+            "name": "Dead Tree"
           },
           {
             "id": "copper-bar",
@@ -3515,12 +3519,12 @@
             "name": "Poppyseed Muffin"
           },
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
-            "id": "sandfish",
-            "name": "Sandfish"
+            "id": "solid-gold-lewis",
+            "name": "Solid Gold Lewis"
           },
           {
             "id": "tom-kha-soup",
@@ -3535,8 +3539,8 @@
             "name": "Roots Platter"
           },
           {
-            "id": "melon",
-            "name": "Melon"
+            "id": "ostrich-incubator",
+            "name": "Ostrich Incubator"
           }
         ],
         "liked": [
@@ -3968,8 +3972,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "cactus-fruit",
-            "name": "Cactus Fruit"
+            "id": "bone-mill",
+            "name": "Bone Mill"
           },
           {
             "id": "pizza",
@@ -4022,8 +4026,8 @@
             "name": "Ice Cream"
           },
           {
-            "id": "stuffing",
-            "name": "Stuffing"
+            "id": "farm-computer",
+            "name": "Farm Computer"
           }
         ],
         "neutral": [
@@ -4032,8 +4036,8 @@
             "name": "Quartz"
           },
           {
-            "id": "seaweed",
-            "name": "Seaweed"
+            "id": "wood-lamp-post",
+            "name": "Wood Lamp-post"
           },
           {
             "id": "clay",
@@ -4401,8 +4405,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "frozen-tear",
-            "name": "Frozen Tear"
+            "id": "wicked-statue",
+            "name": "Wicked Statue"
           },
           {
             "id": "sashimi",
@@ -4771,8 +4775,8 @@
         ],
         "neutral": [
           {
-            "id": "seaweed",
-            "name": "Seaweed"
+            "id": "wood-lamp-post",
+            "name": "Wood Lamp-post"
           },
           {
             "id": "clay",
@@ -5088,8 +5092,8 @@
             "name": "Tortilla"
           },
           {
-            "id": "garlic",
-            "name": "Garlic"
+            "id": "mini-shipping-bin",
+            "name": "Mini-Shipping Bin"
           }
         ],
         "hated": []
@@ -5177,12 +5181,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "coconut",
-            "name": "Coconut"
+            "id": "standing-geode",
+            "name": "Standing Geode"
           },
           {
-            "id": "cactus-fruit",
-            "name": "Cactus Fruit"
+            "id": "bone-mill",
+            "name": "Bone Mill"
           },
           {
             "id": "blueberry-tart",
@@ -5193,8 +5197,8 @@
             "name": "Dish O' The Sea"
           },
           {
-            "id": "yam",
-            "name": "Yam"
+            "id": "statue-of-true-perfection",
+            "name": "Statue Of True Perfection"
           },
           {
             "id": "the-alleyway-buffet",
@@ -5423,16 +5427,16 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
-            "id": "catfish",
-            "name": "Catfish"
+            "id": "wooden-brazier",
+            "name": "Wooden Brazier"
           },
           {
-            "id": "octopus",
-            "name": "Octopus"
+            "id": "skull-brazier",
+            "name": "Skull Brazier"
           },
           {
             "id": "worm-bin",
@@ -5469,8 +5473,8 @@
         ],
         "liked": [
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
             "id": "honey",
@@ -5493,8 +5497,8 @@
             "name": "Fried Calamari"
           },
           {
-            "id": "carp-surprise",
-            "name": "Carp Surprise"
+            "id": "mini-jukebox",
+            "name": "Mini-Jukebox"
           },
           {
             "id": "salmon-dinner",
@@ -5505,12 +5509,12 @@
             "name": "Fish Taco"
           },
           {
-            "id": "crispy-bass",
-            "name": "Crispy Bass"
+            "id": "telephone",
+            "name": "Telephone"
           },
           {
-            "id": "trout-soup",
-            "name": "Trout Soup"
+            "id": "cursed-p-k-arcade-system",
+            "name": "Cursed P.K. Arcade System"
           },
           {
             "id": "fried-eel",
@@ -5533,8 +5537,8 @@
             "name": "Crab Cakes"
           },
           {
-            "id": "seafoam-pudding",
-            "name": "Seafoam Pudding"
+            "id": "deconstructor",
+            "name": "Deconstructor"
           },
           {
             "id": "coffee",
@@ -5829,12 +5833,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
-            "id": "pink-cake",
-            "name": "Pink Cake"
+            "id": "item-pedestal",
+            "name": "Item Pedestal"
           },
           {
             "id": "farmers-lunch",
@@ -5865,8 +5869,8 @@
             "name": "Cheese Press"
           },
           {
-            "id": "seaweed",
-            "name": "Seaweed"
+            "id": "wood-lamp-post",
+            "name": "Wood Lamp-post"
           }
         ],
         "disliked": [
@@ -6118,24 +6122,24 @@
             "name": "Emerald"
           },
           {
-            "id": "aquamarine",
-            "name": "Aquamarine"
+            "id": "garden-pot",
+            "name": "Garden Pot"
           },
           {
-            "id": "ruby",
-            "name": "Ruby"
+            "id": "bookcase",
+            "name": "Bookcase"
           },
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
-            "id": "topaz",
-            "name": "Topaz"
+            "id": "grandfather-clock",
+            "name": "Grandfather Clock"
           },
           {
-            "id": "jade",
-            "name": "Jade"
+            "id": "dead-tree",
+            "name": "Dead Tree"
           },
           {
             "id": "gold-bar",
@@ -6539,12 +6543,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "vegetable-medley",
-            "name": "Vegetable Medley"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
-            "id": "glazed-yams",
-            "name": "Glazed Yams"
+            "id": "workbench",
+            "name": "Workbench"
           },
           {
             "id": "autumns-bounty",
@@ -6565,16 +6569,16 @@
             "name": "Mayonnaise Machine"
           },
           {
-            "id": "coconut",
-            "name": "Coconut"
+            "id": "standing-geode",
+            "name": "Standing Geode"
           },
           {
-            "id": "cactus-fruit",
-            "name": "Cactus Fruit"
+            "id": "bone-mill",
+            "name": "Bone Mill"
           },
           {
-            "id": "potato",
-            "name": "Potato"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
             "id": "blueberry",
@@ -6593,8 +6597,8 @@
             "name": "Artichoke"
           },
           {
-            "id": "bok-choy",
-            "name": "Bok Choy"
+            "id": "campfire",
+            "name": "Campfire"
           },
           {
             "id": "blueberry",
@@ -7458,20 +7462,20 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
-            "id": "vegetable-medley",
-            "name": "Vegetable Medley"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
             "id": "wood-chipper",
             "name": "Wood Chipper"
           },
           {
-            "id": "crispy-bass",
-            "name": "Crispy Bass"
+            "id": "telephone",
+            "name": "Telephone"
           },
           {
             "id": "chocolate-cake",
@@ -7510,8 +7514,8 @@
             "name": "Quartz"
           },
           {
-            "id": "garlic",
-            "name": "Garlic"
+            "id": "mini-shipping-bin",
+            "name": "Mini-Shipping Bin"
           },
           {
             "id": "clay",
@@ -8231,8 +8235,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "pink-cake",
-            "name": "Pink Cake"
+            "id": "item-pedestal",
+            "name": "Item Pedestal"
           },
           {
             "id": "grape",
@@ -8261,16 +8265,16 @@
             "name": "Emerald"
           },
           {
-            "id": "ruby",
-            "name": "Ruby"
+            "id": "bookcase",
+            "name": "Bookcase"
           },
           {
-            "id": "jade",
-            "name": "Jade"
+            "id": "dead-tree",
+            "name": "Dead Tree"
           },
           {
-            "id": "coconut",
-            "name": "Coconut"
+            "id": "standing-geode",
+            "name": "Standing Geode"
           },
           {
             "id": "stone-chest",
@@ -8565,16 +8569,16 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
             "id": "chocolate-cake",
             "name": "Chocolate Cake"
           },
           {
-            "id": "stuffing",
-            "name": "Stuffing"
+            "id": "farm-computer",
+            "name": "Farm Computer"
           },
           {
             "id": "beet",
@@ -8639,16 +8643,16 @@
             "name": "Maki Roll"
           },
           {
-            "id": "trout-soup",
-            "name": "Trout Soup"
+            "id": "cursed-p-k-arcade-system",
+            "name": "Cursed P.K. Arcade System"
           },
           {
             "id": "spice-berry",
             "name": "Spice Berry"
           },
           {
-            "id": "garlic",
-            "name": "Garlic"
+            "id": "mini-shipping-bin",
+            "name": "Mini-Shipping Bin"
           },
           {
             "id": "salmonberry",
@@ -8972,16 +8976,16 @@
             "name": "Parsnip Soup"
           },
           {
-            "id": "vegetable-medley",
-            "name": "Vegetable Medley"
+            "id": "seasonal-plant",
+            "name": "Seasonal Plant"
           },
           {
-            "id": "crispy-bass",
-            "name": "Crispy Bass"
+            "id": "telephone",
+            "name": "Telephone"
           },
           {
-            "id": "trout-soup",
-            "name": "Trout Soup"
+            "id": "cursed-p-k-arcade-system",
+            "name": "Cursed P.K. Arcade System"
           },
           {
             "id": "cookie",
@@ -9212,8 +9216,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
             "id": "fish-taco",
@@ -9528,16 +9532,16 @@
             "name": "Mayonnaise Machine"
           },
           {
-            "id": "cactus-fruit",
-            "name": "Cactus Fruit"
+            "id": "bone-mill",
+            "name": "Bone Mill"
           },
           {
             "id": "parsnip-soup",
             "name": "Parsnip Soup"
           },
           {
-            "id": "glazed-yams",
-            "name": "Glazed Yams"
+            "id": "workbench",
+            "name": "Workbench"
           },
           {
             "id": "pale-ale",
@@ -9594,8 +9598,8 @@
             "name": "Pumpkin Soup"
           },
           {
-            "id": "cranberry-sauce",
-            "name": "Cranberry Sauce"
+            "id": "mini-obelisk",
+            "name": "Mini-Obelisk"
           },
           {
             "id": "sweet-pea",
@@ -9622,12 +9626,12 @@
         ],
         "disliked": [
           {
-            "id": "octopus",
-            "name": "Octopus"
+            "id": "skull-brazier",
+            "name": "Skull Brazier"
           },
           {
-            "id": "squid",
-            "name": "Squid"
+            "id": "marble-brazier",
+            "name": "Marble Brazier"
           }
         ],
         "hated": [
@@ -9795,8 +9799,8 @@
         ],
         "liked": [
           {
-            "id": "coconut",
-            "name": "Coconut"
+            "id": "standing-geode",
+            "name": "Standing Geode"
           },
           {
             "id": "cloth",
@@ -9937,8 +9941,8 @@
             "name": "Purple Mushroom"
           },
           {
-            "id": "dinosaur-egg",
-            "name": "Dinosaur Egg"
+            "id": "plush-bunny",
+            "name": "Plush Bunny"
           }
         ],
         "neutral": [
@@ -10196,8 +10200,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
             "id": "cheese-press",
@@ -10230,12 +10234,12 @@
         ],
         "liked": [
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
-            "id": "seafoam-pudding",
-            "name": "Seafoam Pudding"
+            "id": "deconstructor",
+            "name": "Deconstructor"
           },
           {
             "id": "gold-bar",
@@ -10314,16 +10318,16 @@
         ],
         "liked": [
           {
-            "id": "diamond",
-            "name": "Diamond"
+            "id": "tall-torch",
+            "name": "Tall Torch"
           },
           {
             "id": "fire-quartz",
             "name": "Fire Quartz"
           },
           {
-            "id": "frozen-tear",
-            "name": "Frozen Tear"
+            "id": "wicked-statue",
+            "name": "Wicked Statue"
           },
           {
             "id": "iridium-bar",
@@ -10392,24 +10396,24 @@
             "name": "Emerald"
           },
           {
-            "id": "aquamarine",
-            "name": "Aquamarine"
+            "id": "garden-pot",
+            "name": "Garden Pot"
           },
           {
-            "id": "ruby",
-            "name": "Ruby"
+            "id": "bookcase",
+            "name": "Bookcase"
           },
           {
-            "id": "amethyst",
-            "name": "Amethyst"
+            "id": "ancient-table",
+            "name": "Ancient Table"
           },
           {
-            "id": "topaz",
-            "name": "Topaz"
+            "id": "grandfather-clock",
+            "name": "Grandfather Clock"
           },
           {
-            "id": "jade",
-            "name": "Jade"
+            "id": "dead-tree",
+            "name": "Dead Tree"
           },
           {
             "id": "omni-geode",
@@ -10430,12 +10434,12 @@
             "name": "Fire Quartz"
           },
           {
-            "id": "frozen-tear",
-            "name": "Frozen Tear"
+            "id": "wicked-statue",
+            "name": "Wicked Statue"
           },
           {
-            "id": "earth-crystal",
-            "name": "Earth Crystal"
+            "id": "sloth-skeleton-m",
+            "name": "Sloth Skeleton M"
           },
           {
             "id": "dwarf-scroll-i",
@@ -10586,8 +10590,8 @@
             "name": "Triple Shot Espresso"
           },
           {
-            "id": "oil",
-            "name": "Oil"
+            "id": "sewing-machine",
+            "name": "Sewing Machine"
           },
           {
             "id": "unmilled-rice",
@@ -10897,15 +10901,8 @@
       "description": "A shimmery blue-green gem.",
       "sellValue": 180,
       "cheatId": "62",
-      "likedBy": [
-        "maru",
-        "haley"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 62
     },
@@ -10916,17 +10913,8 @@
       "description": "A precious stone that is sought after for its rich color and beautiful luster.",
       "sellValue": 250,
       "cheatId": "64",
-      "likedBy": [
-        "maru",
-        "haley",
-        "jas",
-        "vincent"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 64
     },
@@ -10937,17 +10925,8 @@
       "description": "A purple variant of quartz.",
       "sellValue": 100,
       "cheatId": "66",
-      "likedBy": [
-        "maru",
-        "willy",
-        "krobus"
-      ],
-      "lovedBy": [
-        "abigail",
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 66
     },
@@ -10958,14 +10937,8 @@
       "description": "Fairly common but still prized for its beauty.",
       "sellValue": 80,
       "cheatId": "68",
-      "likedBy": [
-        "maru"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 68
     },
@@ -10982,7 +10955,8 @@
       "spriteIndex": 69,
       "soldBy": [
         {
-          "shop": "Island Trader"
+          "shop": "Island Trader",
+          "price": 100
         }
       ],
       "geodeSource": [
@@ -10996,17 +10970,8 @@
       "description": "A pale green ornamental stone.",
       "sellValue": 200,
       "cheatId": "70",
-      "likedBy": [
-        "maru",
-        "haley",
-        "jas",
-        "vincent"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 70
     },
@@ -11029,19 +10994,8 @@
       "description": "A rare and valuable gem.",
       "sellValue": 750,
       "cheatId": "72",
-      "likedBy": [
-        "wizard"
-      ],
-      "lovedBy": [
-        "maru",
-        "evelyn",
-        "penny",
-        "jodi",
-        "marnie",
-        "gus",
-        "willy",
-        "krobus"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 72
     },
@@ -11139,15 +11093,8 @@
       "description": "A crystal fabled to be the frozen tears of a yeti.",
       "sellValue": 75,
       "cheatId": "84",
-      "likedBy": [
-        "emily",
-        "elliott",
-        "dwarf",
-        "wizard"
-      ],
-      "lovedBy": [
-        "sebastian"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 84
     },
@@ -11158,11 +11105,7 @@
       "description": "A resinous substance found near the surface.",
       "sellValue": 50,
       "cheatId": "86",
-      "likedBy": [
-        "emily",
-        "leah",
-        "dwarf"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 86
@@ -11174,17 +11117,8 @@
       "description": "A seed of the coconut palm. It has many culinary uses.",
       "sellValue": 100,
       "cheatId": "88",
-      "likedBy": [
-        "lewis",
-        "haley",
-        "jas",
-        "vincent",
-        "sandy"
-      ],
-      "lovedBy": [
-        "linus",
-        "haley"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 88,
       "seasons": [
@@ -11208,14 +11142,8 @@
       "cheatId": "90",
       "energy": 75,
       "health": 34,
-      "likedBy": [
-        "lewis"
-      ],
-      "lovedBy": [
-        "linus",
-        "pam",
-        "sam"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 90,
       "seasons": [
@@ -11427,10 +11355,7 @@
       "description": "A giant dino egg... The entire shell is still intact!",
       "sellValue": 350,
       "cheatId": "107",
-      "likedBy": [
-        "demetrius",
-        "alex"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 107
@@ -11861,9 +11786,7 @@
       "energy": 50,
       "health": 23,
       "likedBy": [],
-      "lovedBy": [
-        "willy"
-      ],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 143
     },
@@ -11944,12 +11867,8 @@
       "description": "A mysterious and intelligent creature.",
       "sellValue": 150,
       "cheatId": "149",
-      "likedBy": [
-        "elliott"
-      ],
-      "lovedBy": [
-        "willy"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 149
     },
@@ -11976,9 +11895,7 @@
       "cheatId": "151",
       "energy": 25,
       "health": 11,
-      "likedBy": [
-        "elliott"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 151
@@ -12161,9 +12078,7 @@
       "energy": 13,
       "health": 6,
       "likedBy": [],
-      "lovedBy": [
-        "penny"
-      ],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 164
     },
@@ -12400,9 +12315,7 @@
       "cheatId": "192",
       "energy": 25,
       "health": 11,
-      "likedBy": [
-        "lewis"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 192
@@ -12446,12 +12359,8 @@
       "cheatId": "196",
       "energy": 113,
       "health": 51,
-      "likedBy": [
-        "emily"
-      ],
-      "lovedBy": [
-        "leah"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 196,
       "soldBy": [
@@ -12520,15 +12429,8 @@
       "cheatId": "200",
       "energy": 165,
       "health": 74,
-      "likedBy": [
-        "george",
-        "emily"
-      ],
-      "lovedBy": [
-        "lewis",
-        "jodi",
-        "leah"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 200
     },
@@ -12689,10 +12591,7 @@
       "energy": 200,
       "health": 90,
       "likedBy": [],
-      "lovedBy": [
-        "lewis",
-        "pam"
-      ],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 208
     },
@@ -12705,9 +12604,7 @@
       "cheatId": "209",
       "energy": 90,
       "health": 41,
-      "likedBy": [
-        "willy"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 209
@@ -12807,13 +12704,8 @@
       "cheatId": "214",
       "energy": 90,
       "health": 41,
-      "likedBy": [
-        "george",
-        "willy"
-      ],
-      "lovedBy": [
-        "jodi"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 214,
       "buffs": [
@@ -12905,10 +12797,7 @@
       "cheatId": "219",
       "energy": 100,
       "health": 45,
-      "likedBy": [
-        "george",
-        "willy"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 219,
@@ -12955,12 +12844,7 @@
       "energy": 250,
       "health": 113,
       "likedBy": [],
-      "lovedBy": [
-        "haley",
-        "jas",
-        "vincent",
-        "marnie"
-      ],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 221
     },
@@ -13319,9 +13203,7 @@
       "cheatId": "238",
       "energy": 125,
       "health": 56,
-      "likedBy": [
-        "pam"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 238,
@@ -13341,12 +13223,8 @@
       "cheatId": "239",
       "energy": 170,
       "health": 77,
-      "likedBy": [
-        "sam"
-      ],
-      "lovedBy": [
-        "evelyn"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 239,
       "buffs": [
@@ -13615,9 +13493,7 @@
       "energy": 113,
       "health": 51,
       "likedBy": [],
-      "lovedBy": [
-        "penny"
-      ],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 254
     },
@@ -13755,10 +13631,7 @@
       "cheatId": "265",
       "energy": 175,
       "health": 79,
-      "likedBy": [
-        "willy",
-        "krobus"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 265,
@@ -13956,9 +13829,7 @@
       "cheatId": "278",
       "energy": 25,
       "health": 11,
-      "likedBy": [
-        "lewis"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 278
@@ -13997,9 +13868,7 @@
       "energy": 45,
       "health": 20,
       "likedBy": [],
-      "lovedBy": [
-        "linus"
-      ],
+      "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 280
     },
@@ -21811,6 +21680,110 @@
       "spriteIndex": 145
     },
     {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "0",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 0,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "1",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 1,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "2",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 2,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "3",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 3,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "4",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 4,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "5",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 5,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "6",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 6,
+      "isBigCraftable": true
+    },
+    {
+      "id": "house-plant",
+      "name": "House Plant",
+      "category": "machine",
+      "description": "Adds some character to your home or farm.",
+      "sellValue": 50,
+      "cheatId": "7",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 7,
+      "isBigCraftable": true
+    },
+    {
       "id": "scarecrow",
       "name": "Scarecrow",
       "category": "machine",
@@ -21992,6 +21965,110 @@
       "isBigCraftable": true
     },
     {
+      "id": "skeleton-model",
+      "name": "Skeleton Model",
+      "category": "machine",
+      "description": "A model of a skeleton.",
+      "sellValue": 50,
+      "cheatId": "28",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 28,
+      "isBigCraftable": true
+    },
+    {
+      "id": "obelisk",
+      "name": "Obelisk",
+      "category": "machine",
+      "description": "A sinister-looking portal that radiates with evil energy.",
+      "sellValue": 50,
+      "cheatId": "29",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 29,
+      "isBigCraftable": true
+    },
+    {
+      "id": "chicken-statue",
+      "name": "Chicken Statue",
+      "category": "machine",
+      "description": "A wooden statue of a chicken.",
+      "sellValue": 50,
+      "cheatId": "31",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 31,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-cairn",
+      "name": "Stone Cairn",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "32",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 32,
+      "isBigCraftable": true
+    },
+    {
+      "id": "suit-of-armor",
+      "name": "Suit Of Armor",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "33",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 33,
+      "isBigCraftable": true
+    },
+    {
+      "id": "sign-of-the-vessel",
+      "name": "Sign Of The Vessel",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "34",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 34,
+      "isBigCraftable": true
+    },
+    {
+      "id": "basic-log",
+      "name": "Basic Log",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 125,
+      "cheatId": "35",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 35,
+      "isBigCraftable": true
+    },
+    {
+      "id": "lawn-flamingo",
+      "name": "Lawn Flamingo",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "36",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 36,
+      "isBigCraftable": true
+    },
+    {
       "id": "wood-sign",
       "name": "Wood Sign",
       "category": "decoration",
@@ -22031,6 +22108,574 @@
       "isBigCraftable": true
     },
     {
+      "id": "big-green-cane",
+      "name": "Big Green Cane",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "40",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 40,
+      "isBigCraftable": true
+    },
+    {
+      "id": "green-canes",
+      "name": "Green Canes",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "41",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 41,
+      "isBigCraftable": true
+    },
+    {
+      "id": "mixed-cane",
+      "name": "Mixed Cane",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "42",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 42,
+      "isBigCraftable": true
+    },
+    {
+      "id": "red-canes",
+      "name": "Red Canes",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "43",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 43,
+      "isBigCraftable": true
+    },
+    {
+      "id": "big-red-cane",
+      "name": "Big Red Cane",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "44",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 44,
+      "isBigCraftable": true
+    },
+    {
+      "id": "ornamental-hay-bale",
+      "name": "Ornamental Hay Bale",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "45",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 45,
+      "isBigCraftable": true
+    },
+    {
+      "id": "log-section",
+      "name": "Log Section",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 175,
+      "cheatId": "46",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 46,
+      "isBigCraftable": true
+    },
+    {
+      "id": "grave-stone",
+      "name": "Grave Stone",
+      "category": "machine",
+      "description": "A decorative piece for your farm.",
+      "sellValue": 50,
+      "cheatId": "47",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 47,
+      "isBigCraftable": true
+    },
+    {
+      "id": "seasonal-decor",
+      "name": "Seasonal Decor",
+      "category": "machine",
+      "description": "This decoration changes with the seasons.",
+      "sellValue": 50,
+      "cheatId": "48",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 48,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-frog",
+      "name": "Stone Frog",
+      "category": "machine",
+      "description": "Garden art for your farm.",
+      "sellValue": 50,
+      "cheatId": "52",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 52,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-parrot",
+      "name": "Stone Parrot",
+      "category": "machine",
+      "description": "Garden art for your farm.",
+      "sellValue": 50,
+      "cheatId": "53",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 53,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-owl",
+      "name": "Stone Owl",
+      "category": "machine",
+      "description": "Garden art for your farm.",
+      "sellValue": 50,
+      "cheatId": "54",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 54,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-junimo",
+      "name": "Stone Junimo",
+      "category": "machine",
+      "description": "Garden art for your farm.",
+      "sellValue": 50,
+      "cheatId": "55",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 55,
+      "isBigCraftable": true
+    },
+    {
+      "id": "garden-pot",
+      "name": "Garden Pot",
+      "category": "machine",
+      "description": "Grows crops from any season when indoors. Outdoors, it can only house seasonal crops.",
+      "sellValue": 1000,
+      "cheatId": "62",
+      "likedBy": [
+        "maru",
+        "haley"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 62,
+      "isBigCraftable": true
+    },
+    {
+      "id": "bookcase",
+      "name": "Bookcase",
+      "category": "machine",
+      "description": "A home for books.",
+      "sellValue": 50,
+      "cheatId": "64",
+      "likedBy": [
+        "maru",
+        "haley",
+        "jas",
+        "vincent"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 64,
+      "isBigCraftable": true
+    },
+    {
+      "id": "fancy-table",
+      "name": "Fancy Table",
+      "category": "machine",
+      "description": "A finely crafted round table.",
+      "sellValue": 50,
+      "cheatId": "65",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 65,
+      "isBigCraftable": true
+    },
+    {
+      "id": "ancient-table",
+      "name": "Ancient Table",
+      "category": "machine",
+      "description": "It's covered in the thickest cobwebs.",
+      "sellValue": 50,
+      "cheatId": "66",
+      "likedBy": [
+        "maru",
+        "willy",
+        "krobus"
+      ],
+      "lovedBy": [
+        "abigail",
+        "clint",
+        "emily",
+        "dwarf"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 66,
+      "isBigCraftable": true
+    },
+    {
+      "id": "ancient-stool",
+      "name": "Ancient Stool",
+      "category": "machine",
+      "description": "It smells like Grandma's apartment.",
+      "sellValue": 50,
+      "cheatId": "67",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 67,
+      "isBigCraftable": true
+    },
+    {
+      "id": "grandfather-clock",
+      "name": "Grandfather Clock",
+      "category": "machine",
+      "description": "It's so old... looks like the pendulum is rusted in place.",
+      "sellValue": 50,
+      "cheatId": "68",
+      "likedBy": [
+        "maru"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 68,
+      "isBigCraftable": true
+    },
+    {
+      "id": "teddy-timer",
+      "name": "Teddy Timer",
+      "category": "machine",
+      "description": "It's a grandfather clock shaped like a teddy.",
+      "sellValue": 50,
+      "cheatId": "69",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 69,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Island Trader",
+          "price": 100
+        }
+      ],
+      "geodeSource": [
+        "Golden Coconut"
+      ]
+    },
+    {
+      "id": "dead-tree",
+      "name": "Dead Tree",
+      "category": "machine",
+      "description": "It's been petrified for a long time, poor thing.",
+      "sellValue": 0,
+      "cheatId": "70",
+      "likedBy": [
+        "maru",
+        "haley",
+        "jas",
+        "vincent"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 70,
+      "isBigCraftable": true
+    },
+    {
+      "id": "tall-torch",
+      "name": "Tall Torch",
+      "category": "machine",
+      "description": "The stem is made from bamboo.",
+      "sellValue": 0,
+      "cheatId": "72",
+      "likedBy": [
+        "wizard"
+      ],
+      "lovedBy": [
+        "maru",
+        "evelyn",
+        "penny",
+        "jodi",
+        "marnie",
+        "gus",
+        "willy",
+        "krobus"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 72,
+      "isBigCraftable": true
+    },
+    {
+      "id": "ritual-mask",
+      "name": "Ritual Mask",
+      "category": "machine",
+      "description": "It's way too large to wear.",
+      "sellValue": 0,
+      "cheatId": "73",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 73,
+      "isBigCraftable": true
+    },
+    {
+      "id": "bonfire",
+      "name": "Bonfire",
+      "category": "machine",
+      "description": "The red embers glow softly.",
+      "sellValue": 0,
+      "cheatId": "74",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 74,
+      "isBigCraftable": true
+    },
+    {
+      "id": "bongo",
+      "name": "Bongo",
+      "category": "machine",
+      "description": "A decorative percussion instrument with a rich sound.",
+      "sellValue": 0,
+      "cheatId": "75",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 75,
+      "isBigCraftable": true
+    },
+    {
+      "id": "decorative-spears",
+      "name": "Decorative Spears",
+      "category": "machine",
+      "description": "Not a very safe decoration.",
+      "sellValue": 0,
+      "cheatId": "76",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 76,
+      "isBigCraftable": true
+    },
+    {
+      "id": "wicked-statue",
+      "name": "Wicked Statue",
+      "category": "machine",
+      "description": "There's something unsettling about the looks of this statue.",
+      "sellValue": 0,
+      "cheatId": "83",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 83,
+      "isBigCraftable": true
+    },
+    {
+      "id": "wicked-statue",
+      "name": "Wicked Statue",
+      "category": "machine",
+      "description": "Something's not right with this statue.",
+      "sellValue": 0,
+      "cheatId": "84",
+      "likedBy": [
+        "emily",
+        "elliott",
+        "dwarf",
+        "wizard"
+      ],
+      "lovedBy": [
+        "sebastian"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 84,
+      "isBigCraftable": true
+    },
+    {
+      "id": "sloth-skeleton-l",
+      "name": "Sloth Skeleton L",
+      "category": "machine",
+      "description": "This extinct sloth roamed the lush, prehistoric forests of Stardew Valley. Its powerful jaw tore through the toughest plant fibers.",
+      "sellValue": 0,
+      "cheatId": "85",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 85,
+      "isBigCraftable": true
+    },
+    {
+      "id": "sloth-skeleton-m",
+      "name": "Sloth Skeleton M",
+      "category": "machine",
+      "description": "The ribs of a prehistoric sloth. ",
+      "sellValue": 0,
+      "cheatId": "86",
+      "likedBy": [
+        "emily",
+        "leah",
+        "dwarf"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 86,
+      "isBigCraftable": true
+    },
+    {
+      "id": "sloth-skeleton-r",
+      "name": "Sloth Skeleton R",
+      "category": "machine",
+      "description": "The hind legs and tail of a prehistoric sloth.",
+      "sellValue": 0,
+      "cheatId": "87",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 87,
+      "isBigCraftable": true
+    },
+    {
+      "id": "standing-geode",
+      "name": "Standing Geode",
+      "category": "machine",
+      "description": "It's a huge geode mounted on a stand. Hundreds of purple crystals shimmer within.",
+      "sellValue": 0,
+      "cheatId": "88",
+      "likedBy": [
+        "lewis",
+        "haley",
+        "jas",
+        "vincent",
+        "sandy"
+      ],
+      "lovedBy": [
+        "linus",
+        "haley"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 88,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "price": 200,
+          "day": "Monday"
+        }
+      ]
+    },
+    {
+      "id": "obsidian-vase",
+      "name": "Obsidian Vase",
+      "category": "machine",
+      "description": "A beautifully crafted ornamental vase made from obsidian and gold.",
+      "sellValue": 0,
+      "cheatId": "89",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 89,
+      "isBigCraftable": true
+    },
+    {
+      "id": "bone-mill",
+      "name": "Bone Mill",
+      "category": "machine",
+      "description": "Turns bone items into fertilizers.",
+      "sellValue": 0,
+      "cheatId": "90",
+      "likedBy": [
+        "lewis"
+      ],
+      "lovedBy": [
+        "linus",
+        "pam",
+        "sam"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 90,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "day": "Tuesday",
+          "price": 150
+        }
+      ]
+    },
+    {
+      "id": "singing-stone",
+      "name": "Singing Stone",
+      "category": "machine",
+      "description": "It rings out with a pure tone when struck.",
+      "sellValue": 0,
+      "cheatId": "94",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 94,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-owl",
+      "name": "Stone Owl",
+      "category": "machine",
+      "description": "It's not clear where this came from, but it looks very fine.",
+      "sellValue": 0,
+      "cheatId": "95",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 95,
+      "isBigCraftable": true
+    },
+    {
       "id": "heater",
       "name": "Heater",
       "category": "machine",
@@ -22041,6 +22686,165 @@
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 104,
+      "isBigCraftable": true
+    },
+    {
+      "id": "camera",
+      "name": "Camera",
+      "category": "machine",
+      "description": "An old camera mounted on a tripod.",
+      "sellValue": 0,
+      "cheatId": "106",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 106,
+      "isBigCraftable": true
+    },
+    {
+      "id": "plush-bunny",
+      "name": "Plush Bunny",
+      "category": "machine",
+      "description": "It's big, it's soft, and it's cute.",
+      "sellValue": 0,
+      "cheatId": "107",
+      "likedBy": [
+        "demetrius",
+        "alex"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 107,
+      "isBigCraftable": true
+    },
+    {
+      "id": "tub-o-flowers",
+      "name": "Tub o' Flowers",
+      "category": "machine",
+      "description": "Flowers planted in an oak barrel. Blooms in spring and summer.",
+      "sellValue": 0,
+      "cheatId": "108",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 108,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (1 of 8)",
+      "sellValue": 0,
+      "cheatId": "110",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 110,
+      "isBigCraftable": true
+    },
+    {
+      "id": "decorative-pitcher",
+      "name": "Decorative Pitcher",
+      "category": "machine",
+      "description": "Hand-made out of brass.",
+      "sellValue": 0,
+      "cheatId": "111",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 111,
+      "isBigCraftable": true
+    },
+    {
+      "id": "dried-sunflowers",
+      "name": "Dried Sunflowers",
+      "category": "machine",
+      "description": "A vibrant home decoration.",
+      "sellValue": 0,
+      "cheatId": "112",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 112,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (2 of 8)",
+      "sellValue": 0,
+      "cheatId": "113",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 113,
+      "isBigCraftable": true
+    },
+    {
+      "id": "charcoal-kiln",
+      "name": "Charcoal Kiln",
+      "category": "machine",
+      "description": "Turns 10 pieces of wood into one piece of coal.",
+      "sellValue": 0,
+      "cheatId": "114",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 114,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stardew-hero-trophy",
+      "name": "Stardew Hero Trophy",
+      "category": "machine",
+      "description": "The most prestigious award a Stardew Valley resident could receive!",
+      "sellValue": 0,
+      "cheatId": "116",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 116,
+      "isBigCraftable": true
+    },
+    {
+      "id": "soda-machine",
+      "name": "Soda Machine",
+      "category": "machine",
+      "description": "Keeps pumping out the good stuff.",
+      "sellValue": 0,
+      "cheatId": "117",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 117,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (3 of 8)",
+      "sellValue": 0,
+      "cheatId": "126",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 126,
+      "isBigCraftable": true
+    },
+    {
+      "id": "statue-of-endless-fortune",
+      "name": "Statue Of Endless Fortune",
+      "category": "machine",
+      "description": "It's made of solid gold. What's it for?",
+      "sellValue": 0,
+      "cheatId": "127",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 127,
       "isBigCraftable": true
     },
     {
@@ -22072,6 +22876,235 @@
       "isBigCraftable": true
     },
     {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (4 of 8)",
+      "sellValue": 0,
+      "cheatId": "136",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 136,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (5 of 8)",
+      "sellValue": 0,
+      "cheatId": "137",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 137,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (6 of 8)",
+      "sellValue": 0,
+      "cheatId": "138",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 138,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (7 of 8)",
+      "sellValue": 0,
+      "cheatId": "139",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 139,
+      "isBigCraftable": true
+    },
+    {
+      "id": "rarecrow",
+      "name": "Rarecrow",
+      "category": "machine",
+      "description": "Collect them all! (8 of 8)",
+      "sellValue": 0,
+      "cheatId": "140",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 140,
+      "isBigCraftable": true
+    },
+    {
+      "id": "prairie-king-arcade-system",
+      "name": "Prairie King Arcade System",
+      "category": "machine",
+      "description": "Play 'Journey Of The Prairie King' at home!",
+      "sellValue": 0,
+      "cheatId": "141",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 141,
+      "isBigCraftable": true
+    },
+    {
+      "id": "wooden-brazier",
+      "name": "Wooden Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 25,
+      "cheatId": "143",
+      "likedBy": [],
+      "lovedBy": [
+        "willy"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 143,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stone-brazier",
+      "name": "Stone Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 40,
+      "cheatId": "144",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 144,
+      "isBigCraftable": true
+    },
+    {
+      "id": "gold-brazier",
+      "name": "Gold Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 100,
+      "cheatId": "145",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 145,
+      "isBigCraftable": true
+    },
+    {
+      "id": "campfire",
+      "name": "Campfire",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 0,
+      "cheatId": "146",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 146,
+      "isBigCraftable": true
+    },
+    {
+      "id": "stump-brazier",
+      "name": "Stump Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 80,
+      "cheatId": "147",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 147,
+      "isBigCraftable": true
+    },
+    {
+      "id": "carved-brazier",
+      "name": "Carved Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 200,
+      "cheatId": "148",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 148,
+      "isBigCraftable": true
+    },
+    {
+      "id": "skull-brazier",
+      "name": "Skull Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 300,
+      "cheatId": "149",
+      "likedBy": [
+        "elliott"
+      ],
+      "lovedBy": [
+        "willy"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 149,
+      "isBigCraftable": true
+    },
+    {
+      "id": "barrel-brazier",
+      "name": "Barrel Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 80,
+      "cheatId": "150",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 150,
+      "isBigCraftable": true
+    },
+    {
+      "id": "marble-brazier",
+      "name": "Marble Brazier",
+      "category": "machine",
+      "description": "Provides a moderate amount of light.",
+      "sellValue": 500,
+      "cheatId": "151",
+      "likedBy": [
+        "elliott"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 151,
+      "isBigCraftable": true
+    },
+    {
+      "id": "wood-lamp-post",
+      "name": "Wood Lamp-post",
+      "category": "machine",
+      "description": "Provides a good amount of light.",
+      "sellValue": 50,
+      "cheatId": "152",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 152,
+      "isBigCraftable": true
+    },
+    {
+      "id": "iron-lamp-post",
+      "name": "Iron Lamp-post",
+      "category": "machine",
+      "description": "Provides a good amount of light.",
+      "sellValue": 100,
+      "cheatId": "153",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 153,
+      "isBigCraftable": true
+    },
+    {
       "id": "worm-bin",
       "name": "Worm Bin",
       "category": "machine",
@@ -22084,6 +23117,73 @@
       ],
       "spriteSheet": "Craftables",
       "spriteIndex": 154,
+      "isBigCraftable": true
+    },
+    {
+      "id": "slime-incubator",
+      "name": "Slime Incubator",
+      "category": "machine",
+      "description": "Hatches slimes eggs into slimes. Allows you to raise slimes outdoors.",
+      "sellValue": 0,
+      "cheatId": "156",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 156,
+      "isBigCraftable": true
+    },
+    {
+      "id": "slime-egg-press",
+      "name": "Slime Egg-Press",
+      "category": "machine",
+      "description": "Compresses 100 pieces of slime into a slime egg. It's a miracle of science!",
+      "sellValue": 0,
+      "cheatId": "158",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 158,
+      "isBigCraftable": true
+    },
+    {
+      "id": "junimo-kart-arcade-system",
+      "name": "Junimo Kart Arcade System",
+      "category": "machine",
+      "description": "Play 'Junimo Kart' at home!",
+      "sellValue": 0,
+      "cheatId": "159",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 159,
+      "isBigCraftable": true
+    },
+    {
+      "id": "statue-of-perfection",
+      "name": "Statue Of Perfection",
+      "category": "machine",
+      "description": "It's made of pure iridium.",
+      "sellValue": 0,
+      "cheatId": "160",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 160,
+      "isBigCraftable": true
+    },
+    {
+      "id": "solid-gold-lewis",
+      "name": "Solid Gold Lewis",
+      "category": "machine",
+      "description": "Mayor's secret project.",
+      "sellValue": 0,
+      "cheatId": "164",
+      "likedBy": [],
+      "lovedBy": [
+        "penny"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 164,
       "isBigCraftable": true
     },
     {
@@ -22128,6 +23228,134 @@
       "isBigCraftable": true
     },
     {
+      "id": "seasonal-plant",
+      "name": "Seasonal Plant",
+      "category": "machine",
+      "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
+      "sellValue": 50,
+      "cheatId": "184",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 184,
+      "isBigCraftable": true
+    },
+    {
+      "id": "seasonal-plant",
+      "name": "Seasonal Plant",
+      "category": "machine",
+      "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
+      "sellValue": 50,
+      "cheatId": "188",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 188,
+      "isBigCraftable": true
+    },
+    {
+      "id": "seasonal-plant",
+      "name": "Seasonal Plant",
+      "category": "machine",
+      "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
+      "sellValue": 50,
+      "cheatId": "192",
+      "likedBy": [
+        "lewis"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 192,
+      "isBigCraftable": true
+    },
+    {
+      "id": "seasonal-plant",
+      "name": "Seasonal Plant",
+      "category": "machine",
+      "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
+      "sellValue": 50,
+      "cheatId": "196",
+      "likedBy": [
+        "emily"
+      ],
+      "lovedBy": [
+        "leah"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 196,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Saloon (Gus)",
+          "price": 220
+        }
+      ]
+    },
+    {
+      "id": "seasonal-plant",
+      "name": "Seasonal Plant",
+      "category": "machine",
+      "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
+      "sellValue": 200,
+      "cheatId": "200",
+      "likedBy": [
+        "george",
+        "emily"
+      ],
+      "lovedBy": [
+        "lewis",
+        "jodi",
+        "leah"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 200,
+      "isBigCraftable": true
+    },
+    {
+      "id": "seasonal-plant",
+      "name": "Seasonal Plant",
+      "category": "machine",
+      "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
+      "sellValue": 50,
+      "cheatId": "204",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 204,
+      "isBigCraftable": true
+    },
+    {
+      "id": "workbench",
+      "name": "Workbench",
+      "category": "machine",
+      "description": "When crafting here, you'll have access to materials in any adjacent chests.",
+      "sellValue": 1000,
+      "cheatId": "208",
+      "likedBy": [],
+      "lovedBy": [
+        "lewis",
+        "pam"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 208,
+      "isBigCraftable": true
+    },
+    {
+      "id": "mini-jukebox",
+      "name": "Mini-Jukebox",
+      "category": "machine",
+      "description": "Allows you to play your favorite tunes.",
+      "sellValue": 1500,
+      "cheatId": "209",
+      "likedBy": [
+        "willy"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 209,
+      "isBigCraftable": true
+    },
+    {
       "id": "wood-chipper",
       "name": "Wood Chipper",
       "category": "machine",
@@ -22140,6 +23368,88 @@
       ],
       "spriteSheet": "Craftables",
       "spriteIndex": 211,
+      "isBigCraftable": true
+    },
+    {
+      "id": "telephone",
+      "name": "Telephone",
+      "category": "machine",
+      "description": "Can be used to check store hours and inventory.",
+      "sellValue": 1000,
+      "cheatId": "214",
+      "likedBy": [
+        "george",
+        "willy"
+      ],
+      "lovedBy": [
+        "jodi"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 214,
+      "isBigCraftable": true
+    },
+    {
+      "id": "mini-fridge",
+      "name": "Mini-Fridge",
+      "category": "machine",
+      "description": "Allows you to store additional ingredients for cooking.",
+      "sellValue": 1500,
+      "cheatId": "216",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 216,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Saloon (Gus)",
+          "price": 120
+        },
+        {
+          "shop": "Krobus (Sewer)",
+          "day": "Saturday",
+          "price": 120
+        }
+      ]
+    },
+    {
+      "id": "cursed-p-k-arcade-system",
+      "name": "Cursed P.K. Arcade System",
+      "category": "machine",
+      "description": "Something's not right with this Prairie King Arcade System...",
+      "sellValue": 0,
+      "cheatId": "219",
+      "likedBy": [
+        "george",
+        "willy"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 219,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Willy's Fish Shop",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "item-pedestal",
+      "name": "Item Pedestal",
+      "category": "machine",
+      "description": "A place to display an item.",
+      "sellValue": 0,
+      "cheatId": "221",
+      "likedBy": [],
+      "lovedBy": [
+        "haley",
+        "jas",
+        "vincent",
+        "marnie"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 221,
       "isBigCraftable": true
     },
     {
@@ -22182,6 +23492,104 @@
       "isBigCraftable": true
     },
     {
+      "id": "mini-obelisk",
+      "name": "Mini-Obelisk",
+      "category": "machine",
+      "description": "Place two on the farm to warp between them.",
+      "sellValue": 0,
+      "cheatId": "238",
+      "likedBy": [
+        "pam"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 238,
+      "isBigCraftable": true
+    },
+    {
+      "id": "farm-computer",
+      "name": "Farm Computer",
+      "category": "machine",
+      "description": "Scans the farm and displays useful information.",
+      "sellValue": 0,
+      "cheatId": "239",
+      "likedBy": [
+        "sam"
+      ],
+      "lovedBy": [
+        "evelyn"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 239,
+      "isBigCraftable": true
+    },
+    {
+      "id": "coffee-maker",
+      "name": "Coffee Maker",
+      "category": "machine",
+      "description": "Automatically brews a fresh cup every morning.",
+      "sellValue": 0,
+      "cheatId": "246",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 246,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Pierre's General Store",
+          "price": 100
+        }
+      ]
+    },
+    {
+      "id": "sewing-machine",
+      "name": "Sewing Machine",
+      "category": "machine",
+      "description": "Use to tailor clothes from the convenience of your home!",
+      "sellValue": 0,
+      "cheatId": "247",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 247,
+      "isBigCraftable": true,
+      "soldBy": [
+        {
+          "shop": "Pierre's General Store",
+          "price": 200
+        }
+      ]
+    },
+    {
+      "id": "mini-shipping-bin",
+      "name": "Mini-Shipping Bin",
+      "category": "machine",
+      "description": "Items placed in it will be included in the nightly shipment.",
+      "sellValue": 0,
+      "cheatId": "248",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 248,
+      "isBigCraftable": true
+    },
+    {
+      "id": "ostrich-incubator",
+      "name": "Ostrich Incubator",
+      "category": "machine",
+      "description": "Hatches ostrich eggs into baby ostriches. Place in a barn.",
+      "sellValue": 0,
+      "cheatId": "254",
+      "likedBy": [],
+      "lovedBy": [
+        "penny"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 254,
+      "isBigCraftable": true
+    },
+    {
       "id": "junimo-chest",
       "name": "Junimo Chest",
       "category": "machine",
@@ -22192,6 +23600,22 @@
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 256,
+      "isBigCraftable": true
+    },
+    {
+      "id": "deconstructor",
+      "name": "Deconstructor",
+      "category": "machine",
+      "description": "Destroys crafted items, but salvages their most valuable material.",
+      "sellValue": 0,
+      "cheatId": "265",
+      "likedBy": [
+        "willy",
+        "krobus"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 265,
       "isBigCraftable": true
     },
     {
@@ -22207,6 +23631,49 @@
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 272,
+      "isBigCraftable": true
+    },
+    {
+      "id": "hopper",
+      "name": "Hopper",
+      "category": "machine",
+      "description": "Items placed inside will automatically be loaded into the machine in front of it.",
+      "sellValue": 0,
+      "cheatId": "275",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 275,
+      "isBigCraftable": true
+    },
+    {
+      "id": "campfire",
+      "name": "Campfire",
+      "category": "machine",
+      "description": "Cook on the go!",
+      "sellValue": 0,
+      "cheatId": "278",
+      "likedBy": [
+        "lewis"
+      ],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 278,
+      "isBigCraftable": true
+    },
+    {
+      "id": "statue-of-true-perfection",
+      "name": "Statue Of True Perfection",
+      "category": "machine",
+      "description": "It's made of pure iridium.",
+      "sellValue": 0,
+      "cheatId": "280",
+      "likedBy": [],
+      "lovedBy": [
+        "linus"
+      ],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 280,
       "isBigCraftable": true
     },
     {
@@ -22262,6 +23729,71 @@
       "isBigCraftable": true
     },
     {
+      "id": "heavy-furnace",
+      "name": "Heavy Furnace",
+      "category": "machine",
+      "description": "It's more efficient than a regular furnace. Requires 25 pieces of ore and 3 coal per use.",
+      "sellValue": 50,
+      "cheatId": "HeavyFurnace",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 288,
+      "isBigCraftable": true
+    },
+    {
+      "id": "statue-of-blessings",
+      "name": "Statue Of Blessings",
+      "category": "machine",
+      "description": "Touching the statue gives a unique blessing every day.",
+      "sellValue": 50,
+      "cheatId": "StatueOfBlessings",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 290,
+      "isBigCraftable": true
+    },
+    {
+      "id": "statue-of-the-dwarf-king",
+      "name": "Statue Of The Dwarf King",
+      "category": "machine",
+      "description": "Choose from two mining-related powers each day.",
+      "sellValue": 50,
+      "cheatId": "StatueOfTheDwarfKing",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 292,
+      "isBigCraftable": true
+    },
+    {
+      "id": "anvil",
+      "name": "Anvil",
+      "category": "machine",
+      "description": "Allows you to re-forge trinkets, randomizing their stats. Costs 3 iridium bars per use.",
+      "sellValue": 50,
+      "cheatId": "Anvil",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 293,
+      "isBigCraftable": true
+    },
+    {
+      "id": "mini-forge",
+      "name": "Mini-Forge",
+      "category": "machine",
+      "description": "Now, you can use a dwarvish forge from the convenience of your home.",
+      "sellValue": 50,
+      "cheatId": "MiniForge",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 294,
+      "isBigCraftable": true
+    },
+    {
       "id": "fish-smoker",
       "name": "Fish Smoker",
       "category": "machine",
@@ -22275,6 +23807,19 @@
       "isBigCraftable": true
     },
     {
+      "id": "deluxe-worm-bin",
+      "name": "Deluxe Worm Bin",
+      "category": "machine",
+      "description": "Produces Deluxe Bait on a regular basis. The worms are self-sufficient.",
+      "sellValue": 0,
+      "cheatId": "DeluxeWormBin",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 298,
+      "isBigCraftable": true
+    },
+    {
       "id": "big-chest",
       "name": "Big Chest",
       "category": "machine",
@@ -22285,6 +23830,19 @@
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 304,
+      "isBigCraftable": true
+    },
+    {
+      "id": "big-stone-chest",
+      "name": "Big Stone Chest",
+      "category": "machine",
+      "description": "It can store almost twice as much as a regular chest.",
+      "sellValue": 0,
+      "cheatId": "BigStoneChest",
+      "likedBy": [],
+      "lovedBy": [],
+      "spriteSheet": "Craftables",
+      "spriteIndex": 328,
       "isBigCraftable": true
     }
   ],
@@ -30235,6 +31793,7 @@
     },
     {
       "id": "114",
+      "itemId": "charcoal-kiln",
       "name": "Charcoal Kiln",
       "rules": [
         {
@@ -30341,6 +31900,7 @@
     },
     {
       "id": "90",
+      "itemId": "bone-mill",
       "name": "Bone Mill",
       "rules": [
         {
@@ -30958,7 +32518,7 @@
           "items": [
             {
               "itemId": "153",
-              "itemName": "Green Algae",
+              "itemName": "Iron Lamp-post",
               "quantity": 2
             }
           ]
@@ -31205,7 +32765,7 @@
           "items": [
             {
               "itemId": "66",
-              "itemName": "Amethyst",
+              "itemName": "Ancient Table",
               "quantity": 1
             },
             {
@@ -31282,7 +32842,7 @@
             },
             {
               "itemId": "84",
-              "itemName": "Frozen Tear",
+              "itemName": "Wicked Statue",
               "quantity": 2
             }
           ]
@@ -31459,7 +33019,7 @@
             },
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 2
             }
           ]
@@ -31605,7 +33165,7 @@
           "items": [
             {
               "itemId": "70",
-              "itemName": "Jade",
+              "itemName": "Dead Tree",
               "quantity": 2
             },
             {
@@ -31740,7 +33300,7 @@
             },
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 1
             }
           ]
@@ -31783,7 +33343,7 @@
         },
         {
           "itemId": "153",
-          "itemName": "Green Algae",
+          "itemName": "Iron Lamp-post",
           "minStack": 1,
           "maxStack": 1,
           "chance": 0.1,
@@ -31887,14 +33447,6 @@
           "minPop": 3
         },
         {
-          "itemId": "72",
-          "itemName": "Diamond",
-          "minStack": 1,
-          "maxStack": 1,
-          "chance": 0.01,
-          "minPop": 9
-        },
-        {
           "itemId": "535",
           "itemName": "Geode",
           "minStack": 1,
@@ -31917,6 +33469,14 @@
           "maxStack": 30,
           "chance": 0.075,
           "minPop": 9
+        },
+        {
+          "itemId": "72",
+          "itemName": "Tall Torch",
+          "minStack": 1,
+          "maxStack": 1,
+          "chance": 0.01,
+          "minPop": 9
         }
       ],
       "populationGates": [
@@ -31935,7 +33495,7 @@
           "items": [
             {
               "itemId": "86",
-              "itemName": "Earth Crystal",
+              "itemName": "Sloth Skeleton M",
               "quantity": 5
             }
           ]
@@ -32005,14 +33565,6 @@
           "minPop": 3
         },
         {
-          "itemId": "72",
-          "itemName": "Diamond",
-          "minStack": 1,
-          "maxStack": 1,
-          "chance": 0.01,
-          "minPop": 9
-        },
-        {
           "itemId": "536",
           "itemName": "Frozen Geode",
           "minStack": 1,
@@ -32021,19 +33573,27 @@
           "minPop": 9
         },
         {
-          "itemId": "84",
-          "itemName": "Frozen Tear",
-          "minStack": 5,
-          "maxStack": 5,
-          "chance": 0.075,
-          "minPop": 9
-        },
-        {
           "itemId": "812",
           "itemName": "Roe",
           "minStack": 1,
           "maxStack": 1,
           "chance": 0.5,
+          "minPop": 9
+        },
+        {
+          "itemId": "72",
+          "itemName": "Tall Torch",
+          "minStack": 1,
+          "maxStack": 1,
+          "chance": 0.01,
+          "minPop": 9
+        },
+        {
+          "itemId": "84",
+          "itemName": "Wicked Statue",
+          "minStack": 5,
+          "maxStack": 5,
+          "chance": 0.075,
           "minPop": 9
         }
       ],
@@ -32053,7 +33613,7 @@
           "items": [
             {
               "itemId": "84",
-              "itemName": "Frozen Tear",
+              "itemName": "Wicked Statue",
               "quantity": 5
             }
           ]
@@ -32276,7 +33836,7 @@
           "items": [
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 1
             }
           ]
@@ -32349,7 +33909,7 @@
         },
         {
           "itemId": "66",
-          "itemName": "Amethyst",
+          "itemName": "Ancient Table",
           "minStack": 1,
           "maxStack": 3,
           "chance": 0.05,
@@ -32410,7 +33970,7 @@
             },
             {
               "itemId": "116",
-              "itemName": "Dried Starfish",
+              "itemName": "Stardew Hero Trophy",
               "quantity": 1
             }
           ]
@@ -32440,7 +34000,7 @@
             },
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 1
             }
           ]
@@ -32526,7 +34086,7 @@
             },
             {
               "itemId": "116",
-              "itemName": "Dried Starfish",
+              "itemName": "Stardew Hero Trophy",
               "quantity": 1
             }
           ]
@@ -32569,7 +34129,7 @@
         },
         {
           "itemId": "74",
-          "itemName": "Prismatic Shard",
+          "itemName": "Bonfire",
           "minStack": 1,
           "maxStack": 1,
           "chance": 0.001,
@@ -32630,7 +34190,7 @@
             },
             {
               "itemId": "116",
-              "itemName": "Dried Starfish",
+              "itemName": "Stardew Hero Trophy",
               "quantity": 1
             }
           ]
@@ -32660,7 +34220,7 @@
             },
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 1
             }
           ]
@@ -32708,12 +34268,12 @@
             },
             {
               "itemId": "66",
-              "itemName": "Amethyst",
+              "itemName": "Ancient Table",
               "quantity": 2
             },
             {
               "itemId": "68",
-              "itemName": "Topaz",
+              "itemName": "Grandfather Clock",
               "quantity": 2
             }
           ]
@@ -32733,7 +34293,7 @@
             },
             {
               "itemId": "86",
-              "itemName": "Earth Crystal",
+              "itemName": "Sloth Skeleton M",
               "quantity": 2
             },
             {
@@ -32763,7 +34323,7 @@
             },
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 1
             }
           ]
@@ -32922,12 +34482,12 @@
           "items": [
             {
               "itemId": "88",
-              "itemName": "Coconut",
+              "itemName": "Standing Geode",
               "quantity": 3
             },
             {
               "itemId": "90",
-              "itemName": "Cactus Fruit",
+              "itemName": "Bone Mill",
               "quantity": 3
             }
           ]
@@ -33004,7 +34564,7 @@
             },
             {
               "itemId": "66",
-              "itemName": "Amethyst",
+              "itemName": "Ancient Table",
               "quantity": 3
             }
           ]
@@ -33034,7 +34594,7 @@
             },
             {
               "itemId": "116",
-              "itemName": "Dried Starfish",
+              "itemName": "Stardew Hero Trophy",
               "quantity": 1
             }
           ]
@@ -33064,7 +34624,7 @@
             },
             {
               "itemId": "72",
-              "itemName": "Diamond",
+              "itemName": "Tall Torch",
               "quantity": 1
             }
           ]
@@ -33126,7 +34686,7 @@
           "items": [
             {
               "itemId": "136",
-              "itemName": "Largemouth Bass",
+              "itemName": "Rarecrow",
               "quantity": 2
             },
             {
@@ -33146,12 +34706,12 @@
             },
             {
               "itemId": "164",
-              "itemName": "Sandfish",
+              "itemName": "Solid Gold Lewis",
               "quantity": 2
             },
             {
               "itemId": "156",
-              "itemName": "Ghostfish",
+              "itemName": "Slime Incubator",
               "quantity": 2
             }
           ]
@@ -33197,7 +34757,7 @@
         },
         {
           "itemId": "153",
-          "itemName": "Green Algae",
+          "itemName": "Iron Lamp-post",
           "minStack": 1,
           "maxStack": 3,
           "chance": 0.05,
@@ -33348,14 +34908,6 @@
           "minPop": 0
         },
         {
-          "itemId": "152",
-          "itemName": "Seaweed",
-          "minStack": 1,
-          "maxStack": 3,
-          "chance": 0.088,
-          "minPop": 0
-        },
-        {
           "itemId": "172",
           "itemName": "Soggy Newspaper",
           "minStack": 1,
@@ -33369,6 +34921,14 @@
           "minStack": 1,
           "maxStack": 1,
           "chance": 0.05,
+          "minPop": 0
+        },
+        {
+          "itemId": "152",
+          "itemName": "Wood Lamp-post",
+          "minStack": 1,
+          "maxStack": 3,
+          "chance": 0.088,
           "minPop": 0
         },
         {
@@ -33492,7 +35052,7 @@
             },
             {
               "itemId": "152",
-              "itemName": "Seaweed",
+              "itemName": "Wood Lamp-post",
               "quantity": 1
             },
             {
@@ -33527,7 +35087,7 @@
             },
             {
               "itemId": "62",
-              "itemName": "Aquamarine",
+              "itemName": "Garden Pot",
               "quantity": 2
             },
             {
@@ -33611,7 +35171,7 @@
           "items": [
             {
               "itemId": "70",
-              "itemName": "Jade",
+              "itemName": "Dead Tree",
               "quantity": 2
             },
             {
@@ -33660,7 +35220,7 @@
           "items": [
             {
               "itemId": "153",
-              "itemName": "Green Algae",
+              "itemName": "Iron Lamp-post",
               "quantity": 2
             },
             {
@@ -33685,7 +35245,7 @@
           "items": [
             {
               "itemId": "86",
-              "itemName": "Earth Crystal",
+              "itemName": "Sloth Skeleton M",
               "quantity": 1
             },
             {

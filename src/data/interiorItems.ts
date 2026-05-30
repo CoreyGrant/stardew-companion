@@ -10,16 +10,17 @@
 
 export type InteriorContext = 'coop' | 'barn' | 'shed' | 'slime_hutch' | 'greenhouse' | 'cabin' | 'any';
 
-/** Machine/decoration cheatIds (BigCraftables) valid in any building interior. */
-export const MACHINE_IDS = new Set([
-  '9','10','12','13','15','16','17','19','20','21','24','25',
-  '105','128','130','154','163','165','182','211','231','232','256','264','272',
-  '104',
-  'BaitMaker','BigChest','Dehydrator','FishSmoker','MushroomLog',
-  '37','38','39','TextSign',  // Signs (Wood, Stone, Dark, Text)
+/**
+ * BigCraftable cheatIds that must NOT appear in building interiors.
+ * Kept small — new machines are allowed by default.
+ */
+export const INTERIOR_EXCLUDED_IDS = new Set([
+  '105', '264', // Tapper, Heavy Tapper — go on trees
+  '163',        // Cask — cellar only
+  '99', '101',  // Feed Hopper, Incubator — auto-placed building fixtures
 ]);
 
-/** Items valid in animal buildings (coop & barn families). */
+/** Items restricted to animal buildings (coop & barn families). */
 export const ANIMAL_BUILDING_IDS = new Set<string>([
   '104', // Heater
   '272', // Auto-Petter
@@ -27,18 +28,19 @@ export const ANIMAL_BUILDING_IDS = new Set<string>([
 
 /**
  * Returns true if the item (by cheatId) is allowed in the given interior context.
- * Machines are always allowed. Some items are restricted to animal buildings.
+ * All BigCraftables are allowed except outdoor-only items and fixtures.
+ * Some items are additionally restricted to animal buildings.
  *
- * isBigCraftable must be passed and be true for machine/animal-building IDs to match —
- * this prevents regular Object items whose numeric IDs collide with BigCraftable IDs
- * from appearing in the interior item list.
+ * isBigCraftable must be passed and be true — this prevents regular Object items
+ * whose numeric IDs collide with BigCraftable IDs from appearing in the list.
  */
 export function isItemAllowedInInterior(cheatId: string, context: InteriorContext, isBigCraftable = false): boolean {
-  if (MACHINE_IDS.has(cheatId) && isBigCraftable) return true;
-  if (ANIMAL_BUILDING_IDS.has(cheatId) && isBigCraftable) {
+  if (!isBigCraftable) return false;
+  if (INTERIOR_EXCLUDED_IDS.has(cheatId)) return false;
+  if (ANIMAL_BUILDING_IDS.has(cheatId)) {
     return context === 'coop' || context === 'barn';
   }
-  return false;
+  return true;
 }
 
 /** Derive interior context from a building id string. */
