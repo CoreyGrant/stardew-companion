@@ -626,6 +626,37 @@
     width: 100%;
     justify-content: center;
   }
+
+  // Greenhouse zone colour legend
+  &__gh-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: $space-1 0 $space-2;
+    border-bottom: 1px solid rgba($color-brown, 0.4);
+    margin-bottom: $space-1;
+  }
+
+  &__gh-legend-row {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+  }
+
+  &__gh-legend-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  &__gh-legend-label {
+    font-size: 0.58rem;
+    color: var(--text-light);
+    font-family: $font-pixel;
+  }
 }
 
 // ── Fish picker modal ─────────────────────────────────────────────────────────

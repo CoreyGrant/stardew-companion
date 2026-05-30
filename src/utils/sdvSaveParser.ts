@@ -657,7 +657,7 @@ function parseLayout(
     const buildingType = txt(bEl, 'buildingType') || xsiType(bEl);
     if (!buildingType) continue;
 
-    if (buildingType === 'Greenhouse') { greenhouseRepaired = true; continue; }
+    if (buildingType === 'Greenhouse') { greenhouseRepaired = true; continue; } // interior parsed below
     if (STATIC_BUILDING_IDS.has(buildingType)) continue;
     if (!validBuildingIds.has(buildingType))    continue;
 
@@ -682,6 +682,22 @@ function parseLayout(
     ),
     ...userBuildings,
   ];
+
+  // ── Greenhouse interior: lives in its own GameLocation, not a building indoors ──
+  // The Greenhouse building element has no <indoors>; instead the game stores all
+  // interior objects/terrain-features in a standalone <Greenhouse> location inside
+  // <locations>.  We reuse parseInteriorLayout (which handles objects + flooring)
+  // with no coordinate offset (greenhouse uses 0-based coordinates directly).
+  const ghStaticBuilding = staticBuildings.find(b => b.buildingId === 'Greenhouse');
+  if (ghStaticBuilding) {
+    const ghLoc = findLocation(root, 'Greenhouse');
+    if (ghLoc) {
+      const ghInterior = parseInteriorLayout(ghLoc, plannerItemCheatIds, 'Greenhouse');
+      if (ghInterior.items.length > 0 || ghInterior.paths.length > 0) {
+        interiors[ghStaticBuilding.id] = ghInterior;
+      }
+    }
+  }
 
   // ── Terrain features: flooring + trees + HoeDirt crops ────────────────────
   const paths: PlacedPath[] = [];

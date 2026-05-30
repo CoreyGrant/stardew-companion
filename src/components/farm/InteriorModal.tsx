@@ -11,6 +11,55 @@ const TILE = 16;
 const CRAFTABLES_COLS = 8;
 const CRAFTABLES_ROWS = 46;
 
+// ── Greenhouse zone map ───────────────────────────────────────────────────────
+// Derived from Greenhouse.tmx (full map 20×24).
+// Tile types control both background colour and placement validity.
+
+type GhTileType = 'wall' | 'walk' | 'water' | 'stone' | 'farm';
+
+/**
+ * Returns the zone type for a greenhouse interior tile at (x, y).
+ * The full map is 20 wide × 24 tall.
+ *
+ * wall  – non-interactive (outer/inner brick walls)
+ * walk  – walking area rows 1-6 (machines ok)
+ * water – water source tiles at row 6 cols 9-10 (non-interactive)
+ * stone – stone/gravel border (tree-plantable + items ok)
+ * farm  – farmable soil centre (crops + items ok)
+ */
+function getGreenhouseTileType(x: number, y: number): GhTileType {
+  // Outer walls
+  if (x === 0 || x === 19 || y === 0) return 'wall';
+  // Bottom row – mostly wall, entrance marker at col 10
+  if (y === 23) return x === 10 ? 'stone' : 'wall';
+  // Walking rows 1-5
+  if (y >= 1 && y <= 5) return 'walk';
+  // Row 6 – walk with water source at cols 9-10
+  if (y === 6) return (x === 9 || x === 10) ? 'water' : 'walk';
+  // Stone rows 7-8 (full width inside walls)
+  if (y === 7 || y === 8) return 'stone';
+  // Inner border rows 9 & 20: stone on sides, wall spanning middle
+  if (y === 9 || y === 20) return (x <= 2 || x >= 17) ? 'stone' : 'wall';
+  // Stone rows 21-22
+  if (y === 21 || y === 22) return 'stone';
+  // Farmable centre rows 10-19
+  if (y >= 10 && y <= 19) {
+    if (x <= 2 || x >= 17) return 'stone'; // side stone strips
+    if (x === 3) return 'wall';            // inner left border
+    if (y === 10) return x <= 14 ? 'farm' : 'wall'; // row 10: 11 farmable + wall at 15-16
+    return x <= 15 ? 'farm' : 'wall';     // rows 11-19: 12 farmable
+  }
+  return 'wall';
+}
+
+const GH_TILE_COLORS: Record<GhTileType, string> = {
+  wall:  '#2a2420',
+  walk:  '#786b58',
+  water: '#2a5f90',
+  stone: '#58504a',
+  farm:  '#5a3820',
+};
+
 const SHED_DIMS: Record<string, { w: number; h: number; corridor: number; count: number }> = {
   'Shed':     { w: 11, h: 9,  corridor: 5, count: 67  },
   'Big Shed': { w: 17, h: 12, corridor: 8, count: 137 },
@@ -44,10 +93,11 @@ interface Props {
 }
 
 export function InteriorModal({ building, buildingDef, interior, allItems, onSave, onClose }: Props) {
-  const shedDims = SHED_DIMS[building.buildingId] ?? null;
-  const iw = shedDims?.w ?? buildingDef.interiorWidth  ?? 13;
-  const ih = shedDims?.h ?? buildingDef.interiorHeight ?? 14;
-  const context = getInteriorContext(building.buildingId);
+  const shedDims      = SHED_DIMS[building.buildingId] ?? null;
+  const iw            = shedDims?.w ?? buildingDef.interiorWidth  ?? 13;
+  const ih            = shedDims?.h ?? buildingDef.interiorHeight ?? 14;
+  const context       = getInteriorContext(building.buildingId);
+  const isGreenhouse  = building.buildingId === 'Greenhouse';
 
   const [localLayout, setLocalLayout] = useState<InteriorLayout>(() => ({
     items: interior.items ?? [],
@@ -71,8 +121,14 @@ export function InteriorModal({ building, buildingDef, interior, allItems, onSav
         for (let dy = 0; dy < rect.h; dy++) {
           for (let dx = 0; dx < rect.w; dx++) {
             const tx = rect.x + dx, ty = rect.y + dy;
-            if (tx >= 0 && ty >= 0 && tx < iw && ty < ih && !occupancy.has(`${tx},${ty}`))
-              newItems.push({ id: crypto.randomUUID(), itemId: selectedItemId, x: tx, y: ty });
+            if (tx < 0 || ty < 0 || tx >= iw || ty >= ih) continue;
+            if (occupancy.has(`${tx},${ty}`)) continue;
+            // Greenhouse: block placement on walls and water tiles
+            if (isGreenhouse) {
+              const z = getGreenhouseTileType(tx, ty);
+              if (z === 'wall' || z === 'water') continue;
+            }
+            newItems.push({ id: crypto.randomUUID(), itemId: selectedItemId, x: tx, y: ty });
           }
         }
         if (newItems.length === 0) return prev;
@@ -87,7 +143,7 @@ export function InteriorModal({ building, buildingDef, interior, allItems, onSav
         ),
       }));
     }
-  }, [selectedItemId, iw, ih]);
+  }, [selectedItemId, iw, ih, isGreenhouse]);
 
   // ── Shared grid hook ──────────────────────────────────────────────────────────
   const {
@@ -113,12 +169,17 @@ export function InteriorModal({ building, buildingDef, interior, allItems, onSav
     for (let dy = 0; dy < drawRect.h; dy++) {
       for (let dx = 0; dx < drawRect.w; dx++) {
         const tx = drawRect.x + dx, ty = drawRect.y + dy;
-        if (tx >= 0 && ty >= 0 && tx < iw && ty < ih && !occupancy.has(`${tx},${ty}`))
-          result.push({ tx, ty });
+        if (tx < 0 || ty < 0 || tx >= iw || ty >= ih) continue;
+        if (occupancy.has(`${tx},${ty}`)) continue;
+        if (isGreenhouse) {
+          const z = getGreenhouseTileType(tx, ty);
+          if (z === 'wall' || z === 'water') continue;
+        }
+        result.push({ tx, ty });
       }
     }
     return result;
-  }, [drawRect, selectedItemId, localLayout.items, iw, ih]);
+  }, [drawRect, selectedItemId, localLayout.items, iw, ih, isGreenhouse]);
 
   const applyOptimalLayout = useCallback(() => {
     if (!optimalMachineId) return;
@@ -162,6 +223,29 @@ export function InteriorModal({ building, buildingDef, interior, allItems, onSav
             <p className="interior-modal__sidebar-hint">
               Click or drag to place. Deselect to erase.
             </p>
+
+            {/* Greenhouse zone colour legend */}
+            {isGreenhouse && (
+              <div className="interior-modal__gh-legend">
+                {(
+                  [
+                    ['walk',  'Walking area'],
+                    ['stone', 'Stone (trees)'],
+                    ['farm',  'Farmable soil'],
+                    ['water', 'Water source'],
+                  ] as [GhTileType, string][]
+                ).map(([type, label]) => (
+                  <div key={type} className="interior-modal__gh-legend-row">
+                    <span
+                      className="interior-modal__gh-legend-swatch"
+                      style={{ background: GH_TILE_COLORS[type] }}
+                    />
+                    <span className="interior-modal__gh-legend-label">{label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <button
               className={`interior-modal__item-btn${selectedItemId === null ? ' interior-modal__item-btn--active' : ''}`}
               onClick={() => setSelectedItemId(null)}
@@ -225,8 +309,24 @@ export function InteriorModal({ building, buildingDef, interior, allItems, onSav
               {...svgHandlers}
             >
               <g transform={`translate(${pan.x} ${pan.y}) scale(${zoom})`}>
-                {/* Floor */}
-                <rect x={0} y={0} width={farmW} height={farmH} fill="#5a4a3a" />
+                {/* Floor / zone background */}
+                {isGreenhouse ? (
+                  /* Greenhouse: render each tile with its zone colour */
+                  <g>
+                    {Array.from({ length: ih }, (_, ty) =>
+                      Array.from({ length: iw }, (_, tx) => (
+                        <rect
+                          key={`zone-${tx}-${ty}`}
+                          x={tx * TILE} y={ty * TILE}
+                          width={TILE} height={TILE}
+                          fill={GH_TILE_COLORS[getGreenhouseTileType(tx, ty)]}
+                        />
+                      )),
+                    )}
+                  </g>
+                ) : (
+                  <rect x={0} y={0} width={farmW} height={farmH} fill="#5a4a3a" />
+                )}
 
                 {/* Grid */}
                 {zoom > 0.35 && (
