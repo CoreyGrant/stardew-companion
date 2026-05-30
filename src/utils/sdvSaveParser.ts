@@ -364,8 +364,9 @@ function parseBundles(
   const result: Record<string, string[]> = {};
   const bundleById = new Map(gameData.bundles.map(b => [b.id, b]));
 
-  // communityCenter is a direct child of SaveGame in 1.6
-  const cc = ch(root, 'communityCenter');
+  // The CommunityCenter is a GameLocation inside <locations>, not a direct
+  // child of <SaveGame>. Use findLocation which matches on xsi:type or <name>.
+  const cc = findLocation(root, 'CommunityCenter');
   if (!cc) return result;
 
   const bundlesEl = ch(cc, 'bundles');
