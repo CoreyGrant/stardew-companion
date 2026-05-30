@@ -100,16 +100,19 @@ const FENCE_NAME_MAP: Record<string, PathType> = {
   'Gate':           'gate',
 };
 
-/** SDV wild Tree.treeType integer → our TreeType */
+/** SDV wild Tree.treeType integer → our TreeType (sourced from Data/WildTrees.json) */
 const WILD_TREE_MAP: Record<number, TreeType> = {
   1:  'oak',
   2:  'maple',
   3:  'pine',
-  6:  'palm',
+  6:  'palm',       // tree_palm.png  — short island palm
   7:  'mushroom',
   8:  'mahogany',
-  9:  'magic',
-  17: 'palm2',
+  9:  'palm2',      // tree_palm2.png — tall island palm (treeType 9, not 17)
+  10: 'oak',        // Green Rain oak  (mossy variant; use base sprite)
+  11: 'maple',      // Green Rain maple
+  12: 'pine',       // Green Rain pine
+  13: 'magic',      // mystic_tree.png — the Mystic Tree (MysticTreeSeed)
 };
 
 /** BigCraftable cheatId → TapperType for overlaidItem detection */
@@ -579,9 +582,20 @@ function parseLocationObjects(
     const cheatId      = stripQualifier(rawItemId);
     const isBigInXml   = txt(objEl, 'bigCraftable').toLowerCase() === 'true';
     const isMatch      = isBigInXml ? plannerBcIds.has(cheatId) : plannerObjIds.has(cheatId);
-    if (isMatch) {
-      items.push({ id: crypto.randomUUID(), itemId: cheatId, x: coord.x, y: coord.y });
+    if (!isMatch) continue;
+
+    // Iridium Sprinkler + Pressure Nozzle attachment → treat as qi-sprinkler
+    // The Pressure Nozzle is stored as <heldObject> on the sprinkler Object element.
+    let effectiveId = cheatId;
+    if (cheatId === '645') {
+      const heldObj = ch(objEl, 'heldObject');
+      if (heldObj) {
+        const heldName  = txt(heldObj, 'name');
+        const heldId    = stripQualifier(txt(heldObj, 'itemId'));
+        if (heldName === 'Pressure Nozzle' || heldId === '915') effectiveId = 'qi-sprinkler';
+      }
     }
+    items.push({ id: crypto.randomUUID(), itemId: effectiveId, x: coord.x, y: coord.y });
   }
 
   return { items, paths };

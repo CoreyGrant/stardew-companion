@@ -111,7 +111,7 @@ const TREE_SPRITES = [
   { file: 'tree8_spring.png', key: 'mahogany',   cols: 3, rows: 10 },
   { file: 'mushroom_tree.png',key: 'mushroom',   cols: 9, rows: 10 },
   { file: 'mystic_tree.png',  key: 'magic',      cols: 3, rows: 10 },
-  // Ginger Island palm trees (treeType 6 and 17)
+  // Ginger Island palm trees (treeType 6 = short palm, treeType 9 = tall palm)
   { file: 'tree_palm.png',    key: 'palm',       cols: 3, rows: 10 },
   { file: 'tree_palm2.png',   key: 'palm2',      cols: 6, rows: 10 },
 ];
