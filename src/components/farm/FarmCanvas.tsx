@@ -1,6 +1,25 @@
 import { useMemo } from 'react';
 import type { ZoneType, BuildingDef, Item, TreeDef, Crop } from '../../types/game';
 import type { FarmLayout, PathType, TreeType } from '../../types/save';
+
+// ── Tooltip helpers ───────────────────────────────────────────────────────────
+
+const PATH_DISPLAY_NAMES: Record<PathType, string> = {
+  wood_plank:     'Wood Plank Path',
+  stone:          'Stone Path',
+  straw:          'Straw Path',
+  crystal:        'Crystal Path',
+  gravel:         'Gravel Path',
+  wood:           'Wood Path',
+  cobblestone:    'Cobblestone Path',
+  stepping_stone: 'Stepping Stone Path',
+  dirt:           'Dirt Path',
+  fence_wood:     'Wood Fence',
+  fence_stone:    'Stone Fence',
+  fence_iron:     'Iron Fence',
+  fence_hardwood: 'Hardwood Fence',
+  gate:           'Gate',
+};
 import type { ToolState } from './HoverLayer';
 import {
   getBuildingOccupancy, getItemOccupancy, getTreeOccupancy,
@@ -112,6 +131,44 @@ export function FarmCanvas({
     }
     return true;
   }, [hoverTile, toolState, buildingDefs, zoneMap, farmBaseType, gridWidth, gridHeight, buildingOccupancy, itemOccupancy]);
+
+  // Tooltip: name of the topmost sprite at the hovered tile
+  // Priority: items > trees > buildings (footprint) > paths
+  const hoverTooltipText = useMemo(() => {
+    if (!hoverTile) return null;
+    const { tx, ty } = hoverTile;
+
+    // Items (machines, sprinklers, chests) — highest priority
+    const item = layout.items.find(i => i.x === tx && i.y === ty);
+    if (item) return itemMap.get(item.itemId)?.name ?? null;
+
+    // Trees
+    const tree = layout.trees.find(t => t.x === tx && t.y === ty);
+    if (tree) {
+      const def  = treeDefs.find(d => d.type === tree.treeType);
+      const name = def?.name ?? tree.treeType;
+      if (tree.tapper) {
+        const tapperLabel = tree.tapper === 'heavy-tapper' ? 'Heavy Tapper' : 'Tapper';
+        return `${name} (${tapperLabel})`;
+      }
+      return name;
+    }
+
+    // Buildings — check full footprint
+    for (const b of layout.buildings) {
+      const def = buildingDefs.get(b.buildingId);
+      if (!def) continue;
+      if (tx >= b.x && tx < b.x + def.width && ty >= b.y && ty < b.y + def.height) {
+        return b.label || def.name;
+      }
+    }
+
+    // Paths / fences
+    const path = layout.paths.find(p => p.x === tx && p.y === ty);
+    if (path) return PATH_DISPLAY_NAMES[path.pathType] ?? path.pathType;
+
+    return null;
+  }, [hoverTile, layout.items, layout.trees, layout.buildings, layout.paths, itemMap, treeDefs, buildingDefs]);
 
   const zoneRects = useMemo(() => (
     Array.from(zoneMap.entries())
@@ -314,6 +371,38 @@ export function FarmCanvas({
         />
 
       </g>
+
+      {/* Hover tooltip — screen-space overlay, not affected by pan/zoom */}
+      {hoverTooltipText && hoverTile && !isDrawingRect && (() => {
+        const pad   = 4;
+        const fSize = 10;
+        const ttW   = Math.round(hoverTooltipText.length * 6.2) + pad * 2;
+        const ttH   = fSize + pad * 2;
+        const sx    = Math.round((hoverTile.tx + 0.5) * TILE_SIZE * zoom + pan.x);
+        const sy    = Math.round(hoverTile.ty * TILE_SIZE * zoom + pan.y);
+        // Prefer above the tile; flip below if too close to the top edge
+        const ttY   = sy - ttH - 4 < 2
+          ? sy + Math.round(TILE_SIZE * zoom) + 4
+          : sy - ttH - 4;
+        const ttX   = Math.max(2, sx - Math.round(ttW / 2));
+        return (
+          <g style={{ pointerEvents: 'none' }}>
+            <rect
+              x={ttX} y={ttY} width={ttW} height={ttH}
+              fill="rgba(0,0,0,0.82)" rx={2}
+            />
+            <text
+              x={ttX + ttW / 2} y={ttY + ttH / 2}
+              textAnchor="middle" dominantBaseline="central"
+              fill="#fff" fontSize={fSize}
+              fontFamily="sans-serif"
+              style={{ pointerEvents: 'none' }}
+            >
+              {hoverTooltipText}
+            </text>
+          </g>
+        );
+      })()}
     </svg>
   );
 }
