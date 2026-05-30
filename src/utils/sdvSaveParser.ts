@@ -565,11 +565,28 @@ function parseLocationObjects(
   return { items, paths };
 }
 
+/**
+ * Interior origin offsets: subtract these from save-file coordinates to get
+ * 0-based planner coordinates.
+ *
+ * SDV stores interior object coordinates in full-map space. Most buildings
+ * (Coop, Barn, Slime Hutch) have their Back-layer origin at (0, 0) so no
+ * adjustment is needed. Sheds have a 1-tile left wall and a 4-tile
+ * ceiling/roof area above the usable floor, so every object is stored 1 tile
+ * too far right and 4 tiles too far down relative to the planner's (0, 0).
+ */
+const INTERIOR_ORIGIN: Record<string, { x: number; y: number }> = {
+  'Shed':     { x: 1, y: 4 },
+  'Big Shed': { x: 1, y: 4 },
+};
+
 /** Parse the interior (indoors element) of a building into an InteriorLayout. */
 function parseInteriorLayout(
   indoorsEl: Element,
   plannerItemCheatIds: Set<string>,
+  buildingType: string,
 ): InteriorLayout {
+  const origin = INTERIOR_ORIGIN[buildingType] ?? { x: 0, y: 0 };
   const { items, paths } = parseLocationObjects(indoorsEl, plannerItemCheatIds);
 
   // Interior flooring
@@ -585,7 +602,13 @@ function parseInteriorLayout(
     }
   }
 
-  return { items, paths };
+  // Translate save-file map-space coordinates → 0-based planner coordinates
+  const ox = origin.x;
+  const oy = origin.y;
+  return {
+    items: items.map(i => ({ ...i, x: i.x - ox, y: i.y - oy })),
+    paths: paths.map(p => ({ ...p, x: p.x - ox, y: p.y - oy })),
+  };
 }
 
 function parseLayout(
@@ -639,7 +662,7 @@ function parseLayout(
     // Parse indoor contents (Shed, Barn, Coop, etc.)
     const indoorsEl = ch(bEl, 'indoors');
     if (indoorsEl) {
-      const interior = parseInteriorLayout(indoorsEl, plannerItemCheatIds);
+      const interior = parseInteriorLayout(indoorsEl, plannerItemCheatIds, buildingType);
       if (interior.items.length > 0 || interior.paths.length > 0) {
         interiors[id] = interior;
       }
