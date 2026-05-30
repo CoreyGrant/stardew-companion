@@ -52,8 +52,16 @@ const SPRINKLERS = [
 ];
 
 const SCARECROWS = [
-  { id: '8',   label: 'Scarecrow', cheatId: '8'   },
-  { id: '167', label: 'Deluxe',    cheatId: '167' },
+  { id: '8',   label: 'Scarecrow',  cheatId: '8'   },
+  { id: '110', label: 'Rarecrow 1', cheatId: '110' },
+  { id: '113', label: 'Rarecrow 2', cheatId: '113' },
+  { id: '126', label: 'Rarecrow 3', cheatId: '126' },
+  { id: '136', label: 'Rarecrow 4', cheatId: '136' },
+  { id: '137', label: 'Rarecrow 5', cheatId: '137' },
+  { id: '138', label: 'Rarecrow 6', cheatId: '138' },
+  { id: '139', label: 'Rarecrow 7', cheatId: '139' },
+  { id: '140', label: 'Rarecrow 8', cheatId: '140' },
+  { id: '167', label: 'Deluxe',     cheatId: '167' },
 ];
 
 interface Props {
@@ -157,7 +165,7 @@ export function FarmSidebar({
     (i) => ['599','621','645'].includes(i.cheatId),
   );
   const scarecrowItems = (data?.items ?? []).filter(
-    (i) => ['8','167'].includes(i.cheatId) && i.isBigCraftable,
+    (i) => ['8','110','113','126','136','137','138','139','140','167'].includes(i.cheatId) && i.isBigCraftable,
   );
 
   const isActive = (t: ToolState) =>

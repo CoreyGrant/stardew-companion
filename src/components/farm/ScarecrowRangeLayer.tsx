@@ -2,6 +2,14 @@ import type { PlacedItem } from '../../types/save';
 
 const SCARECROW_RADIUS: Record<string, number> = {
   '8':   8,   // Scarecrow
+  '110': 8,   // Rarecrow (Turnip Head)
+  '113': 8,   // Rarecrow (Witch Hat)
+  '126': 8,   // Rarecrow (Alien)
+  '136': 8,   // Rarecrow (Butterfly)
+  '137': 8,   // Rarecrow (Skull)
+  '138': 8,   // Rarecrow (Cactus)
+  '139': 8,   // Rarecrow (Snowman)
+  '140': 8,   // Rarecrow (Dwarf)
   '167': 16,  // Deluxe Scarecrow
 };
 

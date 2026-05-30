@@ -111,6 +111,9 @@ const TREE_SPRITES = [
   { file: 'tree8_spring.png', key: 'mahogany',   cols: 3, rows: 10 },
   { file: 'mushroom_tree.png',key: 'mushroom',   cols: 9, rows: 10 },
   { file: 'mystic_tree.png',  key: 'magic',      cols: 3, rows: 10 },
+  // Ginger Island palm trees (treeType 6 and 17)
+  { file: 'tree_palm.png',    key: 'palm',       cols: 3, rows: 10 },
+  { file: 'tree_palm2.png',   key: 'palm2',      cols: 6, rows: 10 },
 ];
 
 // fruitTrees.png: 432×720px, 27 cols × 45 rows (16px cells)
@@ -162,7 +165,7 @@ function copySprites() {
   }
   console.log(`\n  ${bFiles.length} building sprites`);
 
-  // Wild tree sprites
+  // Wild tree sprites (including island palms stored in TerrainFeatures/)
   for (const { file } of TREE_SPRITES) {
     const src = join(TERRAIN_DIR, file);
     if (existsSync(src)) copyFileSync(src, join(SPRITES_DIR, 'trees', file));
@@ -1951,6 +1954,18 @@ async function main() {
   // ── Building defs ──
   console.log('Extracting building definitions …');
   const buildingDefs = extractBuildingDefs();
+  // Island Farmhouse is a hardcoded game structure (not in Buildings.json).
+  // Add a minimal def so the planner can render it at its seeded position.
+  if (!buildingDefs.find(b => b.id === 'Island Farmhouse')) {
+    buildingDefs.push({
+      id: 'Island Farmhouse',
+      name: 'Island Farmhouse',
+      builder: 'None',
+      width: 5,
+      height: 4,
+      hasInterior: false,
+    });
+  }
   console.log(`  ${buildingDefs.length} building definitions\n`);
 
   // ── Tree defs ──

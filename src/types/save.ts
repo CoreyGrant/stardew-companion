@@ -19,7 +19,7 @@ export type PathType =
 
 export type TreeType =
   // Wild trees
-  | 'oak' | 'maple' | 'pine' | 'mahogany' | 'mushroom' | 'magic'
+  | 'oak' | 'maple' | 'pine' | 'mahogany' | 'mushroom' | 'magic' | 'palm' | 'palm2'
   // Fruit trees
   | 'cherry' | 'apricot' | 'orange' | 'peach' | 'pomegranate' | 'apple' | 'banana' | 'mango';
 export type TapperType = 'tapper' | 'heavy-tapper';

@@ -102,12 +102,14 @@ const FENCE_NAME_MAP: Record<string, PathType> = {
 
 /** SDV wild Tree.treeType integer → our TreeType */
 const WILD_TREE_MAP: Record<number, TreeType> = {
-  1: 'oak',
-  2: 'maple',
-  3: 'pine',
-  7: 'mushroom',
-  8: 'mahogany',
-  9: 'magic',
+  1:  'oak',
+  2:  'maple',
+  3:  'pine',
+  6:  'palm',
+  7:  'mushroom',
+  8:  'mahogany',
+  9:  'magic',
+  17: 'palm2',
 };
 
 /** BigCraftable cheatId → TapperType for overlaidItem detection */
@@ -538,10 +540,21 @@ function seedStaticBuildings(
   }));
 }
 
-/** Parse objects from a location element into planner items and fence paths. */
+/**
+ * Parse objects from a location element into planner items and fence paths.
+ *
+ * plannerBcIds  — cheatIds of BigCraftable items we want to capture (Seed Maker, Bee House, etc.)
+ * plannerObjIds — cheatIds of regular Object items we want to capture (sprinklers: 599/621/645)
+ *
+ * The two sets are kept separate so that a regular Object with the same numeric ID as a
+ * BigCraftable is not misidentified — e.g. Stone (itemId 25, bigCraftable=false) vs
+ * Seed Maker (itemId 25, bigCraftable=true).  We confirm the match against the
+ * <bigCraftable> flag stored on every object in the save XML.
+ */
 function parseLocationObjects(
   locEl: Element,
-  plannerItemCheatIds: Set<string>,
+  plannerBcIds: Set<string>,
+  plannerObjIds: Set<string>,
 ): { items: PlacedItem[]; paths: PlacedPath[] } {
   const items: PlacedItem[] = [];
   const paths: PlacedPath[] = [];
@@ -563,8 +576,10 @@ function parseLocationObjects(
     // Planner-relevant items (BigCraftables + sprinklers)
     const rawItemId = txt(objEl, 'itemId');
     if (!rawItemId) continue;
-    const cheatId = stripQualifier(rawItemId);
-    if (plannerItemCheatIds.has(cheatId)) {
+    const cheatId      = stripQualifier(rawItemId);
+    const isBigInXml   = txt(objEl, 'bigCraftable').toLowerCase() === 'true';
+    const isMatch      = isBigInXml ? plannerBcIds.has(cheatId) : plannerObjIds.has(cheatId);
+    if (isMatch) {
       items.push({ id: crypto.randomUUID(), itemId: cheatId, x: coord.x, y: coord.y });
     }
   }
@@ -590,11 +605,12 @@ const INTERIOR_ORIGIN: Record<string, { x: number; y: number }> = {
 /** Parse the interior (indoors element) of a building into an InteriorLayout. */
 function parseInteriorLayout(
   indoorsEl: Element,
-  plannerItemCheatIds: Set<string>,
+  plannerBcIds: Set<string>,
+  plannerObjIds: Set<string>,
   buildingType: string,
 ): InteriorLayout {
   const origin = INTERIOR_ORIGIN[buildingType] ?? { x: 0, y: 0 };
-  const { items, paths } = parseLocationObjects(indoorsEl, plannerItemCheatIds);
+  const { items, paths } = parseLocationObjects(indoorsEl, plannerBcIds, plannerObjIds);
   const trees: PlacedTree[] = [];
   const isGreenhouse = buildingType === 'Greenhouse';
 
@@ -676,14 +692,15 @@ function parseLayout(
 
   const validBuildingIds = new Set(gameData.buildingDefs.map(b => b.id));
 
-  // Set of cheatIds we want to add as PlacedItems:
-  //   - All curated BigCraftables (isBigCraftable: true in our data)
-  //   - Sprinklers (regular objects, cheatIds 599/621/645)
-  const plannerItemCheatIds = new Set(
-    gameData.items
-      .filter(i => i.isBigCraftable || ['599', '621', '645'].includes(i.cheatId))
-      .map(i => i.cheatId),
+  // Two separate sets for planner-relevant items, kept apart to avoid ID collisions:
+  //   plannerBcIds  — BigCraftable cheatIds (e.g. "25" = Seed Maker)
+  //   plannerObjIds — regular Object cheatIds that we still want (sprinklers 599/621/645)
+  // We confirm each XML object against its <bigCraftable> flag before including it,
+  // so a Stone (itemId 25, bigCraftable=false) is never mistaken for a Seed Maker.
+  const plannerBcIds = new Set(
+    gameData.items.filter(i => i.isBigCraftable).map(i => i.cheatId),
   );
+  const plannerObjIds = new Set(['599', '621', '645']);
 
   // Map from harvest item cheatId → Crop (for HoeDirt → CropZone grouping)
   const cropByHarvestId = new Map(gameData.crops.map(c => [c.harvestItemId, c]));
@@ -692,6 +709,20 @@ function parseLayout(
   const userBuildings: PlacedBuilding[] = [];
   const interiors: Record<string, InteriorLayout> = {};
   let greenhouseRepaired = false;
+
+  // Build mutable copies of seeded statics so we can update their positions from XML.
+  // Pet Bowl is handled separately because there can be multiple (extra pet bowls from mods
+  // or multiple saves with additional pets).
+  const staticByType = new Map<string, PlacedBuilding>();
+  const petBowlSeeds: PlacedBuilding[] = [];
+  for (const sb of staticBuildings) {
+    if (sb.buildingId === 'Pet Bowl') {
+      petBowlSeeds.push({ ...sb });
+    } else {
+      staticByType.set(sb.buildingId, { ...sb });
+    }
+  }
+  const petBowlsFromXml: PlacedBuilding[] = [];
 
   for (const bEl of chs(ch(loc, 'buildings'), 'Building').concat(
     Array.from(ch(loc, 'buildings')?.children ?? []).filter(
@@ -702,27 +733,72 @@ function parseLayout(
     const buildingType = txt(bEl, 'buildingType') || xsiType(bEl);
     if (!buildingType) continue;
 
-    if (buildingType === 'Greenhouse') { greenhouseRepaired = true; continue; } // interior parsed below
-    if (STATIC_BUILDING_IDS.has(buildingType)) continue;
-    if (!validBuildingIds.has(buildingType))    continue;
+    const tileX = parseInt(txt(bEl, 'tileX') || '0', 10);
+    const tileY = parseInt(txt(bEl, 'tileY') || '0', 10);
 
-    const x   = parseInt(txt(bEl, 'tileX') || '0', 10);
-    const y   = parseInt(txt(bEl, 'tileY') || '0', 10);
-    const id  = crypto.randomUUID();
-    userBuildings.push({ id, buildingId: buildingType, x, y });
+    if (buildingType === 'Greenhouse') {
+      // Greenhouse interior lives in a separate GameLocation; position from XML.
+      greenhouseRepaired = true;
+      const s = staticByType.get('Greenhouse');
+      if (s) { s.x = tileX; s.y = tileY; }
+      continue;
+    }
+
+    if (buildingType === 'Pet Bowl') {
+      // May have multiple: update seeds in order, then create extras.
+      const idx = petBowlsFromXml.length;
+      const seed = petBowlSeeds[idx];
+      if (seed) {
+        petBowlsFromXml.push({ ...seed, x: tileX, y: tileY });
+      } else {
+        petBowlsFromXml.push({
+          id: crypto.randomUUID(), buildingId: 'Pet Bowl',
+          x: tileX, y: tileY, isStatic: true,
+        });
+      }
+      continue;
+    }
+
+    if (STATIC_BUILDING_IDS.has(buildingType)) {
+      // Farmhouse, Shipping Bin, Island Farmhouse — update seeded position from XML.
+      const s = staticByType.get(buildingType);
+      if (s) { s.x = tileX; s.y = tileY; }
+      continue;
+    }
+
+    if (!validBuildingIds.has(buildingType)) continue;
+
+    // Fish Pond: read which fish species occupies the pond.
+    // Save format: <fishType><int>149</int></fishType> (old) or <fishType><itemId>(O)149</itemId></fishType> (new)
+    let fishId: string | undefined;
+    if (buildingType === 'Fish Pond') {
+      const fishTypeEl = ch(bEl, 'fishType');
+      const rawFishId  = deep(fishTypeEl, 'itemId') || txt(fishTypeEl, 'int');
+      if (rawFishId && rawFishId !== '-1') fishId = stripQualifier(rawFishId);
+    }
+
+    const id = crypto.randomUUID();
+    userBuildings.push({ id, buildingId: buildingType, x: tileX, y: tileY, ...(fishId ? { fishId } : {}) });
 
     // Parse indoor contents (Shed, Barn, Coop, etc.)
     const indoorsEl = ch(bEl, 'indoors');
     if (indoorsEl) {
-      const interior = parseInteriorLayout(indoorsEl, plannerItemCheatIds, buildingType);
+      const interior = parseInteriorLayout(indoorsEl, plannerBcIds, plannerObjIds, buildingType);
       if (interior.items.length > 0 || interior.paths.length > 0) {
         interiors[id] = interior;
       }
     }
   }
 
+  // If no Pet Bowls were found in the XML, fall back to the seeded defaults.
+  const effectivePetBowls = petBowlsFromXml.length > 0 ? petBowlsFromXml : petBowlSeeds;
+  const updatedStatics: PlacedBuilding[] = [
+    ...Array.from(staticByType.values()),
+    ...effectivePetBowls,
+  ];
+
   const buildings: PlacedBuilding[] = [
-    ...staticBuildings.map(b =>
+    ...updatedStatics.map(b =>
       b.buildingId === 'Greenhouse' ? { ...b, repaired: greenhouseRepaired } : b,
     ),
     ...userBuildings,
@@ -733,11 +809,11 @@ function parseLayout(
   // interior objects/terrain-features in a standalone <Greenhouse> location inside
   // <locations>.  We reuse parseInteriorLayout (which handles objects + flooring)
   // with no coordinate offset (greenhouse uses 0-based coordinates directly).
-  const ghStaticBuilding = staticBuildings.find(b => b.buildingId === 'Greenhouse');
+  const ghStaticBuilding = updatedStatics.find(b => b.buildingId === 'Greenhouse');
   if (ghStaticBuilding) {
     const ghLoc = findLocation(root, 'Greenhouse');
     if (ghLoc) {
-      const ghInterior = parseInteriorLayout(ghLoc, plannerItemCheatIds, 'Greenhouse');
+      const ghInterior = parseInteriorLayout(ghLoc, plannerBcIds, plannerObjIds, 'Greenhouse');
       if (ghInterior.items.length > 0 || ghInterior.paths.length > 0 || (ghInterior.trees?.length ?? 0) > 0) {
         interiors[ghStaticBuilding.id] = ghInterior;
       }
@@ -871,7 +947,7 @@ function parseLayout(
   }
 
   // ── Objects: fences + planner items ───────────────────────────────────────
-  const { items, paths: objPaths } = parseLocationObjects(loc, plannerItemCheatIds);
+  const { items, paths: objPaths } = parseLocationObjects(loc, plannerBcIds, plannerObjIds);
   paths.push(...objPaths);
 
   return {

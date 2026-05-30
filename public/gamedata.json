@@ -38668,6 +38668,14 @@
       "hasInterior": true,
       "interiorWidth": 20,
       "interiorHeight": 24
+    },
+    {
+      "id": "Island Farmhouse",
+      "name": "Island Farmhouse",
+      "builder": "None",
+      "width": 5,
+      "height": 4,
+      "hasInterior": false
     }
   ],
   "treeDefs": [
@@ -38721,6 +38729,24 @@
       "name": "Magic Tree",
       "spriteFile": "trees/mystic_tree.png",
       "cols": 3,
+      "rows": 10,
+      "iconX": 0,
+      "iconY": 96
+    },
+    {
+      "type": "palm",
+      "name": "Palm Tree",
+      "spriteFile": "trees/tree_palm.png",
+      "cols": 3,
+      "rows": 10,
+      "iconX": 0,
+      "iconY": 96
+    },
+    {
+      "type": "palm2",
+      "name": "Palm2 Tree",
+      "spriteFile": "trees/tree_palm2.png",
+      "cols": 6,
       "rows": 10,
       "iconX": 0,
       "iconY": 96
