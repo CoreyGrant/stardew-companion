@@ -123,10 +123,19 @@ export interface SaveFile {
   learnedCookingRecipes?: string[];
   /** Current gold on hand (display only). */
   money?: number;
-  /** Deepest mine level reached. */
+  /** Deepest normal mine floor reached (0–120). */
   deepestMineLevel?: number;
+  /** Deepest Skull Cavern floor reached (0 = never entered). */
+  deepestSkullCavernLevel?: number;
   /** Golden walnuts found on Ginger Island. */
   goldenWalnuts?: number;
+  /**
+   * Community Center / Joja route completion status.
+   * - 'cc-restored'   — all 6 rooms completed via bundles
+   * - 'joja-complete' — all 5 Joja community development projects done
+   * - 'joja-member'   — bought Joja membership but not all projects complete
+   */
+  communityStatus?: 'cc-restored' | 'joja-complete' | 'joja-member';
 }
 
 export interface AppSettings {

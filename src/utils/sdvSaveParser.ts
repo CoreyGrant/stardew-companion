@@ -280,7 +280,11 @@ export function parseSdvSave(
   };
 
   // 8. Progression scalars ────────────────────────────────────────────────────
-  const deepestMineLevel = parseInt(txt(player, 'deepestMineLevel') || '0', 10);
+  // SDV stores mine depth as a single integer: 0–120 = normal mines,
+  // >120 = mines complete + (value − 120) floors into Skull Cavern.
+  const rawMineLevel        = parseInt(txt(player, 'deepestMineLevel') || '0', 10);
+  const deepestMineLevel    = Math.min(rawMineLevel, 120);
+  const deepestSkullCavernLevel = Math.max(0, rawMineLevel - 120);
   // goldenWalnuts may be at root or inside player depending on minor version
   const goldenWalnuts =
     parseInt(txt(root,   'goldenWalnuts') || '0', 10) ||
@@ -288,6 +292,9 @@ export function parseSdvSave(
 
   // 9. NPC heart levels ───────────────────────────────────────────────────────
   const heartLevels = parseFriendship(player, gameData);
+
+  // 9b. Community Center / Joja status ───────────────────────────────────────
+  const communityStatus = parseCommunityStatus(root, player);
 
   // 10. Bundle progress ───────────────────────────────────────────────────────
   const bundleProgress = parseBundles(root, gameData, warnings);
@@ -327,7 +334,9 @@ export function parseSdvSave(
       learnedCookingRecipes,
       money,
       deepestMineLevel,
+      deepestSkullCavernLevel,
       goldenWalnuts,
+      communityStatus,
     },
     warnings,
   };
@@ -354,6 +363,37 @@ function parseFriendship(
     result[npc.id]   = Math.min(Math.floor(points / 250), 14);
   }
   return result;
+}
+
+const JOJA_ROOM_FLAGS = [
+  'jojaBoilerRoom', 'jojaVault', 'jojaPantry', 'jojaCraftsRoom', 'jojaFishTank',
+] as const;
+
+function parseCommunityStatus(
+  root: Element,
+  player: Element,
+): SaveFile['communityStatus'] {
+  // Read the player's mailReceived list
+  const mailEl = ch(player, 'mailReceived');
+  const mail   = new Set(chs(mailEl, 'string').map(el => el.textContent?.trim() ?? ''));
+
+  const isJojaMember      = mail.has('JojaMember');
+  const jojaRoomsComplete = JOJA_ROOM_FLAGS.every(f => mail.has(f));
+
+  if (isJojaMember && jojaRoomsComplete) return 'joja-complete';
+  if (isJojaMember)                       return 'joja-member';
+
+  // Community Centre restored via bundles: all 6 areasComplete are true
+  const cc      = findLocation(root, 'CommunityCenter');
+  const areasEl = ch(cc, 'areasComplete');
+  if (areasEl) {
+    const areas = chs(areasEl, 'boolean').map(
+      el => el.textContent?.trim().toLowerCase() === 'true',
+    );
+    if (areas.length === 6 && areas.every(Boolean)) return 'cc-restored';
+  }
+
+  return undefined;
 }
 
 function parseBundles(

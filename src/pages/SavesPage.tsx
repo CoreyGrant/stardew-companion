@@ -295,13 +295,18 @@ export function SavesPage() {
                     <span className="save-card__skills">
                       {SKILLS.map((s) => `${s.charAt(0).toUpperCase()}: ${save.skills[s]}`).join(' · ')}
                     </span>
-                    {(save.money != null || save.deepestMineLevel != null || save.goldenWalnuts != null) && (
+                    {(save.money != null || save.deepestMineLevel != null || save.goldenWalnuts != null || save.communityStatus != null) && (
                       <span className="save-card__meta save-card__meta--extra">
-                        {save.money        != null ? `${save.money.toLocaleString()}g` : null}
+                        {save.money != null ? `${save.money.toLocaleString()}g` : null}
                         {save.deepestMineLevel != null && save.deepestMineLevel > 0
-                          ? ` · Mine floor ${save.deepestMineLevel}` : null}
+                          ? ` · Mine ${save.deepestMineLevel}/120` : null}
+                        {save.deepestSkullCavernLevel != null && save.deepestSkullCavernLevel > 0
+                          ? ` · Skull Cavern ${save.deepestSkullCavernLevel}` : null}
                         {save.goldenWalnuts != null && save.goldenWalnuts > 0
                           ? ` · ${save.goldenWalnuts} 🌰` : null}
+                        {save.communityStatus === 'cc-restored'   ? ' · CC ✓' : null}
+                        {save.communityStatus === 'joja-complete' ? ' · Joja ✓' : null}
+                        {save.communityStatus === 'joja-member'   ? ' · Joja member' : null}
                       </span>
                     )}
                   </div>

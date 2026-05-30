@@ -104,11 +104,20 @@ export function SaveFileUpload() {
   };
 
   const save = preview?.result.save;
-  const bundleCount  = Object.keys(save?.bundleProgress  ?? {}).length;
-  const museumCount  = (save?.museumDonations ?? []).length;
-  const heartCount   = Object.keys(save?.heartLevels     ?? {}).length;
-  const recipeCount  = (save?.learnedCookingRecipes ?? []).length;
+  const bundleCount   = Object.keys(save?.bundleProgress  ?? {}).length;
+  const museumCount   = (save?.museumDonations ?? []).length;
+  const heartCount    = Object.keys(save?.heartLevels     ?? {}).length;
+  const recipeCount   = (save?.learnedCookingRecipes ?? []).length;
   const buildingCount = (save?.farmLayout.buildings.filter(b => !b.isStatic) ?? []).length;
+
+  function fmtCommunity(save: Omit<SaveFile, 'id' | 'createdAt'>): string {
+    switch (save.communityStatus) {
+      case 'cc-restored':   return '✓ Community Centre restored';
+      case 'joja-complete': return '✓ Joja development complete';
+      case 'joja-member':   return `Joja member — ${bundleCount} project(s) done`;
+      default: return `${bundleCount} bundle(s) with progress`;
+    }
+  }
 
   return (
     <div className="sdv-upload">
@@ -194,12 +203,15 @@ export function SaveFileUpload() {
               <PreviewRow label="Money"      value={fmtMoney(save.money!)} />
             )}
             {(save.deepestMineLevel ?? 0) > 0 && (
-              <PreviewRow label="Deepest mine"    value={`Floor ${save.deepestMineLevel}`} />
+              <PreviewRow label="Mines"            value={`Floor ${save.deepestMineLevel}/120`} />
+            )}
+            {(save.deepestSkullCavernLevel ?? 0) > 0 && (
+              <PreviewRow label="Skull Cavern"     value={`Floor ${save.deepestSkullCavernLevel}`} />
             )}
             {(save.goldenWalnuts ?? 0) > 0 && (
-              <PreviewRow label="Golden walnuts"  value={String(save.goldenWalnuts)} />
+              <PreviewRow label="Golden walnuts"   value={String(save.goldenWalnuts)} />
             )}
-            <PreviewRow label="Bundles"       value={`${bundleCount} with progress`} />
+            <PreviewRow label="Community"     value={fmtCommunity(save)} />
             <PreviewRow label="Museum"        value={`${museumCount} donations`} />
             <PreviewRow label="Relationships" value={`${heartCount} NPCs`} />
             <PreviewRow label="Recipes known" value={`${recipeCount} cooking recipes`} />
