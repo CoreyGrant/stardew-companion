@@ -270,12 +270,12 @@ export function useFarmPlanner(): FarmPlannerState {
     const bOcc = getBuildingOccupancy(layout.buildings, buildingDefMap);
     const iOcc = getItemOccupancy(layout.items);
     const tOcc = getTreeOccupancy(layout.trees);
-    if (!canPlaceTree(x, y, zoneMap, farmBaseType, gridWidth, gridHeight, bOcc, iOcc, tOcc, treePlantSet.size > 0 ? treePlantSet : undefined)) return;
+    if (!canPlaceTree(x, y, zoneMap, farmBaseType, gridWidth, gridHeight, bOcc, iOcc, tOcc)) return;
     pushState({
       ...layout,
       trees: [...layout.trees, { id: crypto.randomUUID(), treeType, x, y }],
     });
-  }, [layout, pushState, buildingDefMap, zoneMap, farmBaseType, gridWidth, gridHeight, treePlantSet]);
+  }, [layout, pushState, buildingDefMap, zoneMap, farmBaseType, gridWidth, gridHeight]);
 
   const removeTree = useCallback((id: string) => {
     pushState({ ...layout, trees: layout.trees.filter((t) => t.id !== id) });
@@ -342,7 +342,6 @@ export function useFarmPlanner(): FarmPlannerState {
     const bOcc   = getBuildingOccupancy(layout.buildings, buildingDefMap);
     const iOcc   = getItemOccupancy(layout.items);
     const tOcc   = getTreeOccupancy(layout.trees);
-    const tpSet  = treePlantSet.size > 0 ? treePlantSet : undefined;
     const added  = new Set<string>();
     const newTrees: PlacedTree[] = [];
     for (let dy = 0; dy < rect.h; dy++) {
@@ -350,7 +349,7 @@ export function useFarmPlanner(): FarmPlannerState {
         const tx = rect.x + dx, ty = rect.y + dy;
         const key = `${tx},${ty}`;
         if (!added.has(key) &&
-            canPlaceTree(tx, ty, zoneMap, farmBaseType, gridWidth, gridHeight, bOcc, iOcc, tOcc, tpSet)) {
+            canPlaceTree(tx, ty, zoneMap, farmBaseType, gridWidth, gridHeight, bOcc, iOcc, tOcc)) {
           added.add(key);
           newTrees.push({ id: crypto.randomUUID(), treeType, x: tx, y: ty, ...(tapperType ? { tapper: tapperType } : {}) });
         }
@@ -358,7 +357,7 @@ export function useFarmPlanner(): FarmPlannerState {
     }
     if (newTrees.length > 0)
       pushState({ ...layout, trees: [...layout.trees, ...newTrees] });
-  }, [layout, pushState, buildingDefMap, zoneMap, farmBaseType, gridWidth, gridHeight, treePlantSet]);
+  }, [layout, pushState, buildingDefMap, zoneMap, farmBaseType, gridWidth, gridHeight]);
 
   const eraseRect = useCallback((rect: TileRect) => {
     const inRect = (x: number, y: number) =>
