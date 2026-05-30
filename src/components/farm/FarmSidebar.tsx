@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useGameData } from '../../contexts/GameDataContext';
 import { SpriteIcon } from './SpriteIcon';
 import type { ToolState } from './HoverLayer';
 import type { Season, TreeDef } from '../../types/game';
 import type { CropZone, PathType, TapperType, TreeType } from '../../types/save';
+import { isItemAllowedInInterior } from '../../data/interiorItems';
+import type { InteriorContext } from '../../data/interiorItems';
 
 type Tab = 'farming' | 'buildings' | 'misc' | 'machines' | 'trees';
 
@@ -14,7 +16,7 @@ const SEASONS: { id: Season; label: string }[] = [
   { id: 'winter', label: 'Win' },
 ];
 
-const TABS: { id: Tab; label: string }[] = [
+const ALL_TABS: { id: Tab; label: string }[] = [
   { id: 'farming',   label: 'Farm'  },
   { id: 'buildings', label: 'Build' },
   { id: 'misc',      label: 'Misc'  },
@@ -75,6 +77,22 @@ interface Props {
   onFitView: () => void;
   /** When true, hides the season selector and shows a tropical year-round label instead. */
   isIsland?: boolean;
+
+  // ── Interior mode ────────────────────────────────────────────────────────────
+  /** When true, shows a back button instead of season selector and filters tabs. */
+  interiorMode?: boolean;
+  /** Callback for the Back button in interior mode. */
+  onBackToFarm?: () => void;
+  /** Building name shown in the back button label. */
+  interiorBuildingName?: string;
+  /** When false, the Trees tab is hidden in interior mode. */
+  interiorTreesAllowed?: boolean;
+  /** Used to filter the machines list to only context-valid items. */
+  interiorContext?: InteriorContext;
+  /** When set, shows the Optimal Fill section at the bottom of the Machines tab. */
+  interiorShedDims?: { w: number; h: number; corridor: number; count: number } | null;
+  /** Called when the user clicks "Fill optimally" with the chosen machine cheatId. */
+  onOptimalFill?: (machineId: string) => void;
 }
 
 export function FarmSidebar({
@@ -84,14 +102,34 @@ export function FarmSidebar({
   showScarecrowRanges, onToggleScarecrowRanges,
   canUndo, canRedo, onUndo, onRedo, onFitView,
   isIsland = false,
+  interiorMode = false,
+  onBackToFarm,
+  interiorBuildingName,
+  interiorTreesAllowed = false,
+  interiorContext,
+  interiorShedDims,
+  onOptimalFill,
 }: Props) {
   const { data } = useGameData();
-  const [activeTab, setActiveTab] = useState<Tab>('farming');
+
+  // Default to 'machines' in interior mode, 'farming' otherwise
+  const [activeTab, setActiveTab] = useState<Tab>(() => interiorMode ? 'machines' : 'farming');
   const [search, setSearch] = useState('');
   const [expandedZoneId, setExpandedZoneId] = useState<string | null>(null);
   const [tapperOption, setTapperOption] = useState<TapperType | null>(null);
+  const [optimalMachineId, setOptimalMachineId] = useState('');
 
   const q = search.toLowerCase();
+
+  // Tabs visible in current mode
+  const visibleTabs = useMemo(() => {
+    if (!interiorMode) return ALL_TABS;
+    return ALL_TABS.filter(t => {
+      if (t.id === 'farming' || t.id === 'buildings') return false;
+      if (t.id === 'trees' && !interiorTreesAllowed) return false;
+      return true;
+    });
+  }, [interiorMode, interiorTreesAllowed]);
 
   const robinBuildings = (data?.buildingDefs ?? []).filter(
     (b) => b.builder === 'Robin' && (!b.familyLevel || b.familyLevel === 0),
@@ -99,9 +137,19 @@ export function FarmSidebar({
   const wizardBuildings = (data?.buildingDefs ?? []).filter(
     (b) => b.builder === 'Wizard',
   );
-  const machines = (data?.items ?? []).filter(
-    (i) => i.category === 'machine' && !['8', '167'].includes(i.cheatId),
-  );
+
+  // In interior mode: show all BigCraftables valid for the context.
+  // On the main farm: show items with category=machine (excluding scarecrows).
+  const machines = useMemo(() => {
+    const allItems = data?.items ?? [];
+    if (interiorMode && interiorContext) {
+      return allItems
+        .filter(i => isItemAllowedInInterior(i.cheatId, interiorContext, i.isBigCraftable))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return allItems.filter(i => i.category === 'machine' && !['8', '167'].includes(i.cheatId));
+  }, [data, interiorMode, interiorContext]);
+
   const signItems = (data?.items ?? []).filter(
     (i) => i.category === 'decoration',
   );
@@ -142,9 +190,16 @@ export function FarmSidebar({
   return (
     <aside className="planner-sidebar">
 
-      {/* Season selector — regular farms show 4 season buttons; island shows tropical label */}
+      {/* Season selector / back button / tropical label */}
       <div className="planner-sidebar__seasons">
-        {isIsland ? (
+        {interiorMode ? (
+          <button
+            className="btn btn--sm planner-back-btn"
+            onClick={() => onBackToFarm?.()}
+          >
+            ← {interiorBuildingName ?? 'Farm'}
+          </button>
+        ) : isIsland ? (
           <div className="planner-season planner-season--island">
             <span className="planner-season__tropical">🌴 Year-round</span>
           </div>
@@ -166,7 +221,7 @@ export function FarmSidebar({
 
       {/* Tab bar */}
       <div className="planner-tabs" role="tablist">
-        {TABS.map(({ id, label }) => (
+        {visibleTabs.map(({ id, label }) => (
           <button
             key={id}
             role="tab"
@@ -192,7 +247,7 @@ export function FarmSidebar({
       {/* Tab content — scrollable */}
       <div className="planner-sidebar__content">
 
-        {activeTab === 'farming' && (
+        {activeTab === 'farming' && !interiorMode && (
           <div className="planner-tab-body">
             <div className="planner-group-label">Sprinklers</div>
             <label className="planner-toggle">
@@ -320,7 +375,7 @@ export function FarmSidebar({
           </div>
         )}
 
-        {activeTab === 'buildings' && (
+        {activeTab === 'buildings' && !interiorMode && (
           <div className="planner-tab-body">
             <div className="planner-group-label">Robin</div>
             {robinBuildings
@@ -428,7 +483,8 @@ export function FarmSidebar({
                 </button>
               ))}
 
-            {signItems.filter((item) => !q || item.name.toLowerCase().includes(q)).length > 0 && (
+            {/* Signs — main farm only */}
+            {!interiorMode && signItems.filter((item) => !q || item.name.toLowerCase().includes(q)).length > 0 && (
               <>
                 <div className="planner-group-label">Signs</div>
                 {signItems
@@ -458,6 +514,30 @@ export function FarmSidebar({
                     </button>
                   ))}
               </>
+            )}
+
+            {/* Optimal fill — sheds only, interior mode */}
+            {interiorMode && interiorShedDims && (
+              <div className="planner-optimal">
+                <div className="planner-group-label">Optimal Fill</div>
+                <select
+                  className="planner-optimal__select"
+                  value={optimalMachineId}
+                  onChange={(e) => setOptimalMachineId(e.target.value)}
+                >
+                  <option value="">— pick a machine —</option>
+                  {machines.map((item) => (
+                    <option key={item.cheatId} value={item.cheatId}>{item.name}</option>
+                  ))}
+                </select>
+                <button
+                  className="btn btn--sm btn--primary planner-optimal__btn"
+                  disabled={!optimalMachineId}
+                  onClick={() => { if (optimalMachineId) onOptimalFill?.(optimalMachineId); }}
+                >
+                  Fill ({interiorShedDims.count})
+                </button>
+              </div>
             )}
           </div>
         )}

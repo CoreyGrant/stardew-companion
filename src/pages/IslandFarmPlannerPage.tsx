@@ -8,7 +8,7 @@ import type { ToolState } from '../components/farm/FarmCanvas';
 import { FarmSidebar } from '../components/farm/FarmSidebar';
 import { ContextMenu } from '../components/farm/ContextMenu';
 import type { ContextMenuItem } from '../components/farm/ContextMenu';
-import { InteriorModal } from '../components/farm/InteriorModal';
+import { InteriorEditor } from '../components/farm/InteriorEditor';
 import { FishPickerModal } from '../components/farm/FishPickerModal';
 import { useUserData } from '../contexts/UserDataContext';
 import { useGameData } from '../contexts/GameDataContext';
@@ -241,7 +241,23 @@ export function IslandFarmPlannerPage() {
     );
   }
 
-  const interiorBuildingDef = interiorBuilding ? buildingDefMap.get(interiorBuilding.buildingId) : null;
+  // ── Interior editor (inline, replaces island farm view) ─────────────────────
+  if (interiorBuilding) {
+    const buildingDef = buildingDefMap.get(interiorBuilding.buildingId) ?? null;
+    return (
+      <InteriorEditor
+        building={interiorBuilding}
+        buildingDef={buildingDef}
+        interior={layout.interiors[interiorBuilding.id] ?? { items: [], paths: [], trees: [] }}
+        allItems={gameData?.items ?? []}
+        treeDefs={treeDefs}
+        onBack={(savedInterior) => {
+          updateInterior(interiorBuilding.id, savedInterior);
+          setInteriorBuilding(null);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="page--farm-planner">
@@ -305,17 +321,6 @@ export function IslandFarmPlannerPage() {
           y={contextMenu.y}
           items={buildContextItems()}
           onClose={() => setContextMenu(null)}
-        />
-      )}
-
-      {interiorBuilding && interiorBuildingDef && interiorBuildingDef.hasInterior && (
-        <InteriorModal
-          building={interiorBuilding}
-          buildingDef={interiorBuildingDef}
-          interior={layout.interiors[interiorBuilding.id] ?? { items: [], paths: [] }}
-          allItems={gameData?.items ?? []}
-          onSave={(interior) => updateInterior(interiorBuilding.id, interior)}
-          onClose={() => setInteriorBuilding(null)}
         />
       )}
 

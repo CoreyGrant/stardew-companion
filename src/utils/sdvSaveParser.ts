@@ -595,27 +595,72 @@ function parseInteriorLayout(
 ): InteriorLayout {
   const origin = INTERIOR_ORIGIN[buildingType] ?? { x: 0, y: 0 };
   const { items, paths } = parseLocationObjects(indoorsEl, plannerItemCheatIds);
+  const trees: PlacedTree[] = [];
+  const isGreenhouse = buildingType === 'Greenhouse';
 
-  // Interior flooring
+  // Interior terrain features: flooring + trees (greenhouse only)
   for (const item of chs(ch(indoorsEl, 'terrainFeatures'), 'item')) {
     const coord = vecCoord(ch(item, 'key'));
-    // SDV wraps each dict value as <value><TerrainFeature xsi:type="...">
     const tfEl  = dictVal(ch(item, 'value'));
     if (!coord || !tfEl) continue;
-    if (xsiType(tfEl) === 'Flooring') {
+
+    const type = xsiType(tfEl);
+
+    if (type === 'Flooring') {
       const floorIdx = parseInt(txt(tfEl, 'whichFloor') || '0', 10);
       const pathType = FLOOR_TO_PATH[floorIdx];
       if (pathType) paths.push({ x: coord.x, y: coord.y, pathType });
+      continue;
+    }
+
+    // Wild and fruit trees — only meaningful inside the greenhouse
+    if (isGreenhouse) {
+      if (type === 'Tree') {
+        const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
+        if (growthStage < 5) continue;
+        const treeTypeInt = parseInt(txt(tfEl, 'treeType') || '0', 10);
+        const treeType    = WILD_TREE_MAP[treeTypeInt];
+        if (!treeType) continue;
+
+        let tapper: TapperType | undefined;
+        const overlaidEl = ch(tfEl, 'overlaidItem');
+        if (overlaidEl) {
+          const rawId = stripQualifier(txt(overlaidEl, 'itemId') || txt(overlaidEl, 'parentSheetIndex'));
+          tapper = TAPPER_ITEM_IDS[rawId];
+          if (!tapper) {
+            const n = txt(overlaidEl, 'name');
+            if (n === 'Tapper') tapper = 'tapper';
+            else if (n === 'Heavy Tapper') tapper = 'heavy-tapper';
+          }
+        }
+        trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType, ...(tapper ? { tapper } : {}) });
+        continue;
+      }
+
+      if (type === 'FruitTree') {
+        const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
+        if (growthStage < 4) continue;
+        const rawItemId = txt(tfEl, 'itemId');
+        const cheatId   = rawItemId ? stripQualifier(rawItemId) : '';
+        const treeType  = FRUIT_TREE_CHEAT_MAP[cheatId];
+        if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
+        continue;
+      }
     }
   }
 
   // Translate save-file map-space coordinates → 0-based planner coordinates
   const ox = origin.x;
   const oy = origin.y;
-  return {
+
+  const result: InteriorLayout = {
     items: items.map(i => ({ ...i, x: i.x - ox, y: i.y - oy })),
     paths: paths.map(p => ({ ...p, x: p.x - ox, y: p.y - oy })),
   };
+  if (trees.length > 0) {
+    result.trees = trees.map(t => ({ ...t, x: t.x - ox, y: t.y - oy }));
+  }
+  return result;
 }
 
 function parseLayout(
@@ -693,7 +738,7 @@ function parseLayout(
     const ghLoc = findLocation(root, 'Greenhouse');
     if (ghLoc) {
       const ghInterior = parseInteriorLayout(ghLoc, plannerItemCheatIds, 'Greenhouse');
-      if (ghInterior.items.length > 0 || ghInterior.paths.length > 0) {
+      if (ghInterior.items.length > 0 || ghInterior.paths.length > 0 || (ghInterior.trees?.length ?? 0) > 0) {
         interiors[ghStaticBuilding.id] = ghInterior;
       }
     }

@@ -86,6 +86,11 @@ interface Props {
   onItemContextMenu?: (id: string, e: React.MouseEvent<SVGElement>) => void;
   onTreePointerDown?: (id: string, e: React.PointerEvent<SVGElement>) => void;
   onTreeContextMenu?: (id: string, e: React.MouseEvent<SVGElement>) => void;
+  /**
+   * When true, suppresses the building layer, crop-zone layer, sprinkler ranges,
+   * and scarecrow ranges — used when rendering a building interior.
+   */
+  interiorMode?: boolean;
 }
 
 export function FarmCanvas({
@@ -98,6 +103,7 @@ export function FarmCanvas({
   onBuildingPointerDown, onBuildingContextMenu,
   onItemPointerDown, onItemContextMenu,
   onTreePointerDown, onTreeContextMenu,
+  interiorMode = false,
 }: Props) {
   const farmW   = gridWidth * TILE_SIZE;
   const farmH   = gridHeight * TILE_SIZE;
@@ -269,35 +275,43 @@ export function FarmCanvas({
           />
         ))}
 
-        {/* User crop zones */}
-        <ZoneLayer
-          zones={layout.zones}
-          tileSize={TILE_SIZE}
-          season={layout.season}
-          selectedZoneId={null}
-          cropMap={cropMap}
-          itemMap={itemMap}
-        />
+        {/* User crop zones — hidden in interior mode */}
+        {!interiorMode && (
+          <ZoneLayer
+            zones={layout.zones}
+            tileSize={TILE_SIZE}
+            season={layout.season}
+            selectedZoneId={null}
+            cropMap={cropMap}
+            itemMap={itemMap}
+          />
+        )}
 
         {/* Paths */}
         <PathLayer paths={layout.paths} tileSize={TILE_SIZE} />
 
-        {/* Sprinkler ranges (behind buildings) */}
-        <SprinklerRangeLayer items={layout.items} tileSize={TILE_SIZE} show={showSprinklerRanges} />
+        {/* Sprinkler ranges — hidden in interior mode */}
+        {!interiorMode && (
+          <SprinklerRangeLayer items={layout.items} tileSize={TILE_SIZE} show={showSprinklerRanges} />
+        )}
 
-        {/* Scarecrow ranges (behind buildings) */}
-        <ScarecrowRangeLayer items={layout.items} tileSize={TILE_SIZE} show={showScarecrowRanges} />
+        {/* Scarecrow ranges — hidden in interior mode */}
+        {!interiorMode && (
+          <ScarecrowRangeLayer items={layout.items} tileSize={TILE_SIZE} show={showScarecrowRanges} />
+        )}
 
-        {/* Buildings */}
-        <BuildingLayer
-          buildings={layout.buildings}
-          buildingDefs={buildingDefs}
-          itemMap={itemMap}
-          tileSize={TILE_SIZE}
-          selectedId={selectedBuildingId}
-          onBuildingPointerDown={onBuildingPointerDown}
-          onBuildingContextMenu={onBuildingContextMenu}
-        />
+        {/* Buildings — hidden in interior mode */}
+        {!interiorMode && (
+          <BuildingLayer
+            buildings={layout.buildings}
+            buildingDefs={buildingDefs}
+            itemMap={itemMap}
+            tileSize={TILE_SIZE}
+            selectedId={selectedBuildingId}
+            onBuildingPointerDown={onBuildingPointerDown}
+            onBuildingContextMenu={onBuildingContextMenu}
+          />
+        )}
 
         {/* Items (machines, sprinklers) */}
         <ItemLayer
