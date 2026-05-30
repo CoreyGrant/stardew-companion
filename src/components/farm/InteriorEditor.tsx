@@ -6,6 +6,7 @@ import type { ToolState } from './FarmCanvas';
 import { FarmSidebar } from './FarmSidebar';
 import { ContextMenu } from './ContextMenu';
 import type { ContextMenuItem } from './ContextMenu';
+import { FishPickerModal } from './FishPickerModal';
 import {
   getInteriorContext,
   getInteriorZoneData,
@@ -55,6 +56,13 @@ export function InteriorEditor({
   // ── Tool / UI state ───────────────────────────────────────────────────────────
   const [toolState, setToolState] = useState<ToolState>({ tool: 'select' });
   const [contextMenu, setContextMenu] = useState<CtxMenuState | null>(null);
+  const [gemPickerItemId, setGemPickerItemId] = useState<string | null>(null);
+
+  // Gem items (for Crystalarium picker)
+  const gemItems = useMemo(
+    () => allItems.filter(i => i.category === 'gem' || i.category === 'mineral').sort((a, b) => a.name.localeCompare(b.name)),
+    [allItems],
+  );
 
   // ── Stable empty occupancy (no buildings inside buildings) ───────────────────
   const emptyBuildingOcc     = useMemo(() => new Set<string>(), []);
@@ -79,7 +87,7 @@ export function InteriorEditor({
 
   // ── Mutations ─────────────────────────────────────────────────────────────────
 
-  const placeItemRect = useCallback((rect: TileRect, itemId: string) => {
+  const placeItemRect = useCallback((rect: TileRect, itemId: string, gemId?: string) => {
     setLocalInterior(prev => {
       const iOcc = new Set(prev.items.map(i => `${i.x},${i.y}`));
       const newItems: PlacedItem[] = [];
@@ -90,7 +98,7 @@ export function InteriorEditor({
           if (!iOcc.has(key) &&
               canPlaceItem(tx, ty, zoneMap, farmBaseType, gridWidth, gridHeight, emptyBuildingOcc, iOcc)) {
             iOcc.add(key);
-            newItems.push({ id: crypto.randomUUID(), itemId, x: tx, y: ty });
+            newItems.push({ id: crypto.randomUUID(), itemId, x: tx, y: ty, ...(gemId ? { gemId } : {}) });
           }
         }
       }
@@ -192,7 +200,7 @@ export function InteriorEditor({
   const handleCommit = useCallback((rect: DrawRect) => {
     const { tool } = toolState;
     if      (tool === 'zone'         && toolState.itemId)    addZoneRect(toolState.itemId, rect);
-    else if (tool === 'place-item'   && toolState.itemId)    placeItemRect(rect, toolState.itemId);
+    else if (tool === 'place-item'   && toolState.itemId)    placeItemRect(rect, toolState.itemId, toolState.gemId);
     else if (tool === 'path-draw'    && toolState.pathType)  paintPathRect(rect, toolState.pathType as PathType);
     else if (tool === 'place-tree'   && toolState.treeType)  placeTreeRect(rect, toolState.treeType as TreeType, toolState.tapperType);
     else if (tool === 'erase')                               eraseRect(rect);
@@ -244,14 +252,35 @@ export function InteriorEditor({
     if (!contextMenu) return [];
 
     if (contextMenu.type === 'item') {
-      return [{
+      const placedItem = localInterior.items.find(i => i.id === contextMenu.targetId);
+      const menuItems: ContextMenuItem[] = [];
+      if (placedItem?.itemId === '21') {
+        menuItems.push({
+          label: placedItem.gemId ? 'Change Gem' : 'Set Gem',
+          onClick: () => { setGemPickerItemId(contextMenu.targetId); setContextMenu(null); },
+        });
+        if (placedItem.gemId) {
+          menuItems.push({
+            label: 'Clear Gem',
+            onClick: () => {
+              setLocalInterior(prev => ({
+                ...prev,
+                items: prev.items.map(i => i.id === contextMenu.targetId ? { ...i, gemId: undefined } : i),
+              }));
+              setContextMenu(null);
+            },
+          });
+        }
+      }
+      menuItems.push({
         label: 'Remove',
         danger: true,
         onClick: () => setLocalInterior(prev => ({
           ...prev,
           items: prev.items.filter(i => i.id !== contextMenu.targetId),
         })),
-      }];
+      });
+      return menuItems;
     }
 
     if (contextMenu.type === 'tree') {
@@ -386,6 +415,24 @@ export function InteriorEditor({
           y={contextMenu.y}
           items={buildContextItems()}
           onClose={() => setContextMenu(null)}
+        />
+      )}
+
+      {gemPickerItemId && (
+        <FishPickerModal
+          title="Select Gem"
+          fish={gemItems}
+          currentFishId={localInterior.items.find(i => i.id === gemPickerItemId)?.gemId}
+          onSelect={(gemId) => {
+            setLocalInterior(prev => ({
+              ...prev,
+              items: prev.items.map(i =>
+                i.id === gemPickerItemId ? { ...i, gemId: gemId ?? undefined } : i,
+              ),
+            }));
+            setGemPickerItemId(null);
+          }}
+          onClose={() => setGemPickerItemId(null)}
         />
       )}
     </div>

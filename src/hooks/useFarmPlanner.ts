@@ -50,8 +50,10 @@ interface FarmPlannerState {
   paintPathRect: (rect: TileRect, type: PathType | null) => void;
   placeItem: (itemId: string, x: number, y: number) => void;
   /** Fill a rectangle with items, skipping occupied tiles, in a single undo step. */
-  placeItemRect: (rect: TileRect, itemId: string) => void;
+  placeItemRect: (rect: TileRect, itemId: string, gemId?: string) => void;
   removeItem: (id: string) => void;
+  /** Crystalarium: update the gem being duplicated (null to clear). */
+  setItemGem: (id: string, gemId: string | null) => void;
   /** Erase all items + trees + paths inside a rectangle in a single undo step. */
   eraseRect: (rect: TileRect) => void;
   updateInterior: (buildingId: string, interior: InteriorLayout) => void;
@@ -290,6 +292,15 @@ export function useFarmPlanner(): FarmPlannerState {
     });
   }, [layout, pushState]);
 
+  const setItemGem = useCallback((id: string, gemId: string | null) => {
+    pushState({
+      ...layout,
+      items: layout.items.map((i) =>
+        i.id === id ? { ...i, gemId: gemId ?? undefined } : i,
+      ),
+    });
+  }, [layout, pushState]);
+
   const updateInterior = useCallback((buildingId: string, interior: InteriorLayout) => {
     pushState({ ...layout, interiors: { ...layout.interiors, [buildingId]: interior } });
   }, [layout, pushState]);
@@ -317,7 +328,7 @@ export function useFarmPlanner(): FarmPlannerState {
     pushState({ ...layout, paths: newPaths });
   }, [layout, pushState, buildingDefMap, zoneMap, farmBaseType, gridWidth, gridHeight]);
 
-  const placeItemRect = useCallback((rect: TileRect, itemId: string) => {
+  const placeItemRect = useCallback((rect: TileRect, itemId: string, gemId?: string) => {
     const bOcc  = getBuildingOccupancy(layout.buildings, buildingDefMap);
     const iOcc  = getItemOccupancy(layout.items);
     const isSprinkler = SPRINKLER_IDS.has(itemId);
@@ -330,7 +341,7 @@ export function useFarmPlanner(): FarmPlannerState {
         if (!added.has(key) &&
             canPlaceItem(tx, ty, zoneMap, farmBaseType, gridWidth, gridHeight, bOcc, iOcc, isSprinkler)) {
           added.add(key);
-          newItems.push({ id: crypto.randomUUID(), itemId, x: tx, y: ty });
+          newItems.push({ id: crypto.randomUUID(), itemId, x: tx, y: ty, ...(gemId ? { gemId } : {}) });
         }
       }
     }
@@ -401,6 +412,7 @@ export function useFarmPlanner(): FarmPlannerState {
     placeItem,
     placeItemRect,
     removeItem,
+    setItemGem,
     eraseRect,
     updateInterior,
     placeTree,

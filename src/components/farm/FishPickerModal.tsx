@@ -5,11 +5,12 @@ import { SpriteIcon } from './SpriteIcon';
 interface Props {
   fish: Item[];
   currentFishId?: string;
+  title?: string;
   onSelect: (fishId: string | null) => void;
   onClose: () => void;
 }
 
-export function FishPickerModal({ fish, currentFishId, onSelect, onClose }: Props) {
+export function FishPickerModal({ fish, currentFishId, title = 'Select Fish', onSelect, onClose }: Props) {
   const [search, setSearch] = useState('');
   const q = search.toLowerCase();
   const filtered = fish.filter((f) => !q || f.name.toLowerCase().includes(q));
@@ -18,7 +19,7 @@ export function FishPickerModal({ fish, currentFishId, onSelect, onClose }: Prop
     <div className="fish-picker-backdrop" onClick={onClose}>
       <div className="fish-picker" onClick={(e) => e.stopPropagation()}>
         <div className="fish-picker__header">
-          <span className="fish-picker__title">Select Fish</span>
+          <span className="fish-picker__title">{title}</span>
           <button className="fish-picker__close" onClick={onClose} aria-label="Close">×</button>
         </div>
         <input

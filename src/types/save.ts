@@ -59,6 +59,8 @@ export interface PlacedItem {
   x: number;
   y: number;
   label?: string;
+  /** Crystalarium only: cheatId of the gem being duplicated. */
+  gemId?: string;
 }
 
 export interface PlacedTree {

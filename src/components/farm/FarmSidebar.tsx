@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useGameData } from '../../contexts/GameDataContext';
 import { SpriteIcon } from './SpriteIcon';
 import type { ToolState } from './HoverLayer';
@@ -166,6 +166,7 @@ export function FarmSidebar({
   const [expandedZoneId, setExpandedZoneId] = useState<string | null>(null);
   const [tapperOption, setTapperOption]     = useState<TapperType | null>(null);
   const [optimalMachineId, setOptimalMachineId] = useState('');
+  const [crystalariumGemId, setCrystalariumGemId] = useState<string | null>(null);
 
   // Per-tab open section — accordion, one open at a time.
   // In greenhouse interior, default to crop zones section open.
@@ -203,6 +204,12 @@ export function FarmSidebar({
   const signItems     = (data?.items ?? []).filter(i => i.category === 'decoration');
   const sprinklerItems = (data?.items ?? []).filter(i => ['599','621','645'].includes(i.cheatId));
   const scarecrowItems = (data?.items ?? []).filter(i => ['8','110','113','126','136','137','138','139','140','167'].includes(i.cheatId) && i.isBigCraftable);
+  const gemItems = useMemo(() =>
+    (data?.items ?? [])
+      .filter(i => i.category === 'gem' || i.category === 'mineral')
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    [data],
+  );
 
   const isActive = (t: ToolState) =>
     t.tool === toolState.tool &&
@@ -458,18 +465,44 @@ export function FarmSidebar({
               {machines
                 .slice().sort((a, b) => a.name.localeCompare(b.name))
                 .filter(item => !q || item.name.toLowerCase().includes(q))
-                .map(item => (
-                  <button
-                    key={item.cheatId}
-                    className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
-                    onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: item.cheatId }) ? { tool: 'select' } : { tool: 'place-item', itemId: item.cheatId })}
-                    title={item.description || item.name}
-                  >
-                    {item.spriteSheet && item.spriteIndex !== undefined &&
-                      <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} isBigCraftable={item.isBigCraftable} size={13} />}
-                    <span>{item.name}</span>
-                  </button>
-                ))}
+                .map(item => {
+                  const isCrystalarium = item.cheatId === '21';
+                  const active = isActive({ tool: 'place-item', itemId: item.cheatId });
+                  return (
+                    <React.Fragment key={item.cheatId}>
+                      <button
+                        className={`planner-chip planner-chip--sprite${active ? ' planner-chip--active' : ''}`}
+                        onClick={() => {
+                          if (active) { onToolChange({ tool: 'select' }); return; }
+                          const next: ToolState = { tool: 'place-item', itemId: item.cheatId };
+                          if (isCrystalarium && crystalariumGemId) next.gemId = crystalariumGemId;
+                          onToolChange(next);
+                        }}
+                        title={item.description || item.name}
+                      >
+                        {item.spriteSheet && item.spriteIndex !== undefined &&
+                          <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} isBigCraftable={item.isBigCraftable} size={13} />}
+                        <span>{item.name}</span>
+                      </button>
+                      {isCrystalarium && active && (
+                        <select
+                          className="planner-gem-select"
+                          value={crystalariumGemId ?? ''}
+                          onChange={(e) => {
+                            const val = e.target.value || null;
+                            setCrystalariumGemId(val);
+                            onToolChange({ tool: 'place-item', itemId: '21', ...(val ? { gemId: val } : {}) });
+                          }}
+                        >
+                          <option value="">— None —</option>
+                          {gemItems.map(g => (
+                            <option key={g.cheatId} value={g.cheatId}>{g.name}</option>
+                          ))}
+                        </select>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
 
               {/* Signs — main farm only */}
               {!interiorMode && signItems.filter(item => !q || item.name.toLowerCase().includes(q)).length > 0 && (

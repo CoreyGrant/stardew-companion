@@ -595,7 +595,18 @@ function parseLocationObjects(
         if (heldName === 'Pressure Nozzle' || heldId === '915') effectiveId = 'qi-sprinkler';
       }
     }
-    items.push({ id: crypto.randomUUID(), itemId: effectiveId, x: coord.x, y: coord.y });
+
+    // Crystalarium: read the gem from <heldObject>
+    let gemId: string | undefined;
+    if (cheatId === '21') {
+      const heldObj = ch(objEl, 'heldObject');
+      if (heldObj) {
+        const rawHeldId = txt(heldObj, 'itemId') || txt(heldObj, 'parentSheetIndex');
+        if (rawHeldId) gemId = stripQualifier(rawHeldId);
+      }
+    }
+
+    items.push({ id: crypto.randomUUID(), itemId: effectiveId, x: coord.x, y: coord.y, ...(gemId ? { gemId } : {}) });
   }
 
   return { items, paths };

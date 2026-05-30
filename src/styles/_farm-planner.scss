@@ -714,3 +714,20 @@
     }
   }
 }
+
+// ── Crystalarium gem selector ─────────────────────────────────────────────────
+
+.planner-gem-select {
+  width: 100%;
+  font-family: $font-pixel;
+  font-size: 0.6rem;
+  padding: $space-1 $space-2;
+  background: var(--surface-mid);
+  border: 1px solid $color-brown-light;
+  border-radius: $radius-sm;
+  color: var(--text);
+  cursor: pointer;
+  margin-top: $space-1;
+
+  &:focus { outline: 2px solid $color-gold; }
+}

@@ -13,6 +13,10 @@ interface Props {
 const SHEET_COLS: Record<string, number> = { springobjects: 24, Objects_2: 8, Craftables: 8 };
 const SHEET_ROWS: Record<string, number> = { springobjects: 39, Objects_2: 20, Craftables: 46 };
 
+const CRYSTALARIUM_ID = '21';
+const SO_COLS = 24;  // springobjects sheet columns
+const SO_ROWS = 39;  // springobjects sheet rows
+
 export function ItemLayer({
   items, itemMap, tileSize, selectedId,
   onItemPointerDown, onItemContextMenu,
@@ -73,6 +77,34 @@ export function ItemLayer({
                   style={{ pointerEvents: 'none' }}
                 />
               )}
+                  {/* ── Crystalarium gem overlay ── */}
+              {item.itemId === CRYSTALARIUM_ID && item.gemId && (() => {
+                const gemDef = itemMap.get(item.gemId);
+                if (!gemDef || gemDef.spriteSheet !== 'springobjects' || gemDef.spriteIndex === undefined) return null;
+                const gemCol  = gemDef.spriteIndex % SO_COLS;
+                const gemRow  = Math.floor(gemDef.spriteIndex / SO_COLS);
+                const gemSize = Math.max(4, Math.round(tileSize * 0.45));
+                const gemX    = tileSize - gemSize - 1;
+                const gemY    = tileSize - gemSize - 1;
+                return (
+                  <svg
+                    x={gemX} y={gemY}
+                    width={gemSize} height={gemSize}
+                    viewBox={`${gemCol * 16} ${gemRow * 16} 16 16`}
+                    preserveAspectRatio="xMidYMid meet"
+                    style={{ pointerEvents: 'none' }}
+                    overflow="hidden"
+                  >
+                    <image
+                      href={`${base}sprites/springobjects.png`}
+                      x={0} y={0}
+                      width={SO_COLS * 16} height={SO_ROWS * 16}
+                      imageRendering="pixelated"
+                    />
+                  </svg>
+                );
+              })()}
+
               {sel && (
                 <rect
                   x={0} y={0} width={tileSize} height={tileSize}

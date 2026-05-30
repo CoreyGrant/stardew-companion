@@ -31,7 +31,7 @@ export function FarmPlannerPage() {
     placeBuilding, removeBuilding, updateBuilding,
     createZone, addZoneRect, removeZone, setZoneCrop,
     paintPathRect, placeItemRect, placeTreeRect, eraseRect,
-    removeItem, updateInterior, removeTree, setTreeTapper,
+    removeItem, setItemGem, updateInterior, removeTree, setTreeTapper,
   } = useFarmPlanner();
 
   const { activeSave } = useUserData();
@@ -49,6 +49,7 @@ export function FarmPlannerPage() {
   const [contextMenu, setContextMenu] = useState<CtxMenuState | null>(null);
   const [interiorBuilding, setInteriorBuilding] = useState<PlacedBuilding | null>(null);
   const [fishPickerBuilding, setFishPickerBuilding] = useState<PlacedBuilding | null>(null);
+  const [gemPickerItemId, setGemPickerItemId] = useState<string | null>(null);
 
   // ── Commit rect to the right mutation ─────────────────────────────────────────
   const handleCommit = useCallback((rect: DrawRect) => {
@@ -56,7 +57,7 @@ export function FarmPlannerPage() {
     if (tool === 'zone' && toolState.itemId)             addZoneRect(toolState.itemId, rect);
     else if (tool === 'path-draw' && toolState.pathType)  paintPathRect(rect, toolState.pathType as PathType);
     else if (tool === 'path-erase')                       paintPathRect(rect, null);
-    else if (tool === 'place-item' && toolState.itemId)   placeItemRect(rect, toolState.itemId);
+    else if (tool === 'place-item' && toolState.itemId)   placeItemRect(rect, toolState.itemId, toolState.gemId);
     else if (tool === 'place-tree' && toolState.treeType) placeTreeRect(rect, toolState.treeType as TreeType, toolState.tapperType);
     else if (tool === 'erase')                            eraseRect(rect);
   }, [toolState, addZoneRect, paintPathRect, placeItemRect, placeTreeRect, eraseRect]);
@@ -198,7 +199,22 @@ export function FarmPlannerPage() {
     }
 
     if (contextMenu.type === 'item') {
-      return [{ label: 'Remove', danger: true, onClick: () => removeItem(contextMenu.targetId) }];
+      const item = layout.items.find((i) => i.id === contextMenu.targetId);
+      const menuItems: ContextMenuItem[] = [];
+      if (item?.itemId === '21') {
+        menuItems.push({
+          label: item.gemId ? 'Change Gem' : 'Set Gem',
+          onClick: () => { setGemPickerItemId(contextMenu.targetId); setContextMenu(null); },
+        });
+        if (item.gemId) {
+          menuItems.push({
+            label: 'Clear Gem',
+            onClick: () => { setItemGem(contextMenu.targetId, null); setContextMenu(null); },
+          });
+        }
+      }
+      menuItems.push({ label: 'Remove', danger: true, onClick: () => removeItem(contextMenu.targetId) });
+      return menuItems;
     }
 
     if (contextMenu.type === 'tree') {
@@ -336,6 +352,19 @@ export function FarmPlannerPage() {
             setFishPickerBuilding(null);
           }}
           onClose={() => setFishPickerBuilding(null)}
+        />
+      )}
+
+      {gemPickerItemId && (
+        <FishPickerModal
+          title="Select Gem"
+          fish={(gameData?.items ?? []).filter((i) => i.category === 'gem' || i.category === 'mineral').sort((a, b) => a.name.localeCompare(b.name))}
+          currentFishId={layout.items.find((i) => i.id === gemPickerItemId)?.gemId}
+          onSelect={(gemId) => {
+            if (gemPickerItemId) setItemGem(gemPickerItemId, gemId);
+            setGemPickerItemId(null);
+          }}
+          onClose={() => setGemPickerItemId(null)}
         />
       )}
     </div>

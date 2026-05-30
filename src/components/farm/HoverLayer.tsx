@@ -9,6 +9,8 @@ export interface ToolState {
   itemId?: string;
   treeType?: string;
   tapperType?: TapperType | null;
+  /** Crystalarium placement: cheatId of the gem to duplicate. */
+  gemId?: string;
 }
 
 interface Props {
