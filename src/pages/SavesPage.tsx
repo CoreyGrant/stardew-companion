@@ -4,6 +4,7 @@ import { useSaves } from '../hooks/useSaves';
 import { useUserData } from '../contexts/UserDataContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { Panel } from '../components/common/Panel';
+import { StardewDateInput } from '../components/common/StardewDateInput';
 import { encodeSave, decodeSave } from '../utils/saveCodec';
 import type { FarmType, SaveFile, Skill } from '../types/save';
 import type { Season } from '../types/game';
@@ -15,7 +16,6 @@ const FARM_TYPES: FarmType[] = [
 
 const SKILLS: Skill[] = ['farming', 'mining', 'foraging', 'fishing', 'combat'];
 
-const SEASONS: Season[] = ['spring', 'summer', 'fall', 'winter'];
 const SEASON_LABELS: Record<Season, string> = { spring: 'Spring', summer: 'Summer', fall: 'Fall', winter: 'Winter' };
 
 // ── Export panel ───────────────────────────────────────────────────────────────
@@ -210,39 +210,17 @@ export function SavesPage() {
               </select>
             </label>
 
-            <label className="form-field">
-              Year
-              <input
-                type="number"
-                min={1}
-                max={25}
-                value={form.year}
-                onChange={(e) => setFormField('year', Number(e.target.value))}
+            <div className="form-field">
+              <span className="form-field__label">Date</span>
+              <StardewDateInput
+                season={form.season as Season}
+                day={form.day}
+                year={form.year}
+                onSeasonChange={(s) => setFormField('season', s)}
+                onDayChange={(d) => setFormField('day', d)}
+                onYearChange={(y) => setFormField('year', y)}
+                showYear
               />
-            </label>
-
-            <div className="form-field form-field--row">
-              <label className="form-field form-field--inline">
-                Season
-                <select
-                  value={form.season}
-                  onChange={(e) => setFormField('season', e.target.value as Season)}
-                >
-                  {SEASONS.map((s) => (
-                    <option key={s} value={s}>{SEASON_LABELS[s]}</option>
-                  ))}
-                </select>
-              </label>
-              <label className="form-field form-field--inline">
-                Day
-                <input
-                  type="number"
-                  min={1}
-                  max={28}
-                  value={form.day}
-                  onChange={(e) => setFormField('day', Number(e.target.value))}
-                />
-              </label>
             </div>
 
             <div className="form-field">
