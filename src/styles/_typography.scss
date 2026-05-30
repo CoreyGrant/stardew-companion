@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+body {
+  font-family: $font-body;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+h1, h2, h3, h4 {
+  font-family: $font-pixel;
+}
+
+p {
+  line-height: 1.6;
+  color: var(--text-mid);
+}
+
+code, .cheat-code {
+  font-family: $font-mono;
+  font-size: 0.8em;
+  background: $color-brown-dark;
+  color: $color-gold-light;
+  padding: 1px 5px;
+  border: 1px solid $color-brown;
+}
+
+.badge {
+  display: inline-block;
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  padding: 2px $space-2;
+  border: 1px solid currentColor;
+
+  &--marriageable {
+    color: $color-loved;
+    background: rgba($color-loved, 0.1);
+  }
+}

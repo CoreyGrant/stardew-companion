@@ -1,0 +1,149 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Stardew Date Input ────────────────────────────────────────────────────────
+// Compact, icon-first date/weather selector used in ScheduleViewerPage,
+// NPCDetailPage, etc.
+
+.sdi {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  background: var(--surface-mid);
+  border: 2px solid var(--border);
+  border-radius: $radius-sm;
+
+  // ── Season row ───────────────────────────────────────────────────────────────
+  &__seasons {
+    display: flex;
+    gap: $space-1;
+  }
+
+  &__season {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    padding: 3px $space-2;
+    border: 1.5px solid transparent;
+    border-radius: $radius-sm;
+    background: var(--surface);
+    font-size: 0.7rem;
+    font-family: $font-pixel;
+    cursor: pointer;
+    transition: background 0.1s, border-color 0.1s;
+    color: var(--text-mid);
+    white-space: nowrap;
+
+    &:hover { background: var(--surface-dark); }
+
+    &--spring.sdi__season--active { background: rgba($color-spring, 0.18); border-color: $color-spring; color: #335107; }
+    &--summer.sdi__season--active { background: rgba($color-summer, 0.18); border-color: $color-summer; color: #6b4600; }
+    &--fall.sdi__season--active   { background: rgba($color-fall,   0.18); border-color: $color-fall;   color: #7a2e06; }
+    &--winter.sdi__season--active { background: rgba($color-winter, 0.18); border-color: $color-winter; color: #0a57c2; }
+
+    &-emoji { font-size: 0.95rem; line-height: 1; }
+    &-label { font-size: 0.65rem; }
+  }
+
+  // ── Row 2: day + year + weather ───────────────────────────────────────────────
+  &__row2 {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-wrap: wrap;
+  }
+
+  // ── Stepper (day + year) ──────────────────────────────────────────────────────
+  &__stepper {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: $radius-sm;
+    overflow: hidden;
+  }
+
+  &__step-btn {
+    padding: 2px $space-2;
+    border: none;
+    background: transparent;
+    font-size: 0.6rem;
+    cursor: pointer;
+    color: var(--text-mid);
+    line-height: 1;
+
+    &:hover:not(:disabled) { background: var(--surface-dark); color: var(--text); }
+    &:disabled { opacity: 0.35; cursor: default; }
+  }
+
+  &__stepper-val {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    padding: 2px $space-1;
+    font-family: $font-pixel;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  &__day-name {
+    font-size: 0.6rem;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+
+  // Inline editable field — looks like plain pixel text until focused
+  &__day-input {
+    width: 2.2ch;
+    border: none;
+    background: transparent;
+    font-family: $font-pixel;
+    font-size: 0.85rem;
+    color: var(--text);
+    text-align: center;
+    padding: 0;
+    line-height: 1;
+
+    &:focus {
+      outline: 1px solid $color-gold;
+      border-radius: 1px;
+      background: var(--surface-mid);
+    }
+  }
+
+  &__year-input {
+    width: 2.8ch; // years can be 2 digits
+  }
+
+  // ── Weather buttons ────────────────────────────────────────────────────────────
+  &__weathers {
+    display: flex;
+    gap: $space-1;
+  }
+
+  &__weather {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid transparent;
+    border-radius: $radius-sm;
+    background: var(--surface);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.1s, border-color 0.1s;
+    line-height: 1;
+
+    &:hover { background: var(--surface-dark); }
+
+    &--active {
+      background: rgba($color-gold, 0.2);
+      border-color: $color-gold;
+    }
+  }
+}

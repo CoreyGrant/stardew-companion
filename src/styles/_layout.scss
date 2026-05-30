@@ -1,0 +1,280 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+body {
+  background-color: var(--body-bg, #{$color-green-dark});
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.04) 0px,
+    rgba(0, 0, 0, 0.04) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  color: var(--text, #{$color-text});
+}
+
+// ── App shell ─────────────────────────────────────────────────────────────────
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// ── Header ─────────────────────────────────────────────────────────────────────
+// Layout: [burger?] [title] [inline-nav (lg+)] [search flex:1] [theme (lg+)] [badge?]
+.app-header {
+  height: $header-height;
+  background: var(--chrome-bg, #{$color-brown-dark});
+  border-bottom: 3px solid var(--chrome-border, #{$color-brown});
+  display: flex;
+  align-items: center;
+  padding: 0 $space-3;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  gap: $space-2;
+
+  // ── Hamburger (hidden on desktop) ──
+  &__burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $color-parchment-dark;
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 0;
+
+    &:hover { color: $color-gold; }
+
+    @media (min-width: #{$bp-nav}) { display: none; }
+  }
+
+  // ── Title / logo ──
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.85rem;
+    color: $color-gold;
+    text-shadow: 1px 1px 0 color.adjust($color-gold, $lightness: -40%);
+    flex-shrink: 0;
+    white-space: nowrap;
+    text-decoration: none;
+
+    &:hover { color: $color-gold-light; }
+
+    @media (max-width: 360px) { display: none; }
+  }
+
+  // ── Inline nav (shown only at bp-nav+, hidden on mobile) ──
+  &__nav {
+    display: none;
+    align-items: stretch;
+    flex-shrink: 0;
+    height: 100%;
+
+    @media (min-width: #{$bp-nav}) {
+      display: flex;
+    }
+  }
+
+  // ── Theme buttons (shown only at bp-nav+) ──
+  &__theme {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+
+    @media (min-width: #{$bp-nav}) {
+      display: flex;
+    }
+  }
+
+  // ── Save badge ──
+  &__save-badge {
+    font-size: 0.65rem;
+    color: $color-parchment-mid;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid $color-brown-mid;
+    padding: 2px $space-2;
+    @include truncate;
+    max-width: 110px;
+    flex-shrink: 0;
+
+    // Hide on very small screens
+    @media (max-width: #{$bp-sm}) { display: none; }
+  }
+}
+
+// ── Main content ──────────────────────────────────────────────────────────────
+.app-main {
+  flex: 1;
+  padding: $space-4;
+
+  // Full-screen mode for farm planner
+  &--planner {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - #{$header-height});
+    max-width: none;
+  }
+}
+
+// ── Pages ─────────────────────────────────────────────────────────────────────
+.page {
+  max-width: $content-max;
+  margin: 0 auto;
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 1.1rem;
+    color: $color-gold;
+    text-shadow: 1px 1px 0 $color-brown-dark;
+    margin-bottom: $space-2;
+  }
+
+  &__subtitle {
+    color: var(--label-muted);  // was var(--text-light): ~2.3:1 on dark-green body bg
+    font-size: 0.85rem;
+    margin-bottom: $space-4;
+  }
+}
+
+.page-loading,
+.page-error {
+  @include panel-frame;
+  padding: $space-6;
+  text-align: center;
+  color: var(--text-mid);
+  font-family: $font-pixel;
+  font-size: 0.75rem;
+  margin-top: $space-4;
+}
+
+.page-error {
+  border-color: $color-danger;
+  color: $color-danger;
+}
+
+// ── Splash (loading screen) ───────────────────────────────────────────────────
+.splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--chrome-bg, #{$color-brown-dark});
+  gap: $space-3;
+
+  &__text {
+    font-family: $font-pixel;
+    font-size: 0.9rem;
+    color: $color-gold;
+    animation: pulse 1.2s ease-in-out infinite alternate;
+  }
+
+  &__detail {
+    color: $color-parchment-mid;  // was var(--text-light): ~3.1:1 on chrome-bg splash bg
+    font-size: 0.8rem;
+  }
+
+  &--error &__text {
+    color: $color-danger;
+    animation: none;
+  }
+}
+
+@keyframes pulse {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+// ── Back link ─────────────────────────────────────────────────────────────────
+.back-link {
+  display: inline-block;
+  font-family: $font-pixel;
+  font-size: 0.65rem;
+  color: $color-gold;
+  margin-bottom: $space-4;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Section titles ────────────────────────────────────────────────────────────
+.section-title {
+  font-family: $font-pixel;
+  font-size: 0.85rem;
+  color: $color-gold;
+  margin: $space-6 0 $space-3;
+}
+
+.subsection-title {
+  font-family: $font-pixel;
+  font-size: 0.7rem;
+  color: var(--label-muted);  // was $color-brown-mid: ~2.5:1 on dark-green body bg
+  margin: $space-4 0 $space-2;
+
+  &__hint {
+    font-family: $font-body;
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+}
+
+// ── Notice ────────────────────────────────────────────────────────────────────
+.notice {
+  @include panel-frame(var(--surface-mid));
+  padding: $space-3 $space-4;
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  margin: $space-3 0;
+
+  a { color: $color-green; text-decoration: underline; }
+}
+
+// ── 404 page ──────────────────────────────────────────────────────────────────
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: $space-4;
+
+  &__art {
+    font-size: 4rem;
+    line-height: 1;
+    opacity: 0.6;
+    filter: grayscale(0.3);
+  }
+
+  &__hint {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    max-width: 340px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &__home {
+    margin-top: $space-2;
+  }
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.empty-state {
+  text-align: center;
+  padding: $space-10 $space-4;
+  color: var(--text-light);
+  font-size: 0.85rem;
+
+  .btn { margin-top: $space-4; }
+}

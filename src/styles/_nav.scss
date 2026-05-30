@@ -1,0 +1,399 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Inline nav groups (inside .app-header at bp-nav+) ────────────────────────
+
+// Each group has a trigger button + absolute dropdown
+.nav-group {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  // Dropdown visibility is now controlled by React state (hover-with-delay).
+  // No CSS :hover rule needed — the dropdown is conditionally rendered.
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 100%;
+    padding: 0 $space-3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-parchment-dark;
+    white-space: nowrap;
+    transition: color 0.1s, background 0.1s;
+
+    &::after {
+      content: '▾';
+      font-size: 0.5rem;
+      opacity: 0.7;
+    }
+
+    &:hover {
+      color: $color-gold;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active { color: $color-gold; }
+  }
+
+  &__dropdown {
+    // React conditionally mounts this; always flex when rendered.
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    flex-direction: column;
+    background: var(--chrome-bg, #{$color-brown-dark});
+    border: 2px solid var(--chrome-border, #{$color-brown});
+    border-top: none;
+    z-index: 300;
+    padding: $space-1 0;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-3;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-parchment-dark;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.1s, color 0.1s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: $color-gold;
+    }
+
+    &--active {
+      color: $color-gold;
+      background: rgba(255, 255, 255, 0.06);
+      border-left: 2px solid $color-gold;
+      padding-left: calc(#{$space-3} - 2px);
+    }
+
+    &__icon {
+      font-size: 0.75rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Standalone link (Profiles, etc.) — same height as group trigger
+.nav-standalone-link {
+  display: flex;
+  align-items: center;
+  padding: 0 $space-3;
+  font-family: $font-pixel;
+  font-size: 0.65rem;
+  color: $color-parchment-dark;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.1s, background 0.1s;
+
+  &:hover {
+    color: $color-gold;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &--active {
+    color: $color-gold;
+  }
+}
+
+// ── Theme dropdown (single icon → small menu) ─────────────────────────────────
+.theme-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    transition: border-color 0.1s, background 0.1s;
+    opacity: 0.65;
+
+    &:hover, &--open {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      opacity: 1;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--chrome-bg, #{$color-brown-dark});
+    border: 2px solid var(--chrome-border, #{$color-brown});
+    z-index: 300;
+    padding: $space-1 0;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+    min-width: 110px;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-parchment-dark;
+    text-align: left;
+    white-space: nowrap;
+    transition: background 0.1s, color 0.1s;
+
+    &:hover { background: rgba(255, 255, 255, 0.06); color: $color-gold; }
+
+    &--active {
+      color: $color-gold;
+      background: rgba(255, 255, 255, 0.06);
+      border-left: 2px solid $color-gold;
+      padding-left: calc(#{$space-3} - 2px);
+    }
+  }
+
+  &__option-icon { font-size: 0.8rem; line-height: 1; }
+}
+
+// ── Legacy theme toggle buttons (kept for reference; unused in desktop header) ──
+.nav-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  transition: border-color 0.1s, background 0.1s;
+  opacity: 0.55;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    opacity: 0.9;
+  }
+
+  &--active {
+    border-color: $color-gold;
+    background: rgba(255, 255, 255, 0.08);
+    opacity: 1;
+  }
+}
+
+// ── Mobile drawer ─────────────────────────────────────────────────────────────
+
+.nav-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+
+  &--open { display: block; }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+
+  &__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 85vw);
+    background: var(--chrome-bg, #{$color-brown-dark});
+    border-right: 3px solid var(--chrome-border, #{$color-brown});
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: drawer-slide-in 0.2s ease-out;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-3 $space-4;
+    border-bottom: 2px solid var(--chrome-border, #{$color-brown});
+    flex-shrink: 0;
+
+    &-title {
+      font-family: $font-pixel;
+      font-size: 0.75rem;
+      color: $color-gold;
+    }
+  }
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $color-parchment-dark;
+    font-size: 1rem;
+    &:hover { color: $color-gold; }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-2 0;
+  }
+
+  // Accordion groups
+  &__group {
+    border-bottom: 1px solid rgba($color-brown, 0.4);
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: $space-3 $space-4;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: $font-pixel;
+      font-size: 0.65rem;
+      color: $color-parchment-dark;
+      text-align: left;
+
+      &:hover { background: rgba(255, 255, 255, 0.04); color: $color-gold; }
+
+      &-chevron {
+        font-size: 0.55rem;
+        transition: transform 0.15s;
+        &--open { transform: rotate(180deg); }
+      }
+    }
+
+    &-items {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: $space-2;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-4 $space-2 $space-6;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-parchment-mid;
+    text-decoration: none;
+
+    &:hover { background: rgba(255, 255, 255, 0.04); color: $color-gold; }
+
+    &--active {
+      color: $color-gold;
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 2px solid $color-gold;
+      padding-left: calc(#{$space-6} - 2px);
+    }
+
+    &__icon { font-size: 0.75rem; line-height: 1; flex-shrink: 0; }
+  }
+
+  &__standalone {
+    padding: $space-2 0;
+    border-top: 1px solid rgba($color-brown, 0.4);
+  }
+
+  &__footer {
+    padding: $space-3 $space-4;
+    border-top: 2px solid var(--chrome-border, #{$color-brown});
+    flex-shrink: 0;
+  }
+
+  &__theme-label {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-parchment-dark;
+    margin-bottom: $space-2;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__theme-btns {
+    display: flex;
+    gap: $space-2;
+  }
+
+  &__theme-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: $space-2;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    transition: border-color 0.1s, background 0.1s;
+
+    span {
+      font-family: $font-pixel;
+      font-size: 0.45rem;
+      color: $color-parchment-dark;
+    }
+
+    &:hover { background: rgba(255, 255, 255, 0.09); }
+
+    &--active {
+      border-color: $color-gold;
+      background: rgba(255, 255, 255, 0.09);
+      span { color: $color-gold; }
+    }
+  }
+}
+
+@keyframes drawer-slide-in {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+// Drawer never shows on desktop
+@media (min-width: #{$bp-nav}) {
+  .nav-drawer { display: none !important; }
+}

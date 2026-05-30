@@ -1,0 +1,293 @@
+@use 'variables' as *;
+@use 'sass:color';
+
+// ── Seasonal Calendar ─────────────────────────────────────────────────────────
+
+.page--calendar {}
+
+// Calendar options toggle — sits on dark body bg in Stardew theme
+.calendar-options {
+  margin: $space-3 0;
+  font-size: 0.88rem;
+
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    cursor: pointer;
+    color: var(--label-muted);  // parchment-dark on dark bg; adapts to light/dark themes
+
+    input[type='checkbox'] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      accent-color: $color-green;
+    }
+  }
+}
+
+// Legend row — items use surface background so text is readable regardless of body bg
+.calendar-legend {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+  margin-bottom: $space-4;
+  font-size: 0.8rem;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    padding: 3px $space-2 3px ($space-2 - 1px);
+    border-radius: 3px;
+    font-weight: 600;
+    // Surface base so dark text is readable on any body bg
+    background: var(--surface-mid);
+    border-left: 3px solid transparent;
+
+    &--festival {
+      border-left-color: #7c3aed;
+      color: #5b21b6;
+    }
+    &--birthday {
+      border-left-color: $color-loved;
+      color: $color-loved;
+    }
+    &--crop {
+      border-left-color: $color-green;
+      color: $color-green-dark;
+    }
+  }
+}
+
+// 7-column calendar grid (Mon–Sun, 4 weeks)
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  margin-bottom: $space-6;
+
+  // Day-of-week header cells — render on body bg, use label-muted for contrast
+  &__dow {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--label-muted);  // parchment-dark on Stardew dark bg; adapts per theme
+    padding: $space-1 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  // Season-themed border color
+  &[data-season='spring'] .cal-day { border-color: color.adjust($color-spring, $lightness: -10%); }
+  &[data-season='summer'] .cal-day { border-color: color.adjust($color-summer, $lightness: -10%); }
+  &[data-season='fall']   .cal-day { border-color: color.adjust($color-fall,   $lightness: -10%); }
+  &[data-season='winter'] .cal-day { border-color: color.adjust($color-winter, $lightness: -10%); }
+}
+
+// Individual day cell
+.cal-day {
+  background: var(--surface);
+  border: 1.5px solid $color-parchment-dark;
+  border-radius: 3px;
+  padding: 4px 5px;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+
+  // Festival day — only the border changes; background stays consistent with all days
+  &--festival {
+    border-color: rgba(#7c3aed, 0.5);
+  }
+
+  // Today (save-aware current day) — gold ring
+  &--today {
+    outline: 2px solid $color-gold;
+    outline-offset: -2px;
+    background: rgba($color-gold, 0.08);
+
+    .cal-day__number {
+      color: $color-gold;
+      font-weight: 700;
+    }
+  }
+
+  // Day number
+  &__number {
+    font-family: $font-pixel;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: $color-brown;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  // Event row (festival or birthday)
+  &__event {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    border-radius: 2px;
+    padding: 1px 3px;
+    font-size: 0.68rem;
+    line-height: 1.2;
+
+    &--festival {
+      background: rgba(#7c3aed, 0.15);
+      color: #5b21b6;
+    }
+
+    &--birthday {
+      background: rgba($color-loved, 0.12);
+      color: $color-loved;
+    }
+
+    &--crop {
+      background: rgba($color-green, 0.12);
+      color: $color-green-dark;
+    }
+  }
+
+  &__event-emoji {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  &__event-name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  // NPC portrait chip (16×16 from portrait sprite)
+  // Sheets are 128px wide; first 64×64 frame shown at 16×16.
+  // background-size at (128 × 0.25) = 32px makes the 64px-wide frame fill 16px.
+  &__portrait {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background-size: 32px auto;      // scale 128px sheet by 0.25 so first 64px frame → 16px
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    border-radius: 2px;
+    border: 1px solid rgba($color-loved, 0.3);
+    image-rendering: pixelated;
+    display: inline-block;
+  }
+}
+
+// ── Crop Deadline Table ────────────────────────────────────────────────────────
+// Wrapped in a surface panel so all internal text (var(--text) etc.) is
+// readable on parchment rather than on the dark body background.
+
+.calendar-crop-list {
+  margin-top: $space-6;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  padding: $space-4;
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 1rem;
+    color: var(--text);   // readable on --surface (parchment); was $color-brown-dark on body bg
+    margin-bottom: $space-3;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    max-width: 600px;
+
+    th {
+      text-align: left;
+      padding: $space-1 $space-3 $space-1 $space-2;
+      border-bottom: 2px solid var(--border);
+      font-weight: 700;
+      color: var(--text-mid);  // readable on --surface panel
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      padding: 5px $space-3 5px $space-2;
+      border-bottom: 1px solid var(--surface-dark);
+      color: var(--text);  // readable on --surface panel
+    }
+
+    tr:hover td {
+      background: var(--surface-mid);  // subtle parchment-to-darker-parchment hover
+    }
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  // "+ Summer" / "+ Fall" etc. season tags on multi-season crops
+  &__season-tag {
+    display: inline-block;
+    margin-left: $space-1;
+    padding: 1px 5px;
+    border-radius: 10px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    vertical-align: middle;
+
+    &--spring { background: rgba($color-spring, 0.15); color: #335107; }
+    &--summer { background: rgba($color-summer, 0.18); color: #6b4600; }
+    &--fall   { background: rgba($color-fall,   0.15); color: #7a2e06; }
+    &--winter { background: rgba($color-winter, 0.15); color: #0a57c2; }
+  }
+
+  &__days {
+    color: var(--text-mid);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__lpd {
+    font-weight: 600;
+
+    &--early {
+      color: $color-danger;
+    }
+  }
+
+  &__harvests {
+    font-weight: 700;
+    color: $color-green;
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: #{$bp-sm}) {
+  .cal-day {
+    min-height: 54px;
+    padding: 3px;
+
+    &__event-name {
+      display: none;
+    }
+
+    &__event {
+      padding: 1px 2px;
+    }
+
+    &__number {
+      font-size: 0.65rem;
+    }
+  }
+
+  .calendar-grid__dow {
+    font-size: 0.6rem;
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "stardew-companion",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "extract": "node scripts/extract-gamedata.mjs",
+    "extract:mods": "node scripts/extract-gamedata.mjs --mods",
+    "data": "node scripts/build-data.mjs",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "@types/qrcode": "^1.5.6",
+    "fflate": "^0.8.3",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "fast-xml-parser": "^5.8.0",
+    "gh-pages": "^6.2.0",
+    "sass": "^1.81.0",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5"
+  }
+}

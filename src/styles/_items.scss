@@ -1,0 +1,813 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Item grid ─────────────────────────────────────────────────────────────────
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-3;
+
+  @include sm { grid-template-columns: repeat(3, 1fr); }
+  @include md { grid-template-columns: repeat(4, 1fr); }
+  @include lg { grid-template-columns: repeat(5, 1fr); }
+}
+
+.item-card {
+  @include panel-frame;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.45);
+  }
+
+  &__sprite {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: $color-brown-dark;
+    border: 2px solid $color-brown-mid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-pixel;
+    font-size: 1rem;
+    color: $color-gold;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--text);
+    @include truncate;
+  }
+
+  &__category {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: capitalize;
+  }
+
+  &__value {
+    font-size: 0.75rem;
+    color: $color-gold;
+  }
+
+  &__energy {
+    font-size: 0.7rem;
+    color: $color-green;
+    font-weight: 600;
+  }
+}
+
+// ── Item detail hero ──────────────────────────────────────────────────────────
+.item-hero {
+  display: flex;
+  gap: $space-4;
+  margin-bottom: $space-4;
+
+  &__sprite {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    background: $color-brown-dark;
+    border: 3px solid $color-brown;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-pixel;
+    font-size: 1.8rem;
+    color: $color-gold;
+    @include pixel-shadow;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__name {
+    font-family: $font-pixel;
+    font-size: 1rem;
+    color: $color-gold;
+    text-shadow: 1px 1px 0 $color-brown-dark;
+  }
+
+  &__category  { font-size: 0.8rem; color: var(--text-light); text-transform: capitalize; }
+  &__value     { font-size: 0.85rem; color: var(--text); }
+  &__energy    { font-size: 0.85rem; color: #2d6a4f; }
+  &__cheat     { font-size: 0.8rem; color: var(--text-light); }
+}
+
+// ── Crop info ─────────────────────────────────────────────────────────────────
+.crop-info {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-bottom: $space-4;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.quality-table-wrap {
+  @include scroll-x;
+}
+
+.quality-table {
+  width: 100%;
+  min-width: 340px;
+  font-size: 0.8rem;
+
+  th {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-gold;
+    background: $color-brown-dark;
+    padding: $space-2 $space-3;
+    text-align: right;
+
+    &:first-child { text-align: left; }
+  }
+
+  td {
+    padding: $space-2 $space-3;
+    border-bottom: 1px solid $color-parchment-dark;
+    text-align: right;
+    color: var(--text-mid);
+
+    &:first-child { text-align: left; font-family: $font-pixel; font-size: 0.6rem; }
+  }
+
+  &__row--active td {
+    background: rgba($color-gold, 0.12);
+    font-weight: bold;
+    color: var(--text);
+  }
+}
+
+// ── NPC affinity ──────────────────────────────────────────────────────────────
+.npc-affinity-group {
+  margin-bottom: $space-3;
+
+  strong {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: var(--text-mid);
+    display: block;
+    margin-bottom: $space-2;
+  }
+}
+
+.npc-affinity-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1 $space-3;
+
+  li { font-size: 0.85rem; }
+}
+
+.obtain-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  list-style: disc;
+  padding-left: $space-4;
+}
+
+// ── Recipe / Bundle reference lists ──────────────────────────────────────────
+
+.recipe-ref-list,
+.bundle-ref-list,
+.machine-ref-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.recipe-ref-item,
+.bundle-ref-item {
+  display: flex;
+  align-items: baseline;
+  gap: $space-2;
+  font-size: 0.85rem;
+  padding: 3px 0;
+  border-bottom: 1px solid $color-parchment-dark;
+
+  &:last-child { border-bottom: none; }
+
+  &__name {
+    font-weight: 600;
+    color: $color-brown-dark;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    &:hover { color: $color-brown; text-decoration: underline; }
+  }
+
+  &__source,
+  &__meta {
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+}
+
+.machine-ref-item {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 0.85rem;
+  padding: 4px 0;
+  border-bottom: 1px solid $color-parchment-dark;
+
+  &:last-child { border-bottom: none; }
+
+  &__machine {
+    font-weight: 600;
+    color: $color-brown-dark;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    &:hover { color: $color-brown; text-decoration: underline; }
+  }
+
+  &__arrow {
+    color: $color-brown-light;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  &__output {
+    flex: 1;
+    color: var(--text);
+    font-size: 0.82rem;
+    min-width: 0;
+  }
+
+  &__time {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: var(--text-light);
+    background: var(--surface-dark);
+    border: 1px solid $color-parchment-mid;
+    padding: 1px $space-1;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
+  }
+}
+
+// ── Crops page ────────────────────────────────────────────────────────────────
+
+.crop-table {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 64px 1fr 72px 60px;
+    gap: $space-3;
+    padding: $space-2 $space-3;
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    border-bottom: 2px solid $color-brown;
+  }
+
+  &--with-harvests &__header { grid-template-columns: 1fr 64px 1fr 72px 60px 44px; }
+}
+
+.crop-row {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr 72px 60px;
+  gap: $space-3;
+  align-items: center;
+  padding: $space-3;
+  border-bottom: 1px solid rgba($color-brown, 0.25);
+  transition: background 0.1s;
+
+  .crop-table--with-harvests & { grid-template-columns: 1fr 64px 1fr 72px 60px 44px; }
+
+  &--cant-plant { opacity: 0.45; }
+
+  &__harvests {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    text-align: right;
+    color: $color-green;
+
+    &--zero { color: #a04040; font-size: 0.8rem; }
+    &--na   { color: var(--text-light); }
+  }
+
+  &:hover { background: rgba($color-parchment-dark, 0.15); }
+
+  // Season-tinted left border
+  border-left: 3px solid transparent;
+  &--spring { border-left-color: $color-spring; }
+  &--summer { border-left-color: $color-summer; }
+  &--fall   { border-left-color: $color-fall;   }
+  &--winter { border-left-color: $color-winter; }
+
+  &__name {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-2;
+    min-width: 0;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: rgba($color-brown-dark, 0.5);
+    border: 1px solid rgba($color-brown, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+
+    &--placeholder {
+      font-family: $font-pixel;
+      font-size: 1rem;
+      color: $color-gold;
+    }
+  }
+
+  &__name-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &__link {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: var(--text);
+    text-decoration: none;
+    @include truncate;
+
+    &:hover { color: $color-green; text-decoration: underline; }
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+    align-items: center;
+  }
+
+  &__seed {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    text-decoration: none;
+
+    &:hover { color: $color-green; text-decoration: underline; }
+  }
+
+  &__seed-price {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+    background: rgba($color-brown, 0.1);
+    border: 1px solid rgba($color-brown, 0.2);
+    border-radius: 2px;
+    padding: 1px 4px;
+  }
+
+  &__seasons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__growth {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__sell {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: var(--text);
+    text-align: right;
+
+    strong { color: $color-gold-light; }
+  }
+
+  &__multi {
+    font-size: 0.65rem;
+    color: var(--text-light);
+  }
+
+  &__gpd {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-green-light;
+    text-align: right;
+
+    strong { color: $color-green-light; }
+  }
+}
+
+// ── Season pips ───────────────────────────────────────────────────────────────
+
+.season-pip {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  opacity: 0.25;
+  transition: opacity 0.1s;
+
+  &--on { opacity: 1; }
+
+  &--spring { background: $color-spring; }
+  &--summer { background: $color-summer; }
+  &--fall   { background: $color-fall;   }
+  &--winter { background: $color-winter; }
+}
+
+// ── Grow bar ──────────────────────────────────────────────────────────────────
+
+.grow-bar {
+  position: relative;
+  height: 8px;
+  background: rgba($color-brown-dark, 0.6);
+  border: 1px solid rgba($color-brown, 0.4);
+  border-radius: 2px;
+  overflow: visible;
+
+  &__initial {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: $color-green;
+    border-radius: 2px 0 0 2px;
+    min-width: 2px;
+  }
+
+  &__regrow {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: rgba($color-green-light, 0.55);
+    border-left: 1px dashed $color-green-light;
+  }
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+}
+
+// ── Crop badges ───────────────────────────────────────────────────────────────
+
+.crop-badge {
+  display: inline-block;
+  font-family: $font-pixel;
+  font-size: 0.48rem;
+  padding: 1px $space-1;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+
+  &--multi   { background: rgba($color-gold, 0.15); color: color.adjust($color-gold, $lightness: -20%); border: 1px solid rgba($color-gold, 0.4); }
+  &--trellis { background: rgba(#a0522d, 0.25); color: #a0522d; border: 1px solid rgba(#a0522d, 0.4); }
+  &--giant   { background: rgba($color-green, 0.2); color: color.adjust($color-green, $lightness: -10%); border: 1px solid rgba($color-green, 0.4); }
+  &--paddy   { background: rgba($color-winter, 0.2); color: color.adjust($color-winter, $lightness: -25%); border: 1px solid rgba($color-winter, 0.4); }
+}
+
+// ── Category buttons — season tints ──────────────────────────────────────────
+
+.category-btn {
+  &--spring { border-color: rgba($color-spring, 0.6); &.category-btn--active { background: rgba($color-spring, 0.15); color: color.adjust($color-spring, $lightness: -25%); } }
+  &--summer { border-color: rgba($color-summer, 0.6); &.category-btn--active { background: rgba($color-summer, 0.15); color: color.adjust($color-summer, $lightness: -25%); } }
+  &--fall   { border-color: rgba($color-fall,   0.6); &.category-btn--active { background: rgba($color-fall,   0.15); color: color.adjust($color-fall,   $lightness: -15%); } }
+  &--winter { border-color: rgba($color-winter, 0.6); &.category-btn--active { background: rgba($color-winter, 0.15); color: color.adjust($color-winter, $lightness: -25%); } }
+}
+
+// ── Fish guide ────────────────────────────────────────────────────────────────
+
+.page__subtitle {
+  font-size: 0.8rem;
+  color: var(--label-muted);
+  margin-top: -$space-2;
+  margin-bottom: $space-4;
+}
+
+.fish-sort-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-3;
+  font-size: 0.75rem;
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: var(--text-light);
+    margin-right: $space-1;
+  }
+
+  &__sep {
+    width: 1px;
+    height: 18px;
+    background: rgba($color-brown, 0.35);
+    margin: 0 $space-1;
+    flex-shrink: 0;
+  }
+}
+
+.fish-sort-btn {
+  @include btn-base;
+  font-size: 0.6rem;
+
+  &--active {
+    background: $color-brown-mid;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+}
+
+.fish-table {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 2fr 64px 48px 80px 1fr 100px 56px;
+    gap: $space-2;
+    padding: $space-2 $space-3;
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    border-bottom: 2px solid $color-brown;
+
+    @include sm { font-size: 0.55rem; }
+  }
+}
+
+.fish-row {
+  display: grid;
+  grid-template-columns: 2fr 64px 48px 80px 1fr 100px 56px;
+  gap: $space-2;
+  align-items: center;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid rgba($color-brown, 0.2);
+  transition: background 0.1s;
+
+  &:hover { background: rgba($color-parchment-dark, 0.15); }
+
+  &--legendary { border-left: 3px solid rgba($color-gold, 0.6); }
+  &--trap      { border-left: 3px solid rgba($color-brown-mid, 0.6); opacity: 0.85; }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-width: 0;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: rgba($color-brown-dark, 0.5);
+    border: 1px solid rgba($color-brown, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__name-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-1;
+    min-width: 0;
+
+    a { font-size: 0.8rem; color: var(--text); text-decoration: none; &:hover { color: $color-green; } }
+  }
+
+  &__seasons {
+    display: flex;
+    gap: 3px;
+  }
+
+  &__weather {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  &__time {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  &__time-slot {
+    font-size: 0.6rem;
+    color: var(--text-mid);
+    white-space: nowrap;
+  }
+
+  &__location {
+    font-size: 0.7rem;
+    color: var(--text-light);
+  }
+
+  &__difficulty { }
+
+  &__trap-label {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+  }
+
+  &__sell {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-gold;
+    text-align: right;
+  }
+}
+
+.fish-badge {
+  display: inline-block;
+  font-family: $font-pixel;
+  font-size: 0.45rem;
+  padding: 1px $space-1;
+  border-radius: 2px;
+  border: 1px solid;
+  white-space: nowrap;
+
+  &--legendary { color: $color-gold; border-color: rgba($color-gold, 0.6); background: rgba($color-gold, 0.1); }
+  &--trap { color: var(--text-light); border-color: rgba($color-text-light, 0.4); background: rgba(0,0,0,0.2); }
+}
+
+.fish-difficulty {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+
+  &__bar {
+    flex: 1;
+    height: 6px;
+    background: rgba($color-brown-dark, 0.6);
+    border: 1px solid rgba($color-brown, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.2s;
+  }
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.48rem;
+    color: var(--text-mid);
+    min-width: 20px;
+    text-align: right;
+  }
+}
+
+// ── Food buff panel ───────────────────────────────────────────────────────────
+
+.buff-panel {
+  padding: $space-2 0;
+
+  &--debuff {
+    .buff-panel__header { color: #a04040; }
+    .buff-stat--pos .buff-stat__val { color: #a04040; }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: $color-green;
+    margin-bottom: $space-2;
+  }
+
+  &__duration {
+    font-size: 0.55rem;
+    color: var(--text-light);
+    background: var(--surface-dark);
+    border: 1px solid rgba($color-brown, 0.3);
+    border-radius: 2px;
+    padding: 1px $space-1;
+  }
+}
+
+.buff-stat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.buff-stat {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  background: var(--surface-mid);
+  border: 1px solid $color-parchment-dark;
+  border-radius: $radius-sm;
+  padding: $space-1 $space-2;
+
+  &__emoji {
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 0.7rem;
+    color: var(--text);
+  }
+
+  &__val {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+
+  &--pos &__val { color: $color-green; }
+  &--neg &__val { color: #a04040; }
+}
+
+// ── Quality sell price badges ─────────────────────────────────────────────────
+
+.item-hero__quality-prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+  margin-top: 3px;
+}
+
+.quality-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--surface-mid);
+  border: 1px solid $color-parchment-dark;
+  border-radius: $radius-sm;
+  padding: 2px $space-2;
+
+  &__star {
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.45rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__val {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+}

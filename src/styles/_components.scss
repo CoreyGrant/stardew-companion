@@ -1,0 +1,539 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Panel ─────────────────────────────────────────────────────────────────────
+.panel {
+  @include panel-frame;
+  margin-bottom: $space-4;
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.75rem;
+    color: var(--text);
+    background: var(--surface-dark);
+    border-bottom: 2px solid $color-brown;
+    padding: $space-2 $space-4;
+    display: block;
+    cursor: pointer;
+
+    &::-webkit-details-marker { display: none; }
+  }
+
+  &__body {
+    padding: $space-4;
+  }
+
+  // When used as <details>
+  &[open] > summary::after { content: ' ▲'; font-size: 0.5rem; }
+  & summary::after          { content: ' ▼'; font-size: 0.5rem; }
+}
+
+// ── Gift tags ─────────────────────────────────────────────────────────────────
+.gift-tag {
+  display: inline-block;
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  padding: 2px $space-2;
+  border: 1px solid transparent;
+
+  &--loved    { color: $color-loved;    border-color: $color-loved;    background: rgba($color-loved, 0.1); }
+  &--liked    { color: $color-liked;    border-color: $color-liked;    background: rgba($color-liked, 0.1); }
+  &--neutral  { color: $color-neutral;  border-color: $color-neutral;  }
+  &--disliked { color: $color-disliked; border-color: $color-disliked; background: rgba($color-disliked, 0.1); }
+  &--hated    { color: $color-danger;   border-color: $color-danger;   background: rgba($color-danger, 0.1); }
+}
+
+// ── Progress bar ──────────────────────────────────────────────────────────────
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-4;
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--text-light);
+    min-width: 60px;
+  }
+
+  &__track {
+    flex: 1;
+    height: 12px;
+    background: $color-brown-dark;
+    border: 2px solid $color-brown;
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    background: linear-gradient(to right, $color-green, $color-green-light);
+    transition: width 0.3s ease;
+  }
+
+  &__value {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--text-mid);
+    min-width: 36px;
+    text-align: right;
+  }
+}
+
+// ── GameLink ──────────────────────────────────────────────────────────────────
+.game-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  vertical-align: middle;
+  color: var(--link);  // was $color-green (~4.0:1 on parchment); --link is calibrated per theme
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover { color: var(--link); opacity: 0.75; }
+  &--npc  { color: #0369a1; }  // 4.8:1 on parchment ✓
+  &--npc:hover { color: #0284c7; }
+
+  img, & > div { flex-shrink: 0; }
+}
+
+// ── Buttons ───────────────────────────────────────────────────────────────────
+.btn {
+  @include btn-base;
+
+  &--primary {
+    background: $color-green;
+    border-color: $color-green-dark;
+    color: $color-parchment;
+    @include pixel-shadow($color-green-dark);
+  }
+
+  &--danger {
+    background: $color-danger;
+    border-color: color.adjust($color-danger, $lightness: -15%);
+    color: #fff;
+    @include pixel-shadow(color.adjust($color-danger, $lightness: -20%));
+  }
+
+  &--sm {
+    padding: $space-1 $space-2;
+    font-size: 0.6rem;
+  }
+}
+
+// ── Filter bar ────────────────────────────────────────────────────────────────
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-4;
+
+  &__search {
+    flex: 1;
+    min-width: 180px;
+    padding: $space-2 $space-3;
+    border: 2px solid $color-brown;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.85rem;
+
+    &::placeholder { color: var(--text-light); }
+    &:focus { outline: 2px solid $color-gold; outline-offset: 1px; }
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: 0.8rem;
+    color: $color-parchment-mid;
+    cursor: pointer;
+
+    input { cursor: pointer; }
+  }
+
+  &__seasons,
+  &__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+  }
+}
+
+.season-btn,
+.category-btn,
+.sort-btn {
+  @include btn-base;
+  font-size: 0.6rem;
+
+  &--active {
+    background: $color-brown-mid;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  // Season accent colours apply to both season-btn and category-btn active states
+  &--spring { &.season-btn--active, &.category-btn--active { background: $color-spring; color: $color-brown-dark; } }
+  &--summer { &.season-btn--active, &.category-btn--active { background: $color-summer; color: $color-brown-dark; } }
+  &--fall   { &.season-btn--active, &.category-btn--active { background: $color-fall;   color: $color-parchment; } }
+  &--winter { &.season-btn--active, &.category-btn--active { background: $color-winter; color: $color-brown-dark; } }
+}
+
+// Sort buttons group inside filter-bar
+.filter-bar__sorts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+}
+
+// ── Form fields ───────────────────────────────────────────────────────────────
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  margin-bottom: $space-4;
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: var(--text-mid);
+  }
+
+  input, select, textarea {
+    padding: $space-2 $space-3;
+    border: 2px solid $color-brown;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.85rem;
+
+    &:focus { outline: 2px solid $color-gold; outline-offset: 1px; }
+  }
+
+  // Row layout: two inline fields side-by-side
+  &--row {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: $space-3;
+    margin-bottom: $space-4;
+  }
+
+  &--inline {
+    margin-bottom: 0;
+    flex: 1;
+  }
+}
+
+.control-label {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  font-family: $font-pixel;
+  font-size: 0.6rem;
+  color: var(--text-mid);
+
+  input, select {
+    padding: $space-2 $space-3;
+    border: 2px solid $color-brown;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.85rem;
+    min-width: 80px;
+
+    &:focus { outline: 2px solid $color-gold; outline-offset: 1px; }
+  }
+
+  &__hint {
+    font-family: $font-body;
+    font-size: 0.75rem;
+    color: var(--text-mid);  // was $color-gold (~1.8:1 on parchment)
+  }
+
+  &--wide { grid-column: 1 / -1; }
+}
+
+.toggle-label {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text);
+
+  input { margin-top: 3px; flex-shrink: 0; }
+
+  &__hint {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: $space-1;
+  }
+}
+
+// ── Home page ─────────────────────────────────────────────────────────────────
+.home-save-summary {
+  margin-bottom: $space-4;
+}
+
+.home-save-body {
+  display: flex;
+  gap: $space-6;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  .save-summary__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    min-width: 180px;
+  }
+
+  .birthday-widget {
+    flex: 1;
+    min-width: 220px;
+  }
+}
+
+.home-groups {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.home-group {
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--label-muted);  // was var(--text-light): ~2.3:1 on dark-green body bg
+    margin-bottom: $space-2;
+    padding-bottom: $space-1;
+    border-bottom: 1px solid var(--border);  // was $color-parchment-dark (invisible in light theme)
+  }
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-3;
+  margin-top: 0;
+
+  @include md {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.home-card {
+  @include panel-frame;
+  padding: $space-3 $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  &__emoji {
+    font-size: 1.3rem;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: var(--text);
+  }
+
+  &__desc {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+}
+
+// ── Onboarding modal ──────────────────────────────────────────────────────────
+.onboarding-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba($color-brown-dark, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: $space-4;
+}
+
+.onboarding-modal {
+  @include panel-frame;
+  width: 100%;
+  max-width: 440px;
+  padding: $space-6;
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.9rem;
+    color: $color-gold;
+    margin-bottom: $space-3;
+    line-height: 1.4;
+  }
+
+  &__desc {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+    margin-bottom: $space-5;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+    margin-top: $space-4;
+  }
+
+  &__hint {
+    margin-top: $space-4;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    text-align: center;
+  }
+}
+
+// ── Birthday widget ───────────────────────────────────────────────────────────
+
+.birthday-widget {
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: var(--text-mid);
+    margin-bottom: $space-2;
+  }
+
+  &__empty {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+}
+
+.birthday-row {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 $space-2;
+  border-radius: 3px;
+  background: var(--surface-mid);
+  border: 1px solid $color-parchment-dark;
+
+  &--today {
+    background: color.mix($color-gold-light, $color-parchment, 25%);
+    border-color: $color-gold;
+  }
+
+  &__portrait {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-dark);
+    border: 1px solid $color-brown;
+
+    &--fallback {
+      font-family: $font-pixel;
+      font-size: 0.7rem;
+      color: var(--text-mid);
+    }
+  }
+
+  &__portrait-img {
+    display: block;
+    image-rendering: pixelated;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__name {
+    flex: 1;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    &:hover { color: $color-brown-mid; text-decoration: underline; }
+  }
+
+  &__date {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  &__countdown {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+    white-space: nowrap;
+    min-width: 56px;
+    text-align: right;
+
+    &--today {
+      color: $color-text;  // was $color-gold (~1.9:1 on warm-yellow today-row bg)
+      font-size: 0.55rem;
+    }
+  }
+}
+
+// ── Error boundary ────────────────────────────────────────────────────────────
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: $space-4;
+  min-height: 60vh;
+
+  &__message {
+    font-family: monospace;
+    font-size: 0.85rem;
+    background: rgba($color-danger, 0.1);
+    border: 1px solid rgba($color-danger, 0.4);
+    border-radius: 4px;
+    padding: $space-3 $space-4;
+    color: #fcc;
+    max-width: 480px;
+    word-break: break-word;
+  }
+
+  &__hint {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    max-width: 380px;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-3;
+  }
+}

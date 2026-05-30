@@ -1,0 +1,712 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Full-screen planner layout ────────────────────────────────────────────────
+
+.page--farm-planner {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+  position: relative;
+}
+
+// ── Sidebar shell ─────────────────────────────────────────────────────────────
+
+.planner-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: $color-brown-dark;
+  border-right: 3px solid $color-brown;
+  overflow: hidden;
+
+  &__seasons {
+    padding: $space-2 $space-3;
+    border-bottom: 2px solid $color-brown;
+    flex-shrink: 0;
+  }
+
+  // scrollable tab content
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+  }
+
+  &__actions {
+    padding: $space-2 $space-3;
+    border-top: 2px solid $color-brown;
+    display: flex;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
+}
+
+// ── Season toggle ─────────────────────────────────────────────────────────────
+
+.planner-season {
+  display: flex;
+  gap: $space-1;
+
+  &__btn {
+    @include btn-base;
+    flex: 1;
+    font-size: 0.6rem;
+    padding: $space-1 0;
+    text-align: center;
+
+    // Inactive: muted
+    opacity: 0.55;
+
+    // Per-season border tint (always present)
+    &--spring { border-color: $color-spring; }
+    &--summer { border-color: $color-summer; }
+    &--fall   { border-color: $color-fall;   }
+    &--winter { border-color: $color-winter; }
+
+    // Active: full opacity, coloured background, NO position shift
+    &--active {
+      opacity: 1;
+      box-shadow: none;
+      transform: none;
+
+      &.planner-season__btn--spring { background: rgba($color-spring, 0.3); color: $color-spring; }
+      &.planner-season__btn--summer { background: rgba($color-summer, 0.3); color: $color-summer; }
+      &.planner-season__btn--fall   { background: rgba($color-fall,   0.3); color: $color-fall;   }
+      &.planner-season__btn--winter { background: rgba($color-winter, 0.3); color: $color-winter; }
+    }
+  }
+}
+
+// ── Island tropical label (replaces season buttons) ──────────────────────────
+
+.planner-season--island {
+  justify-content: center;
+  align-items: center;
+  min-height: 24px;
+}
+
+.planner-season__tropical {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: $color-summer;
+  letter-spacing: 0.02em;
+  padding: $space-1 $space-2;
+  border: 1px solid rgba($color-summer, 0.45);
+  border-radius: $radius-sm;
+  background: rgba($color-summer, 0.1);
+}
+
+// ── Tab bar ───────────────────────────────────────────────────────────────────
+
+.planner-tabs {
+  display: flex;
+  border-bottom: 2px solid $color-brown;
+  flex-shrink: 0;
+
+  &__tab {
+    flex: 1;
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    padding: $space-2 $space-1;
+    text-align: center;
+    background: none;
+    border: none;
+    border-right: 1px solid rgba($color-brown, 0.5);
+    border-bottom: 2px solid transparent;
+    color: $color-parchment-dark;
+    cursor: pointer;
+    transition: color 0.1s, background 0.1s;
+    margin-bottom: -2px; // overlap the container border
+
+    &:last-child { border-right: none; }
+    &:hover { color: $color-gold; background: rgba($color-gold, 0.08); }
+
+    &--active {
+      color: $color-gold;
+      background: rgba($color-gold, 0.1);
+      border-bottom-color: $color-gold;
+    }
+  }
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+
+.planner-search {
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid rgba($color-brown, 0.4);
+  flex-shrink: 0;
+
+  &__input {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid $color-brown;
+    border-radius: 2px;
+    color: $color-parchment;
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    padding: $space-1 $space-2;
+    outline: none;
+
+    &::placeholder { color: var(--text-light); }
+    &:focus { border-color: $color-gold; }
+
+    // hide browser search clear icon
+    &::-webkit-search-cancel-button { display: none; }
+  }
+}
+
+// ── Tab content body ──────────────────────────────────────────────────────────
+
+.planner-tab-body {
+  padding: $space-2 $space-3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+}
+
+// ── Group labels (inside a tab) ───────────────────────────────────────────────
+
+.planner-group-label {
+  width: 100%;
+  font-size: 0.55rem;
+  font-family: $font-pixel;
+  color: $color-parchment-dark;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: $space-2;
+  padding-top: $space-2;
+  border-top: 1px solid rgba($color-brown, 0.35);
+
+  &:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+}
+
+// ── Chips (buildings / items) ─────────────────────────────────────────────────
+
+.planner-chip {
+  @include btn-base;
+  font-size: 0.6rem;
+  padding: $space-1;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+  flex: 0 0 calc(50% - #{$space-1} / 2);
+  min-width: 0;
+  line-height: 1.3;
+
+  &--active {
+    background: rgba($color-gold, 0.25);
+    border-color: $color-gold;
+    color: $color-gold;
+    box-shadow: none;
+    transform: none;
+  }
+
+  &--sprite {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+
+    span {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.3;
+    }
+  }
+
+  &--danger { border-color: #d44; color: #faa; }
+}
+
+// ── Path chips ────────────────────────────────────────────────────────────────
+
+.planner-path-chip {
+  @include btn-base;
+  font-size: 0.6rem;
+  padding: $space-1 $space-2;
+  border-color: var(--path-color);
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--path-color);
+    border-radius: 1px;
+    margin-right: $space-1;
+    vertical-align: middle;
+  }
+
+  &--active {
+    background: rgba(0,0,0,0.2);
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+// ── Zone chips ────────────────────────────────────────────────────────────────
+
+.planner-zone-chip {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  // Header row: name | expand | remove
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    width: 100%;
+  }
+
+  &__name {
+    @include btn-base;
+    flex: 1;
+    font-size: 0.6rem;
+    padding: $space-1 $space-2;
+    text-align: left;
+  }
+
+  &__expand {
+    @include btn-base;
+    font-size: 0.55rem;
+    padding: 0 $space-1;
+    line-height: 1.6;
+    color: $color-parchment-dark;
+    border-color: rgba($color-brown, 0.6);
+    min-width: 18px;
+    text-align: center;
+
+    &:hover { color: $color-gold; border-color: $color-gold; }
+  }
+
+  &__remove {
+    @include btn-base;
+    font-size: 0.75rem;
+    padding: 0 $space-1;
+    line-height: 1;
+    color: #faa;
+    border-color: #844;
+
+    &:hover { background: rgba(#d44, 0.2); }
+  }
+
+  &--active &__name {
+    background: rgba($color-gold, 0.2);
+    border-color: $color-gold;
+    color: $color-gold;
+  }
+}
+
+// ── Zone crop picker ──────────────────────────────────────────────────────────
+
+.planner-zone-crop-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: $space-1 0 $space-1 $space-2;
+  border-left: 2px solid rgba($color-brown, 0.5);
+  margin-left: $space-1;
+  margin-top: 2px;
+}
+
+.planner-zone-crop-row {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+
+  &__label {
+    font-size: 0.5rem;
+    font-family: $font-pixel;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    width: 28px;
+    flex-shrink: 0;
+    color: $color-parchment-dark;
+
+    // Season-tinted labels
+    .planner-zone-crop-row--spring > & { color: $color-spring; }
+    .planner-zone-crop-row--summer > & { color: $color-summer; }
+    .planner-zone-crop-row--fall   > & { color: $color-fall;   }
+    .planner-zone-crop-row--winter > & { color: $color-winter; }
+  }
+
+  &__select {
+    flex: 1;
+    min-width: 0;
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid $color-brown;
+    border-radius: 2px;
+    color: $color-parchment;
+    padding: 1px $space-1;
+    outline: none;
+    cursor: pointer;
+
+    &:focus { border-color: $color-gold; }
+
+    // Style the dropdown options (limited browser support)
+    option { background: $color-brown-dark; color: $color-parchment; }
+  }
+}
+
+// ── Misc sidebar elements ─────────────────────────────────────────────────────
+
+.planner-hint {
+  font-size: 0.65rem;
+  color: $color-parchment-dark;
+  font-style: italic;
+  margin: 0;
+  line-height: 1.4;
+  width: 100%;
+}
+
+.planner-empty {
+  font-size: 0.65rem;
+  color: $color-parchment-dark;
+  font-style: italic;
+}
+
+.planner-toggle {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: 0.65rem;
+  color: $color-parchment-dark;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  padding: $space-1 0;
+
+  input[type="checkbox"] { accent-color: $color-gold; }
+}
+
+// ── Sidebar action buttons ────────────────────────────────────────────────────
+
+.planner-fit-btn { flex: 1; }
+
+// ── Touch notice (only shown on coarse-pointer / touch devices) ──────────────
+
+.planner-touch-notice {
+  display: none;
+  position: absolute;
+  top: $space-3;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  background: rgba($color-brown-dark, 0.9);
+  color: $color-parchment-mid;
+  font-size: 0.72rem;
+  padding: $space-2 $space-3;
+  border: 1px solid $color-brown-mid;
+  border-radius: $radius-sm;
+  pointer-events: none;
+  white-space: nowrap;
+
+  @media (pointer: coarse) {
+    display: block;
+  }
+}
+
+// ── Canvas area ───────────────────────────────────────────────────────────────
+
+.planner-canvas-wrap {
+  flex: 1;
+  overflow: hidden;
+  background: $color-green-dark;
+  position: relative;
+}
+
+// ── Context menu ──────────────────────────────────────────────────────────────
+
+.planner-context-menu {
+  position: fixed;
+  z-index: 9999;
+  background: $color-brown-dark;
+  border: 2px solid $color-brown;
+  border-radius: 4px;
+  min-width: 140px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+
+  &__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: $color-parchment;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    padding: $space-2 $space-3;
+    cursor: pointer;
+
+    &:hover { background: rgba($color-gold, 0.15); color: $color-gold; }
+    &--danger { color: #faa; }
+    &--danger:hover { background: rgba(#d44, 0.2); color: #fdd; }
+  }
+}
+
+// ── Interior modal ────────────────────────────────────────────────────────────
+
+.interior-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.interior-modal {
+  background: $color-brown-dark;
+  border: 3px solid $color-brown;
+  border-radius: 6px;
+  width: min(95vw, 900px);
+  height: min(90vh, 700px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-3 $space-4;
+    border-bottom: 2px solid $color-brown;
+    flex-shrink: 0;
+    gap: $space-3;
+  }
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.85rem;
+    color: $color-gold;
+    margin: 0;
+  }
+
+  &__header-actions {
+    display: flex;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  &__sidebar {
+    width: 160px;
+    flex-shrink: 0;
+    border-right: 2px solid $color-brown;
+    overflow-y: auto;
+    padding: $space-2;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+  }
+
+  &__sidebar-hint {
+    font-size: 0.6rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin: 0 0 $space-1;
+    line-height: 1.4;
+  }
+
+  &__item-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    overflow-y: auto;
+  }
+
+  &__item-btn {
+    @include btn-base;
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    font-size: 0.6rem;
+    padding: $space-1 $space-2;
+    text-align: left;
+    width: 100%;
+
+    &--active {
+      background: rgba($color-gold, 0.25);
+      border-color: $color-gold;
+      color: $color-gold;
+    }
+  }
+
+  &__canvas {
+    flex: 1;
+    overflow: hidden;
+    background: #2a1f14;
+  }
+
+  &__optimal {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    margin-top: $space-3;
+    padding-top: $space-3;
+    border-top: 1px solid $color-brown;
+  }
+
+  &__optimal-label {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: $color-gold;
+    margin: 0;
+  }
+
+  &__optimal-select {
+    width: 100%;
+    font-size: 0.6rem;
+    padding: 2px $space-1;
+    background: $color-brown-dark;
+    border: 1px solid $color-brown;
+    // Use explicit parchment colour — var(--text) is near-black in the Stardew
+    // theme and invisible against the modal's dark brown background.
+    color: $color-parchment-mid;
+    border-radius: 2px;
+    cursor: pointer;
+
+    option { background: $color-brown-dark; color: $color-parchment-mid; }
+  }
+
+  &__optimal-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// ── Fish picker modal ─────────────────────────────────────────────────────────
+
+.fish-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fish-picker {
+  background: $color-brown-dark;
+  border: 3px solid $color-brown;
+  border-radius: 6px;
+  width: min(92vw, 480px);
+  max-height: min(85vh, 540px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-3 $space-4;
+    border-bottom: 2px solid $color-brown;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.8rem;
+    color: $color-gold;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    color: $color-parchment-mid;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 $space-1;
+    &:hover { color: $color-gold; }
+  }
+
+  &__search {
+    margin: $space-2 $space-3;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid $color-brown;
+    border-radius: 2px;
+    color: $color-parchment;
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    padding: $space-1 $space-2;
+    outline: none;
+    width: calc(100% - #{$space-3 * 2});
+    box-sizing: border-box;
+
+    &:focus { border-color: $color-gold; }
+    &::-webkit-search-cancel-button { display: none; }
+  }
+
+  &__grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-2 $space-3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+    align-content: flex-start;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+  }
+
+  &__item {
+    @include btn-base;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: $space-1;
+    width: 64px;
+    font-size: 0.5rem;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+
+    span { min-width: 0; }
+
+    &--active {
+      background: rgba($color-gold, 0.25);
+      border-color: $color-gold;
+      color: $color-gold;
+    }
+
+    &--clear {
+      color: #faa;
+      border-color: #844;
+      font-size: 0.55rem;
+      justify-content: center;
+      height: 44px;
+
+      &:hover { background: rgba(#d44, 0.2); }
+    }
+  }
+}

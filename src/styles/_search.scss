@@ -1,0 +1,178 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Global search wrapper ─────────────────────────────────────────────────────
+
+.gsearch {
+  position: relative;
+  flex: 1;
+  max-width: 340px;
+  min-width: 0;
+
+  // On mobile, full available width
+  @media (max-width: #{$bp-sm}) {
+    max-width: 100%;
+  }
+}
+
+// ── Input ─────────────────────────────────────────────────────────────────────
+
+.gsearch__input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid $color-brown-mid;
+  border-radius: $radius-sm;
+  padding: 0 $space-2;
+  height: 30px;
+  gap: $space-1;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:focus-within {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: $color-gold;
+  }
+}
+
+.gsearch__icon {
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.gsearch__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $color-parchment;
+  font-family: $font-pixel;
+  font-size: 0.6rem;
+  min-width: 0;
+  height: 100%;
+
+  &::placeholder {
+    color: $color-brown-light;
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+  }
+
+  // Remove default search clear button on WebKit
+  &::-webkit-search-cancel-button { display: none; }
+}
+
+// ── Dropdown ─────────────────────────────────────────────────────────────────
+
+.gsearch__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  min-width: 280px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 2px solid $color-brown;
+  border-top: none;
+  box-shadow: $panel-shadow;
+  z-index: 350;
+
+  // On mobile, anchor to left edge of screen and stretch full width
+  @media (max-width: #{$bp-sm}) {
+    position: fixed;
+    left: $space-2;
+    right: $space-2;
+    top: calc(#{$header-height} + 4px);
+    min-width: 0;
+  }
+}
+
+// ── Result group ──────────────────────────────────────────────────────────────
+
+.gsearch__group {
+  & + & {
+    border-top: 1px solid $color-parchment-dark;
+  }
+}
+
+.gsearch__group-label {
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  color: var(--text-light);
+  padding: $space-2 $space-3 $space-1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.gsearch__group-extra {
+  font-family: $font-body;
+  color: var(--text-light);
+  text-transform: none;
+  font-size: 0.65rem;
+  letter-spacing: 0;
+}
+
+// ── Individual result ─────────────────────────────────────────────────────────
+
+.gsearch__result {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-2 $space-3;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+
+  &:hover,
+  &--focused {
+    background: var(--surface-mid);
+  }
+}
+
+.gsearch__result-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.gsearch__result-type-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.gsearch__result-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.gsearch__result-name {
+  font-size: 0.78rem;
+  color: var(--text);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gsearch__result-sub {
+  font-size: 0.62rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}

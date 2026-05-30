@@ -1,0 +1,181 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Progress bar ───────────────────────────────────────────────────────────────
+
+.museum-progress {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-4;
+
+  &__track {
+    flex: 1;
+    height: 10px;
+    background: rgba($color-brown, 0.15);
+    border: 1px solid rgba($color-brown, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    background: $color-brown-mid;
+    transition: width 0.25s ease;
+  }
+
+  &__label {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  &--full .museum-progress__fill { background: $color-green-light; }
+  &--full .museum-progress__label { color: $color-green-light; }
+}
+
+// ── Tabs ───────────────────────────────────────────────────────────────────────
+
+.museum-tabs {
+  display: flex;
+  gap: $space-2;
+  margin-bottom: $space-3;
+  border-bottom: 2px solid $color-brown;
+  padding-bottom: $space-1;
+}
+
+.museum-tab {
+  @include btn-base;
+  font-size: 0.65rem;
+  padding: $space-1 $space-3;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  &--active {
+    background: $color-brown;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: none;
+  }
+
+  &__count {
+    font-size: 0.5rem;
+    opacity: 0.75;
+    background: rgba(0, 0, 0, 0.12);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+}
+
+// ── Mark-all button ────────────────────────────────────────────────────────────
+
+.museum-select-all-btn {
+  @include btn-base;
+  font-size: 0.6rem;
+  padding: $space-1 $space-2;
+  margin-left: auto;
+}
+
+// ── Item grid ──────────────────────────────────────────────────────────────────
+
+.museum-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: $space-2;
+  margin-top: $space-3;
+
+  @include sm {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+// ── Item card ──────────────────────────────────────────────────────────────────
+
+.museum-card {
+  @include btn-base;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
+  font-size: 0.65rem;
+  position: relative;
+  border-radius: 3px;
+
+  &:hover:not(.museum-card--readonly) {
+    background: var(--surface-dark);
+    border-color: $color-brown-mid;
+  }
+
+  &--donated {
+    background: color.mix(#d4f5d4, $color-parchment-mid, 55%);
+    border-color: $color-green-light;
+
+    .museum-card__check { color: $color-green-light; }
+    .museum-card__name  { color: $color-brown-dark; opacity: 0.7; text-decoration: line-through; }
+  }
+
+  &--readonly {
+    cursor: default;
+  }
+
+  &__check {
+    font-size: 0.8rem;
+    width: 12px;
+    flex-shrink: 0;
+    font-weight: 700;
+    color: transparent; // hidden when not donated
+  }
+
+  &__sprite {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+
+    &--fallback {
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: $font-body;
+    font-size: 0.7rem;
+    color: var(--text);
+    line-height: 1.2;
+    // Override GameLink default styling within cards
+    &:hover { color: $color-brown-mid; text-decoration: underline; }
+  }
+
+  &__geodes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  &__geode-badge {
+    font-family: $font-pixel;
+    font-size: 0.4rem;
+    color: #fff;
+    padding: 1px 4px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+  }
+}

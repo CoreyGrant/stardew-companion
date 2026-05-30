@@ -1,0 +1,173 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Season tabs ───────────────────────────────────────────────────────────────
+
+.forage-season-tabs {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+  border-bottom: 2px solid $color-brown;
+  padding-bottom: $space-1;
+  margin-bottom: $space-3;
+}
+
+.forage-season-tab {
+  @include btn-base;
+  font-size: 0.65rem;
+  padding: $space-1 $space-3;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+
+  &--active {
+    background: $color-brown;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: none;
+  }
+
+  &--spring.forage-season-tab--active { background: $color-spring;  border-color: $color-spring; color: #fff; }
+  &--summer.forage-season-tab--active { background: $color-summer;  border-color: $color-summer; color: #1a1a00; }
+  &--fall.forage-season-tab--active   { background: $color-fall;    border-color: $color-fall;   color: #fff; }
+  &--winter.forage-season-tab--active { background: $color-winter;  border-color: $color-winter; color: #fff; }
+
+  &__count {
+    font-size: 0.5rem;
+    opacity: 0.8;
+    background: rgba(0, 0, 0, 0.12);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+}
+
+// ── Location filter buttons ───────────────────────────────────────────────────
+
+.forage-loc-btn {
+  @include btn-base;
+  font-size: 0.6rem;
+  padding: $space-1 $space-2;
+
+  &--active {
+    background: $color-brown;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+// ── Result count ─────────────────────────────────────────────────────────────
+
+.forage-result-count {
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  color: var(--text-light);
+  margin-bottom: $space-2;
+}
+
+// ── Item grid ─────────────────────────────────────────────────────────────────
+
+.forage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-2;
+
+  @include sm { grid-template-columns: repeat(2, 1fr); }
+  @include md { grid-template-columns: repeat(2, 1fr); }
+  @include lg { grid-template-columns: repeat(3, 1fr); }
+}
+
+// ── Item card ─────────────────────────────────────────────────────────────────
+
+.forage-card {
+  @include panel-frame;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  font-size: 0.7rem;
+
+  &__sprite {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--fallback { font-size: 1rem; }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__name {
+    font-family: $font-body;
+    font-size: 0.75rem;
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    &:hover { color: $color-brown-mid; text-decoration: underline; }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex-wrap: wrap;
+  }
+
+  &__loc {
+    font-family: $font-pixel;
+    font-size: 0.45rem;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  &__yr-badge {
+    font-family: $font-pixel;
+    font-size: 0.45rem;
+    color: var(--text-light);
+    border: 1px solid $color-parchment-dark;
+    padding: 1px 5px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__sell {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-gold;
+  }
+}
+
+// Season pip highlight ring (pulsed when it's the active tab's season)
+.season-pip--highlight {
+  box-shadow: 0 0 0 2px $color-parchment, 0 0 0 3px currentColor;
+}
+
+// ── Forage pips container ────────────────────────────────────────────────────
+
+.forage-pips {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}

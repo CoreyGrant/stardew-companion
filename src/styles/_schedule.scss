@@ -1,0 +1,265 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Controls ──────────────────────────────────────────────────────────────────
+.schedule-controls {
+  margin-bottom: $space-4;
+
+  &__inner {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-4;
+    flex-wrap: wrap;
+  }
+
+  &__search {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    align-self: center;
+  }
+
+  &__search-label {
+    font-size: 0.7rem;
+    font-family: $font-pixel;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__search-input {
+    padding: 4px $space-2;
+    border: 1.5px solid var(--border);
+    border-radius: $radius-sm;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.8rem;
+    min-width: 160px;
+  }
+}
+
+// ── NPC schedule section (NPCDetailPage) ─────────────────────────────────────
+.schedule-section {
+  margin-top: $space-6;
+
+  .section-title {
+    font-family: $font-pixel;
+    font-size: 1rem;
+    color: $color-brown-dark;
+    margin-bottom: $space-3;
+    padding-bottom: $space-2;
+    border-bottom: 2px solid var(--border);
+  }
+
+  &__filter {
+    margin-bottom: $space-4;
+  }
+
+  &__empty {
+    color: var(--text-mid);
+    font-size: 0.85rem;
+    font-style: italic;
+    padding: $space-3 0;
+  }
+}
+
+.schedule-match {
+  margin-bottom: $space-4;
+
+  &__label {
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    margin-bottom: $space-2;
+    font-style: italic;
+
+    strong { color: var(--text); font-style: normal; }
+  }
+}
+
+// ── Timeline list ─────────────────────────────────────────────────────────────
+.schedule-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &__entry {
+    display: flex;
+    align-items: baseline;
+    gap: $space-2;
+    padding: $space-1 $space-2;
+    border-radius: $radius-sm;
+    background: var(--surface-mid);
+
+    &:hover { background: var(--surface-dark); }
+  }
+
+  &__time {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: $color-gold;
+    min-width: 44px;
+    white-space: nowrap;
+  }
+
+  &__arrow {
+    color: var(--text-light);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  &__location {
+    font-size: 0.8rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  &__desc {
+    font-size: 0.7rem;
+    color: var(--text-mid);
+    font-style: italic;
+    margin-left: $space-1;
+  }
+
+  &--compact &__entry {
+    padding: 1px $space-2;
+    background: transparent;
+    &:hover { background: var(--surface-mid); }
+  }
+}
+
+// ── All-variants toggle ───────────────────────────────────────────────────────
+.schedule-all {
+  margin-top: $space-3;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-sm;
+  overflow: hidden;
+
+  &__summary {
+    padding: $space-2 $space-3;
+    font-size: 0.78rem;
+    font-family: $font-pixel;
+    color: var(--text-mid);
+    cursor: pointer;
+    user-select: none;
+    background: var(--surface-mid);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    &::-webkit-details-marker { display: none; }
+    &::before { content: '▶'; font-size: 0.55rem; transition: transform 0.15s; }
+
+    &:hover { background: var(--surface-dark); color: var(--text); }
+  }
+
+  &[open] &__summary::before { transform: rotate(90deg); }
+
+  &__list {
+    padding: $space-3;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__variant-label {
+    font-size: 0.72rem;
+    font-family: $font-pixel;
+    color: var(--text-mid);
+    margin-bottom: $space-1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+// ── Calendar table ────────────────────────────────────────────────────────────
+.schedule-cal-wrap {
+  @include panel-frame;
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.schedule-cal {
+  width: 100%;
+  min-width: 540px;
+  border-collapse: collapse;
+
+  // NPC column: fixed narrow width
+  &__npc-col { width: 100px; }
+
+  // ── Header row ──────────────────────────────────────────────────────────────
+  thead th {
+    background: $color-brown-dark;
+    color: $color-gold;
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    padding: $space-2 $space-3;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 2px solid $color-brown;
+    border-right: 1px solid rgba($color-brown, 0.4);
+
+    &:last-child { border-right: none; }
+  }
+
+  &__npc-head {
+    text-align: left !important;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    border-right: 2px solid $color-brown !important;
+  }
+
+  // ── Body rows ────────────────────────────────────────────────────────────────
+  tbody tr {
+    &:last-child td { border-bottom: none; }
+
+    // Subtle row hover
+    &:hover .schedule-cal__block    { background: rgba($color-gold, 0.06); }
+    &:hover .schedule-cal__npc-cell { filter: brightness(0.97); }
+  }
+
+  // Alternate row shading
+  tbody tr:nth-child(even) {
+    .schedule-cal__npc-cell { background: var(--surface-mid); }
+    .schedule-cal__block    { background: var(--surface-mid); }
+  }
+
+  // ── NPC name cell (sticky left) ──────────────────────────────────────────────
+  &__npc-cell {
+    background: var(--surface);
+    padding: $space-2 $space-3;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-right: 2px solid $color-parchment-dark;
+    border-bottom: 1px solid $color-parchment-dark;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+
+  // ── Location block (calendar event cell) ─────────────────────────────────────
+  &__block {
+    background: var(--surface);
+    color: var(--text-mid);
+    padding: $space-2 $space-3;
+    font-size: 0.72rem;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid $color-parchment-dark;
+    border-right: 1px solid $color-parchment-dark;
+    line-height: 1.35;
+
+    &:last-child { border-right: none; }
+
+    // Spans >1 column get a subtle left accent to mark transition
+    &[colspan]:not([colspan="1"]) {
+      border-left: 2px solid rgba($color-brown-light, 0.35);
+    }
+  }
+}

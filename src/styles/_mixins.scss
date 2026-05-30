@@ -1,0 +1,59 @@
+@use 'variables' as *;
+
+// Mobile-first breakpoint helpers
+@mixin sm { @media (min-width: #{$bp-sm}) { @content; } }
+@mixin md { @media (min-width: #{$bp-md}) { @content; } }
+@mixin lg { @media (min-width: #{$bp-lg}) { @content; } }
+
+// Game-style panel frame
+@mixin panel-frame($bg: var(--surface)) {
+  background: $bg;
+  border: 3px solid var(--border, #{$color-brown});
+  box-shadow: $panel-shadow;
+}
+
+// Hard pixel-art border shadow
+@mixin pixel-shadow($color: $color-brown-dark, $offset: 2px) {
+  box-shadow: #{$offset} #{$offset} 0 $color;
+}
+
+// Button base
+@mixin btn-base {
+  font-family: $font-pixel;
+  font-size: 0.7rem;
+  border: 2px solid var(--border, #{$color-brown});
+  background: var(--surface-mid, #{$color-parchment-mid});
+  color: var(--text, #{$color-text});
+  padding: $space-2 $space-3;
+  cursor: pointer;
+  @include pixel-shadow($color-brown-dark);
+  transition: box-shadow 0.05s, transform 0.05s;
+
+  &:hover:not(:disabled) {
+    box-shadow: 1px 1px 0 $color-brown-dark;
+    transform: translate(1px, 1px);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Truncate
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Scrollable on mobile
+@mixin scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

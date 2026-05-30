@@ -1,0 +1,237 @@
+@use 'variables' as *;
+@use 'sass:color';
+
+// ── Recipes Page ──────────────────────────────────────────────────────────────
+
+.page--recipes {
+  .filter-bar--wrap {
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+}
+
+// Source-type filter buttons
+.recipe-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  border: 2px solid $color-brown;
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: $font-body;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--surface-mid);
+  }
+
+  &--active {
+    background: $color-brown;
+    border-color: $color-brown-dark;
+    color: $color-parchment;
+
+    .recipe-filter-btn__count {
+      background: rgba(255,255,255,0.25);
+    }
+  }
+
+  &__emoji {
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    padding: 0 5px;
+    height: 18px;
+    background: var(--surface-dark);
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+}
+
+// Search bar
+.recipe-search-bar {
+  margin: $space-4 0;
+
+  &__input {
+    width: 100%;
+    max-width: 400px;
+    padding: $space-2 $space-3;
+    border: 2px solid $color-brown;
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: $font-body;
+    font-size: 0.9rem;
+
+    &:focus {
+      outline: none;
+      border-color: $color-brown-dark;
+      box-shadow: 0 0 0 2px rgba($color-gold, 0.35);
+    }
+
+    &::placeholder {
+      color: var(--text-light);
+    }
+  }
+}
+
+// Recipe card grid
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $space-4;
+}
+
+// Individual recipe card
+.recipe-card {
+  background: var(--surface);
+  border: 2px solid $color-brown;
+  border-radius: 4px;
+  padding: $space-3;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+
+  &:hover {
+    border-color: $color-brown-dark;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
+  }
+
+  // Header row: icon + name + source badge
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-2;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-mid);
+    border: 1px solid $color-parchment-dark;
+    border-radius: 3px;
+
+    &--placeholder {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+  }
+
+  &__title-block {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $color-brown-dark;
+    text-decoration: none;
+    line-height: 1.2;
+
+    &:hover {
+      color: $color-brown;
+      text-decoration: underline;
+    }
+  }
+
+  &__source-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+
+  // Source detail line (NPC name, skill, etc.)
+  &__source {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.3;
+    padding-left: 2px;
+
+    strong {
+      color: var(--text);
+    }
+  }
+
+  // Ingredients list
+  &__ingredients {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid $color-parchment-dark;
+    padding-top: $space-2;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__ingredient {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  &__ing-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--cat {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+  }
+
+  &__ing-qty {
+    font-weight: 700;
+    color: $color-brown;
+    min-width: 22px;
+  }
+
+  &__ing-name {
+    flex: 1;
+    text-decoration: none;
+    color: var(--text);
+
+    &:hover {
+      color: $color-brown;
+      text-decoration: underline;
+    }
+
+    &--cat {
+      color: var(--text-mid);
+      font-style: italic;
+    }
+  }
+}

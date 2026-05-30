@@ -1,0 +1,122 @@
+// ── Colour palette ────────────────────────────────────────────────────────────
+$color-green-dark:    #1a3d1f;
+$color-green:         #4a7c59;
+$color-green-light:   #6aab4f;
+$color-brown-dark:    #2d1b0e;
+$color-brown:         #7a4a2a;
+$color-brown-mid:     #a0632d;
+$color-brown-light:   #c8945a;
+$color-gold:          #daa520;
+$color-gold-light:    #f5c842;
+$color-parchment:     #f5e6c8;
+$color-parchment-mid: #e8d4a8;
+$color-parchment-dark:#d4ba80;
+$color-sky:           #87ceeb;
+$color-text:          #2a1a0e;
+$color-text-mid:      #5c3d1e;
+$color-text-light:    #8b6242;
+
+// Semantic colours — dark enough for WCAG AA on $color-parchment backgrounds
+$color-loved:     #be185d;
+$color-liked:     #0f766e;
+$color-neutral:   #4b5563;
+$color-disliked:  #c2410c;
+$color-hated:     #b91c1c;
+$color-success:   #16a34a;
+$color-danger:    #dc2626;
+
+// Season accent colours
+$color-spring:  #84cc16;
+$color-summer:  #f59e0b;
+$color-fall:    #ea580c;
+$color-winter:  #60a5fa;
+
+// ── Typography ────────────────────────────────────────────────────────────────
+$font-pixel: 'DotGothic16', monospace;
+$font-body:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono:  'Courier New', Courier, monospace;
+
+// ── Spacing ───────────────────────────────────────────────────────────────────
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+$space-10: 40px;
+$space-12: 48px;
+
+// ── Layout ────────────────────────────────────────────────────────────────────
+$header-height:    52px;
+$nav-height-mob:   56px;
+$nav-width-desk:   220px;
+$content-max:      1100px;
+
+// ── Breakpoints ───────────────────────────────────────────────────────────────
+$bp-sm:  480px;
+$bp-md:  768px;
+$bp-lg:  1024px;
+$bp-xl:  1280px;
+
+// ── Borders & shadows ─────────────────────────────────────────────────────────
+$panel-border:  3px solid $color-brown;
+$panel-shadow:  2px 2px 0 rgba(0, 0, 0, 0.45);
+$radius-sm:     2px;
+
+// ── Breakpoint at which the inline header nav becomes visible ─────────────────
+$bp-nav: 1000px;
+
+// ── CSS Custom Properties (theme system) ─────────────────────────────────────
+// `:root` carries the Stardew default values.
+// `[data-theme="light"]` and `[data-theme="dark"]` override them at runtime.
+:root {
+  // Surface / panel backgrounds
+  --surface:       #{$color-parchment};
+  --surface-mid:   #{$color-parchment-mid};
+  --surface-dark:  #{$color-parchment-dark};
+  // Body & chrome backgrounds
+  --body-bg:       #{$color-green-dark};
+  --chrome-bg:     #{$color-brown-dark};
+  --chrome-border: #{$color-brown};
+  // Text — calibrated for parchment (--surface) panels
+  --text:          #{$color-text};
+  --text-mid:      #{$color-text-mid};
+  --text-light:    #7a5535;   // darkened from #8b6242 → 5.4:1 on --surface
+  // Borders (panel frames etc.)
+  --border:        #{$color-brown};
+  // Links — dark enough for parchment panels
+  --link:          #2d6b42;   // 5.2:1 on --surface
+  // Muted labels rendered directly on --body-bg (not inside panels)
+  --label-muted:   #{$color-parchment-dark};
+}
+
+[data-theme="light"] {
+  --surface:       #ffffff;
+  --surface-mid:   #f1f5f9;
+  --surface-dark:  #e2e8f0;
+  --body-bg:       #dde4ed;
+  --chrome-bg:     #334155;
+  --chrome-border: #475569;
+  --text:          #1e293b;
+  --text-mid:      #475569;
+  --text-light:    #4b5563;   // darkened from #64748b → 5.9:1 on --surface
+  --border:        #94a3b8;
+  --link:          #166534;
+  --label-muted:   #374151;
+}
+
+[data-theme="dark"] {
+  --surface:       #1e2433;
+  --surface-mid:   #252d3d;
+  --surface-dark:  #2d3654;
+  --body-bg:       #0f1117;
+  --chrome-bg:     #0a0c10;
+  --chrome-border: #30363d;
+  --text:          #d4d8e0;
+  --text-mid:      #9ea6b4;
+  --text-light:    #8b97a8;   // lightened from #6b7685 → 4.6:1 on --surface
+  --border:        #354060;
+  --link:          #4ade80;   // bright green readable on dark surfaces
+  --label-muted:   #9ea6b4;
+}

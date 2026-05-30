@@ -1,0 +1,262 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Save list ─────────────────────────────────────────────────────────────────
+.save-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-bottom: $space-4;
+}
+
+.save-card {
+  @include panel-frame;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-4;
+
+  @include sm {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &--active {
+    border-color: $color-gold;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: $font-pixel;
+    font-size: 0.8rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-wrap: wrap;
+  }
+
+  &__active-badge {
+    font-size: 0.55rem;
+    // Inverted: dark text on gold bg — gold-on-parchment was ~1.8:1
+    background: $color-gold;
+    color: $color-brown-dark;
+    border: 1px solid color.adjust($color-gold, $lightness: -18%);
+    padding: 1px $space-2;
+  }
+
+  &__meta, &__skills {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  &__delete-confirm {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: $color-danger;
+  }
+}
+
+// ── Save entry wrapper (card + optional export panel) ────────────────────────
+.save-entry {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Save card — exporting state (square bottom corners) ───────────────────────
+.save-card--exporting {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+}
+
+// ── Export panel ──────────────────────────────────────────────────────────────
+.save-export {
+  @include panel-frame;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: $space-3 $space-4 $space-4;
+  background: var(--surface-mid);  // was --surface-dark: text-light only ~2.8:1 on it
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+  }
+
+  &__title {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: var(--text);
+  }
+
+  &__hint {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin: 0;
+  }
+
+  &__code {
+    width: 100%;
+    font-family: monospace;
+    font-size: 0.68rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 2px solid $color-brown;
+    border-radius: $radius-sm;
+    padding: $space-2;
+    resize: vertical;
+    word-break: break-all;
+    line-height: 1.5;
+    cursor: text;
+
+    &:focus { outline: none; border-color: $color-brown-mid; }
+  }
+
+  &__copy-row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__code-len {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+  }
+
+  &__qr {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    align-items: flex-start;
+
+    canvas {
+      border: 2px solid $color-brown;
+      border-radius: $radius-sm;
+      display: block;
+    }
+  }
+
+  &__qr-hint {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+  }
+
+  &__qr-too-large {
+    font-size: 0.75rem;
+    color: var(--text-mid);
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+// ── Import panel ──────────────────────────────────────────────────────────────
+.save-import-panel {
+  margin-top: $space-5;
+}
+
+.save-import {
+  &__hint {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin: 0 0 $space-3;
+  }
+
+  &__code {
+    display: block;
+    width: 100%;
+    font-family: monospace;
+    font-size: 0.68rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 2px solid $color-brown;
+    border-radius: $radius-sm;
+    padding: $space-2;
+    resize: vertical;
+    word-break: break-all;
+    line-height: 1.5;
+    margin-bottom: $space-3;
+    box-sizing: border-box;
+
+    &::placeholder { color: var(--text-light); font-style: italic; }
+    &:focus { outline: none; border-color: $color-brown-mid; }
+  }
+
+  &__error {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: $color-danger;
+    margin: 0 0 $space-2;
+  }
+
+  &__success {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--link);  // was $color-green: ~4.0:1 on parchment; --link is calibrated
+    margin: 0 0 $space-2;
+  }
+}
+
+// ── Save form ─────────────────────────────────────────────────────────────────
+.save-form-panel {
+  margin-bottom: $space-4;
+}
+
+.save-form {
+  &__actions {
+    display: flex;
+    gap: $space-3;
+    margin-top: $space-2;
+  }
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-2;
+  margin-top: $space-2;
+
+  @include sm { grid-template-columns: repeat(5, 1fr); }
+}
+
+.skill-field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  font-family: $font-pixel;
+  font-size: 0.6rem;
+  color: var(--text-mid);
+
+  input {
+    padding: $space-2;
+    border: 2px solid $color-brown;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
+}

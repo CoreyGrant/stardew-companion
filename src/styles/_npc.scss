@@ -1,0 +1,191 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── NPC grid ──────────────────────────────────────────────────────────────────
+.npc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-3;
+
+  @include sm  { grid-template-columns: repeat(3, 1fr); }
+  @include md  { grid-template-columns: repeat(4, 1fr); }
+  @include lg  { grid-template-columns: repeat(5, 1fr); }
+}
+
+.npc-card {
+  @include panel-frame;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $space-3;
+  text-align: center;
+  gap: $space-2;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.45);
+  }
+
+  &__portrait {
+    width: 64px;
+    height: 64px;
+    background: $color-brown-dark;
+    border: 2px solid $color-brown-mid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-pixel;
+    font-size: 1.4rem;
+    color: $color-gold;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    img { display: block; }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__name {
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    color: var(--text);
+  }
+
+  &__birthday {
+    font-size: 0.7rem;
+    color: var(--text-light);
+  }
+
+  &__badge {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: $color-loved;
+    border: 1px solid $color-loved;
+    padding: 1px 4px;
+    background: rgba($color-loved, 0.08);
+  }
+}
+
+// ── NPC detail hero ───────────────────────────────────────────────────────────
+.npc-hero {
+  display: flex;
+  gap: $space-4;
+  align-items: flex-start;
+  margin-bottom: $space-4;
+
+  &__portrait {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    background: $color-brown-dark;
+    border: 3px solid $color-brown;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-pixel;
+    font-size: 2rem;
+    color: $color-gold;
+    overflow: hidden;
+    @include pixel-shadow;
+
+    img { display: block; }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    flex: 1;
+  }
+
+  &__name {
+    font-family: $font-pixel;
+    font-size: 1.1rem;
+    color: $color-gold;
+    text-shadow: 1px 1px 0 $color-brown-dark;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-wrap: wrap;
+  }
+
+  &__married-badge {
+    font-size: 0.55rem;
+    color: $color-gold;
+    border: 1px solid $color-gold;
+    padding: 2px $space-2;
+  }
+
+  &__birthday, &__home {
+    font-size: 0.8rem;
+    color: $color-parchment-mid;
+  }
+}
+
+// ── Gift table ────────────────────────────────────────────────────────────────
+.gift-table {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.gift-section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1 $space-3;
+
+    li {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// ── Schedule ──────────────────────────────────────────────────────────────────
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.schedule-entry {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+  font-size: 0.85rem;
+  padding: $space-1 0;
+  border-bottom: 1px solid $color-parchment-dark;
+
+  &:last-child { border-bottom: none; }
+
+  &__time {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--text-mid);  // was $color-brown-mid: ~4.0:1 on parchment panel
+    min-width: 52px;
+  }
+
+  &__location {
+    color: var(--text);
+    flex: 1;
+  }
+
+  &__desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+}
+
+.schedule-section {
+  margin-top: $space-2;
+}

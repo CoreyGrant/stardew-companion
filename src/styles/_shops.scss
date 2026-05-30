@@ -1,0 +1,171 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Shop selector tabs ────────────────────────────────────────────────────────
+
+.shop-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+  margin-bottom: $space-3;
+  padding-bottom: $space-2;
+  border-bottom: 2px solid $color-brown;
+}
+
+.shop-tab {
+  @include btn-base;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: 0.6rem;
+  padding: $space-1 $space-2;
+  border-radius: 3px;
+
+  &--active {
+    background: $color-brown;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: none;
+  }
+
+  &__emoji {
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  &__name {
+    white-space: nowrap;
+  }
+
+  &__count {
+    font-size: 0.5rem;
+    opacity: 0.75;
+    background: rgba(0, 0, 0, 0.12);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+}
+
+// ── Item count line ───────────────────────────────────────────────────────────
+
+.shop-item-count {
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+// ── Shop table ────────────────────────────────────────────────────────────────
+
+.shop-table {
+  @include scroll-x;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 90px 90px 140px;
+    gap: $space-2;
+    padding: $space-2 $space-3;
+    background: $color-brown;
+    color: $color-parchment;
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    border-radius: 3px 3px 0 0;
+    min-width: 560px;
+  }
+}
+
+// ── Shop row ─────────────────────────────────────────────────────────────────
+
+.shop-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 90px 140px;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid $color-parchment-dark;
+  align-items: center;
+  min-width: 560px;
+
+  &:hover { background: var(--surface-mid); }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-width: 0;
+  }
+
+  &__sprite {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--fallback {
+      font-family: $font-pixel;
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: $font-body;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    @include truncate;
+    &:hover { color: $color-brown-mid; text-decoration: underline; }
+  }
+
+  &__category {
+    font-family: $font-pixel;
+    font-size: 0.45rem;
+    color: var(--text-light);
+    text-transform: capitalize;
+  }
+
+  &__price { }
+  &__sell  { }
+
+  &__gold {
+    font-family: $font-pixel;
+    font-size: 0.7rem;
+    color: $color-gold;
+  }
+
+  &__barter {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-light);
+  }
+
+  &__sell-val {
+    font-family: $font-pixel;
+    font-size: 0.6rem;
+    color: var(--text-light);
+  }
+
+  &__avail-note {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: var(--text-mid);
+    line-height: 1.4;
+  }
+
+  &__avail-always {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: $color-parchment-dark;
+  }
+}

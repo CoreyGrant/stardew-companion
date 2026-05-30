@@ -1,0 +1,418 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+
+.pond-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-3;
+}
+
+.pond-search {
+  flex: 1;
+  min-width: 180px;
+  padding: $space-2 $space-3;
+  border: 2px solid $color-brown;
+  border-radius: $radius-sm;
+  background: var(--surface);
+  font-family: $font-body;
+  font-size: 0.85rem;
+  color: var(--text);
+
+  &::placeholder { color: var(--text-light); }
+  &:focus { outline: none; border-color: $color-brown-mid; }
+}
+
+.pond-view-tabs {
+  display: flex;
+  gap: $space-1;
+}
+
+.pond-view-tab {
+  @include btn-base;
+  font-size: 0.65rem;
+  padding: $space-1 $space-3;
+  border-radius: $radius-sm;
+
+  &--active {
+    background: $color-brown;
+    color: $color-parchment;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+// ── Pond list ─────────────────────────────────────────────────────────────────
+
+.pond-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.pond-empty {
+  color: var(--text-light);
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: $space-2 0;
+}
+
+// ── Pond card ─────────────────────────────────────────────────────────────────
+
+.pond-card {
+  @include panel-frame;
+  overflow: hidden;
+
+  &--open {
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    width: 100%;
+    padding: $space-3 $space-4;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.1s;
+
+    &:hover { background: rgba($color-parchment-dark, 0.3); }
+  }
+
+  &__fish {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__fish-emoji {
+    font-size: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 0;
+    @include truncate;
+
+    a { color: $color-brown-dark; text-decoration: none;
+        &:hover { color: $color-brown; text-decoration: underline; } }
+  }
+
+  &__generic-label {
+    font-style: italic;
+    color: var(--text-mid);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__badge {
+    font-family: $font-pixel;
+    font-size: 0.48rem;
+    padding: 1px $space-2;
+    border-radius: 2px;
+    background: var(--surface-dark);
+    border: 1px solid rgba($color-brown, 0.3);
+    color: var(--text-mid);
+    white-space: nowrap;
+
+    &--chance {
+      color: $color-green;
+      background: rgba($color-green, 0.1);
+      border-color: rgba($color-green, 0.3);
+    }
+  }
+
+  &__chevron {
+    font-size: 0.6rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+
+  &__body {
+    padding: 0 $space-4 $space-4;
+    border-top: 1px solid $color-parchment-dark;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-4;
+
+    @include sm { grid-template-columns: 1.6fr 1fr; }
+  }
+
+  &__section-title {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    margin: $space-3 0 $space-2;
+  }
+}
+
+// ── Produce table ─────────────────────────────────────────────────────────────
+
+.pond-produce {
+  font-size: 0.78rem;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 48px 1fr 80px 40px;
+    gap: $space-2;
+    padding: 0 0 $space-1;
+    border-bottom: 1px solid $color-parchment-dark;
+    font-family: $font-pixel;
+    font-size: 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 48px 1fr 80px 40px;
+    gap: $space-2;
+    padding: $space-1 0;
+    border-bottom: 1px solid rgba($color-parchment-dark, 0.5);
+    align-items: center;
+
+    &:last-child { border-bottom: none; }
+  }
+
+  &__pop {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: var(--text-mid);
+    text-align: right;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    min-width: 0;
+
+    a { color: var(--text); text-decoration: none;
+        &:hover { color: $color-brown-mid; text-decoration: underline; } }
+  }
+
+  &__col-chance {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+  }
+
+  &__chance-bar {
+    flex: 1;
+    height: 5px;
+    background: rgba($color-brown-dark, 0.3);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: var(--pct, 0%);
+      background: $color-green;
+      border-radius: 2px;
+    }
+  }
+
+  &__chance-label {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: $color-green;
+    min-width: 28px;
+    text-align: right;
+  }
+
+  &__qty {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: var(--text-mid);
+    text-align: right;
+  }
+}
+
+// ── Population gates ─────────────────────────────────────────────────────────
+
+.pond-gates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.pond-gate {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  padding: $space-2 0;
+  border-bottom: 1px solid rgba($color-parchment-dark, 0.5);
+
+  &:last-child { border-bottom: none; }
+
+  &__pop {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-parchment;
+    background: $color-brown-mid;
+    border-radius: 2px;
+    padding: 1px $space-2;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__arrow {
+    color: var(--text-light);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.75rem;
+
+    a { color: var(--text); text-decoration: none;
+        &:hover { color: $color-brown-mid; text-decoration: underline; } }
+  }
+
+  &__qty {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-gold;
+    font-weight: 700;
+  }
+
+  &__sep {
+    color: var(--text-light);
+    margin-right: 2px;
+  }
+}
+
+// ── Inline pond panel (ItemDetailPage) ───────────────────────────────────────
+
+.pond-inline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-3;
+}
+
+.pond-inline-badge {
+  font-family: $font-pixel;
+  font-size: 0.5rem;
+  padding: 1px $space-2;
+  border-radius: 2px;
+  background: var(--surface-dark);
+  border: 1px solid rgba($color-brown, 0.3);
+  color: var(--text-mid);
+  white-space: nowrap;
+}
+
+.pond-inline-link {
+  font-family: $font-pixel;
+  font-size: 0.5rem;
+  color: $color-brown-mid;
+  text-decoration: none;
+  margin-left: auto;
+  &:hover { text-decoration: underline; }
+}
+
+.pond-inline-section {
+  margin-bottom: $space-3;
+  &:last-child { margin-bottom: 0; }
+}
+
+.pond-inline-label {
+  font-family: $font-pixel;
+  font-size: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-light);
+  margin-bottom: $space-1;
+}
+
+.pond-inline-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pond-inline-item {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 0;
+  border-bottom: 1px solid rgba($color-parchment-dark, 0.6);
+  font-size: 0.78rem;
+
+  &:last-child { border-bottom: none; }
+
+  &__name {
+    flex: 1;
+    color: var(--text);
+  }
+
+  &__chance {
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-green;
+  }
+
+  &__pop {
+    font-family: $font-pixel;
+    font-size: 0.48rem;
+    color: var(--text-light);
+  }
+
+  &__pop-badge {
+    font-family: $font-pixel;
+    font-size: 0.5rem;
+    color: $color-parchment;
+    background: $color-brown-mid;
+    border-radius: 2px;
+    padding: 1px $space-2;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__gate-items {
+    flex: 1;
+    font-size: 0.75rem;
+    color: var(--text);
+  }
+}
