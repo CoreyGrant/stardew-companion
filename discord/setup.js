@@ -4,7 +4,7 @@
  *
  * Configures the Stardew Companion Discord server:
  *   - Removes the default General text/voice channels Discord creates
- *   - Creates: #welcome (read-only), #chat, #feature-requests, #bug-reports, #feedback
+ *   - Creates: #welcome (read-only), #updates (read-only), #chat, #feature-requests, #bug-reports, #feedback
  *   - Posts the welcome embed to #welcome
  *   - Posts and pins templates in #feature-requests and #bug-reports
  *   - Creates a permanent (never-expires) invite on #welcome
@@ -126,6 +126,7 @@ const WELCOME_EMBED = {
     `**Open the app →** ${APP_URL}`,
     '',
     '**Channels:**',
+    '📣 **#updates** — new features and changes to the app',
     '💬 **#chat** — general chat about the app or Stardew Valley',
     '✨ **#feature-requests** — suggest new features (use the pinned template)',
     '🐛 **#bug-reports** — report bugs (use the pinned template)',
@@ -194,11 +195,12 @@ async function main() {
 
   // 2. Create channels in the desired display order
   console.log('\nCreating channels…');
-  const welcome         = await createChannel('welcome',          'Welcome to Stardew Companion — read me first!',               0, true);
-  const chat            = await createChannel('chat',             'Chat about the app or anything Stardew Valley related',       1);
-  const featureRequests = await createChannel('feature-requests', 'Suggest new features — see the pinned template before posting', 2);
-  const bugReports      = await createChannel('bug-reports',      'Report bugs — see the pinned template before posting',        3);
-  /* feedback */          await createChannel('feedback',         'General impressions and thoughts about the app',              4);
+  const welcome         = await createChannel('welcome',          'Welcome to Stardew Companion — read me first!',                 0, true);
+  /* updates */           await createChannel('updates',          'New features and changes — follow here to stay up to date',     1, true);
+  const chat            = await createChannel('chat',             'Chat about the app or anything Stardew Valley related',         2);
+  const featureRequests = await createChannel('feature-requests', 'Suggest new features — see the pinned template before posting', 3);
+  const bugReports      = await createChannel('bug-reports',      'Report bugs — see the pinned template before posting',          4);
+  /* feedback */          await createChannel('feedback',         'General impressions and thoughts about the app',                5);
 
   // 3. Post the welcome embed
   console.log('\nPosting messages…');
