@@ -508,27 +508,27 @@ export function FarmSidebar({
                   );
                 })}
 
-              {/* Signs — main farm only */}
-              {!interiorMode && signItems.filter(item => !q || item.name.toLowerCase().includes(q)).length > 0 && (
-                <>
-                  <div className="planner-group-label">Signs</div>
-                  {signItems.slice().sort((a, b) => a.name.localeCompare(b.name))
-                    .filter(item => !q || item.name.toLowerCase().includes(q))
-                    .map(item => (
-                      <button
-                        key={item.cheatId}
-                        className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
-                        onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: item.cheatId }) ? { tool: 'select' } : { tool: 'place-item', itemId: item.cheatId })}
-                        title={item.description || item.name}
-                      >
-                        {item.spriteSheet && item.spriteIndex !== undefined &&
-                          <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} isBigCraftable={item.isBigCraftable} size={13} />}
-                        <span>{item.name}</span>
-                      </button>
-                    ))}
-                </>
-              )}
             </SidebarSection>
+
+            {/* Signs — main farm only, own collapsible section */}
+            {!interiorMode && (
+              <SidebarSection {...sp('signs')} label="Signs">
+                {signItems.slice().sort((a, b) => a.name.localeCompare(b.name))
+                  .filter(item => !q || item.name.toLowerCase().includes(q))
+                  .map(item => (
+                    <button
+                      key={item.cheatId}
+                      className={`planner-chip planner-chip--sprite${isActive({ tool: 'place-item', itemId: item.cheatId }) ? ' planner-chip--active' : ''}`}
+                      onClick={() => onToolChange(isActive({ tool: 'place-item', itemId: item.cheatId }) ? { tool: 'select' } : { tool: 'place-item', itemId: item.cheatId })}
+                      title={item.description || item.name}
+                    >
+                      {item.spriteSheet && item.spriteIndex !== undefined &&
+                        <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} isBigCraftable={item.isBigCraftable} size={13} />}
+                      <span>{item.name}</span>
+                    </button>
+                  ))}
+              </SidebarSection>
+            )}
 
             {/* Optimal fill — sheds only, interior mode */}
             {interiorMode && interiorShedDims && (
