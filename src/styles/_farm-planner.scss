@@ -206,13 +206,8 @@
     flex-shrink: 0;
   }
 
-  // Section body — scrolls when open
+  // Section body — scroll container only; no flex here so overflow-y works reliably
   &__body {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-1;
-    padding: $space-2 $space-3;
-    align-content: flex-start;
     flex: 1;
     min-height: 0;
     overflow-y: auto;
@@ -220,6 +215,16 @@
 
     &::-webkit-scrollbar { width: 4px; }
     &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+  }
+
+  // Inner flex layout — separated from the scroll container so wrapping doesn't
+  // fight overflow-y on the parent
+  &__body-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+    padding: $space-2 $space-3;
+    align-content: flex-start;
 
     // Column layout variant (zones, optimal fill, etc.)
     &--col {

@@ -32,8 +32,10 @@ function SidebarSection({ label, isOpen, onOpen, children, colBody = false }: Se
         <span className="planner-section__caret">{isOpen ? '▲' : '▼'}</span>
       </button>
       {isOpen && (
-        <div className={`planner-section__body${colBody ? ' planner-section__body--col' : ''}`}>
-          {children}
+        <div className="planner-section__body">
+          <div className={`planner-section__body-inner${colBody ? ' planner-section__body-inner--col' : ''}`}>
+            {children}
+          </div>
         </div>
       )}
     </div>
