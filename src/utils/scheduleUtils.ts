@@ -28,19 +28,31 @@ function weatherFromPart(part: string): Weather | null {
  * IDs follow the pattern: `{season}`, `{dayOfWeek}`, `{day}`, `{weather}`,
  * `{season}_{dayOfWeek}`, `{season}_{day}`, etc. — split on `_`.
  *
+ * The `marriage_` prefix is handled specially — it implies `married: true`
+ * and the remainder of the key is parsed for further conditions.
+ *
  * Examples:
- *   "spring"    → { season: "spring" }
- *   "Wed"       → { dayOfWeek: "Wed" }
- *   "rain"      → { weather: "rainy" }
- *   "rain2"     → { weather: "rainy" }
- *   "GreenRain" → { weather: "stormy" }
- *   "11"        → { day: 11 }
- *   "spring_4"  → { season: "spring", day: 4 }
- *   "fall_Mon"  → { season: "fall", dayOfWeek: "Mon" }
+ *   "spring"        → { season: "spring" }
+ *   "Wed"           → { dayOfWeek: "Wed" }
+ *   "rain"          → { weather: "rainy" }
+ *   "rain2"         → { weather: "rainy" }
+ *   "GreenRain"     → { weather: "stormy" }
+ *   "11"            → { day: 11 }
+ *   "spring_4"      → { season: "spring", day: 4 }
+ *   "fall_Mon"      → { season: "fall", dayOfWeek: "Mon" }
+ *   "marriage_Mon"  → { married: true, dayOfWeek: "Mon" }
  */
 export function parseConditionsFromId(id: string): ScheduleCondition {
   const result: ScheduleCondition = {};
-  const parts = id.split('_');
+
+  // Handle marriage_ prefix: these variants only apply after the player marries this NPC.
+  let workId = id;
+  if (workId.startsWith('marriage_')) {
+    result.married = true;
+    workId = workId.slice('marriage_'.length);
+  }
+
+  const parts = workId.split('_');
 
   for (const part of parts) {
     // Season
@@ -106,14 +118,16 @@ export function scoreVariant(
 ): number {
   // Merge stored conditions (extraction) with ID-derived ones.
   // Stored conditions win when set; parsed fills in when missing.
+  // `variant.conditions` may be absent from older gamedata.json — default to {}.
+  const stored = variant.conditions ?? {};
   const parsed = parseConditionsFromId(variant.id);
   const c: ScheduleCondition = {
-    season:     variant.conditions.season     ?? parsed.season,
-    weather:    variant.conditions.weather    ?? parsed.weather,
-    minYear:    variant.conditions.minYear    ?? parsed.minYear,
-    married:    variant.conditions.married    ?? parsed.married,
-    dayOfWeek:  variant.conditions.dayOfWeek  ?? parsed.dayOfWeek,
-    day:        variant.conditions.day        ?? parsed.day,
+    season:     stored.season     ?? parsed.season,
+    weather:    stored.weather    ?? parsed.weather,
+    minYear:    stored.minYear    ?? parsed.minYear,
+    married:    stored.married    ?? parsed.married,
+    dayOfWeek:  stored.dayOfWeek  ?? parsed.dayOfWeek,
+    day:        stored.day        ?? parsed.day,
   };
 
   // Hard-fail on mismatches

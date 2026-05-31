@@ -56,7 +56,10 @@ export interface ScheduleEntry {
 export interface ScheduleVariant {
   id: string;
   label: string;
-  conditions: ScheduleCondition;
+  /** 'normal' for regular schedule variants; 'marriage' for post-marriage variants. */
+  type?: 'normal' | 'marriage';
+  /** Explicit conditions. When absent, conditions are derived from the `id` at runtime. */
+  conditions?: ScheduleCondition;
   entries: ScheduleEntry[];
 }
 

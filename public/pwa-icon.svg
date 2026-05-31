@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Dark brown background with rounded corners -->
+  <rect width="512" height="512" rx="76" fill="#2d1b0e"/>
+  <!-- Subtle green border ring -->
+  <rect width="512" height="512" rx="76" fill="none" stroke="#4a7c59" stroke-width="16"/>
+  <!-- Gold 5-pointed star — Stardew quality indicator -->
+  <polygon
+    points="256,76 298,198 427,200 325,278 362,402 256,328 150,402 188,278 85,200 214,198"
+    fill="#daa520"
+  />
+  <!-- Inner highlight -->
+  <polygon
+    points="256,112 288,205 394,206 311,262 340,358 256,300 172,358 201,262 118,206 224,205"
+    fill="#f5c842"
+    opacity="0.55"
+  />
+</svg>
