@@ -55,9 +55,10 @@ const NAV_GROUPS: NavGroup[] = [
     id: 'progress',
     label: 'Progress',
     items: [
-      { to: '/bundles', label: 'Bundles', icon: '📋' },
-      { to: '/quests',  label: 'Quests',  icon: '📜' },
-      { to: '/museum',  label: 'Museum',  icon: '🏛️' },
+      { to: '/bundles',    label: 'Bundles',    icon: '📋' },
+      { to: '/quests',     label: 'Quests',     icon: '📜' },
+      { to: '/museum',     label: 'Museum',     icon: '🏛️' },
+      { to: '/perfection', label: 'Perfection', icon: '✦'  },
     ],
   },
 ];
