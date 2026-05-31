@@ -46,10 +46,9 @@
   }
 }
 
-// Truncate
+// Truncate — no ellipsis; just clip (pixel font renders ellipsis at wrong position)
 @mixin truncate {
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
