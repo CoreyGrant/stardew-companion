@@ -37,14 +37,13 @@
   }
 
   &__sprite {
-    // BigCraftable sprite is 2× taller than wide; clip to top 14px to show machine body
+    // BigCraftable sprite is 2× taller than wide; center the 26px sprite in 14px to show mid-body
     width: 13px;
     height: 14px;
     overflow: hidden;
     flex-shrink: 0;
-    // Shift down slightly to center on the machine icon body (not the top)
     display: flex;
-    align-items: flex-start;
+    align-items: center;
   }
 
   &__label {

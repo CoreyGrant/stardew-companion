@@ -103,11 +103,11 @@
     border-color: rgba(#7c3aed, 0.5);
   }
 
-  // Today (save-aware current day) — gold ring
+  // Today (save-aware current day) — solid surface bg + thick gold ring so cell is always readable
   &--today {
-    outline: 2px solid $color-gold;
+    outline: 3px solid $color-gold;
     outline-offset: -2px;
-    background: rgba($color-gold, 0.08);
+    background: var(--surface);
 
     .cal-day__number {
       color: $color-gold;

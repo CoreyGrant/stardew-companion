@@ -21,6 +21,7 @@
 @mixin btn-base {
   font-family: $font-pixel;
   font-size: 0.7rem;
+  line-height: 1;
   border: 2px solid var(--border, #{$color-brown});
   background: var(--surface-mid, #{$color-parchment-mid});
   color: var(--text, #{$color-text});

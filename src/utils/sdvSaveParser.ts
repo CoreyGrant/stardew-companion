@@ -439,25 +439,56 @@ function parseBundles(
   const cc = findLocation(root, 'CommunityCenter');
   if (!cc) return result;
 
+  // ── Shortcut: if all 6 CC areas are complete, mark every bundle complete ─────
+  // This bypasses individual bundle slot parsing which can fail for certain
+  // bundles (vault, fodder, enchanters) due to save-format variations in 1.6.
+  const areasEl = ch(cc, 'areasComplete');
+  if (areasEl) {
+    const areas = chs(areasEl, 'boolean').map(
+      el => el.textContent?.trim().toLowerCase() === 'true',
+    );
+    if (areas.length === 6 && areas.every(Boolean)) {
+      for (const bundle of gameData.bundles) {
+        result[bundle.id] = bundle.items.map(bi => bi.slotId ?? bi.itemId);
+      }
+      return result;
+    }
+  }
+
+  // ── Partial completion — parse bundle by bundle ───────────────────────────────
   const bundlesEl = ch(cc, 'bundles');
   if (!bundlesEl) return result;
 
   for (const item of chs(bundlesEl, 'item')) {
-    const sdvId  = parseInt(deep(item, 'key', 'int') || '-1', 10);
+    // Support both <int> and <int64> key variants (SDV 1.6 uses int for all
+    // bundle IDs, but fall back to int64 for robustness)
+    const sdvId = parseInt(
+      deep(item, 'key', 'int') || deep(item, 'key', 'int64') || '-1',
+      10,
+    );
     if (sdvId < 0) continue;
 
-    const ourId    = SDV_BUNDLE_ID_MAP[sdvId];
+    const ourId = SDV_BUNDLE_ID_MAP[sdvId];
     if (!ourId) continue;
 
     const ourBundle = bundleById.get(ourId);
     if (!ourBundle) continue;
 
-    const arrayOfBool = ch(ch(item, 'value'), 'ArrayOfBoolean');
+    const valueEl     = ch(item, 'value');
+    const arrayOfBool = ch(valueEl, 'ArrayOfBoolean');
     if (!arrayOfBool) continue;
 
     const slots = chs(arrayOfBool, 'boolean').map(
       el => el.textContent?.trim().toLowerCase() === 'true',
     );
+
+    // If a multi-item bundle has only 1 boolean slot = true, treat as
+    // "entire bundle complete" (some 1.6 save variants write a single
+    // completion flag instead of per-slot booleans)
+    if (slots.length === 1 && slots[0] && ourBundle.items.length > 1) {
+      result[ourId] = ourBundle.items.map(bi => bi.slotId ?? bi.itemId);
+      continue;
+    }
 
     const completed: string[] = [];
     for (let i = 0; i < Math.min(slots.length, ourBundle.items.length); i++) {

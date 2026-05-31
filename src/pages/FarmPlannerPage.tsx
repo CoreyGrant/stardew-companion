@@ -279,6 +279,7 @@ export function FarmPlannerPage() {
         interior={layout.interiors[interiorBuilding.id] ?? { items: [], paths: [], trees: [] }}
         allItems={gameData?.items ?? []}
         treeDefs={treeDefs}
+        cropMap={cropMap}
         onBack={(savedInterior) => {
           updateInterior(interiorBuilding.id, savedInterior);
           setInteriorBuilding(null);

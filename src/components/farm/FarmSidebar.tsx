@@ -233,8 +233,8 @@ export function FarmSidebar({
     ? [{ id: 'summer', label: 'Year-round' }]
     : SEASONS;
 
-  // Helper to create a section's open/onOpen props
-  const sp = (id: string) => ({ id, isOpen: curSection === id, onOpen: () => setSection(id) });
+  // Helper to create a section's open/onOpen props — clicking an open section collapses it
+  const sp = (id: string) => ({ id, isOpen: curSection === id, onOpen: () => setSection(curSection === id ? '' : id) });
 
   return (
     <aside className="planner-sidebar">

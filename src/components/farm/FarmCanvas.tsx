@@ -277,17 +277,15 @@ export function FarmCanvas({
           />
         ))}
 
-        {/* User crop zones — hidden in interior mode */}
-        {!interiorMode && (
-          <ZoneLayer
-            zones={layout.zones}
-            tileSize={TILE_SIZE}
-            season={layout.season}
-            selectedZoneId={null}
-            cropMap={cropMap}
-            itemMap={itemMap}
-          />
-        )}
+        {/* User crop zones (shown in both farm and interior mode — greenhouses have plantable zones) */}
+        <ZoneLayer
+          zones={layout.zones}
+          tileSize={TILE_SIZE}
+          season={layout.season}
+          selectedZoneId={null}
+          cropMap={cropMap}
+          itemMap={itemMap}
+        />
 
         {/* Paths */}
         <PathLayer paths={layout.paths} tileSize={TILE_SIZE} />

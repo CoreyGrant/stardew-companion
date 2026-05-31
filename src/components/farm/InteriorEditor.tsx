@@ -19,7 +19,7 @@ import type {
   InteriorLayout, PathType, TreeType, TapperType, TileRect,
 } from '../../types/save';
 import type { Season } from '../../types/game';
-import type { BuildingDef, Item, TreeDef } from '../../types/game';
+import type { BuildingDef, Item, TreeDef, Crop } from '../../types/game';
 
 interface CtxMenuState {
   x: number;
@@ -34,11 +34,13 @@ interface Props {
   interior: InteriorLayout;
   allItems: Item[];
   treeDefs: TreeDef[];
+  /** Crop definitions keyed by crop id — used to render crop icons inside zones (e.g. greenhouse). */
+  cropMap?: Map<string, Crop>;
   onBack: (savedInterior: InteriorLayout) => void;
 }
 
 export function InteriorEditor({
-  building, buildingDef, interior, allItems, treeDefs, onBack,
+  building, buildingDef, interior, allItems, treeDefs, cropMap, onBack,
 }: Props) {
   // ── Zone data ─────────────────────────────────────────────────────────────────
   const { gridWidth, gridHeight, farmBaseType, zoneMap, treesAllowed } = useMemo(
@@ -403,6 +405,7 @@ export function InteriorEditor({
           layout={farmLayout}
           buildingDefs={emptyBuildingDefMap}
           itemMap={itemMap}
+          cropMap={cropMap}
           treeDefs={treeDefs}
           zoom={zoom}
           pan={pan}
