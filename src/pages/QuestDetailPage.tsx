@@ -13,7 +13,7 @@ export function QuestDetailPage() {
   const { activeSave } = useUserData();
   usePageTitle(quest?.name ?? 'Quest');
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error) return <div className="page-error">{error}</div>;
   if (!quest) return <div className="page-error">Quest not found.</div>;
 

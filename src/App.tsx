@@ -33,7 +33,7 @@ export function App() {
   if (loading) {
     return (
       <div className="splash">
-        <p className="splash__text">Loading Stardew Companion…</p>
+        <p className="splash__text">Loading Stardew Companion</p>
       </div>
     );
   }

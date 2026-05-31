@@ -60,7 +60,7 @@ export function FishGuidePage() {
     [data],
   );
 
-  if (loading) return <div className="page-loading">Loading fish data…</div>;
+  if (loading) return <div className="page-loading">Loading fish data</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   const allFish = data?.fish ?? [];
@@ -98,7 +98,7 @@ export function FishGuidePage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder="Search fish…"
+          placeholder="Search fish"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

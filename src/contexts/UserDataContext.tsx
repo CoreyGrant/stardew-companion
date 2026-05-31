@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -20,6 +21,12 @@ interface UserDataContextValue {
   updateQuestProgress: (saveId: string, questId: string, completedStepIds: string[]) => void;
   updateBundleProgress: (saveId: string, bundleId: string, completedItemIds: string[]) => void;
   updateMuseumDonations: (saveId: string, itemIds: string[]) => void;
+  /** Save IDs that have an in-memory File System API handle for re-reading. */
+  syncableSaveIds: ReadonlySet<string>;
+  /** Store a file handle (from showOpenFilePicker) for a given save ID. */
+  setFileHandle: (saveId: string, handle: FileSystemFileHandle) => void;
+  /** Retrieve the stored file handle for a save ID, if any. */
+  getFileHandle: (saveId: string) => FileSystemFileHandle | undefined;
 }
 
 const UserDataContext = createContext<UserDataContextValue | null>(null);
@@ -34,6 +41,10 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<AppSettings>(() =>
     service.getSettings()
   );
+
+  // In-memory file handles for sync — not persisted (FileSystemFileHandle is not serialisable).
+  const fileHandlesRef  = useRef(new Map<string, FileSystemFileHandle>());
+  const [syncableSaveIds, setSyncableSaveIds] = useState<ReadonlySet<string>>(new Set());
 
   const refresh = useCallback(() => {
     setSaves(service.getSaves());
@@ -106,6 +117,20 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
     [service, refresh]
   );
 
+  const setFileHandle = useCallback((saveId: string, handle: FileSystemFileHandle) => {
+    fileHandlesRef.current.set(saveId, handle);
+    setSyncableSaveIds(prev => {
+      if (prev.has(saveId)) return prev;
+      const next = new Set(prev);
+      next.add(saveId);
+      return next;
+    });
+  }, []);
+
+  const getFileHandle = useCallback((saveId: string) => {
+    return fileHandlesRef.current.get(saveId);
+  }, []);
+
   return (
     <UserDataContext.Provider
       value={{
@@ -120,6 +145,9 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
         updateQuestProgress,
         updateBundleProgress,
         updateMuseumDonations,
+        syncableSaveIds,
+        setFileHandle,
+        getFileHandle,
       }}
     >
       {children}

@@ -148,7 +148,7 @@ export function MuseumPage() {
     return list;
   };
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   const artDonated = artifacts.filter((i) => donatedSet.has(i.id)).length;
@@ -200,7 +200,7 @@ export function MuseumPage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder="Search…"
+          placeholder="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

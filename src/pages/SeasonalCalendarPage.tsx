@@ -39,9 +39,9 @@ const FESTIVALS: Record<Season, Festival[]> = {
   ],
 };
 
-/** Last planting day = 28 - growDays + 1, min 1. Only for single-season crops. */
+/** Last planting day = 28 - growDays, min 1. Planted day does not count as a growth day. */
 function lastPlantDay(growDays: number): number {
-  return Math.max(1, 28 - growDays + 1);
+  return Math.max(1, 28 - growDays);
 }
 
 export function SeasonalCalendarPage() {
@@ -59,7 +59,7 @@ export function SeasonalCalendarPage() {
       ? activeSave.day
       : null;
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   // Build day → NPCs map for this season

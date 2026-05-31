@@ -160,14 +160,14 @@ export function FarmPlannerPage() {
 
       if (b?.buildingId === 'Fish Pond') {
         items.push({
-          label: b.fishId ? 'Change Fish…' : 'Set Fish…',
+          label: b.fishId ? 'Change Fish' : 'Set Fish',
           onClick: () => { if (b) { setFishPickerBuilding(b); setContextMenu(null); } },
         });
       }
 
       if (def?.hasInterior && b?.repaired !== false) {
         items.push({
-          label: 'Open Interior…',
+          label: 'Open Interior',
           onClick: () => { if (b) setInteriorBuilding(b); },
         });
       }
@@ -193,7 +193,7 @@ export function FarmPlannerPage() {
       }
 
       items.push({
-        label: 'Edit Label…',
+        label: 'Edit Label',
         onClick: () => {
           if (!b) return;
           const newLabel = window.prompt('Building label:', b.label ?? '');
@@ -256,7 +256,7 @@ export function FarmPlannerPage() {
   }, [createZone, layout.zones.length]);
 
   // ── Guards ────────────────────────────────────────────────────────────────────
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
 
   if (!activeSave) {
     return (

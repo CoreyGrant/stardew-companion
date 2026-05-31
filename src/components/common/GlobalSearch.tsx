@@ -161,7 +161,7 @@ export function GlobalSearch() {
           ref={inputRef}
           type="search"
           className="gsearch__input"
-          placeholder="Search… (/)"
+          placeholder="Search (/)"
           value={query}
           aria-label="Search all game data"
           autoComplete="off"

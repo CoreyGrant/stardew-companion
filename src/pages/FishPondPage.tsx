@@ -246,7 +246,7 @@ export function FishPondPage() {
     });
   }
 
-  if (!data) return <div className="page-loading">Loading…</div>;
+  if (!data) return <div className="page-loading">Loading</div>;
 
   return (
     <div className="page page--fish-pond">
@@ -259,7 +259,7 @@ export function FishPondPage() {
         <input
           type="search"
           className="pond-search"
-          placeholder="Search fish or produce…"
+          placeholder="Search fish or produce"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

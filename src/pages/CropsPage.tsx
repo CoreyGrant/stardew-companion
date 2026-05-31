@@ -31,7 +31,7 @@ function remainingHarvests(
   regrowDays: number | null | undefined,
   currentDay: number,
 ): number {
-  const daysLeft = SEASON_DAYS - currentDay + 1; // days remaining including today
+  const daysLeft = SEASON_DAYS - currentDay; // days remaining after planting (planted day is not a growth day)
   if (growDays > daysLeft) return 0;             // not enough time even for first harvest
   if (!regrowDays) return 1;
   return 1 + Math.floor((daysLeft - growDays) / regrowDays);
@@ -80,7 +80,7 @@ export function CropsPage() {
     [data],
   );
 
-  if (loading) return <div className="page-loading">Loading crops…</div>;
+  if (loading) return <div className="page-loading">Loading crops</div>;
   if (error) return <div className="page-error">{error}</div>;
 
   const rawCrops = (data?.crops ?? []).filter(

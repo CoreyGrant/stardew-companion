@@ -83,7 +83,7 @@ export function RecipesPage() {
     return map;
   }, [data]);
 
-  if (loading) return <div className="page-loading">Loading recipes…</div>;
+  if (loading) return <div className="page-loading">Loading recipes</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   return (
@@ -114,7 +114,7 @@ export function RecipesPage() {
         <input
           type="search"
           className="recipe-search-bar__input"
-          placeholder="Search recipes or ingredients…"
+          placeholder="Search recipes or ingredients"
           value={search}
           onChange={e => setSearch(e.target.value)}
         />

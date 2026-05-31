@@ -35,7 +35,7 @@ export function ScheduleViewerPage() {
     npcRows,
   } = useScheduleViewer();
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
 
   return (
     <div className="page page--schedule">
@@ -61,7 +61,7 @@ export function ScheduleViewerPage() {
             <span className="schedule-controls__search-label">Search</span>
             <input
               type="search"
-              placeholder="Filter by name…"
+              placeholder="Filter by name"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="schedule-controls__search-input"

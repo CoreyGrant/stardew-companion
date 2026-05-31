@@ -228,7 +228,11 @@ export function FarmSidebar({
 
   const switchTab = (tab: Tab) => { setActiveTab(tab); setSearch(''); };
 
-  const cropsForSeason = (s: Season) => (data?.crops ?? []).filter(c => c.seasons.includes(s));
+  const isGreenhouse = interiorMode && interiorContext === 'greenhouse';
+  const cropsForSeason = (s: Season) => {
+    if (isGreenhouse || isIsland) return (data?.crops ?? []); // no season restriction indoors
+    return (data?.crops ?? []).filter(c => c.seasons.includes(s));
+  };
   const zoneSeasonsRows: { id: Season; label: string }[] = isIsland
     ? [{ id: 'summer', label: 'Year-round' }]
     : SEASONS;
@@ -284,7 +288,7 @@ export function FarmSidebar({
         <input
           className="planner-search__input"
           type="search"
-          placeholder="Search…"
+          placeholder="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

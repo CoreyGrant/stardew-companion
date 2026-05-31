@@ -621,7 +621,7 @@ export function ItemDetailPage() {
   usePageTitle(item?.name ?? 'Item');
   const { data } = useGameData();
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error) return <div className="page-error">{error}</div>;
   if (!item) return <div className="page-error">Item not found.</div>;
 

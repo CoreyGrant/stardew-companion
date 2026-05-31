@@ -134,7 +134,7 @@ export function ForagingPage() {
     });
   }, [forageItems, seasonTab, locationFilter, search]);
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   const highlight = seasonTab === 'all' ? undefined : seasonTab as Season;
@@ -158,7 +158,7 @@ export function ForagingPage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder="Search…"
+          placeholder="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

@@ -35,7 +35,7 @@ export function QuestListPage() {
     return list;
   }, [data, filter, search]);
 
-  if (loading) return <div className="page-loading">Loading quests…</div>;
+  if (loading) return <div className="page-loading">Loading quests</div>;
   if (error) return <div className="page-error">{error}</div>;
 
   return (
@@ -47,7 +47,7 @@ export function QuestListPage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder="Search quests…"
+          placeholder="Search quests"
           value={search}
           onChange={e => setSearch(e.target.value)}
           aria-label="Search quests"

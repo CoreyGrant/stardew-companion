@@ -83,7 +83,7 @@ export function ShopsPage() {
     return items.filter((e) => e.item.name.toLowerCase().includes(q));
   }, [shopMap, activeShop, search]);
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   const isIslandTrader = activeShop === 'Island Trader';
@@ -116,7 +116,7 @@ export function ShopsPage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder={`Search ${activeShop}…`}
+          placeholder={`Search ${activeShop}`}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

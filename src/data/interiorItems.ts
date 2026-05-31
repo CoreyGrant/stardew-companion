@@ -138,32 +138,33 @@ type GhTileType = 'wall' | 'walk' | 'water' | 'stone' | 'farm';
  * The full map is 20 wide × 24 tall.
  *
  * wall  – non-interactive (outer/inner brick walls)
- * walk  – walking area rows 1-6 (machines ok)
- * water – water source tiles at row 6 cols 9-10 (non-interactive)
+ * walk  – walking area top rows 1-2 and bottom rows 20-22 (machines ok)
+ * water – water source tiles at row 3 cols 9-10 (non-interactive)
  * stone – stone/gravel border (tree-plantable + items ok)
- * farm  – farmable soil centre (crops + items ok)
+ * farm  – farmable soil centre rows 7-16, cols 4-15 (crops + items ok)
  */
 function getGreenhouseTileType(x: number, y: number): GhTileType {
   // Outer walls
   if (x === 0 || x === 19 || y === 0) return 'wall';
   // Bottom row – mostly wall, entrance marker at col 10
   if (y === 23) return x === 10 ? 'stone' : 'wall';
-  // Walking rows 1-5
-  if (y >= 1 && y <= 5) return 'walk';
-  // Row 6 – walk with water source at cols 9-10
-  if (y === 6) return (x === 9 || x === 10) ? 'water' : 'walk';
-  // Stone rows 7-8 (full width inside walls)
-  if (y === 7 || y === 8) return 'stone';
-  // Inner border rows 9 & 20: stone on sides, wall spanning middle
-  if (y === 9 || y === 20) return (x <= 2 || x >= 17) ? 'stone' : 'wall';
-  // Stone rows 21-22
-  if (y === 21 || y === 22) return 'stone';
-  // Farmable centre rows 10-19
-  if (y >= 10 && y <= 19) {
-    if (x <= 2 || x >= 17) return 'stone'; // side stone strips
-    if (x === 3) return 'wall';            // inner left border
-    if (y === 10) return x <= 14 ? 'farm' : 'wall'; // row 10: 11 farmable + wall at 15-16
-    return x <= 15 ? 'farm' : 'wall';     // rows 11-19: 12 farmable
+  // Walking rows 1-2 (top hallway — machines ok)
+  if (y >= 1 && y <= 2) return 'walk';
+  // Row 3 – walk with water source at cols 9-10
+  if (y === 3) return (x === 9 || x === 10) ? 'water' : 'walk';
+  // Stone rows 4-5 (full width inside outer walls)
+  if (y === 4 || y === 5) return 'stone';
+  // Inner border rows 6 & 17: stone on outer sides, wall spanning farmable middle
+  if (y === 6 || y === 17) return (x <= 2 || x >= 17) ? 'stone' : 'wall';
+  // Stone rows 18-19 (bottom stone strip)
+  if (y === 18 || y === 19) return 'stone';
+  // Walking rows 20-22 (bottom hallway before entrance)
+  if (y >= 20 && y <= 22) return 'walk';
+  // Farmable centre rows 7-16
+  if (y >= 7 && y <= 16) {
+    if (x <= 2 || x >= 17) return 'stone';  // side stone strips
+    if (x === 3 || x === 16) return 'wall'; // inner left/right borders
+    return 'farm';                          // x=4..15 = 12 cols, uniform on every row
   }
   return 'wall';
 }

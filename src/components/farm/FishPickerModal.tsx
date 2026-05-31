@@ -25,7 +25,7 @@ export function FishPickerModal({ fish, currentFishId, title = 'Select Fish', on
         <input
           className="fish-picker__search"
           type="search"
-          placeholder="Search fish…"
+          placeholder="Search fish"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           autoFocus

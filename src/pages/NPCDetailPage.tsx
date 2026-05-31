@@ -51,7 +51,7 @@ export function NPCDetailPage() {
   const [schedWeather, setSchedWeather] = useState<Weather>('sunny');
   const [showAllVariants, setShowAllVariants] = useState(false);
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
   if (!npc)    return <div className="page-error">Character not found.</div>;
 

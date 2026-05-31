@@ -183,7 +183,7 @@ export function MachinesPage() {
   const { data, loading, error } = useGameData();
   const [selectedId, setSelectedId] = useState<string>('12'); // Keg default
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
   if (!data)   return null;
 

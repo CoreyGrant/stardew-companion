@@ -24,7 +24,7 @@ export function ItemListPage() {
           sort, setSort, hasEnergy } = useItemList();
   const [viewMode, setViewMode] = useViewMode('items', 'tile');
 
-  if (loading) return <div className="page-loading">Loading items…</div>;
+  if (loading) return <div className="page-loading">Loading items</div>;
   if (error) return <div className="page-error">{error}</div>;
 
   return (
@@ -36,7 +36,7 @@ export function ItemListPage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder="Search items…"
+          placeholder="Search items"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           aria-label="Search items"

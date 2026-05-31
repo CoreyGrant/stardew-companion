@@ -90,7 +90,7 @@ export function GiftGuidePage() {
     return allItems.filter((i) => i.name.toLowerCase().includes(q));
   }, [allItems, search]);
 
-  if (loading) return <div className="page-loading">Loading…</div>;
+  if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
   const npcs = data!.npcs;
@@ -223,7 +223,7 @@ export function GiftGuidePage() {
             <input
               className="filter-bar__search"
               type="search"
-              placeholder="Search gifts by name…"
+              placeholder="Search gifts by name"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               autoFocus

@@ -21,7 +21,7 @@ export function NPCListPage() {
   const { activeSave } = useUserData();
   const heartLevels = activeSave?.heartLevels;
 
-  if (loading) return <div className="page-loading">Loading characters…</div>;
+  if (loading) return <div className="page-loading">Loading characters</div>;
   if (error) return <div className="page-error">{error}</div>;
 
   return (
@@ -33,7 +33,7 @@ export function NPCListPage() {
         <input
           className="filter-bar__search"
           type="search"
-          placeholder="Search by name…"
+          placeholder="Search by name"
           value={filters.search}
           onChange={(e) => setSearch(e.target.value)}
           aria-label="Search characters"
