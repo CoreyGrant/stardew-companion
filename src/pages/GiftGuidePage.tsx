@@ -1,14 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useGameData } from '../contexts/GameDataContext';
+import { useUserData } from '../contexts/UserDataContext';
 import { GameLink } from '../components/common/GameLink';
 import { PortraitImg } from '../components/common/PortraitImg';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { NPC, ItemRef } from '../types/game';
+import type { FriendshipEntry } from '../types/save';
 
 const BASE = import.meta.env.BASE_URL;
 
-type Mode = 'by-npc' | 'by-item';
+type Mode = 'by-npc' | 'by-item' | 'my-plan';
 const UNIVERSAL_ID = '__universal__';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -49,14 +51,50 @@ function GiftList({ title, items, className }: { title: string; items: ItemRef[]
   );
 }
 
+/**
+ * Maximum heart level achievable for this NPC given current relationship status.
+ * Married    → 14
+ * Dating/Engaged → 10
+ * Non-marriageable (no romance) → 10
+ * Marriageable + no save / Friendly → 8
+ */
+function getFriendshipCap(npc: NPC, fd?: FriendshipEntry): number {
+  if (!fd) return npc.marriageable ? 8 : 10;
+  const st = fd.status;
+  if (st === 'Married')             return 14;
+  if (st === 'Dating' || st === 'Engaged') return 10;
+  if (!npc.marriageable)            return 10;
+  return 8;
+}
+
+// ── Heart bar ─────────────────────────────────────────────────────────────────
+
+function HeartBar({ current, cap, isMaxed }: { current: number; cap: number; isMaxed: boolean }) {
+  const hearts = Array.from({ length: cap }, (_, i) => i < current);
+  return (
+    <div className={`plan-hearts${isMaxed ? ' plan-hearts--maxed' : ''}`} title={`${current}/${cap} hearts`}>
+      {hearts.map((filled, i) => (
+        <span key={i} className={`plan-heart${filled ? ' plan-heart--filled' : ''}`}>♥</span>
+      ))}
+    </div>
+  );
+}
+
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export function GiftGuidePage() {
   usePageTitle('Gift Guide');
   const { data, loading, error } = useGameData();
+  const { activeSave } = useUserData();
   const [mode, setMode] = useState<Mode>('by-npc');
   const [selectedNPCId, setSelectedNPCId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+
+  // ── My Plan state ─────────────────────────────────────────────────────────
+  const [myItemIds, setMyItemIds] = useState<string[]>([]);
+  const [planSearch, setPlanSearch] = useState('');
+  const [planDropdownOpen, setPlanDropdownOpen] = useState(false);
+  const planSearchRef = useRef<HTMLInputElement>(null);
 
   // Index: itemId → { loved: npc[], liked: npc[] }
   const itemIndex = useMemo(() => {
@@ -90,6 +128,77 @@ export function GiftGuidePage() {
     return allItems.filter((i) => i.name.toLowerCase().includes(q));
   }, [allItems, search]);
 
+  // ── My Plan computations ──────────────────────────────────────────────────
+
+  // ItemRef lookup by id
+  const itemRefById = useMemo(() => {
+    const m = new Map<string, ItemRef>();
+    allItems.forEach((i) => m.set(i.id, i));
+    return m;
+  }, [allItems]);
+
+  // Items currently in My Plan picker
+  const myItems = useMemo<ItemRef[]>(() =>
+    myItemIds.map((id) => itemRefById.get(id)).filter((x): x is ItemRef => x !== undefined),
+  [myItemIds, itemRefById]);
+
+  // Plan search results (items NOT already added)
+  const planSearchResults = useMemo<ItemRef[]>(() => {
+    const q = planSearch.trim().toLowerCase();
+    if (!q) return [];
+    return allItems.filter((i) => !myItemIds.includes(i.id) && i.name.toLowerCase().includes(q)).slice(0, 8);
+  }, [allItems, myItemIds, planSearch]);
+
+  // NPC rows for My Plan
+  const planRows = useMemo(() => {
+    if (!data) return [];
+    return data.npcs.map((npc) => {
+      const fd   = activeSave?.friendshipData?.[npc.id];
+      const heartLevel = activeSave?.heartLevels?.[npc.id] ?? 0;
+      const cap  = getFriendshipCap(npc, fd);
+      const isMaxed    = heartLevel >= cap;
+      const giftsThisWeek = fd?.giftsThisWeek ?? 0;
+      const giftsToday    = fd?.giftsToday    ?? 0;
+      const canGiftMore   = !isMaxed && giftsThisWeek < 2;
+
+      // Which of my items does this NPC love/like?
+      const lovedMatches = myItems.filter((item) => {
+        const aff = itemIndex.get(item.id);
+        const isUnivLoved = data.universalGifts.loved.some((u) => u.id === item.id);
+        return isUnivLoved || aff?.loved.some((n) => n.id === npc.id);
+      });
+      const likedMatches = myItems.filter((item) => {
+        // Exclude items already matched as loved
+        if (lovedMatches.some((lv) => lv.id === item.id)) return false;
+        const aff = itemIndex.get(item.id);
+        const isUnivLiked = data.universalGifts.liked.some((u) => u.id === item.id);
+        return isUnivLiked || aff?.liked.some((n) => n.id === npc.id);
+      });
+
+      let priority: number;
+      if (canGiftMore && lovedMatches.length > 0)    priority = 0;
+      else if (canGiftMore && likedMatches.length > 0) priority = 1;
+      else if (canGiftMore)                           priority = 2;
+      else if (!isMaxed)                              priority = 3; // gifted out this week
+      else                                            priority = 4; // maxed
+
+      return { npc, heartLevel, cap, isMaxed, canGiftMore, giftsThisWeek, giftsToday, lovedMatches, likedMatches, priority };
+    }).sort((a, b) => a.priority - b.priority || a.npc.name.localeCompare(b.npc.name));
+  }, [data, activeSave, myItems, itemIndex]);
+
+  // ── Plan picker handlers ──────────────────────────────────────────────────
+
+  function addItem(id: string) {
+    if (!myItemIds.includes(id)) setMyItemIds((prev) => [...prev, id]);
+    setPlanSearch('');
+    setPlanDropdownOpen(false);
+    planSearchRef.current?.focus();
+  }
+
+  function removeItem(id: string) {
+    setMyItemIds((prev) => prev.filter((i) => i !== id));
+  }
+
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
@@ -116,6 +225,10 @@ export function GiftGuidePage() {
           className={`gift-guide-tab${mode === 'by-item' ? ' gift-guide-tab--active' : ''}`}
           onClick={() => setMode('by-item')}
         >By Item</button>
+        <button
+          className={`gift-guide-tab${mode === 'my-plan' ? ' gift-guide-tab--active' : ''}`}
+          onClick={() => setMode('my-plan')}
+        >My Plan</button>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════
@@ -285,6 +398,143 @@ export function GiftGuidePage() {
               <p className="page-empty">No gift matches found for "{search}".</p>
             )}
           </div>
+        </>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          MY PLAN MODE
+      ═══════════════════════════════════════════════════════════════════════ */}
+      {mode === 'my-plan' && (
+        <>
+          {/* Save-data notice */}
+          {!activeSave && (
+            <p className="plan-notice">
+              No save loaded — heart levels and gift limits are not shown.{' '}
+              <Link to="/saves">Load a save</Link> to unlock full save-aware recommendations.
+            </p>
+          )}
+
+          {/* Item picker */}
+          <div className="plan-picker">
+            <div className="plan-picker__label">What gifts do you have?</div>
+            <div className="plan-picker__input-wrap">
+              <input
+                ref={planSearchRef}
+                className="plan-picker__input"
+                type="search"
+                placeholder="Search for a gift item…"
+                value={planSearch}
+                onChange={(e) => { setPlanSearch(e.target.value); setPlanDropdownOpen(true); }}
+                onFocus={() => { if (planSearch.trim()) setPlanDropdownOpen(true); }}
+                onBlur={() => setTimeout(() => setPlanDropdownOpen(false), 150)}
+                autoComplete="off"
+              />
+              {planDropdownOpen && planSearchResults.length > 0 && (
+                <ul className="plan-picker__dropdown">
+                  {planSearchResults.map((item) => (
+                    <li key={item.id}>
+                      <button
+                        className="plan-picker__dropdown-item"
+                        onMouseDown={() => addItem(item.id)}
+                      >
+                        {item.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Selected item chips */}
+            {myItems.length > 0 && (
+              <div className="plan-picker__chips">
+                {myItems.map((item) => (
+                  <span key={item.id} className="plan-item-chip">
+                    <GameLink type="item" id={item.id}>{item.name}</GameLink>
+                    <button
+                      className="plan-item-chip__remove"
+                      onClick={() => removeItem(item.id)}
+                      title={`Remove ${item.name}`}
+                      aria-label={`Remove ${item.name}`}
+                    >×</button>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {myItems.length === 0 && (
+            <p className="gift-guide-prompt">
+              Search for items above to see which villagers would love or like them.
+            </p>
+          )}
+
+          {/* NPC rows */}
+          {myItems.length > 0 && (
+            <div className="plan-npc-list">
+              {planRows.map(({ npc, heartLevel, cap, isMaxed, canGiftMore, giftsThisWeek, giftsToday, lovedMatches, likedMatches }) => {
+                const hasMatch = lovedMatches.length > 0 || likedMatches.length > 0;
+                return (
+                  <div
+                    key={npc.id}
+                    className={[
+                      'plan-npc-row',
+                      isMaxed           ? 'plan-npc-row--maxed'    : '',
+                      !canGiftMore && !isMaxed ? 'plan-npc-row--gifted-out' : '',
+                      hasMatch && canGiftMore  ? 'plan-npc-row--match'      : '',
+                    ].filter(Boolean).join(' ')}
+                  >
+                    {/* Portrait */}
+                    <Link to={`/characters/${npc.id}`} className="plan-npc-row__portrait" title={npc.name}>
+                      {npc.portrait ? (
+                        <PortraitImg src={`${BASE}sprites/portraits/${npc.portrait}`} size={32} />
+                      ) : (
+                        <span className="plan-npc-row__initial">{npc.name.charAt(0)}</span>
+                      )}
+                    </Link>
+
+                    {/* Name + hearts */}
+                    <div className="plan-npc-row__info">
+                      <Link to={`/characters/${npc.id}`} className="plan-npc-row__name">{npc.name}</Link>
+                      {activeSave && (
+                        <HeartBar current={heartLevel} cap={cap} isMaxed={isMaxed} />
+                      )}
+                    </div>
+
+                    {/* Gift status badge */}
+                    <div className="plan-npc-row__status">
+                      {isMaxed ? (
+                        <span className="plan-badge plan-badge--maxed">Max ♥</span>
+                      ) : giftsThisWeek >= 2 ? (
+                        <span className="plan-badge plan-badge--gifted-out">
+                          {activeSave ? 'Gifted out' : ''}
+                        </span>
+                      ) : giftsToday > 0 ? (
+                        <span className="plan-badge plan-badge--today">Gifted today</span>
+                      ) : null}
+                    </div>
+
+                    {/* Matched items */}
+                    <div className="plan-npc-row__matches">
+                      {lovedMatches.map((item) => (
+                        <span key={item.id} className="plan-match plan-match--loved" title="Loved gift">
+                          ❤️ {item.name}
+                        </span>
+                      ))}
+                      {likedMatches.map((item) => (
+                        <span key={item.id} className="plan-match plan-match--liked" title="Liked gift">
+                          👍 {item.name}
+                        </span>
+                      ))}
+                      {!hasMatch && (
+                        <span className="plan-match plan-match--none">No match</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </>
       )}
     </div>
