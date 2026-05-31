@@ -32,6 +32,10 @@ jobs:
           # Settings → Secrets and variables → Actions → Variables tab.
           # The Discord icon in the navbar only appears when this is set.
           VITE_DISCORD_INVITE: ${{ vars.VITE_DISCORD_INVITE }}
+          # Set VITE_SYNC_API_URL as a repository secret in
+          # Settings → Secrets and variables → Actions → Secrets tab.
+          # The Cloud Sync panel only appears when this is set.
+          VITE_SYNC_API_URL: ${{ secrets.VITE_SYNC_API_URL }}
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
