@@ -490,10 +490,9 @@ function parseFriendship(
       ? rawStatus as FriendshipStatus
       : 'Friendly';
     const giftsThisWeek = parseInt(txt(friendship, 'GiftsThisWeek') || '0', 10);
-    const giftsToday    = parseInt(txt(friendship, 'GiftsToday')    || '0', 10);
 
     heartLevels[npc.id]    = Math.min(Math.floor(points / 250), 14);
-    friendshipData[npc.id] = { points, status, giftsThisWeek, giftsToday };
+    friendshipData[npc.id] = { points, status, giftsThisWeek };
   }
   return { heartLevels, friendshipData };
 }

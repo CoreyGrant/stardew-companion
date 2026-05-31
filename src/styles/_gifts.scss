@@ -515,12 +515,6 @@
     border-color: var(--border);
     background: transparent;
   }
-
-  &--today {
-    color: $color-liked;
-    border-color: rgba($color-liked, 0.4);
-    background: rgba($color-liked, 0.08);
-  }
 }
 
 // ── NPC mini portrait chip (by-item mode) ─────────────────────────────────────

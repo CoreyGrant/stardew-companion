@@ -158,7 +158,6 @@ export function GiftGuidePage() {
       const cap  = getFriendshipCap(npc, fd);
       const isMaxed    = heartLevel >= cap;
       const giftsThisWeek = fd?.giftsThisWeek ?? 0;
-      const giftsToday    = fd?.giftsToday    ?? 0;
       const canGiftMore   = !isMaxed && giftsThisWeek < 2;
 
       // Which of my items does this NPC love/like?
@@ -182,7 +181,7 @@ export function GiftGuidePage() {
       else if (!isMaxed)                              priority = 3; // gifted out this week
       else                                            priority = 4; // maxed
 
-      return { npc, heartLevel, cap, isMaxed, canGiftMore, giftsThisWeek, giftsToday, lovedMatches, likedMatches, priority };
+      return { npc, heartLevel, cap, isMaxed, canGiftMore, giftsThisWeek, lovedMatches, likedMatches, priority };
     }).sort((a, b) => a.priority - b.priority || a.npc.name.localeCompare(b.npc.name));
   }, [data, activeSave, myItems, itemIndex]);
 
@@ -472,7 +471,7 @@ export function GiftGuidePage() {
           {/* NPC rows */}
           {myItems.length > 0 && (
             <div className="plan-npc-list">
-              {planRows.map(({ npc, heartLevel, cap, isMaxed, canGiftMore, giftsThisWeek, giftsToday, lovedMatches, likedMatches }) => {
+              {planRows.map(({ npc, heartLevel, cap, isMaxed, canGiftMore, giftsThisWeek, lovedMatches, likedMatches }) => {
                 const hasMatch = lovedMatches.length > 0 || likedMatches.length > 0;
                 return (
                   <div
@@ -505,12 +504,8 @@ export function GiftGuidePage() {
                     <div className="plan-npc-row__status">
                       {isMaxed ? (
                         <span className="plan-badge plan-badge--maxed">Max ♥</span>
-                      ) : giftsThisWeek >= 2 ? (
-                        <span className="plan-badge plan-badge--gifted-out">
-                          {activeSave ? 'Gifted out' : ''}
-                        </span>
-                      ) : giftsToday > 0 ? (
-                        <span className="plan-badge plan-badge--today">Gifted today</span>
+                      ) : activeSave && giftsThisWeek >= 2 ? (
+                        <span className="plan-badge plan-badge--gifted-out">Gifted out</span>
                       ) : null}
                     </div>
 

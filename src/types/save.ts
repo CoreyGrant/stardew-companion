@@ -115,8 +115,6 @@ export interface FriendshipEntry {
   status: FriendshipStatus;
   /** Number of gifts given this week (0, 1, or 2). */
   giftsThisWeek: number;
-  /** 1 if a gift was given to this NPC today, 0 otherwise. */
-  giftsToday: number;
 }
 
 // ── Save file ─────────────────────────────────────────────────────────────────
