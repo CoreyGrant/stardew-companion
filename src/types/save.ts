@@ -143,6 +143,31 @@ export interface SaveFile {
    * - 'joja-member'   — bought Joja membership but not all projects complete
    */
   communityStatus?: 'cc-restored' | 'joja-complete' | 'joja-member';
+
+  // ── Cloud sync / multiplayer fields ──────────────────────────────────────
+  /** UUID of the multiplayer room on the sync server (present on the host's save). */
+  roomId?: string;
+  /** 8-char B62 character invite code (present on guest saves — used to reconnect WS). */
+  charCode?: string;
+  /** Index of this save's character slot within the room (0 = host). */
+  charSlotIndex?: number;
+  /**
+   * All per-character data extracted from the save file (index 0 = host, 1+ = farmhands).
+   * Populated on import; used when creating a multiplayer room.
+   */
+  parsedCharacters?: ParsedCharacter[];
+}
+
+/**
+ * Lightweight per-character data stored on a SaveFile after import.
+ * Used when creating a multiplayer room so character names are available
+ * without re-parsing the original save file.
+ */
+export interface ParsedCharacter {
+  charName: string;
+  skills: Record<Skill, number>;
+  marriedTo: string | null;
+  money?: number;
 }
 
 export interface AppSettings {

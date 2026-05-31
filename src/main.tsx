@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import { DataServiceProvider } from './contexts/DataServiceContext';
 import { GameDataProvider } from './contexts/GameDataContext';
 import { UserDataProvider } from './contexts/UserDataContext';
+import { SyncProvider } from './contexts/SyncContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { App } from './App';
 import './styles/main.scss';
@@ -18,7 +19,9 @@ createRoot(root).render(
         <DataServiceProvider>
           <GameDataProvider>
             <UserDataProvider>
-              <App />
+              <SyncProvider>
+                <App />
+              </SyncProvider>
             </UserDataProvider>
           </GameDataProvider>
         </DataServiceProvider>

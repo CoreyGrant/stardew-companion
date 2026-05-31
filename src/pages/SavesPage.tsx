@@ -6,6 +6,7 @@ import { usePageTitle } from '../hooks/usePageTitle';
 import { Panel } from '../components/common/Panel';
 import { StardewDateInput } from '../components/common/StardewDateInput';
 import { SaveFileUpload } from '../components/saves/SaveFileUpload';
+import { SyncPanel, CreateRoomButton } from '../components/sync/SyncPanel';
 import { encodeSave, decodeSave } from '../utils/saveCodec';
 import type { FarmType, SaveFile, Skill } from '../types/save';
 import type { Season } from '../types/game';
@@ -323,6 +324,7 @@ export function SavesPage() {
                     >
                       {exportingId === save.id ? 'Hide Export' : 'Export'}
                     </button>
+                    <CreateRoomButton save={save} />
                     {deletingId === save.id ? (
                       <>
                         <span className="save-card__delete-confirm">Really delete?</span>
@@ -365,6 +367,8 @@ export function SavesPage() {
       </Panel>
 
       <ImportSection />
+
+      <SyncPanel />
     </div>
   );
 }

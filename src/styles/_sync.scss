@@ -1,0 +1,278 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Cloud Sync panel (on SavesPage) ───────────────────────────────────────────
+
+.sync-panel {
+  &__intro {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: $space-3;
+    line-height: 1.5;
+  }
+
+  // ── Auth form ──
+  &__auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    max-width: 420px;
+  }
+
+  &__auth-row {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+  }
+
+  &__input {
+    flex: 1 1 180px;
+    height: 30px;
+    padding: 0 $space-2;
+    background: var(--surface-mid);
+    border: 1px solid $color-brown-mid;
+    border-radius: $radius-sm;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-family: $font-body;
+
+    &:focus {
+      outline: none;
+      border-color: $color-gold;
+    }
+
+    &::placeholder { color: var(--text-light); }
+  }
+
+  &__auth-actions {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__error {
+    font-size: 0.75rem;
+    color: $color-danger;
+  }
+
+  // ── Logged-in header ──
+  &__account-row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-wrap: wrap;
+    margin-bottom: $space-3;
+    font-size: 0.8rem;
+    color: var(--text-mid);
+  }
+
+  &__email {
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  // ── Empty rooms hint ──
+  &__no-rooms {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+}
+
+// ── Room card ─────────────────────────────────────────────────────────────────
+
+.room-card {
+  @include panel-frame(var(--surface-mid));
+  padding: $space-3 $space-4;
+  margin-top: $space-3;
+
+  &__name {
+    font-family: $font-pixel;
+    font-size: 0.8rem;
+    color: $color-gold;
+    margin-bottom: $space-3;
+  }
+
+  &__slots {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin-bottom: $space-3;
+  }
+
+  &__slot {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--text-mid);
+  }
+
+  &__slot-icon {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  &__slot-name {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  &__slot-code {
+    font-family: monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    background: var(--surface);
+    border: 1px solid $color-brown-mid;
+    border-radius: $radius-sm;
+    padding: 2px $space-2;
+    color: var(--text);
+  }
+
+  &__slot-actions {
+    display: flex;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__last-pushed {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+}
+
+// ── Create-room button on save cards ─────────────────────────────────────────
+
+.save-card__create-room {
+  // inherits btn styles — no extra needed
+}
+
+// ── WS status dot (in navbar) ─────────────────────────────────────────────────
+
+.ws-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  color: $color-parchment-mid;
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  &__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: $color-brown-mid;
+
+    &--connected    { background: #4caf50; }
+    &--reconnecting { background: $color-gold; animation: pulse 1s ease-in-out infinite alternate; }
+  }
+
+  // Hide label on very small screens
+  &__label { @media (max-width: #{$bp-sm}) { display: none; } }
+
+  @media (max-width: #{$bp-sm}) { gap: 3px; }
+}
+
+// ── Join page ─────────────────────────────────────────────────────────────────
+
+.join-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: $space-4;
+  text-align: center;
+
+  &__card {
+    @include panel-frame;
+    padding: $space-6 $space-8;
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  &__icon { font-size: 2.5rem; line-height: 1; }
+
+  &__farm {
+    font-family: $font-pixel;
+    font-size: 0.9rem;
+    color: $color-gold;
+  }
+
+  &__char {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+  }
+
+  &__hint {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-2;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__divider {
+    border: none;
+    border-top: 1px solid $color-brown-mid;
+    margin: $space-2 0;
+  }
+
+  &__manual-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  &__manual-row {
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__code-input {
+    width: 120px;
+    height: 30px;
+    padding: 0 $space-2;
+    background: var(--surface-mid);
+    border: 1px solid $color-brown-mid;
+    border-radius: $radius-sm;
+    color: var(--text);
+    font-family: monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: none;
+
+    &:focus {
+      outline: none;
+      border-color: $color-gold;
+    }
+  }
+
+  &__error {
+    font-size: 0.75rem;
+    color: $color-danger;
+  }
+}

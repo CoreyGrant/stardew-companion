@@ -4,6 +4,7 @@ import { InlineNavGroups, ThemeDropdown, MobileDrawer } from './Nav';
 import { GlobalSearch } from '../common/GlobalSearch';
 import { useUserData } from '../../contexts/UserDataContext';
 import { useGameData } from '../../contexts/GameDataContext';
+import { useSync } from '../../contexts/SyncContext';
 import { parseSdvSave } from '../../utils/sdvSaveParser';
 
 // Only defined when VITE_DISCORD_INVITE is set at build time (GitHub Actions variable)
@@ -24,6 +25,7 @@ interface Props {
 export function AppShell({ children }: Props) {
   const { activeSave, settings, updateSave } = useUserData();
   const { data: gameData } = useGameData();
+  const { wsConnected } = useSync();
   const location = useLocation();
   const isPlanner = location.pathname === '/farm-planner' || location.pathname === '/island-farm';
 
@@ -82,6 +84,14 @@ export function AppShell({ children }: Props) {
 
         {/* Right group — sync + search + discord + theme + save badge, all pushed to the right */}
         <div className="app-header__right">
+          {/* WS status dot — shown when active save is a guest room save */}
+          {activeSave?.charCode && (
+            <span className="ws-status" title={wsConnected ? 'Live sync connected' : 'Reconnecting to sync server'}>
+              <span className={`ws-status__dot ws-status__dot--${wsConnected ? 'connected' : 'reconnecting'}`} />
+              <span className="ws-status__label">{wsConnected ? 'Live' : 'Reconnecting'}</span>
+            </span>
+          )}
+
           {/* Sync button — shown when the active save was imported from a file */}
           {activeSave?.sourceFileName && (
             <>

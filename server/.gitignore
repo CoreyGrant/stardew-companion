@@ -1,0 +1,5 @@
+node_modules/
+bun.lockb
+data/*.db
+data/*.db-shm
+data/*.db-wal

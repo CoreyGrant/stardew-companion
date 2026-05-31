@@ -98,8 +98,18 @@ export function SaveFileUpload() {
 
   const handleImport = () => {
     if (!preview) return;
-    // Store the source filename so the navbar Sync button can prompt for the same file.
-    const save = createSave({ ...preview.result.save, sourceFileName: preview.fileName });
+    // Store sourceFileName (for Sync button) and parsedCharacters (for room creation).
+    const parsedCharacters = preview.result.characters.map(c => ({
+      charName:  c.charName,
+      skills:    c.skills,
+      marriedTo: c.marriedTo,
+      money:     c.money,
+    }));
+    const save = createSave({
+      ...preview.result.save,
+      sourceFileName: preview.fileName,
+      parsedCharacters,
+    });
     setImported(save.name);
     setPreview(null);
   };

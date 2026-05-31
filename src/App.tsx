@@ -25,6 +25,7 @@ import { MuseumPage } from './pages/MuseumPage';
 import { ForagingPage } from './pages/ForagingPage';
 import { ShopsPage } from './pages/ShopsPage';
 import { FishPondPage } from './pages/FishPondPage';
+import { JoinPage } from './pages/JoinPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export function App() {
@@ -75,6 +76,8 @@ export function App() {
         <Route path="/foraging" element={<ForagingPage />} />
         <Route path="/shops" element={<ShopsPage />} />
         <Route path="/fish-pond" element={<FishPondPage />} />
+        <Route path="/join/:charCode" element={<JoinPage />} />
+        <Route path="/join" element={<JoinPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </ErrorBoundary>

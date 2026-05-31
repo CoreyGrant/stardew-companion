@@ -24,6 +24,7 @@ import type {
   TapperType,
   TreeType,
 } from '../types/save';
+import type { CharacterSaveData } from './saveSync';
 import { DEFAULT_FARM_LAYOUT, STATIC_BUILDING_IDS } from '../types/save';
 import type { Season } from '../types/game';
 
@@ -162,6 +163,12 @@ const XP_TABLE = [0, 100, 380, 770, 1300, 2150, 3300, 4800, 6900, 10_000, 15_000
 
 export interface SdvParseResult {
   save: Omit<SaveFile, 'id' | 'createdAt'>;
+  /**
+   * Per-character data for all players in the save.
+   * Index 0 is always the host (matches `save`'s character data).
+   * Index 1+ are farmhands (co-op players) if this is a multiplayer save.
+   */
+  characters: CharacterSaveData[];
   warnings: string[];
 }
 
@@ -262,6 +269,47 @@ function findLocation(root: Element, typeName: string): Element | null {
   return null;
 }
 
+// ── Per-character parser ──────────────────────────────────────────────────────
+
+/**
+ * Extract per-character data from a <player> or <Farmer> element.
+ * Used for both the host player and each co-op farmhand.
+ */
+function parseFarmer(
+  playerEl: Element,
+  gameData: GameData,
+): CharacterSaveData {
+  const charName = txt(playerEl, 'name') || 'Farmer';
+
+  // Skills
+  const xpEls = chs(ch(playerEl, 'experiencePoints'), 'int');
+  const xpArr = xpEls.map(el => parseInt(el.textContent?.trim() ?? '0', 10));
+  const skills: Record<Skill, number> = {
+    farming:  xpToLevel(xpArr[0] ?? 0),
+    fishing:  xpToLevel(xpArr[1] ?? 0),
+    foraging: xpToLevel(xpArr[2] ?? 0),
+    mining:   xpToLevel(xpArr[3] ?? 0),
+    combat:   xpToLevel(xpArr[4] ?? 0),
+  };
+
+  const spouseRaw = txt(playerEl, 'spouse');
+  const marriedTo = spouseRaw || null;
+  const money     = parseInt(txt(playerEl, 'money') || '0', 10);
+
+  const heartLevels           = parseFriendship(playerEl, gameData);
+  const learnedCookingRecipes = parseCookingRecipes(playerEl, gameData);
+
+  return {
+    charName,
+    skills,
+    marriedTo,
+    heartLevels,
+    questProgress: {},          // manual tracking — not read from file
+    learnedCookingRecipes,
+    money,
+  };
+}
+
 // ── Main entry point ──────────────────────────────────────────────────────────
 
 export function parseSdvSave(
@@ -342,8 +390,27 @@ export function parseSdvSave(
     parseInt(txt(root,   'goldenWalnuts') || '0', 10) ||
     parseInt(txt(player, 'goldenWalnuts') || '0', 10);
 
-  // 9. NPC heart levels ───────────────────────────────────────────────────────
+  // 9. NPC heart levels & per-character data ───────────────────────────────────
   const heartLevels = parseFriendship(player, gameData);
+
+  // Build per-character array: host (index 0) + farmhands (index 1+)
+  const hostCharacter = parseFarmer(player, gameData);
+  const characters: CharacterSaveData[] = [hostCharacter];
+
+  // Farmhands live inside <Farm><farmhands><Farmer> in multiplayer saves.
+  // The exact tag may be <Farmer> or a subclass — we match all children of <farmhands>.
+  const farmLoc = findLocation(root, 'Farm');
+  if (farmLoc) {
+    const farmhandsEl = ch(farmLoc, 'farmhands');
+    if (farmhandsEl) {
+      for (const farmerEl of Array.from(farmhandsEl.children)) {
+        // Skip empty/placeholder entries (SDV sometimes writes stub <Farmer> with no name)
+        const fhName = txt(farmerEl, 'name');
+        if (!fhName) continue;
+        characters.push(parseFarmer(farmerEl, gameData));
+      }
+    }
+  }
 
   // 9b. Community Center / Joja status ───────────────────────────────────────
   const communityStatus = parseCommunityStatus(root, player);
@@ -390,6 +457,7 @@ export function parseSdvSave(
       goldenWalnuts,
       communityStatus,
     },
+    characters,
     warnings,
   };
 }
