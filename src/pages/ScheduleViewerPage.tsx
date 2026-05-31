@@ -1,12 +1,15 @@
 import { useScheduleViewer, DISPLAY_TIMES } from '../hooks/useScheduleViewer';
 import { StardewDateInput } from '../components/common/StardewDateInput';
+import { PortraitImg } from '../components/common/PortraitImg';
 import { GameLink } from '../components/common/GameLink';
 import { usePageTitle } from '../hooks/usePageTitle';
+
+const BASE = import.meta.env.BASE_URL;
 
 function formatTime(t: number): string {
   const h = Math.floor(t / 100);
   const suffix = h >= 12 ? 'pm' : 'am';
-  const displayH = h > 12 ? h - 12 : h;
+  const displayH = h > 12 ? h - 12 : h === 0 ? 12 : h;
   return `${displayH}${suffix}`;
 }
 
@@ -32,6 +35,7 @@ export function ScheduleViewerPage() {
     weather, setWeather,
     year, setYear,
     search, setSearch,
+    dayName,
     npcRows,
   } = useScheduleViewer();
 
@@ -39,8 +43,8 @@ export function ScheduleViewerPage() {
 
   return (
     <div className="page page--schedule">
-      <h1 className="page__title">Schedule Viewer</h1>
-      <p className="page__subtitle">Find where every villager is on any given day.</p>
+      <h1 className="page__title">Villager Schedules</h1>
+      <p className="page__subtitle">Where is everyone on a given day?</p>
 
       <div className="schedule-controls panel">
         <div className="panel__body schedule-controls__inner">
@@ -70,6 +74,7 @@ export function ScheduleViewerPage() {
         </div>
       </div>
 
+      {/* ── Schedule grid ── */}
       <div className="schedule-cal-wrap">
         <table className="schedule-cal">
           <colgroup>
@@ -78,29 +83,47 @@ export function ScheduleViewerPage() {
           </colgroup>
           <thead>
             <tr>
-              <th className="schedule-cal__npc-head">Villager</th>
+              <th className="schedule-cal__npc-head">
+                Villager
+                <span className="schedule-cal__date-label">
+                  {season.charAt(0).toUpperCase() + season.slice(1)} {day} ({dayName})
+                </span>
+              </th>
               {DISPLAY_TIMES.map((t) => (
                 <th key={t}>{formatTime(t)}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {npcRows.map(({ npc, locations }) => (
-              <tr key={npc.id}>
-                <td className="schedule-cal__npc-cell">
-                  <GameLink type="npc" id={npc.id}>{npc.name}</GameLink>
-                </td>
-                {computeSpans(locations).map((span, i) => (
-                  <td
-                    key={i}
-                    colSpan={span.span}
-                    className="schedule-cal__block"
-                  >
-                    {span.location}
+            {npcRows.map(({ npc, locations }) => {
+              const isEmpty = locations.every((l) => l === '—');
+              return (
+                <tr key={npc.id} className={isEmpty ? 'schedule-cal__row--empty' : ''}>
+                  <td className="schedule-cal__npc-cell">
+                    {npc.portrait ? (
+                      <PortraitImg
+                        src={`${BASE}sprites/portraits/${npc.portrait}`}
+                        size={24}
+                        alt=""
+                        className="schedule-cal__portrait"
+                      />
+                    ) : (
+                      <span className="schedule-cal__portrait-initial">{npc.name.charAt(0)}</span>
+                    )}
+                    <GameLink type="npc" id={npc.id}>{npc.name}</GameLink>
                   </td>
-                ))}
-              </tr>
-            ))}
+                  {computeSpans(locations).map((span, i) => (
+                    <td
+                      key={i}
+                      colSpan={span.span}
+                      className={`schedule-cal__block${span.location === '—' ? ' schedule-cal__block--empty' : ''}`}
+                    >
+                      {span.location}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

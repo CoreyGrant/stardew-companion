@@ -175,6 +175,18 @@
   }
 }
 
+// ── Calendar date label (in thead) ───────────────────────────────────────────
+.schedule-cal__date-label {
+  display: block;
+  font-family: $font-body;
+  font-size: 0.65rem;
+  font-weight: normal;
+  color: $color-gold;
+  opacity: 0.8;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
 // ── Calendar table ────────────────────────────────────────────────────────────
 .schedule-cal-wrap {
   @include panel-frame;
@@ -232,7 +244,7 @@
   // ── NPC name cell (sticky left) ──────────────────────────────────────────────
   &__npc-cell {
     background: var(--surface);
-    padding: $space-2 $space-3;
+    padding: $space-1 $space-3;
     font-size: 0.8rem;
     white-space: nowrap;
     vertical-align: middle;
@@ -241,6 +253,37 @@
     position: sticky;
     left: 0;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  // ── Portrait thumbnail in NPC cell ───────────────────────────────────────────
+  &__portrait {
+    display: block;
+    flex-shrink: 0;
+    border: 1px solid $color-brown;
+    background: $color-brown-dark;
+    overflow: hidden;
+  }
+
+  &__portrait-initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background: $color-brown-dark;
+    border: 1px solid $color-brown;
+    font-family: $font-pixel;
+    font-size: 0.55rem;
+    color: $color-gold;
+  }
+
+  // ── Empty-schedule row ───────────────────────────────────────────────────────
+  &__row--empty {
+    opacity: 0.45;
   }
 
   // ── Location block (calendar event cell) ─────────────────────────────────────
@@ -260,6 +303,13 @@
     // Spans >1 column get a subtle left accent to mark transition
     &[colspan]:not([colspan="1"]) {
       border-left: 2px solid rgba($color-brown-light, 0.35);
+    }
+
+    // No schedule data for this slot
+    &--empty {
+      color: var(--text-light);
+      opacity: 0.5;
+      font-style: italic;
     }
   }
 }
