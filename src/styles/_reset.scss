@@ -1,3 +1,16 @@
+// ── DotGothic16 — self-hosted with corrected line metrics ────────────────────
+// The upstream Google Font has hhea ascent=1160 / descent=−288 (ratio 1.448).
+// We regenerated the WOFF2 with hhea corrected to 880/−120 (ratio 1.0), so
+// text sitting in flex containers no longer drifts vertically on the Stardew
+// theme. The USE_TYPO_METRICS OS/2 flag is also set as belt-and-suspenders.
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('/fonts/DotGothic16.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
