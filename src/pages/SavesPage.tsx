@@ -145,6 +145,9 @@ function ImportSection() {
   );
 }
 
+// ── Feature flag — set to true to restore legacy code-based import/export ─────
+const LEGACY_CODE_SYNC = false as boolean;
+
 // ── Main page ──────────────────────────────────────────────────────────────────
 
 export function SavesPage() {
@@ -278,8 +281,8 @@ export function SavesPage() {
                 <div
                   className={[
                     'save-card',
-                    activeSave?.id === save.id  ? 'save-card--active'    : '',
-                    exportingId   === save.id   ? 'save-card--exporting' : '',
+                    activeSave?.id === save.id                           ? 'save-card--active'    : '',
+                    LEGACY_CODE_SYNC && exportingId === save.id          ? 'save-card--exporting' : '',
                   ].filter(Boolean).join(' ')}
                 >
                   <div className="save-card__info">
@@ -319,12 +322,14 @@ export function SavesPage() {
                       </button>
                     )}
                     <button className="btn btn--sm" onClick={() => startEdit(save)}>Edit</button>
-                    <button
-                      className={`btn btn--sm${exportingId === save.id ? ' btn--primary' : ''}`}
-                      onClick={() => toggleExport(save.id)}
-                    >
-                      {exportingId === save.id ? 'Hide Export' : 'Export'}
-                    </button>
+                    {LEGACY_CODE_SYNC && (
+                      <button
+                        className={`btn btn--sm${exportingId === save.id ? ' btn--primary' : ''}`}
+                        onClick={() => toggleExport(save.id)}
+                      >
+                        {exportingId === save.id ? 'Hide Export' : 'Export'}
+                      </button>
+                    )}
                     <CreateRoomButton save={save} />
                     {deletingId === save.id ? (
                       <>
@@ -350,7 +355,7 @@ export function SavesPage() {
                   </div>
                 </div>
 
-                {exportingId === save.id && (
+                {LEGACY_CODE_SYNC && exportingId === save.id && (
                   <ExportPanel save={save} onClose={() => setExportingId(null)} />
                 )}
               </div>
@@ -367,7 +372,7 @@ export function SavesPage() {
         <SaveFileUpload />
       </Panel>
 
-      <ImportSection />
+      {LEGACY_CODE_SYNC && <ImportSection />}
 
       <SyncPanel />
 
