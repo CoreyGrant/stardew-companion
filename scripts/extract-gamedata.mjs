@@ -699,7 +699,14 @@ function extractBigCraftables() {
 
 function applyGiftTastes(items) {
   const tastes  = readData('NPCGiftTastes.json');
-  const byCheat = new Map(items.map(i => [i.cheatId, i]));
+  // Build cheatId → item map giving Objects priority over BigCraftables.
+  // Both BigCraftable 74 (Bonfire) and Object 74 (Prismatic Shard) share cheatId "74";
+  // since BigCraftables are appended after Objects in the items array they would overwrite
+  // the Object entry if we used a simple Map construction. Build the map in two passes:
+  // Objects first (will set the entry), then BigCraftables only for ids not yet present.
+  const byCheat = new Map();
+  for (const i of items) { if (!i.isBigCraftable) byCheat.set(i.cheatId, i); }
+  for (const i of items) { if (i.isBigCraftable && !byCheat.has(i.cheatId)) byCheat.set(i.cheatId, i); }
 
   function idsFromField(raw) {
     return (raw ?? '').trim().split(/\s+/).filter(id => id && !/^-\d/.test(id));
@@ -1600,13 +1607,24 @@ function scheduleLabel(key) {
   const SEASON_NAMES = { spring:'Spring', summer:'Summer', fall:'Fall', winter:'Winter' };
   if (key === 'default') return 'Default';
   if (key === 'rain' || key === 'rainy') return 'Rainy Day';
+  if (key === 'rain2') return 'Rainy Day (alt)';
   if (key === 'GreenRain') return 'Green Rain';
+  if (key === 'marriageJob') return 'Spouse (work day)';
   if (SEASON_NAMES[key]) return SEASON_NAMES[key];
   if (DAY_NAMES[key]) return DAY_NAMES[key];
+  // Pure numeric: day of month (e.g. 6 → Day 6)
+  if (/^\d+$/.test(key)) return `Day ${key}`;
   // Date keys: summer_16 → Summer 16
   const dateMatch = key.match(/^(spring|summer|fall|winter)_(\d+)$/);
   if (dateMatch) return `${SEASON_NAMES[dateMatch[1]]} ${dateMatch[2]}`;
-  // Day + friendship: Wed_6 → Wednesday (low friendship)
+  // Season + day of week: fall_Mon → Fall Monday
+  const seasonDayMatch = key.match(/^(spring|summer|fall|winter)_(Mon|Tue|Wed|Thu|Fri|Sat|Sun)$/i);
+  if (seasonDayMatch) {
+    const sName = SEASON_NAMES[seasonDayMatch[1].toLowerCase()] ?? seasonDayMatch[1];
+    const dName = DAY_NAMES[seasonDayMatch[2]] ?? seasonDayMatch[2];
+    return `${sName} ${dName}`;
+  }
+  // Day + friendship: Wed_6 → Wednesday (friendship ≥6)
   const dayFriendMatch = key.match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)_(\d+)$/);
   if (dayFriendMatch) return `${DAY_NAMES[dayFriendMatch[1]]} (friendship ≥${dayFriendMatch[2]})`;
   return key;
@@ -1636,37 +1654,87 @@ function extractSchedules(npcName) {
   try { raw = JSON.parse(readFileSync(filePath, 'utf8')); } catch { return []; }
 
   const variants = [];
-  const SKIP_PREFIXES = ['marriage_', 'DesertFestival_'];
   const GOTO_ONLY = /^GOTO\s/i;
   const seen = new Set();
 
-  for (const [key, value] of Object.entries(raw)) {
-    if (typeof value !== 'string') continue;
-    // Skip marriage and festival variants to keep the list manageable
-    if (SKIP_PREFIXES.some(p => key.startsWith(p))) continue;
-    // Skip pure redirect keys
-    if (GOTO_ONLY.test(value.trim())) continue;
-
-    const label = scheduleLabel(key);
-    const entries = parseScheduleEntries(value);
-    if (entries.length === 0) continue;
-
-    // Deduplicate by label
-    if (seen.has(label)) continue;
-    seen.add(label);
-
-    variants.push({ id: key, label, conditions: {}, entries });
+  // Follow GOTO chains to find the actual schedule value (cycle-safe).
+  function resolveValue(key, visited = new Set()) {
+    if (visited.has(key)) return null; // cycle guard
+    visited.add(key);
+    const value = raw[key];
+    if (!value || typeof value !== 'string') return null;
+    if (GOTO_ONLY.test(value.trim())) {
+      const targetKey = value.trim().replace(/^GOTO\s+/i, '').trim();
+      return resolveValue(targetKey, visited);
+    }
+    return value;
   }
 
-  // Sort: default first, then seasons, then days, then rest
-  const ORDER = ['default', 'spring', 'summer', 'fall', 'winter', 'rain', 'GreenRain',
-    'Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  // Extract condition flags that prefix the schedule value (before the first time entry).
+  // Currently handles: "NOT friendship <NPC> <hearts>"
+  function extractConditions(value) {
+    const conditions = {};
+    for (const part of value.split('/')) {
+      const trimmed = part.trim();
+      if (/^\d/.test(trimmed)) break; // reached first time entry — done
+      const m = trimmed.match(/^NOT\s+friendship\s+(\w+)\s+(\d+)$/i);
+      if (m) conditions.notFriendship = { npc: m[1], minHearts: parseInt(m[2], 10) };
+    }
+    return conditions;
+  }
+
+  for (const key of Object.keys(raw)) {
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    // Skip Desert Festival schedules (highly specific, clutters the list)
+    if (key.startsWith('DesertFestival_')) continue;
+
+    // Determine variant type from key prefix
+    let type = 'normal';
+    let labelKey = key;
+    if (key.startsWith('marriage_')) {
+      type = 'marriage';
+      labelKey = key.slice('marriage_'.length); // strip prefix for label generation
+      // Also skip festival marriage variants (e.g. marriage_DesertFestival_1)
+      if (labelKey.startsWith('DesertFestival_')) continue;
+    }
+
+    // Resolve GOTO chains — if the key is a redirect, follow to the target entries
+    const resolvedValue = resolveValue(key);
+    if (!resolvedValue) continue;
+
+    const conditions = extractConditions(resolvedValue);
+    const entries = parseScheduleEntries(resolvedValue);
+    if (entries.length === 0) continue;
+
+    const label = type === 'marriage'
+      ? scheduleLabel(labelKey) + ' (married)'
+      : scheduleLabel(labelKey);
+
+    const variant = { id: key, label, type, entries };
+    if (Object.keys(conditions).length > 0) variant.conditions = conditions;
+    variants.push(variant);
+  }
+
+  // Sort: default → seasons → named days → numeric days → season+day → rest; marriage last
+  const ORDER = ['default', 'spring', 'summer', 'fall', 'winter', 'rain', 'rain2', 'GreenRain',
+    'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   variants.sort((a, b) => {
+    // Marriage variants always after normal
+    if (a.type === 'marriage' && b.type !== 'marriage') return 1;
+    if (b.type === 'marriage' && a.type !== 'marriage') return -1;
     const ai = ORDER.indexOf(a.id);
     const bi = ORDER.indexOf(b.id);
     if (ai !== -1 && bi !== -1) return ai - bi;
     if (ai !== -1) return -1;
     if (bi !== -1) return  1;
+    // Numeric day-of-month keys: sort numerically, after ORDER entries
+    const aIsNum = /^\d+$/.test(a.id);
+    const bIsNum = /^\d+$/.test(b.id);
+    if (aIsNum && bIsNum) return parseInt(a.id, 10) - parseInt(b.id, 10);
+    if (aIsNum) return 1;
+    if (bIsNum) return -1;
     return a.id.localeCompare(b.id);
   });
 
@@ -1998,7 +2066,10 @@ async function main() {
 
   // ── NPC enrichment: portraits + schedules + gifts ──
   const tastes = readData('NPCGiftTastes.json');
-  const byCheat = new Map(items.map(i => [i.cheatId, i]));
+  // Objects take priority over BigCraftables for the same cheatId (same fix as applyGiftTastes).
+  const byCheat = new Map();
+  for (const i of items) { if (!i.isBigCraftable) byCheat.set(i.cheatId, i); }
+  for (const i of items) { if (i.isBigCraftable && !byCheat.has(i.cheatId)) byCheat.set(i.cheatId, i); }
 
   // NPC name → actual portrait PNG name (for NPCs whose file differs from their display name)
   const PORTRAIT_FILE_OVERRIDES = {

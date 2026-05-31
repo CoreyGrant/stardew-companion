@@ -13,6 +13,8 @@ import type {
   CropZone,
   FarmLayout,
   FarmType,
+  FriendshipEntry,
+  FriendshipStatus,
   InteriorLayout,
   PathType,
   PlacedBuilding,
@@ -296,7 +298,7 @@ function parseFarmer(
   const marriedTo = spouseRaw || null;
   const money     = parseInt(txt(playerEl, 'money') || '0', 10);
 
-  const heartLevels           = parseFriendship(playerEl, gameData);
+  const { heartLevels }       = parseFriendship(playerEl, gameData);
   const learnedCookingRecipes = parseCookingRecipes(playerEl, gameData);
 
   return {
@@ -391,7 +393,7 @@ export function parseSdvSave(
     parseInt(txt(player, 'goldenWalnuts') || '0', 10);
 
   // 9. NPC heart levels & per-character data ───────────────────────────────────
-  const heartLevels = parseFriendship(player, gameData);
+  const { heartLevels, friendshipData } = parseFriendship(player, gameData);
 
   // Build per-character array: host (index 0) + farmhands (index 1+)
   const hostCharacter = parseFarmer(player, gameData);
@@ -447,6 +449,7 @@ export function parseSdvSave(
       farmLayout,
       islandFarmLayout,
       heartLevels,
+      friendshipData,
       learnedCookingRecipes,
       money,
       deepestMineLevel,
@@ -461,25 +464,38 @@ export function parseSdvSave(
 
 // ── Sub-parsers ───────────────────────────────────────────────────────────────
 
+const VALID_FRIENDSHIP_STATUSES = new Set<FriendshipStatus>([
+  'Friendly', 'Dating', 'Engaged', 'Married', 'Divorced', 'Housemate',
+]);
+
 function parseFriendship(
   player: Element,
   gameData: GameData,
-): Record<string, number> {
-  const result: Record<string, number> = {};
+): { heartLevels: Record<string, number>; friendshipData: Record<string, FriendshipEntry> } {
+  const heartLevels: Record<string, number> = {};
+  const friendshipData: Record<string, FriendshipEntry> = {};
   const npcByName = new Map(gameData.npcs.map(n => [n.name, n]));
-  const friendshipData = ch(player, 'friendshipData');
-  if (!friendshipData) return result;
+  const friendshipDataEl = ch(player, 'friendshipData');
+  if (!friendshipDataEl) return { heartLevels, friendshipData };
 
-  for (const item of chs(friendshipData, 'item')) {
+  for (const item of chs(friendshipDataEl, 'item')) {
     const npcName    = deep(item, 'key', 'string');
     const npc        = npcByName.get(npcName);
     if (!npc) continue;
 
-    const friendship = ch(ch(item, 'value'), 'Friendship');
-    const points     = parseInt(txt(friendship, 'Points') || '0', 10);
-    result[npc.id]   = Math.min(Math.floor(points / 250), 14);
+    const friendship    = ch(ch(item, 'value'), 'Friendship');
+    const points        = parseInt(txt(friendship, 'Points') || '0', 10);
+    const rawStatus     = txt(friendship, 'Status') || 'Friendly';
+    const status: FriendshipStatus = VALID_FRIENDSHIP_STATUSES.has(rawStatus as FriendshipStatus)
+      ? rawStatus as FriendshipStatus
+      : 'Friendly';
+    const giftsThisWeek = parseInt(txt(friendship, 'GiftsThisWeek') || '0', 10);
+    const giftsToday    = parseInt(txt(friendship, 'GiftsToday')    || '0', 10);
+
+    heartLevels[npc.id]    = Math.min(Math.floor(points / 250), 14);
+    friendshipData[npc.id] = { points, status, giftsThisWeek, giftsToday };
   }
-  return result;
+  return { heartLevels, friendshipData };
 }
 
 const JOJA_ROOM_FLAGS = [

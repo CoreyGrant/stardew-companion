@@ -3,8 +3,8 @@
   "universalGifts": {
     "loved": [
       {
-        "id": "bonfire",
-        "name": "Bonfire"
+        "id": "prismatic-shard",
+        "name": "Prismatic Shard"
       },
       {
         "id": "rabbits-foot",
@@ -25,8 +25,8 @@
     ],
     "liked": [
       {
-        "id": "tall-torch",
-        "name": "Tall Torch"
+        "id": "diamond",
+        "name": "Diamond"
       },
       {
         "id": "coffee",
@@ -87,12 +87,12 @@
         "name": "Driftwood"
       },
       {
-        "id": "coffee-maker",
-        "name": "Coffee Maker"
+        "id": "wheat-flour",
+        "name": "Wheat Flour"
       },
       {
-        "id": "sewing-machine",
-        "name": "Sewing Machine"
+        "id": "oil",
+        "name": "Oil"
       },
       {
         "id": "void-egg",
@@ -165,28 +165,28 @@
         "name": "Sap"
       },
       {
-        "id": "rarecrow",
-        "name": "Rarecrow"
+        "id": "rusty-spoon",
+        "name": "Rusty Spoon"
       },
       {
-        "id": "decorative-pitcher",
-        "name": "Decorative Pitcher"
+        "id": "rusty-spur",
+        "name": "Rusty Spur"
       },
       {
-        "id": "dried-sunflowers",
-        "name": "Dried Sunflowers"
+        "id": "rusty-cog",
+        "name": "Rusty Cog"
       },
       {
         "id": "carp",
         "name": "Carp"
       },
       {
-        "id": "wood-lamp-post",
-        "name": "Wood Lamp-post"
+        "id": "seaweed",
+        "name": "Seaweed"
       },
       {
-        "id": "iron-lamp-post",
-        "name": "Iron Lamp-post"
+        "id": "green-algae",
+        "name": "Green Algae"
       },
       {
         "id": "white-algae",
@@ -265,8 +265,8 @@
         "name": "Void Mayonnaise"
       },
       {
-        "id": "deconstructor",
-        "name": "Deconstructor"
+        "id": "seafoam-pudding",
+        "name": "Seafoam Pudding"
       },
       {
         "id": "radioactive-ore",
@@ -293,12 +293,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
-            "id": "mushroom-box",
-            "name": "Mushroom Box"
+            "id": "pufferfish",
+            "name": "Pufferfish"
           },
           {
             "id": "chocolate-cake",
@@ -341,16 +341,16 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "sugar",
             "name": "Sugar"
           },
           {
-            "id": "coffee-maker",
-            "name": "Coffee Maker"
+            "id": "wheat-flour",
+            "name": "Wheat Flour"
           }
         ],
         "disliked": [
@@ -365,7 +365,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -392,7 +392,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -419,7 +419,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -446,7 +446,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -469,7 +469,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -498,9 +498,32 @@
           ]
         },
         {
+          "id": "rain2",
+          "label": "Rainy Day (alt)",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1100,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1400,
+              "location": "Saloon"
+            },
+            {
+              "time": 2000,
+              "location": "Seed Shop"
+            }
+          ]
+        },
+        {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -511,7 +534,7 @@
         {
           "id": "Wed",
           "label": "Wednesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -530,7 +553,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -553,7 +576,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -574,24 +597,9 @@
           ]
         },
         {
-          "id": "11",
-          "label": "11",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 1000,
-              "location": "Sebastian Room"
-            },
-            {
-              "time": 1700,
-              "location": "Seed Shop"
-            }
-          ]
-        },
-        {
-          "id": "6",
-          "label": "6",
-          "conditions": {},
+          "id": "11_6",
+          "label": "11_6",
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -602,19 +610,50 @@
               "location": "Seed Shop"
             },
             {
-              "time": 1500,
-              "location": "Mountain"
+              "time": 1300,
+              "location": "Town"
             },
             {
-              "time": 2000,
+              "time": 1630,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1930,
+              "location": "Seed Shop"
+            }
+          ]
+        },
+        {
+          "id": "25_6",
+          "label": "25_6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1030,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1300,
+              "location": "Town"
+            },
+            {
+              "time": 1630,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1930,
               "location": "Seed Shop"
             }
           ]
         },
         {
           "id": "fall_Mon",
-          "label": "fall_Mon",
-          "conditions": {},
+          "label": "Fall Monday",
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -631,32 +670,9 @@
           ]
         },
         {
-          "id": "rain2",
-          "label": "rain2",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 900,
-              "location": "Seed Shop"
-            },
-            {
-              "time": 1100,
-              "location": "Seed Shop"
-            },
-            {
-              "time": 1400,
-              "location": "Saloon"
-            },
-            {
-              "time": 2000,
-              "location": "Seed Shop"
-            }
-          ]
-        },
-        {
           "id": "spring_4",
           "label": "Spring 4",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -683,7 +699,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -700,6 +716,119 @@
             {
               "time": 2400,
               "location": "Seed Shop"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "label": "Day 6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1030,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1500,
+              "location": "Mountain"
+            },
+            {
+              "time": 2000,
+              "location": "Seed Shop"
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "label": "Day 11",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1000,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1700,
+              "location": "Seed Shop"
+            }
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Sebastian",
+              "minHearts": 6
+            }
+          }
+        },
+        {
+          "id": "16",
+          "label": "Day 16",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1030,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1500,
+              "location": "Mountain"
+            },
+            {
+              "time": 2000,
+              "location": "Seed Shop"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Fri",
+          "label": "Friday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1100,
+              "location": "Mountain"
+            },
+            {
+              "time": 1500,
+              "location": "Saloon"
+            },
+            {
+              "time": 2030,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1300,
+              "location": "Town"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2030,
+              "location": "bed"
             }
           ]
         }
@@ -738,14 +867,14 @@
             "name": "Field Snack"
           },
           {
-            "id": "plush-bunny",
-            "name": "Plush Bunny"
+            "id": "dinosaur-egg",
+            "name": "Dinosaur Egg"
           }
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -764,7 +893,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -795,7 +924,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 730,
@@ -826,7 +955,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -857,7 +986,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -888,7 +1017,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -899,7 +1028,7 @@
         {
           "id": "Wed",
           "label": "Wednesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -925,12 +1054,18 @@
               "time": 2200,
               "location": "Josh House"
             }
-          ]
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Haley",
+              "minHearts": 6
+            }
+          }
         },
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -961,7 +1096,7 @@
         {
           "id": "summer_16",
           "label": "Summer 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -988,7 +1123,7 @@
         {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1001,6 +1136,52 @@
             {
               "time": 2400,
               "location": "Josh House"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Josh House"
+            },
+            {
+              "time": 1800,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Sun",
+          "label": "Sunday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Town"
+            },
+            {
+              "time": 1100,
+              "location": "Saloon"
+            },
+            {
+              "time": 1500,
+              "location": "Town"
+            },
+            {
+              "time": 1830,
+              "location": "Josh House"
+            },
+            {
+              "time": 2000,
+              "location": "Josh House"
+            },
+            {
+              "time": 2200,
+              "location": "bed"
             }
           ]
         }
@@ -1067,16 +1248,16 @@
             "name": "Fire Quartz"
           },
           {
-            "id": "wicked-statue",
-            "name": "Wicked Statue"
+            "id": "frozen-tear",
+            "name": "Frozen Tear"
           },
           {
-            "id": "skull-brazier",
-            "name": "Skull Brazier"
+            "id": "octopus",
+            "name": "Octopus"
           },
           {
-            "id": "marble-brazier",
-            "name": "Marble Brazier"
+            "id": "squid",
+            "name": "Squid"
           },
           {
             "id": "beer",
@@ -1093,8 +1274,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "pizza",
@@ -1111,8 +1292,8 @@
             "name": "Quartz"
           },
           {
-            "id": "worm-bin",
-            "name": "Worm Bin"
+            "id": "sea-cucumber",
+            "name": "Sea Cucumber"
           },
           {
             "id": "amaranth",
@@ -1133,7 +1314,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1176,7 +1357,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1211,7 +1392,42 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1000,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1100,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1130,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1730,
+              "location": "Elliott House"
+            },
+            {
+              "time": 2100,
+              "location": "Elliott House"
+            },
+            {
+              "time": 2400,
+              "location": "Elliott House"
+            }
+          ]
+        },
+        {
+          "id": "winter",
+          "label": "Winter",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1246,7 +1462,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1281,7 +1497,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -1292,7 +1508,7 @@
         {
           "id": "Thu",
           "label": "Thursday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1327,7 +1543,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1345,12 +1561,82 @@
               "time": 2340,
               "location": "Elliott House"
             }
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Leah",
+              "minHearts": 6
+            }
+          }
+        },
+        {
+          "id": "Sun",
+          "label": "Sunday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1100,
+              "location": "Beach"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2340,
+              "location": "Elliott House"
+            }
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Leah",
+              "minHearts": 6
+            }
+          }
+        },
+        {
+          "id": "Fri_6",
+          "label": "Friday (friendship ≥6)",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1000,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1100,
+              "location": "Elliott House"
+            },
+            {
+              "time": 1130,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1730,
+              "location": "Elliott House"
+            },
+            {
+              "time": 2100,
+              "location": "Elliott House"
+            },
+            {
+              "time": 2400,
+              "location": "Elliott House"
+            }
           ]
         },
         {
           "id": "SquidFest",
           "label": "SquidFest",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1369,7 +1655,7 @@
         {
           "id": "summer_9",
           "label": "Summer 9",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1400,7 +1686,7 @@
         {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -1427,6 +1713,21 @@
               "location": "Elliott House"
             }
           ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Beach"
+            },
+            {
+              "time": 1700,
+              "location": "bed"
+            }
+          ]
         }
       ],
       "portrait": "Elliott.png"
@@ -1449,24 +1750,24 @@
             "name": "Emerald"
           },
           {
-            "id": "garden-pot",
-            "name": "Garden Pot"
+            "id": "aquamarine",
+            "name": "Aquamarine"
           },
           {
-            "id": "bookcase",
-            "name": "Bookcase"
+            "id": "ruby",
+            "name": "Ruby"
           },
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
-            "id": "grandfather-clock",
-            "name": "Grandfather Clock"
+            "id": "topaz",
+            "name": "Topaz"
           },
           {
-            "id": "dead-tree",
-            "name": "Dead Tree"
+            "id": "jade",
+            "name": "Jade"
           },
           {
             "id": "survival-burger",
@@ -1491,20 +1792,20 @@
             "name": "Fire Quartz"
           },
           {
-            "id": "wicked-statue",
-            "name": "Wicked Statue"
+            "id": "frozen-tear",
+            "name": "Frozen Tear"
           },
           {
-            "id": "sloth-skeleton-m",
-            "name": "Sloth Skeleton M"
+            "id": "earth-crystal",
+            "name": "Earth Crystal"
           },
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "salad",
+            "name": "Salad"
           },
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "vegetable-medley",
+            "name": "Vegetable Medley"
           },
           {
             "id": "bean-hotpot",
@@ -1533,8 +1834,8 @@
             "name": "Cave Carrot"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
@@ -1573,7 +1874,30 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Haley House"
+            },
+            {
+              "time": 1200,
+              "location": "Haley House"
+            },
+            {
+              "time": 1530,
+              "location": "Saloon"
+            },
+            {
+              "time": 2430,
+              "location": "Haley House"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1596,7 +1920,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -1607,7 +1931,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1634,7 +1958,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1657,7 +1981,7 @@
         {
           "id": "DesertFestival",
           "label": "DesertFestival",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -1676,7 +2000,7 @@
         {
           "id": "fall_15",
           "label": "Fall 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1715,7 +2039,7 @@
         {
           "id": "winter_11",
           "label": "Winter 11",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1742,7 +2066,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -1759,6 +2083,87 @@
             {
               "time": 2430,
               "location": "Haley House"
+            }
+          ]
+        },
+        {
+          "id": "marriage_fall_15",
+          "label": "Fall 15 (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 1300,
+              "location": "Desert"
+            },
+            {
+              "time": 1500,
+              "location": "Desert"
+            },
+            {
+              "time": 1700,
+              "location": "Desert"
+            },
+            {
+              "time": 1800,
+              "location": "Desert"
+            },
+            {
+              "time": 1900,
+              "location": "35"
+            },
+            {
+              "time": 2000,
+              "location": "Desert"
+            },
+            {
+              "time": 2400,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Fri",
+          "label": "Friday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Beach"
+            },
+            {
+              "time": 1300,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1500,
+              "location": "Saloon"
+            },
+            {
+              "time": 2200,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Haley House"
+            },
+            {
+              "time": 1100,
+              "location": "Town"
+            },
+            {
+              "time": 1500,
+              "location": "Saloon"
+            },
+            {
+              "time": 2200,
+              "location": "bed"
             }
           ]
         }
@@ -1855,12 +2260,12 @@
             "name": "Ice Cream"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
-            "id": "mini-obelisk",
-            "name": "Mini-Obelisk"
+            "id": "cranberry-sauce",
+            "name": "Cranberry Sauce"
           },
           {
             "id": "blueberry-tart",
@@ -1875,28 +2280,28 @@
             "name": "Rhubarb Pie"
           },
           {
-            "id": "item-pedestal",
-            "name": "Item Pedestal"
+            "id": "pink-cake",
+            "name": "Pink Cake"
           },
           {
             "id": "chocolate-cake",
             "name": "Chocolate Cake"
           },
           {
-            "id": "mini-fridge",
-            "name": "Mini-Fridge"
+            "id": "bread",
+            "name": "Bread"
           },
           {
-            "id": "wood-chipper",
-            "name": "Wood Chipper"
+            "id": "pancakes",
+            "name": "Pancakes"
           },
           {
             "id": "hashbrowns",
             "name": "Hashbrowns"
           },
           {
-            "id": "workbench",
-            "name": "Workbench"
+            "id": "glazed-yams",
+            "name": "Glazed Yams"
           },
           {
             "id": "pizza",
@@ -1943,7 +2348,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -1974,7 +2379,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -2005,7 +2410,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -2032,7 +2437,38 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Harvey Room"
+            },
+            {
+              "time": 840,
+              "location": "Hospital"
+            },
+            {
+              "time": 1200,
+              "location": "Harvey Room"
+            },
+            {
+              "time": 1600,
+              "location": "Harvey Room"
+            },
+            {
+              "time": 1730,
+              "location": "Saloon"
+            },
+            {
+              "time": 2200,
+              "location": "Harvey Room"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -2063,7 +2499,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -2074,7 +2510,50 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 730,
+              "location": "Hospital"
+            },
+            {
+              "time": 1250,
+              "location": "Hospital"
+            },
+            {
+              "time": 1330,
+              "location": "Hospital"
+            },
+            {
+              "time": 1410,
+              "location": "Hospital"
+            },
+            {
+              "time": 1550,
+              "location": "Hospital"
+            },
+            {
+              "time": 1610,
+              "location": "Hospital"
+            },
+            {
+              "time": 1630,
+              "location": "Hospital"
+            },
+            {
+              "time": 1800,
+              "location": "Harvey Room"
+            },
+            {
+              "time": 2300,
+              "location": "Harvey Room"
+            }
+          ]
+        },
+        {
+          "id": "Thu",
+          "label": "Thursday",
+          "type": "normal",
           "entries": [
             {
               "time": 730,
@@ -2117,7 +2596,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -2156,7 +2635,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -2191,7 +2670,7 @@
         {
           "id": "DesertFestival",
           "label": "DesertFestival",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -2205,8 +2684,8 @@
         },
         {
           "id": "marriageJob",
-          "label": "marriageJob",
-          "conditions": {},
+          "label": "Spouse (work day)",
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -2245,7 +2724,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -2272,6 +2751,36 @@
               "location": "Harvey Room"
             }
           ]
+        },
+        {
+          "id": "marriage_DesertFestival",
+          "label": "DesertFestival (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Desert"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1200,
+              "location": "Town"
+            },
+            {
+              "time": 1700,
+              "location": "bed"
+            }
+          ]
         }
       ],
       "portrait": "Harvey.png"
@@ -2290,8 +2799,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "item-pedestal",
-            "name": "Item Pedestal"
+            "id": "pink-cake",
+            "name": "Pink Cake"
           },
           {
             "id": "sunflower",
@@ -2302,8 +2811,8 @@
             "name": "Fruit Salad"
           },
           {
-            "id": "standing-geode",
-            "name": "Standing Geode"
+            "id": "coconut",
+            "name": "Coconut"
           }
         ],
         "liked": [
@@ -2316,20 +2825,20 @@
             "name": "Emerald"
           },
           {
-            "id": "garden-pot",
-            "name": "Garden Pot"
+            "id": "aquamarine",
+            "name": "Aquamarine"
           },
           {
-            "id": "bookcase",
-            "name": "Bookcase"
+            "id": "ruby",
+            "name": "Ruby"
           },
           {
-            "id": "dead-tree",
-            "name": "Dead Tree"
+            "id": "jade",
+            "name": "Jade"
           },
           {
-            "id": "standing-geode",
-            "name": "Standing Geode"
+            "id": "coconut",
+            "name": "Coconut"
           },
           {
             "id": "rhubarb-pie",
@@ -2340,8 +2849,8 @@
             "name": "Cookie"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
@@ -2368,16 +2877,16 @@
         ],
         "disliked": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
             "name": "Clay"
           },
           {
-            "id": "bonfire",
-            "name": "Bonfire"
+            "id": "prismatic-shard",
+            "name": "Prismatic Shard"
           }
         ],
         "hated": []
@@ -2386,7 +2895,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2417,7 +2926,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 840,
@@ -2452,7 +2961,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -2487,7 +2996,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -2522,7 +3031,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -2533,7 +3042,7 @@
         {
           "id": "Wed",
           "label": "Wednesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2559,12 +3068,53 @@
               "time": 2230,
               "location": "Haley House"
             }
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Alex",
+              "minHearts": 6
+            }
+          }
+        },
+        {
+          "id": "fall_Mon",
+          "label": "Fall Monday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Haley House"
+            },
+            {
+              "time": 830,
+              "location": "Haley House"
+            },
+            {
+              "time": 1000,
+              "location": "Haley House"
+            },
+            {
+              "time": 1100,
+              "location": "Forest"
+            },
+            {
+              "time": 1630,
+              "location": "Haley House"
+            },
+            {
+              "time": 2000,
+              "location": "Haley House"
+            },
+            {
+              "time": 2300,
+              "location": "Haley House"
+            }
           ]
         },
         {
           "id": "spring_Mon",
-          "label": "spring_Mon",
-          "conditions": {},
+          "label": "Spring Monday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -2599,7 +3149,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -2630,7 +3180,7 @@
         {
           "id": "winter_9",
           "label": "Winter 9",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2661,6 +3211,21 @@
               "location": "Haley House"
             }
           ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 930,
+              "location": "Haley House"
+            },
+            {
+              "time": 1540,
+              "location": "bed"
+            }
+          ]
         }
       ],
       "portrait": "Haley.png"
@@ -2679,12 +3244,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "salad",
+            "name": "Salad"
           },
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "vegetable-medley",
+            "name": "Vegetable Medley"
           },
           {
             "id": "wine",
@@ -2733,22 +3298,22 @@
             "name": "Crocus"
           },
           {
-            "id": "sloth-skeleton-m",
-            "name": "Sloth Skeleton M"
+            "id": "earth-crystal",
+            "name": "Earth Crystal"
           }
         ],
         "neutral": [
           {
-            "id": "wood-lamp-post",
-            "name": "Wood Lamp-post"
+            "id": "seaweed",
+            "name": "Seaweed"
           },
           {
             "id": "clay",
             "name": "Clay"
           },
           {
-            "id": "item-pedestal",
-            "name": "Item Pedestal"
+            "id": "pink-cake",
+            "name": "Pink Cake"
           },
           {
             "id": "cookie",
@@ -2759,8 +3324,8 @@
             "name": "Tortilla"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
@@ -2771,8 +3336,8 @@
             "name": "Survival Burger"
           },
           {
-            "id": "mini-jukebox",
-            "name": "Mini-Jukebox"
+            "id": "carp-surprise",
+            "name": "Carp Surprise"
           },
           {
             "id": "fried-egg",
@@ -2785,8 +3350,8 @@
             "name": "Void Egg"
           },
           {
-            "id": "wood-chipper",
-            "name": "Wood Chipper"
+            "id": "pancakes",
+            "name": "Pancakes"
           },
           {
             "id": "hashbrowns",
@@ -2797,8 +3362,8 @@
             "name": "Pizza"
           },
           {
-            "id": "mini-fridge",
-            "name": "Mini-Fridge"
+            "id": "bread",
+            "name": "Bread"
           }
         ],
         "hated": []
@@ -2807,7 +3372,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2842,7 +3407,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2869,7 +3434,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2894,9 +3459,63 @@
           ]
         },
         {
+          "id": "winter",
+          "label": "Winter",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Leah House"
+            },
+            {
+              "time": 1200,
+              "location": "Leah House"
+            },
+            {
+              "time": 1400,
+              "location": "Leah House"
+            },
+            {
+              "time": 1600,
+              "location": "Saloon"
+            },
+            {
+              "time": 2340,
+              "location": "Leah House"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Leah House"
+            },
+            {
+              "time": 1200,
+              "location": "Leah House"
+            },
+            {
+              "time": 1400,
+              "location": "Leah House"
+            },
+            {
+              "time": 1600,
+              "location": "Saloon"
+            },
+            {
+              "time": 2340,
+              "location": "Leah House"
+            }
+          ]
+        },
+        {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -2915,7 +3534,7 @@
         {
           "id": "Mon",
           "label": "Monday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2942,7 +3561,34 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Leah House"
+            },
+            {
+              "time": 1200,
+              "location": "Leah House"
+            },
+            {
+              "time": 1400,
+              "location": "Leah House"
+            },
+            {
+              "time": 1600,
+              "location": "Saloon"
+            },
+            {
+              "time": 2340,
+              "location": "Leah House"
+            }
+          ]
+        },
+        {
+          "id": "Sat",
+          "label": "Saturday",
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2969,7 +3615,7 @@
         {
           "id": "spring_16",
           "label": "Spring 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -2996,7 +3642,7 @@
         {
           "id": "summer_noBridge",
           "label": "summer_noBridge",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -3023,7 +3669,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -3046,6 +3692,25 @@
               "location": "Leah House"
             }
           ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Forest"
+            },
+            {
+              "time": 1500,
+              "location": "Forest"
+            },
+            {
+              "time": 1730,
+              "location": "bed"
+            }
+          ]
         }
       ],
       "portrait": "Leah.png"
@@ -3064,8 +3729,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
             "id": "cheese-cauliflower",
@@ -3114,24 +3779,24 @@
         ],
         "liked": [
           {
-            "id": "garden-pot",
-            "name": "Garden Pot"
+            "id": "aquamarine",
+            "name": "Aquamarine"
           },
           {
-            "id": "bookcase",
-            "name": "Bookcase"
+            "id": "ruby",
+            "name": "Ruby"
           },
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
-            "id": "grandfather-clock",
-            "name": "Grandfather Clock"
+            "id": "topaz",
+            "name": "Topaz"
           },
           {
-            "id": "dead-tree",
-            "name": "Dead Tree"
+            "id": "jade",
+            "name": "Jade"
           },
           {
             "id": "copper-bar",
@@ -3200,7 +3865,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3227,7 +3892,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3254,7 +3919,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3281,7 +3946,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3320,7 +3985,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -3331,7 +3996,7 @@
         {
           "id": "Mon",
           "label": "Monday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3358,7 +4023,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 730,
@@ -3387,9 +4052,67 @@
           ]
         },
         {
+          "id": "Thu",
+          "label": "Thursday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 730,
+              "location": "Hospital"
+            },
+            {
+              "time": 1400,
+              "location": "Hospital"
+            },
+            {
+              "time": 1600,
+              "location": "Hospital"
+            },
+            {
+              "time": 1640,
+              "location": "Science House"
+            },
+            {
+              "time": 2200,
+              "location": "Science House"
+            },
+            {
+              "time": 2400,
+              "location": "Science House"
+            }
+          ]
+        },
+        {
+          "id": "Sun",
+          "label": "Sunday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Science House"
+            },
+            {
+              "time": 1000,
+              "location": "Science House"
+            },
+            {
+              "time": 1330,
+              "location": "Town"
+            },
+            {
+              "time": 1830,
+              "location": "Science House"
+            },
+            {
+              "time": 2300,
+              "location": "Science House"
+            }
+          ]
+        },
+        {
           "id": "marriageJob",
-          "label": "marriageJob",
-          "conditions": {},
+          "label": "Spouse (work day)",
+          "type": "normal",
           "entries": [
             {
               "time": 730,
@@ -3411,8 +4134,8 @@
         },
         {
           "id": "summer_Mon",
-          "label": "summer_Mon",
-          "conditions": {},
+          "label": "Summer Monday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3438,8 +4161,8 @@
         },
         {
           "id": "summer_Sun",
-          "label": "summer_Sun",
-          "conditions": {},
+          "label": "Summer Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3466,7 +4189,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3487,6 +4210,29 @@
             {
               "time": 2330,
               "location": "Science House"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Science House"
+            },
+            {
+              "time": 1200,
+              "location": "Science House"
+            },
+            {
+              "time": 1400,
+              "location": "Town"
+            },
+            {
+              "time": 1800,
+              "location": "bed"
             }
           ]
         }
@@ -3519,12 +4265,12 @@
             "name": "Poppyseed Muffin"
           },
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
-            "id": "solid-gold-lewis",
-            "name": "Solid Gold Lewis"
+            "id": "sandfish",
+            "name": "Sandfish"
           },
           {
             "id": "tom-kha-soup",
@@ -3539,14 +4285,14 @@
             "name": "Roots Platter"
           },
           {
-            "id": "ostrich-incubator",
-            "name": "Ostrich Incubator"
+            "id": "melon",
+            "name": "Melon"
           }
         ],
         "liked": [
           {
-            "id": "recycling-machine",
-            "name": "Recycling Machine"
+            "id": "leek",
+            "name": "Leek"
           },
           {
             "id": "dandelion",
@@ -3627,7 +4373,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3650,7 +4396,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 810,
@@ -3673,7 +4419,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -3700,7 +4446,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -3729,9 +4475,36 @@
           ]
         },
         {
+          "id": "rain2",
+          "label": "Rainy Day (alt)",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 810,
+              "location": "Town"
+            },
+            {
+              "time": 1200,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1600,
+              "location": "Trailer"
+            },
+            {
+              "time": 1900,
+              "location": "Trailer"
+            },
+            {
+              "time": 2100,
+              "location": "Trailer"
+            }
+          ]
+        },
+        {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -3742,7 +4515,69 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Trailer"
+            },
+            {
+              "time": 900,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1400,
+              "location": "Town"
+            },
+            {
+              "time": 1620,
+              "location": "Town"
+            },
+            {
+              "time": 1750,
+              "location": "Forest"
+            },
+            {
+              "time": 1830,
+              "location": "Trailer"
+            }
+          ]
+        },
+        {
+          "id": "Wed",
+          "label": "Wednesday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Trailer"
+            },
+            {
+              "time": 900,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1400,
+              "location": "Town"
+            },
+            {
+              "time": 1620,
+              "location": "Town"
+            },
+            {
+              "time": 1750,
+              "location": "Forest"
+            },
+            {
+              "time": 1830,
+              "location": "Trailer"
+            }
+          ]
+        },
+        {
+          "id": "Fri",
+          "label": "Friday",
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -3773,7 +4608,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -3794,21 +4629,44 @@
           ]
         },
         {
-          "id": "9",
-          "label": "9",
-          "conditions": {},
+          "id": "23_6",
+          "label": "23_6",
+          "type": "normal",
           "entries": [
             {
-              "time": 900,
-              "location": "Trailer"
-            },
-            {
-              "time": 1100,
+              "time": 800,
               "location": "Town"
             },
             {
-              "time": 1600,
+              "time": 1230,
               "location": "Trailer"
+            },
+            {
+              "time": 1600,
+              "location": "Town"
+            },
+            {
+              "time": 1840,
+              "location": "Trailer"
+            }
+          ]
+        },
+        {
+          "id": "9_6",
+          "label": "9_6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Town"
+            },
+            {
+              "time": 1230,
+              "location": "Trailer"
+            },
+            {
+              "time": 1600,
+              "location": "Town"
             },
             {
               "time": 1840,
@@ -3818,8 +4676,8 @@
         },
         {
           "id": "marriageJob",
-          "label": "marriageJob",
-          "conditions": {},
+          "label": "Spouse (work day)",
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -3844,36 +4702,9 @@
           ]
         },
         {
-          "id": "rain2",
-          "label": "rain2",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 810,
-              "location": "Town"
-            },
-            {
-              "time": 1200,
-              "location": "Archaeology House"
-            },
-            {
-              "time": 1600,
-              "location": "Trailer"
-            },
-            {
-              "time": 1900,
-              "location": "Trailer"
-            },
-            {
-              "time": 2100,
-              "location": "Trailer"
-            }
-          ]
-        },
-        {
           "id": "summer_Sun",
-          "label": "summer_Sun",
-          "conditions": {},
+          "label": "Summer Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -3896,7 +4727,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -3927,7 +4758,7 @@
         {
           "id": "winter_4",
           "label": "Winter 4",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -3954,6 +4785,62 @@
               "location": "Trailer"
             }
           ]
+        },
+        {
+          "id": "9",
+          "label": "Day 9",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Trailer"
+            },
+            {
+              "time": 1100,
+              "location": "Town"
+            },
+            {
+              "time": 1600,
+              "location": "Trailer"
+            },
+            {
+              "time": 1840,
+              "location": "Trailer"
+            }
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Sam",
+              "minHearts": 6
+            }
+          }
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1100,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1130,
+              "location": "Town"
+            },
+            {
+              "time": 1600,
+              "location": "Town"
+            },
+            {
+              "time": 1810,
+              "location": "bed"
+            }
+          ]
         }
       ],
       "portrait": "Penny.png"
@@ -3972,8 +4859,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "bone-mill",
-            "name": "Bone Mill"
+            "id": "cactus-fruit",
+            "name": "Cactus Fruit"
           },
           {
             "id": "pizza",
@@ -3990,8 +4877,8 @@
         ],
         "liked": [
           {
-            "id": "deluxe-scarecrow",
-            "name": "Deluxe Scarecrow"
+            "id": "joja-cola",
+            "name": "Joja Cola"
           },
           {
             "id": "hashbrowns",
@@ -4018,16 +4905,16 @@
             "name": "Maki Roll"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
             "name": "Ice Cream"
           },
           {
-            "id": "farm-computer",
-            "name": "Farm Computer"
+            "id": "stuffing",
+            "name": "Stuffing"
           }
         ],
         "neutral": [
@@ -4036,8 +4923,8 @@
             "name": "Quartz"
           },
           {
-            "id": "wood-lamp-post",
-            "name": "Wood Lamp-post"
+            "id": "seaweed",
+            "name": "Seaweed"
           },
           {
             "id": "clay",
@@ -4064,7 +4951,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4091,7 +4978,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4118,7 +5005,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4145,7 +5032,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4172,7 +5059,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4201,9 +5088,32 @@
           ]
         },
         {
+          "id": "rain2",
+          "label": "Rainy Day (alt)",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1000,
+              "location": "Sam House"
+            },
+            {
+              "time": 1100,
+              "location": "Sam House"
+            },
+            {
+              "time": 1400,
+              "location": "Saloon"
+            },
+            {
+              "time": 1940,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -4214,7 +5124,30 @@
         {
           "id": "Mon",
           "label": "Monday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1000,
+              "location": "Sam House"
+            },
+            {
+              "time": 1100,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1600,
+              "location": "Sam House"
+            },
+            {
+              "time": 2130,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "Wed",
+          "label": "Wednesday",
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4237,7 +5170,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4260,7 +5193,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -4289,28 +5222,55 @@
           ]
         },
         {
-          "id": "9",
-          "label": "9",
-          "conditions": {},
+          "id": "23_6",
+          "label": "23_6",
+          "type": "normal",
           "entries": [
             {
-              "time": 900,
+              "time": 1000,
               "location": "Sam House"
             },
             {
-              "time": 1100,
-              "location": "Town"
-            },
-            {
-              "time": 1600,
-              "location": "Town"
-            },
-            {
-              "time": 1900,
+              "time": 1040,
               "location": "Sam House"
             },
             {
-              "time": 2130,
+              "time": 1340,
+              "location": "Town"
+            },
+            {
+              "time": 1830,
+              "location": "Sam House"
+            },
+            {
+              "time": 2100,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "9_6",
+          "label": "9_6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1000,
+              "location": "Sam House"
+            },
+            {
+              "time": 1040,
+              "location": "Sam House"
+            },
+            {
+              "time": 1340,
+              "location": "Town"
+            },
+            {
+              "time": 1830,
+              "location": "Sam House"
+            },
+            {
+              "time": 2100,
               "location": "Sam House"
             }
           ]
@@ -4318,7 +5278,7 @@
         {
           "id": "fall_11",
           "label": "Fall 11",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4343,32 +5303,9 @@
           ]
         },
         {
-          "id": "rain2",
-          "label": "rain2",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 1000,
-              "location": "Sam House"
-            },
-            {
-              "time": 1100,
-              "location": "Sam House"
-            },
-            {
-              "time": 1400,
-              "location": "Saloon"
-            },
-            {
-              "time": 1940,
-              "location": "Sam House"
-            }
-          ]
-        },
-        {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4385,6 +5322,81 @@
             {
               "time": 2400,
               "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "9",
+          "label": "Day 9",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Sam House"
+            },
+            {
+              "time": 1100,
+              "location": "Town"
+            },
+            {
+              "time": 1600,
+              "location": "Town"
+            },
+            {
+              "time": 1900,
+              "location": "Sam House"
+            },
+            {
+              "time": 2130,
+              "location": "Sam House"
+            }
+          ],
+          "conditions": {
+            "notFriendship": {
+              "npc": "Penny",
+              "minHearts": 6
+            }
+          }
+        },
+        {
+          "id": "marriage_Fri",
+          "label": "Friday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Sam House"
+            },
+            {
+              "time": 1100,
+              "location": "Town"
+            },
+            {
+              "time": 1500,
+              "location": "Saloon"
+            },
+            {
+              "time": 2100,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Sam House"
+            },
+            {
+              "time": 1100,
+              "location": "Sam House"
+            },
+            {
+              "time": 1500,
+              "location": "bed"
             }
           ]
         }
@@ -4405,8 +5417,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "wicked-statue",
-            "name": "Wicked Statue"
+            "id": "frozen-tear",
+            "name": "Frozen Tear"
           },
           {
             "id": "sashimi",
@@ -4478,9 +5490,36 @@
       },
       "schedules": [
         {
+          "id": "default",
+          "label": "Default",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1030,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1500,
+              "location": "Science House"
+            },
+            {
+              "time": 1530,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1830,
+              "location": "Mountain"
+            },
+            {
+              "time": 2130,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1030,
@@ -4507,7 +5546,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1030,
@@ -4542,7 +5581,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1030,
@@ -4555,9 +5594,28 @@
           ]
         },
         {
+          "id": "rain2",
+          "label": "Rainy Day (alt)",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1030,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1500,
+              "location": "Saloon"
+            },
+            {
+              "time": 2110,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -4568,7 +5626,7 @@
         {
           "id": "Thu",
           "label": "Thursday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1030,
@@ -4595,7 +5653,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1030,
@@ -4614,7 +5672,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -4639,9 +5697,113 @@
           ]
         },
         {
+          "id": "11_6",
+          "label": "11_6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1030,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1500,
+              "location": "Science House"
+            },
+            {
+              "time": 1530,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1830,
+              "location": "Mountain"
+            },
+            {
+              "time": 2130,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
+          "id": "25_6",
+          "label": "25_6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1030,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1500,
+              "location": "Science House"
+            },
+            {
+              "time": 1530,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1830,
+              "location": "Mountain"
+            },
+            {
+              "time": 2130,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
+          "id": "summer_4",
+          "label": "Summer 4",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1000,
+              "location": "Hospital"
+            },
+            {
+              "time": 1330,
+              "location": "Hospital"
+            },
+            {
+              "time": 1600,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
+          "id": "winter_16",
+          "label": "Winter 16",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 1030,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1500,
+              "location": "Science House"
+            },
+            {
+              "time": 1530,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1650,
+              "location": "Beach"
+            },
+            {
+              "time": 2340,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
           "id": "11",
-          "label": "11",
-          "conditions": {},
+          "label": "Day 11",
+          "type": "normal",
           "entries": [
             {
               "time": 1000,
@@ -4666,13 +5828,40 @@
           ]
         },
         {
-          "id": "rain2",
-          "label": "rain2",
-          "conditions": {},
+          "id": "15",
+          "label": "Day 15",
+          "type": "normal",
           "entries": [
             {
-              "time": 1030,
+              "time": 1000,
               "location": "Sebastian Room"
+            },
+            {
+              "time": 1200,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 1710,
+              "location": "Science House"
+            },
+            {
+              "time": 1800,
+              "location": "Sebastian Room"
+            },
+            {
+              "time": 2130,
+              "location": "Sebastian Room"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Fri",
+          "label": "Friday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Beach"
             },
             {
               "time": 1500,
@@ -4680,57 +5869,26 @@
             },
             {
               "time": 2110,
-              "location": "Sebastian Room"
+              "location": "bed"
             }
           ]
         },
         {
-          "id": "summer_4",
-          "label": "Summer 4",
-          "conditions": {},
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
           "entries": [
             {
-              "time": 900,
-              "location": "Sebastian Room"
+              "time": 830,
+              "location": "Mountain"
             },
             {
-              "time": 1000,
-              "location": "Hospital"
-            },
-            {
-              "time": 1330,
-              "location": "Hospital"
-            },
-            {
-              "time": 1600,
-              "location": "Sebastian Room"
-            }
-          ]
-        },
-        {
-          "id": "winter_16",
-          "label": "Winter 16",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 1030,
-              "location": "Sebastian Room"
-            },
-            {
-              "time": 1500,
+              "time": 1300,
               "location": "Science House"
             },
             {
-              "time": 1530,
-              "location": "Sebastian Room"
-            },
-            {
-              "time": 1650,
-              "location": "Beach"
-            },
-            {
-              "time": 2340,
-              "location": "Sebastian Room"
+              "time": 1700,
+              "location": "bed"
             }
           ]
         }
@@ -4775,8 +5933,8 @@
         ],
         "neutral": [
           {
-            "id": "wood-lamp-post",
-            "name": "Wood Lamp-post"
+            "id": "seaweed",
+            "name": "Seaweed"
           },
           {
             "id": "clay",
@@ -4804,7 +5962,7 @@
         {
           "id": "default",
           "label": "Default",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -4847,7 +6005,46 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 700,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1230,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1330,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1430,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1530,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1630,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2300,
+              "location": "Animal Shop"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -4886,7 +6083,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -4897,7 +6094,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -4920,7 +6117,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -4942,8 +6139,8 @@
         },
         {
           "id": "summer_Sun",
-          "label": "summer_Sun",
-          "conditions": {},
+          "label": "Summer Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -4970,7 +6167,7 @@
         {
           "id": "Sun_normal",
           "label": "Sun_normal",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -4997,7 +6194,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -5014,6 +6211,94 @@
             {
               "time": 2300,
               "location": "Animal Shop"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Fri",
+          "label": "Friday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Town"
+            },
+            {
+              "time": 1300,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2200,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Fri_normal",
+          "label": "Fri_normal (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Town"
+            },
+            {
+              "time": 1300,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2200,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Mon",
+          "label": "Monday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1100,
+              "location": "Forest"
+            },
+            {
+              "time": 1700,
+              "location": "bed"
+            }
+          ]
+        },
+        {
+          "id": "marriage_Sun",
+          "label": "Sunday (married)",
+          "type": "marriage",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Town"
+            },
+            {
+              "time": 1000,
+              "location": "Saloon"
+            },
+            {
+              "time": 1500,
+              "location": "Saloon"
+            },
+            {
+              "time": 2000,
+              "location": "bed"
             }
           ]
         }
@@ -5076,8 +6361,8 @@
         ],
         "disliked": [
           {
-            "id": "deluxe-scarecrow",
-            "name": "Deluxe Scarecrow"
+            "id": "joja-cola",
+            "name": "Joja Cola"
           },
           {
             "id": "parsnip-soup",
@@ -5092,8 +6377,8 @@
             "name": "Tortilla"
           },
           {
-            "id": "mini-shipping-bin",
-            "name": "Mini-Shipping Bin"
+            "id": "garlic",
+            "name": "Garlic"
           }
         ],
         "hated": []
@@ -5102,7 +6387,38 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 700,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 830,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1700,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 1900,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 2100,
+              "location": "Seed Shop"
+            },
+            {
+              "time": 2300,
+              "location": "Seed Shop"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -5133,7 +6449,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5144,7 +6460,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -5181,12 +6497,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "standing-geode",
-            "name": "Standing Geode"
+            "id": "coconut",
+            "name": "Coconut"
           },
           {
-            "id": "bone-mill",
-            "name": "Bone Mill"
+            "id": "cactus-fruit",
+            "name": "Cactus Fruit"
           },
           {
             "id": "blueberry-tart",
@@ -5197,8 +6513,8 @@
             "name": "Dish O' The Sea"
           },
           {
-            "id": "statue-of-true-perfection",
-            "name": "Statue Of True Perfection"
+            "id": "yam",
+            "name": "Yam"
           },
           {
             "id": "the-alleyway-buffet",
@@ -5232,7 +6548,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -5267,7 +6583,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -5298,7 +6614,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -5325,7 +6641,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1100,
@@ -5344,7 +6660,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -5371,7 +6687,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5394,7 +6710,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1100,
@@ -5427,20 +6743,20 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
-            "id": "wooden-brazier",
-            "name": "Wooden Brazier"
+            "id": "catfish",
+            "name": "Catfish"
           },
           {
-            "id": "skull-brazier",
-            "name": "Skull Brazier"
+            "id": "octopus",
+            "name": "Octopus"
           },
           {
-            "id": "worm-bin",
-            "name": "Worm Bin"
+            "id": "sea-cucumber",
+            "name": "Sea Cucumber"
           },
           {
             "id": "pumpkin",
@@ -5473,8 +6789,8 @@
         ],
         "liked": [
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
             "id": "honey",
@@ -5497,8 +6813,8 @@
             "name": "Fried Calamari"
           },
           {
-            "id": "mini-jukebox",
-            "name": "Mini-Jukebox"
+            "id": "carp-surprise",
+            "name": "Carp Surprise"
           },
           {
             "id": "salmon-dinner",
@@ -5509,12 +6825,12 @@
             "name": "Fish Taco"
           },
           {
-            "id": "telephone",
-            "name": "Telephone"
+            "id": "crispy-bass",
+            "name": "Crispy Bass"
           },
           {
-            "id": "cursed-p-k-arcade-system",
-            "name": "Cursed P.K. Arcade System"
+            "id": "trout-soup",
+            "name": "Trout Soup"
           },
           {
             "id": "fried-eel",
@@ -5537,8 +6853,8 @@
             "name": "Crab Cakes"
           },
           {
-            "id": "deconstructor",
-            "name": "Deconstructor"
+            "id": "seafoam-pudding",
+            "name": "Seafoam Pudding"
           },
           {
             "id": "coffee",
@@ -5579,7 +6895,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5602,7 +6918,30 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 610,
+              "location": "Beach"
+            },
+            {
+              "time": 850,
+              "location": "Fish Shop"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2320,
+              "location": "Fish Shop"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5625,7 +6964,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -5636,7 +6975,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5659,7 +6998,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5682,7 +7021,7 @@
         {
           "id": "DesertFestival",
           "label": "DesertFestival",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5697,7 +7036,7 @@
         {
           "id": "spring_9",
           "label": "Spring 9",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5728,7 +7067,7 @@
         {
           "id": "SquidFest",
           "label": "SquidFest",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5751,7 +7090,7 @@
         {
           "id": "TroutDerby",
           "label": "TroutDerby",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5774,7 +7113,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1630,
@@ -5789,7 +7128,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1630,
@@ -5804,7 +7143,7 @@
         {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1630,
@@ -5833,12 +7172,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
-            "id": "item-pedestal",
-            "name": "Item Pedestal"
+            "id": "pink-cake",
+            "name": "Pink Cake"
           },
           {
             "id": "farmers-lunch",
@@ -5865,12 +7204,12 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
-            "id": "wood-lamp-post",
-            "name": "Wood Lamp-post"
+            "id": "seaweed",
+            "name": "Seaweed"
           }
         ],
         "disliked": [
@@ -5885,7 +7224,34 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 850,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1600,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1800,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 2100,
+              "location": "Animal Shop"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -5912,7 +7278,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -5923,7 +7289,7 @@
         {
           "id": "Mon",
           "label": "Monday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 810,
@@ -5942,7 +7308,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -5971,9 +7337,36 @@
           ]
         },
         {
+          "id": "Wed",
+          "label": "Wednesday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 850,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1600,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2300,
+              "location": "Animal Shop"
+            }
+          ]
+        },
+        {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -6000,7 +7393,34 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 830,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 850,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1600,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2300,
+              "location": "Animal Shop"
+            }
+          ]
+        },
+        {
+          "id": "Sun",
+          "label": "Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -6027,7 +7447,7 @@
         {
           "id": "fall_18",
           "label": "Fall 18",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -6054,7 +7474,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -6077,7 +7497,7 @@
         {
           "id": "winter_18",
           "label": "Winter 18",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -6122,24 +7542,24 @@
             "name": "Emerald"
           },
           {
-            "id": "garden-pot",
-            "name": "Garden Pot"
+            "id": "aquamarine",
+            "name": "Aquamarine"
           },
           {
-            "id": "bookcase",
-            "name": "Bookcase"
+            "id": "ruby",
+            "name": "Ruby"
           },
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
-            "id": "grandfather-clock",
-            "name": "Grandfather Clock"
+            "id": "topaz",
+            "name": "Topaz"
           },
           {
-            "id": "dead-tree",
-            "name": "Dead Tree"
+            "id": "jade",
+            "name": "Jade"
           },
           {
             "id": "gold-bar",
@@ -6178,8 +7598,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "quartz",
@@ -6193,7 +7613,30 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 850,
+              "location": "Blacksmith"
+            },
+            {
+              "time": 1700,
+              "location": "Blacksmith"
+            },
+            {
+              "time": 1900,
+              "location": "Saloon"
+            },
+            {
+              "time": 2400,
+              "location": "Blacksmith"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 850,
@@ -6216,7 +7659,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -6227,7 +7670,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 850,
@@ -6246,7 +7689,7 @@
         {
           "id": "winter_15",
           "label": "Winter 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 850,
@@ -6265,7 +7708,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -6338,8 +7781,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -6353,7 +7796,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6376,7 +7819,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6399,7 +7842,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -6410,7 +7853,7 @@
         {
           "id": "Mon",
           "label": "Monday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6433,7 +7876,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 930,
@@ -6460,7 +7903,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6483,7 +7926,7 @@
         {
           "id": "summer_18",
           "label": "Summer 18",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -6510,7 +7953,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6543,12 +7986,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "vegetable-medley",
+            "name": "Vegetable Medley"
           },
           {
-            "id": "workbench",
-            "name": "Workbench"
+            "id": "glazed-yams",
+            "name": "Glazed Yams"
           },
           {
             "id": "autumns-bounty",
@@ -6565,20 +8008,20 @@
         ],
         "liked": [
           {
-            "id": "mayonnaise-machine",
-            "name": "Mayonnaise Machine"
+            "id": "parsnip",
+            "name": "Parsnip"
           },
           {
-            "id": "standing-geode",
-            "name": "Standing Geode"
+            "id": "coconut",
+            "name": "Coconut"
           },
           {
-            "id": "bone-mill",
-            "name": "Bone Mill"
+            "id": "cactus-fruit",
+            "name": "Cactus Fruit"
           },
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "potato",
+            "name": "Potato"
           },
           {
             "id": "blueberry",
@@ -6589,16 +8032,16 @@
             "name": "Radish"
           },
           {
-            "id": "auto-petter",
-            "name": "Auto-Petter"
+            "id": "eggplant",
+            "name": "Eggplant"
           },
           {
             "id": "artichoke",
             "name": "Artichoke"
           },
           {
-            "id": "campfire",
-            "name": "Campfire"
+            "id": "bok-choy",
+            "name": "Bok Choy"
           },
           {
             "id": "blueberry",
@@ -6607,8 +8050,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -6627,7 +8070,7 @@
         {
           "id": "default",
           "label": "Default",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6666,7 +8109,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6713,7 +8156,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6740,7 +8183,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -6751,7 +8194,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6786,7 +8229,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6819,121 +8262,9 @@
           ]
         },
         {
-          "id": "1",
-          "label": "1",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 800,
-              "location": "Manor House"
-            },
-            {
-              "time": 1000,
-              "location": "Fish Shop"
-            },
-            {
-              "time": 1600,
-              "location": "Manor House"
-            },
-            {
-              "time": 2100,
-              "location": "Manor House"
-            },
-            {
-              "time": 2200,
-              "location": "Manor House"
-            }
-          ]
-        },
-        {
-          "id": "15",
-          "label": "15",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 800,
-              "location": "Manor House"
-            },
-            {
-              "time": 1000,
-              "location": "Science House"
-            },
-            {
-              "time": 1600,
-              "location": "Manor House"
-            },
-            {
-              "time": 2100,
-              "location": "Manor House"
-            },
-            {
-              "time": 2200,
-              "location": "Manor House"
-            }
-          ]
-        },
-        {
-          "id": "3",
-          "label": "3",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 800,
-              "location": "Manor House"
-            },
-            {
-              "time": 1000,
-              "location": "Animal Shop"
-            },
-            {
-              "time": 1600,
-              "location": "Manor House"
-            },
-            {
-              "time": 2100,
-              "location": "Manor House"
-            },
-            {
-              "time": 2200,
-              "location": "Manor House"
-            }
-          ]
-        },
-        {
-          "id": "6",
-          "label": "6",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 800,
-              "location": "Manor House"
-            },
-            {
-              "time": 1000,
-              "location": "Blacksmith"
-            },
-            {
-              "time": 1300,
-              "location": "Archaeology House"
-            },
-            {
-              "time": 1600,
-              "location": "Manor House"
-            },
-            {
-              "time": 2100,
-              "location": "Manor House"
-            },
-            {
-              "time": 2200,
-              "location": "Manor House"
-            }
-          ]
-        },
-        {
           "id": "fall_9",
           "label": "Fall 9",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6959,8 +8290,8 @@
         },
         {
           "id": "fall_Sun",
-          "label": "fall_Sun",
-          "conditions": {},
+          "label": "Fall Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -6994,8 +8325,8 @@
         },
         {
           "id": "summer_Sun",
-          "label": "summer_Sun",
-          "conditions": {},
+          "label": "Summer Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7030,7 +8361,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7064,8 +8395,8 @@
         },
         {
           "id": "winter_Sun",
-          "label": "winter_Sun",
-          "conditions": {},
+          "label": "Winter Sunday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7085,6 +8416,176 @@
             },
             {
               "time": 2000,
+              "location": "Manor House"
+            },
+            {
+              "time": 2200,
+              "location": "Manor House"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "label": "Day 1",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Manor House"
+            },
+            {
+              "time": 1000,
+              "location": "Fish Shop"
+            },
+            {
+              "time": 1600,
+              "location": "Manor House"
+            },
+            {
+              "time": 2100,
+              "location": "Manor House"
+            },
+            {
+              "time": 2200,
+              "location": "Manor House"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "label": "Day 3",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Manor House"
+            },
+            {
+              "time": 1000,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1600,
+              "location": "Manor House"
+            },
+            {
+              "time": 2100,
+              "location": "Manor House"
+            },
+            {
+              "time": 2200,
+              "location": "Manor House"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "label": "Day 6",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Manor House"
+            },
+            {
+              "time": 1000,
+              "location": "Blacksmith"
+            },
+            {
+              "time": 1300,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1600,
+              "location": "Manor House"
+            },
+            {
+              "time": 2100,
+              "location": "Manor House"
+            },
+            {
+              "time": 2200,
+              "location": "Manor House"
+            }
+          ]
+        },
+        {
+          "id": "15",
+          "label": "Day 15",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Manor House"
+            },
+            {
+              "time": 1000,
+              "location": "Science House"
+            },
+            {
+              "time": 1600,
+              "location": "Manor House"
+            },
+            {
+              "time": 2100,
+              "location": "Manor House"
+            },
+            {
+              "time": 2200,
+              "location": "Manor House"
+            }
+          ]
+        },
+        {
+          "id": "20",
+          "label": "Day 20",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Manor House"
+            },
+            {
+              "time": 1000,
+              "location": "Blacksmith"
+            },
+            {
+              "time": 1300,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1600,
+              "location": "Manor House"
+            },
+            {
+              "time": 2100,
+              "location": "Manor House"
+            },
+            {
+              "time": 2200,
+              "location": "Manor House"
+            }
+          ]
+        },
+        {
+          "id": "24",
+          "label": "Day 24",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Manor House"
+            },
+            {
+              "time": 1000,
+              "location": "Animal Shop"
+            },
+            {
+              "time": 1600,
+              "location": "Manor House"
+            },
+            {
+              "time": 2100,
               "location": "Manor House"
             },
             {
@@ -7144,8 +8645,8 @@
             "name": "Crocus"
           },
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           }
         ],
         "neutral": [
@@ -7182,7 +8683,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7213,7 +8714,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7240,7 +8741,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -7251,7 +8752,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7282,7 +8783,7 @@
         {
           "id": "Wed",
           "label": "Wednesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7309,7 +8810,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7336,7 +8837,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7359,7 +8860,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -7390,7 +8891,7 @@
         {
           "id": "fall_25",
           "label": "Fall 25",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7421,7 +8922,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7462,20 +8963,20 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "vegetable-medley",
+            "name": "Vegetable Medley"
           },
           {
-            "id": "wood-chipper",
-            "name": "Wood Chipper"
+            "id": "pancakes",
+            "name": "Pancakes"
           },
           {
-            "id": "telephone",
-            "name": "Telephone"
+            "id": "crispy-bass",
+            "name": "Crispy Bass"
           },
           {
             "id": "chocolate-cake",
@@ -7490,8 +8991,8 @@
             "name": "Fried Eel"
           },
           {
-            "id": "solar-panel",
-            "name": "Solar Panel"
+            "id": "eggplant-parmesan",
+            "name": "Eggplant Parmesan"
           }
         ],
         "liked": [
@@ -7514,8 +9015,8 @@
             "name": "Quartz"
           },
           {
-            "id": "mini-shipping-bin",
-            "name": "Mini-Shipping Bin"
+            "id": "garlic",
+            "name": "Garlic"
           },
           {
             "id": "clay",
@@ -7542,7 +9043,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7597,7 +9098,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7648,7 +9149,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -7659,7 +9160,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7698,7 +9199,74 @@
         {
           "id": "Wed",
           "label": "Wednesday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Sam House"
+            },
+            {
+              "time": 940,
+              "location": "Sam House"
+            },
+            {
+              "time": 1000,
+              "location": "Sam House"
+            },
+            {
+              "time": 1020,
+              "location": "Sam House"
+            },
+            {
+              "time": 1040,
+              "location": "Sam House"
+            },
+            {
+              "time": 1100,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1330,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1400,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1440,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1530,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1600,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1700,
+              "location": "Sam House"
+            },
+            {
+              "time": 1930,
+              "location": "Sam House"
+            },
+            {
+              "time": 2100,
+              "location": "Sam House"
+            },
+            {
+              "time": 2200,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "Fri",
+          "label": "Friday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7765,7 +9333,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7808,7 +9376,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7847,7 +9415,7 @@
         {
           "id": "spring_11",
           "label": "Spring 11",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -7882,7 +9450,7 @@
         {
           "id": "spring_18",
           "label": "Spring 18",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -7937,7 +9505,7 @@
         {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8058,7 +9626,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -8093,7 +9661,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 830,
@@ -8124,7 +9692,34 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 700,
+              "location": "Town"
+            },
+            {
+              "time": 1030,
+              "location": "Sam House"
+            },
+            {
+              "time": 1400,
+              "location": "Town"
+            },
+            {
+              "time": 1700,
+              "location": "Saloon"
+            },
+            {
+              "time": 2350,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "Sat",
+          "label": "Saturday",
+          "type": "normal",
           "entries": [
             {
               "time": 700,
@@ -8151,7 +9746,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8186,7 +9781,7 @@
         {
           "id": "Sun_normal",
           "label": "Sun_normal",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8235,8 +9830,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "item-pedestal",
-            "name": "Item Pedestal"
+            "id": "pink-cake",
+            "name": "Pink Cake"
           },
           {
             "id": "grape",
@@ -8265,20 +9860,20 @@
             "name": "Emerald"
           },
           {
-            "id": "bookcase",
-            "name": "Bookcase"
+            "id": "ruby",
+            "name": "Ruby"
           },
           {
-            "id": "dead-tree",
-            "name": "Dead Tree"
+            "id": "jade",
+            "name": "Jade"
           },
           {
-            "id": "standing-geode",
-            "name": "Standing Geode"
+            "id": "coconut",
+            "name": "Coconut"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
@@ -8333,8 +9928,8 @@
             "name": "Mead"
           },
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -8351,7 +9946,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -8382,7 +9977,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -8409,7 +10004,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -8440,7 +10035,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -8451,7 +10046,61 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1400,
+              "location": "Town"
+            },
+            {
+              "time": 1620,
+              "location": "Town"
+            },
+            {
+              "time": 1740,
+              "location": "Sam House"
+            },
+            {
+              "time": 2000,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "Wed",
+          "label": "Wednesday",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 900,
+              "location": "Archaeology House"
+            },
+            {
+              "time": 1400,
+              "location": "Town"
+            },
+            {
+              "time": 1620,
+              "location": "Town"
+            },
+            {
+              "time": 1740,
+              "location": "Sam House"
+            },
+            {
+              "time": 2000,
+              "location": "Sam House"
+            }
+          ]
+        },
+        {
+          "id": "Fri",
+          "label": "Friday",
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -8478,7 +10127,7 @@
         {
           "id": "Sat",
           "label": "Saturday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 1010,
@@ -8501,7 +10150,7 @@
         {
           "id": "spring_11",
           "label": "Spring 11",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -8528,7 +10177,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -8569,16 +10218,16 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
             "id": "chocolate-cake",
             "name": "Chocolate Cake"
           },
           {
-            "id": "farm-computer",
-            "name": "Farm Computer"
+            "id": "stuffing",
+            "name": "Stuffing"
           },
           {
             "id": "beet",
@@ -8617,8 +10266,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "quartz",
@@ -8643,16 +10292,16 @@
             "name": "Maki Roll"
           },
           {
-            "id": "cursed-p-k-arcade-system",
-            "name": "Cursed P.K. Arcade System"
+            "id": "trout-soup",
+            "name": "Trout Soup"
           },
           {
             "id": "spice-berry",
             "name": "Spice Berry"
           },
           {
-            "id": "mini-shipping-bin",
-            "name": "Mini-Shipping Bin"
+            "id": "garlic",
+            "name": "Garlic"
           },
           {
             "id": "salmonberry",
@@ -8669,7 +10318,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8704,7 +10353,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8739,7 +10388,7 @@
         {
           "id": "winter",
           "label": "Winter",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8774,7 +10423,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8805,7 +10454,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -8814,9 +10463,9 @@
           ]
         },
         {
-          "id": "Thu",
-          "label": "Thursday",
-          "conditions": {},
+          "id": "Mon",
+          "label": "Monday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8845,24 +10494,24 @@
           ]
         },
         {
-          "id": "2",
-          "label": "2",
-          "conditions": {},
+          "id": "Thu",
+          "label": "Thursday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
               "location": "Josh House"
             },
             {
-              "time": 1030,
-              "location": "Hospital"
+              "time": 1040,
+              "location": "Josh House"
             },
             {
-              "time": 1330,
-              "location": "Hospital"
+              "time": 1210,
+              "location": "Community Center"
             },
             {
-              "time": 1600,
+              "time": 1630,
               "location": "Josh House"
             },
             {
@@ -8876,9 +10525,9 @@
           ]
         },
         {
-          "id": "23",
-          "label": "23",
-          "conditions": {},
+          "id": "Sat",
+          "label": "Saturday",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8886,14 +10535,14 @@
             },
             {
               "time": 1040,
-              "location": "Hospital"
+              "location": "Josh House"
             },
             {
-              "time": 1330,
-              "location": "Hospital"
+              "time": 1210,
+              "location": "Community Center"
             },
             {
-              "time": 1610,
+              "time": 1630,
               "location": "Josh House"
             },
             {
@@ -8909,7 +10558,7 @@
         {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -8936,6 +10585,68 @@
               "location": "Josh House"
             }
           ]
+        },
+        {
+          "id": "2",
+          "label": "Day 2",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Josh House"
+            },
+            {
+              "time": 1030,
+              "location": "Hospital"
+            },
+            {
+              "time": 1330,
+              "location": "Hospital"
+            },
+            {
+              "time": 1600,
+              "location": "Josh House"
+            },
+            {
+              "time": 1900,
+              "location": "Josh House"
+            },
+            {
+              "time": 2130,
+              "location": "Josh House"
+            }
+          ]
+        },
+        {
+          "id": "23",
+          "label": "Day 23",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Josh House"
+            },
+            {
+              "time": 1040,
+              "location": "Hospital"
+            },
+            {
+              "time": 1330,
+              "location": "Hospital"
+            },
+            {
+              "time": 1610,
+              "location": "Josh House"
+            },
+            {
+              "time": 1900,
+              "location": "Josh House"
+            },
+            {
+              "time": 2130,
+              "location": "Josh House"
+            }
+          ]
         }
       ],
       "portrait": "Evelyn.png"
@@ -8954,8 +10665,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "recycling-machine",
-            "name": "Recycling Machine"
+            "id": "leek",
+            "name": "Leek"
           },
           {
             "id": "fried-mushroom",
@@ -8976,24 +10687,24 @@
             "name": "Parsnip Soup"
           },
           {
-            "id": "seasonal-plant",
-            "name": "Seasonal Plant"
+            "id": "vegetable-medley",
+            "name": "Vegetable Medley"
           },
           {
-            "id": "telephone",
-            "name": "Telephone"
+            "id": "crispy-bass",
+            "name": "Crispy Bass"
           },
           {
-            "id": "cursed-p-k-arcade-system",
-            "name": "Cursed P.K. Arcade System"
+            "id": "trout-soup",
+            "name": "Trout Soup"
           },
           {
             "id": "cookie",
             "name": "Cookie"
           },
           {
-            "id": "solar-panel",
-            "name": "Solar Panel"
+            "id": "eggplant-parmesan",
+            "name": "Eggplant Parmesan"
           },
           {
             "id": "ice-cream",
@@ -9002,8 +10713,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           }
         ],
         "disliked": [
@@ -9026,7 +10737,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9049,7 +10760,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9072,7 +10783,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -9083,7 +10794,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9104,36 +10815,9 @@
           ]
         },
         {
-          "id": "23",
-          "label": "23",
-          "conditions": {},
-          "entries": [
-            {
-              "time": 630,
-              "location": "Josh House"
-            },
-            {
-              "time": 1030,
-              "location": "Hospital"
-            },
-            {
-              "time": 1330,
-              "location": "Hospital"
-            },
-            {
-              "time": 1600,
-              "location": "Josh House"
-            },
-            {
-              "time": 2000,
-              "location": "Josh House"
-            }
-          ]
-        },
-        {
           "id": "summer_Fri",
-          "label": "summer_Fri",
-          "conditions": {},
+          "label": "Summer Friday",
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9156,7 +10840,7 @@
         {
           "id": "Sun_normal",
           "label": "Sun_normal",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9179,7 +10863,7 @@
         {
           "id": "winter_17",
           "label": "Winter 17",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9195,6 +10879,33 @@
             },
             {
               "time": 2340,
+              "location": "Josh House"
+            }
+          ]
+        },
+        {
+          "id": "23",
+          "label": "Day 23",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 630,
+              "location": "Josh House"
+            },
+            {
+              "time": 1030,
+              "location": "Hospital"
+            },
+            {
+              "time": 1330,
+              "location": "Hospital"
+            },
+            {
+              "time": 1600,
+              "location": "Josh House"
+            },
+            {
+              "time": 2000,
               "location": "Josh House"
             }
           ]
@@ -9216,8 +10927,8 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
             "id": "fish-taco",
@@ -9256,8 +10967,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -9270,8 +10981,8 @@
             "name": "Quartz"
           },
           {
-            "id": "deluxe-scarecrow",
-            "name": "Deluxe Scarecrow"
+            "id": "joja-cola",
+            "name": "Joja Cola"
           },
           {
             "id": "coleslaw",
@@ -9284,7 +10995,50 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Saloon"
+            },
+            {
+              "time": 1200,
+              "location": "Saloon"
+            },
+            {
+              "time": 1830,
+              "location": "Saloon"
+            },
+            {
+              "time": 1850,
+              "location": "Saloon"
+            },
+            {
+              "time": 1940,
+              "location": "Saloon"
+            },
+            {
+              "time": 1950,
+              "location": "Saloon"
+            },
+            {
+              "time": 2030,
+              "location": "Saloon"
+            },
+            {
+              "time": 2040,
+              "location": "Saloon"
+            },
+            {
+              "time": 2400,
+              "location": "Saloon"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9327,7 +11081,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -9338,7 +11092,7 @@
         {
           "id": "Mon",
           "label": "Monday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9381,7 +11135,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9428,7 +11182,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9471,7 +11225,7 @@
         {
           "id": "fall_4",
           "label": "Fall 4",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9528,20 +11282,20 @@
       "gifts": {
         "loved": [
           {
-            "id": "mayonnaise-machine",
-            "name": "Mayonnaise Machine"
+            "id": "parsnip",
+            "name": "Parsnip"
           },
           {
-            "id": "bone-mill",
-            "name": "Bone Mill"
+            "id": "cactus-fruit",
+            "name": "Cactus Fruit"
           },
           {
             "id": "parsnip-soup",
             "name": "Parsnip Soup"
           },
           {
-            "id": "workbench",
-            "name": "Workbench"
+            "id": "glazed-yams",
+            "name": "Glazed Yams"
           },
           {
             "id": "pale-ale",
@@ -9574,12 +11328,12 @@
             "name": "Maki Roll"
           },
           {
-            "id": "solar-panel",
-            "name": "Solar Panel"
+            "id": "eggplant-parmesan",
+            "name": "Eggplant Parmesan"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
@@ -9598,8 +11352,8 @@
             "name": "Pumpkin Soup"
           },
           {
-            "id": "mini-obelisk",
-            "name": "Mini-Obelisk"
+            "id": "cranberry-sauce",
+            "name": "Cranberry Sauce"
           },
           {
             "id": "sweet-pea",
@@ -9612,8 +11366,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "quartz",
@@ -9626,18 +11380,18 @@
         ],
         "disliked": [
           {
-            "id": "skull-brazier",
-            "name": "Skull Brazier"
+            "id": "octopus",
+            "name": "Octopus"
           },
           {
-            "id": "marble-brazier",
-            "name": "Marble Brazier"
+            "id": "squid",
+            "name": "Squid"
           }
         ],
         "hated": [
           {
-            "id": "deluxe-scarecrow",
-            "name": "Deluxe Scarecrow"
+            "id": "joja-cola",
+            "name": "Joja Cola"
           }
         ]
       },
@@ -9645,7 +11399,30 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
+          "entries": [
+            {
+              "time": 800,
+              "location": "Trailer"
+            },
+            {
+              "time": 1200,
+              "location": "Joja Mart"
+            },
+            {
+              "time": 1600,
+              "location": "Saloon"
+            },
+            {
+              "time": 2400,
+              "location": "Trailer"
+            }
+          ]
+        },
+        {
+          "id": "rain",
+          "label": "Rainy Day",
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9668,7 +11445,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 0,
@@ -9679,7 +11456,7 @@
         {
           "id": "bus",
           "label": "bus",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9702,7 +11479,7 @@
         {
           "id": "DesertFestival",
           "label": "DesertFestival",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -9721,7 +11498,7 @@
         {
           "id": "spring_25",
           "label": "Spring 25",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9748,7 +11525,7 @@
         {
           "id": "SquidFest",
           "label": "SquidFest",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 800,
@@ -9799,8 +11576,8 @@
         ],
         "liked": [
           {
-            "id": "standing-geode",
-            "name": "Standing Geode"
+            "id": "coconut",
+            "name": "Coconut"
           },
           {
             "id": "cloth",
@@ -9832,7 +11609,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9843,7 +11620,7 @@
         {
           "id": "DesertFestival",
           "label": "DesertFestival",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9862,7 +11639,7 @@
         {
           "id": "fall_15",
           "label": "Fall 15",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 630,
@@ -9923,8 +11700,8 @@
             "name": "Bean Hotpot"
           },
           {
-            "id": "stone-chest",
-            "name": "Stone Chest"
+            "id": "rice-pudding",
+            "name": "Rice Pudding"
           },
           {
             "id": "ice-cream",
@@ -9941,8 +11718,8 @@
             "name": "Purple Mushroom"
           },
           {
-            "id": "plush-bunny",
-            "name": "Plush Bunny"
+            "id": "dinosaur-egg",
+            "name": "Dinosaur Egg"
           }
         ],
         "neutral": [
@@ -9962,7 +11739,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 750,
@@ -10001,7 +11778,7 @@
         {
           "id": "summer",
           "label": "Summer",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 750,
@@ -10032,7 +11809,7 @@
         {
           "id": "fall",
           "label": "Fall",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 750,
@@ -10061,9 +11838,48 @@
           ]
         },
         {
+          "id": "winter",
+          "label": "Winter",
+          "type": "normal",
+          "entries": [
+            {
+              "time": 750,
+              "location": "Science House"
+            },
+            {
+              "time": 1100,
+              "location": "Science House"
+            },
+            {
+              "time": 1500,
+              "location": "Science House"
+            },
+            {
+              "time": 1540,
+              "location": "Science House"
+            },
+            {
+              "time": 1800,
+              "location": "Science House"
+            },
+            {
+              "time": 1920,
+              "location": "Science House"
+            },
+            {
+              "time": 2000,
+              "location": "Science House"
+            },
+            {
+              "time": 2200,
+              "location": "Science House"
+            }
+          ]
+        },
+        {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 750,
@@ -10102,7 +11918,7 @@
         {
           "id": "GreenRain",
           "label": "Green Rain",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 610,
@@ -10113,7 +11929,7 @@
         {
           "id": "Fri",
           "label": "Friday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 750,
@@ -10136,7 +11952,7 @@
         {
           "id": "summer_25",
           "label": "Summer 25",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 820,
@@ -10159,7 +11975,7 @@
         {
           "id": "winter_16",
           "label": "Winter 16",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 750,
@@ -10200,12 +12016,12 @@
       "gifts": {
         "loved": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "pumpkin",
@@ -10234,12 +12050,12 @@
         ],
         "liked": [
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
-            "id": "deconstructor",
-            "name": "Deconstructor"
+            "id": "seafoam-pudding",
+            "name": "Seafoam Pudding"
           },
           {
             "id": "gold-bar",
@@ -10318,16 +12134,16 @@
         ],
         "liked": [
           {
-            "id": "tall-torch",
-            "name": "Tall Torch"
+            "id": "diamond",
+            "name": "Diamond"
           },
           {
             "id": "fire-quartz",
             "name": "Fire Quartz"
           },
           {
-            "id": "wicked-statue",
-            "name": "Wicked Statue"
+            "id": "frozen-tear",
+            "name": "Frozen Tear"
           },
           {
             "id": "iridium-bar",
@@ -10336,8 +12152,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -10396,24 +12212,24 @@
             "name": "Emerald"
           },
           {
-            "id": "garden-pot",
-            "name": "Garden Pot"
+            "id": "aquamarine",
+            "name": "Aquamarine"
           },
           {
-            "id": "bookcase",
-            "name": "Bookcase"
+            "id": "ruby",
+            "name": "Ruby"
           },
           {
-            "id": "ancient-table",
-            "name": "Ancient Table"
+            "id": "amethyst",
+            "name": "Amethyst"
           },
           {
-            "id": "grandfather-clock",
-            "name": "Grandfather Clock"
+            "id": "topaz",
+            "name": "Topaz"
           },
           {
-            "id": "dead-tree",
-            "name": "Dead Tree"
+            "id": "jade",
+            "name": "Jade"
           },
           {
             "id": "omni-geode",
@@ -10434,12 +12250,12 @@
             "name": "Fire Quartz"
           },
           {
-            "id": "wicked-statue",
-            "name": "Wicked Statue"
+            "id": "frozen-tear",
+            "name": "Frozen Tear"
           },
           {
-            "id": "sloth-skeleton-m",
-            "name": "Sloth Skeleton M"
+            "id": "earth-crystal",
+            "name": "Earth Crystal"
           },
           {
             "id": "dwarf-scroll-i",
@@ -10468,8 +12284,8 @@
         ],
         "neutral": [
           {
-            "id": "cheese-press",
-            "name": "Cheese Press"
+            "id": "wild-horseradish",
+            "name": "Wild Horseradish"
           },
           {
             "id": "clay",
@@ -10590,8 +12406,8 @@
             "name": "Triple Shot Espresso"
           },
           {
-            "id": "sewing-machine",
-            "name": "Sewing Machine"
+            "id": "oil",
+            "name": "Oil"
           },
           {
             "id": "unmilled-rice",
@@ -10626,8 +12442,8 @@
             "name": "Mead"
           },
           {
-            "id": "deluxe-scarecrow",
-            "name": "Deluxe Scarecrow"
+            "id": "joja-cola",
+            "name": "Joja Cola"
           }
         ],
         "hated": [
@@ -10641,7 +12457,7 @@
         {
           "id": "spring",
           "label": "Spring",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -10668,7 +12484,7 @@
         {
           "id": "rain",
           "label": "Rainy Day",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -10699,7 +12515,7 @@
         {
           "id": "Tue",
           "label": "Tuesday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -10726,7 +12542,7 @@
         {
           "id": "Sun",
           "label": "Sunday",
-          "conditions": {},
+          "type": "normal",
           "entries": [
             {
               "time": 900,
@@ -10764,8 +12580,12 @@
       "cheatId": "16",
       "energy": 13,
       "health": 6,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "caroline"
+      ],
+      "lovedBy": [
+        "krobus"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 16,
       "seasons": [
@@ -10814,8 +12634,12 @@
       "cheatId": "20",
       "energy": 40,
       "health": 18,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "penny"
+      ],
+      "lovedBy": [
+        "george"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 20,
       "seasons": [
@@ -10853,8 +12677,12 @@
       "cheatId": "24",
       "energy": 25,
       "health": 11,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "lewis"
+      ],
+      "lovedBy": [
+        "pam"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 24
     },
@@ -10901,8 +12729,15 @@
       "description": "A shimmery blue-green gem.",
       "sellValue": 180,
       "cheatId": "62",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "maru",
+        "haley"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 62
     },
@@ -10913,8 +12748,17 @@
       "description": "A precious stone that is sought after for its rich color and beautiful luster.",
       "sellValue": 250,
       "cheatId": "64",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "maru",
+        "haley",
+        "jas",
+        "vincent"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 64
     },
@@ -10925,8 +12769,17 @@
       "description": "A purple variant of quartz.",
       "sellValue": 100,
       "cheatId": "66",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "maru",
+        "willy",
+        "krobus"
+      ],
+      "lovedBy": [
+        "abigail",
+        "clint",
+        "emily",
+        "dwarf"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 66
     },
@@ -10937,8 +12790,14 @@
       "description": "Fairly common but still prized for its beauty.",
       "sellValue": 80,
       "cheatId": "68",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "maru"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 68
     },
@@ -10970,8 +12829,17 @@
       "description": "A pale green ornamental stone.",
       "sellValue": 200,
       "cheatId": "70",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "maru",
+        "haley",
+        "jas",
+        "vincent"
+      ],
+      "lovedBy": [
+        "clint",
+        "emily",
+        "dwarf"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 70
     },
@@ -10994,8 +12862,19 @@
       "description": "A rare and valuable gem.",
       "sellValue": 750,
       "cheatId": "72",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "wizard"
+      ],
+      "lovedBy": [
+        "maru",
+        "evelyn",
+        "penny",
+        "jodi",
+        "marnie",
+        "gus",
+        "willy",
+        "krobus"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 72
     },
@@ -11093,8 +12972,15 @@
       "description": "A crystal fabled to be the frozen tears of a yeti.",
       "sellValue": 75,
       "cheatId": "84",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "emily",
+        "elliott",
+        "dwarf",
+        "wizard"
+      ],
+      "lovedBy": [
+        "sebastian"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 84
     },
@@ -11105,7 +12991,11 @@
       "description": "A resinous substance found near the surface.",
       "sellValue": 50,
       "cheatId": "86",
-      "likedBy": [],
+      "likedBy": [
+        "emily",
+        "leah",
+        "dwarf"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 86
@@ -11117,8 +13007,17 @@
       "description": "A seed of the coconut palm. It has many culinary uses.",
       "sellValue": 100,
       "cheatId": "88",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "lewis",
+        "haley",
+        "jas",
+        "vincent",
+        "sandy"
+      ],
+      "lovedBy": [
+        "linus",
+        "haley"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 88,
       "seasons": [
@@ -11142,8 +13041,14 @@
       "cheatId": "90",
       "energy": 75,
       "health": 34,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "lewis"
+      ],
+      "lovedBy": [
+        "linus",
+        "pam",
+        "sam"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 90,
       "seasons": [
@@ -11355,7 +13260,10 @@
       "description": "A giant dino egg... The entire shell is still intact!",
       "sellValue": 350,
       "cheatId": "107",
-      "likedBy": [],
+      "likedBy": [
+        "demetrius",
+        "alex"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 107
@@ -11618,7 +13526,9 @@
       "sellValue": 200,
       "cheatId": "128",
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "abigail"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 128
     },
@@ -11786,7 +13696,9 @@
       "energy": 50,
       "health": 23,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "willy"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 143
     },
@@ -11867,8 +13779,12 @@
       "description": "A mysterious and intelligent creature.",
       "sellValue": 150,
       "cheatId": "149",
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "elliott"
+      ],
+      "lovedBy": [
+        "willy"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 149
     },
@@ -11895,7 +13811,9 @@
       "cheatId": "151",
       "energy": 25,
       "health": 11,
-      "likedBy": [],
+      "likedBy": [
+        "elliott"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 151
@@ -11936,7 +13854,9 @@
       "sellValue": 75,
       "cheatId": "154",
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "willy"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 154
     },
@@ -12078,7 +13998,9 @@
       "energy": 13,
       "health": 6,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "penny"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 164
     },
@@ -12115,7 +14037,9 @@
       "cheatId": "167",
       "energy": 13,
       "health": 6,
-      "likedBy": [],
+      "likedBy": [
+        "sam"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 167,
@@ -12315,7 +14239,9 @@
       "cheatId": "192",
       "energy": 25,
       "health": 11,
-      "likedBy": [],
+      "likedBy": [
+        "lewis"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 192
@@ -12359,8 +14285,12 @@
       "cheatId": "196",
       "energy": 113,
       "health": 51,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "emily"
+      ],
+      "lovedBy": [
+        "leah"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 196,
       "soldBy": [
@@ -12429,8 +14359,15 @@
       "cheatId": "200",
       "energy": 165,
       "health": 74,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "george",
+        "emily"
+      ],
+      "lovedBy": [
+        "lewis",
+        "jodi",
+        "leah"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 200
     },
@@ -12591,7 +14528,10 @@
       "energy": 200,
       "health": 90,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "lewis",
+        "pam"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 208
     },
@@ -12604,7 +14544,9 @@
       "cheatId": "209",
       "energy": 90,
       "health": 41,
-      "likedBy": [],
+      "likedBy": [
+        "willy"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 209
@@ -12641,7 +14583,9 @@
       "energy": 90,
       "health": 41,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "jodi"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 211,
       "buffs": [
@@ -12704,8 +14648,13 @@
       "cheatId": "214",
       "energy": 90,
       "health": 41,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "george",
+        "willy"
+      ],
+      "lovedBy": [
+        "jodi"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 214,
       "buffs": [
@@ -12797,7 +14746,10 @@
       "cheatId": "219",
       "energy": 100,
       "health": 45,
-      "likedBy": [],
+      "likedBy": [
+        "george",
+        "willy"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 219,
@@ -12844,7 +14796,12 @@
       "energy": 250,
       "health": 113,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "haley",
+        "jas",
+        "vincent",
+        "marnie"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 221
     },
@@ -13043,8 +15000,13 @@
       "cheatId": "231",
       "energy": 175,
       "health": 79,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "george",
+        "pam"
+      ],
+      "lovedBy": [
+        "jodi"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 231,
       "buffs": [
@@ -13064,8 +15026,16 @@
       "cheatId": "232",
       "energy": 115,
       "health": 52,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "pam",
+        "haley",
+        "jas",
+        "vincent",
+        "sam"
+      ],
+      "lovedBy": [
+        "demetrius"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 232
     },
@@ -13203,7 +15173,9 @@
       "cheatId": "238",
       "energy": 125,
       "health": 56,
-      "likedBy": [],
+      "likedBy": [
+        "pam"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 238,
@@ -13223,8 +15195,12 @@
       "cheatId": "239",
       "energy": 170,
       "health": 77,
-      "likedBy": [],
-      "lovedBy": [],
+      "likedBy": [
+        "sam"
+      ],
+      "lovedBy": [
+        "evelyn"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 239,
       "buffs": [
@@ -13493,7 +15469,9 @@
       "energy": 113,
       "health": 51,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "penny"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 254
     },
@@ -13631,7 +15609,10 @@
       "cheatId": "265",
       "energy": 175,
       "health": 79,
-      "likedBy": [],
+      "likedBy": [
+        "willy",
+        "krobus"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 265,
@@ -13737,7 +15718,9 @@
       "cheatId": "272",
       "energy": 20,
       "health": 9,
-      "likedBy": [],
+      "likedBy": [
+        "lewis"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 272
@@ -13829,7 +15812,9 @@
       "cheatId": "278",
       "energy": 25,
       "health": 11,
-      "likedBy": [],
+      "likedBy": [
+        "lewis"
+      ],
       "lovedBy": [],
       "spriteSheet": "springobjects",
       "spriteIndex": 278
@@ -13868,7 +15853,9 @@
       "energy": 45,
       "health": 20,
       "likedBy": [],
-      "lovedBy": [],
+      "lovedBy": [
+        "linus"
+      ],
       "spriteSheet": "springobjects",
       "spriteIndex": 280
     },
@@ -21868,12 +23855,8 @@
       "description": "Turns milk into cheese.",
       "sellValue": 50,
       "cheatId": "16",
-      "likedBy": [
-        "caroline"
-      ],
-      "lovedBy": [
-        "krobus"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 16,
       "isBigCraftable": true
@@ -21911,12 +23894,8 @@
       "description": "Turns fishing trash into resources.",
       "sellValue": 50,
       "cheatId": "20",
-      "likedBy": [
-        "penny"
-      ],
-      "lovedBy": [
-        "george"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 20,
       "isBigCraftable": true
@@ -21941,12 +23920,8 @@
       "description": "Turns eggs into mayonnaise.",
       "sellValue": 50,
       "cheatId": "24",
-      "likedBy": [
-        "lewis"
-      ],
-      "lovedBy": [
-        "pam"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 24,
       "isBigCraftable": true
@@ -22283,15 +24258,8 @@
       "description": "Grows crops from any season when indoors. Outdoors, it can only house seasonal crops.",
       "sellValue": 1000,
       "cheatId": "62",
-      "likedBy": [
-        "maru",
-        "haley"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 62,
       "isBigCraftable": true
@@ -22303,17 +24271,8 @@
       "description": "A home for books.",
       "sellValue": 50,
       "cheatId": "64",
-      "likedBy": [
-        "maru",
-        "haley",
-        "jas",
-        "vincent"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 64,
       "isBigCraftable": true
@@ -22338,17 +24297,8 @@
       "description": "It's covered in the thickest cobwebs.",
       "sellValue": 50,
       "cheatId": "66",
-      "likedBy": [
-        "maru",
-        "willy",
-        "krobus"
-      ],
-      "lovedBy": [
-        "abigail",
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 66,
       "isBigCraftable": true
@@ -22373,14 +24323,8 @@
       "description": "It's so old... looks like the pendulum is rusted in place.",
       "sellValue": 50,
       "cheatId": "68",
-      "likedBy": [
-        "maru"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 68,
       "isBigCraftable": true
@@ -22414,17 +24358,8 @@
       "description": "It's been petrified for a long time, poor thing.",
       "sellValue": 0,
       "cheatId": "70",
-      "likedBy": [
-        "maru",
-        "haley",
-        "jas",
-        "vincent"
-      ],
-      "lovedBy": [
-        "clint",
-        "emily",
-        "dwarf"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 70,
       "isBigCraftable": true
@@ -22436,19 +24371,8 @@
       "description": "The stem is made from bamboo.",
       "sellValue": 0,
       "cheatId": "72",
-      "likedBy": [
-        "wizard"
-      ],
-      "lovedBy": [
-        "maru",
-        "evelyn",
-        "penny",
-        "jodi",
-        "marnie",
-        "gus",
-        "willy",
-        "krobus"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 72,
       "isBigCraftable": true
@@ -22525,15 +24449,8 @@
       "description": "Something's not right with this statue.",
       "sellValue": 0,
       "cheatId": "84",
-      "likedBy": [
-        "emily",
-        "elliott",
-        "dwarf",
-        "wizard"
-      ],
-      "lovedBy": [
-        "sebastian"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 84,
       "isBigCraftable": true
@@ -22558,11 +24475,7 @@
       "description": "The ribs of a prehistoric sloth. ",
       "sellValue": 0,
       "cheatId": "86",
-      "likedBy": [
-        "emily",
-        "leah",
-        "dwarf"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 86,
@@ -22588,17 +24501,8 @@
       "description": "It's a huge geode mounted on a stand. Hundreds of purple crystals shimmer within.",
       "sellValue": 0,
       "cheatId": "88",
-      "likedBy": [
-        "lewis",
-        "haley",
-        "jas",
-        "vincent",
-        "sandy"
-      ],
-      "lovedBy": [
-        "linus",
-        "haley"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 88,
       "isBigCraftable": true,
@@ -22630,14 +24534,8 @@
       "description": "Turns bone items into fertilizers.",
       "sellValue": 0,
       "cheatId": "90",
-      "likedBy": [
-        "lewis"
-      ],
-      "lovedBy": [
-        "linus",
-        "pam",
-        "sam"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 90,
       "isBigCraftable": true,
@@ -22708,10 +24606,7 @@
       "description": "It's big, it's soft, and it's cute.",
       "sellValue": 0,
       "cheatId": "107",
-      "likedBy": [
-        "demetrius",
-        "alex"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 107,
@@ -22855,9 +24750,7 @@
       "sellValue": 0,
       "cheatId": "128",
       "likedBy": [],
-      "lovedBy": [
-        "abigail"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 128,
       "isBigCraftable": true
@@ -22961,9 +24854,7 @@
       "sellValue": 25,
       "cheatId": "143",
       "likedBy": [],
-      "lovedBy": [
-        "willy"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 143,
       "isBigCraftable": true
@@ -23040,12 +24931,8 @@
       "description": "Provides a moderate amount of light.",
       "sellValue": 300,
       "cheatId": "149",
-      "likedBy": [
-        "elliott"
-      ],
-      "lovedBy": [
-        "willy"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 149,
       "isBigCraftable": true
@@ -23070,9 +24957,7 @@
       "description": "Provides a moderate amount of light.",
       "sellValue": 500,
       "cheatId": "151",
-      "likedBy": [
-        "elliott"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 151,
@@ -23112,9 +24997,7 @@
       "sellValue": 0,
       "cheatId": "154",
       "likedBy": [],
-      "lovedBy": [
-        "willy"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 154,
       "isBigCraftable": true
@@ -23179,9 +25062,7 @@
       "sellValue": 0,
       "cheatId": "164",
       "likedBy": [],
-      "lovedBy": [
-        "penny"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 164,
       "isBigCraftable": true
@@ -23206,9 +25087,7 @@
       "description": "Prevents crows from attacking your crops. Has a large radius (about 16 \"tiles\").",
       "sellValue": 50,
       "cheatId": "167",
-      "likedBy": [
-        "sam"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 167,
@@ -23260,9 +25139,7 @@
       "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
       "sellValue": 50,
       "cheatId": "192",
-      "likedBy": [
-        "lewis"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 192,
@@ -23275,12 +25152,8 @@
       "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
       "sellValue": 50,
       "cheatId": "196",
-      "likedBy": [
-        "emily"
-      ],
-      "lovedBy": [
-        "leah"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 196,
       "isBigCraftable": true,
@@ -23298,15 +25171,8 @@
       "description": "An ornamental plant that changes with each season. It doesn't need to be watered.",
       "sellValue": 200,
       "cheatId": "200",
-      "likedBy": [
-        "george",
-        "emily"
-      ],
-      "lovedBy": [
-        "lewis",
-        "jodi",
-        "leah"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 200,
       "isBigCraftable": true
@@ -23332,10 +25198,7 @@
       "sellValue": 1000,
       "cheatId": "208",
       "likedBy": [],
-      "lovedBy": [
-        "lewis",
-        "pam"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 208,
       "isBigCraftable": true
@@ -23347,9 +25210,7 @@
       "description": "Allows you to play your favorite tunes.",
       "sellValue": 1500,
       "cheatId": "209",
-      "likedBy": [
-        "willy"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 209,
@@ -23363,9 +25224,7 @@
       "sellValue": 500,
       "cheatId": "211",
       "likedBy": [],
-      "lovedBy": [
-        "jodi"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 211,
       "isBigCraftable": true
@@ -23377,13 +25236,8 @@
       "description": "Can be used to check store hours and inventory.",
       "sellValue": 1000,
       "cheatId": "214",
-      "likedBy": [
-        "george",
-        "willy"
-      ],
-      "lovedBy": [
-        "jodi"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 214,
       "isBigCraftable": true
@@ -23419,10 +25273,7 @@
       "description": "Something's not right with this Prairie King Arcade System...",
       "sellValue": 0,
       "cheatId": "219",
-      "likedBy": [
-        "george",
-        "willy"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 219,
@@ -23442,12 +25293,7 @@
       "sellValue": 0,
       "cheatId": "221",
       "likedBy": [],
-      "lovedBy": [
-        "haley",
-        "jas",
-        "vincent",
-        "marnie"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 221,
       "isBigCraftable": true
@@ -23459,13 +25305,8 @@
       "description": "Slowly generates batteries when left in the sun.",
       "sellValue": 0,
       "cheatId": "231",
-      "likedBy": [
-        "george",
-        "pam"
-      ],
-      "lovedBy": [
-        "jodi"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 231,
       "isBigCraftable": true
@@ -23477,16 +25318,8 @@
       "description": "A place to store your items.",
       "sellValue": 0,
       "cheatId": "232",
-      "likedBy": [
-        "pam",
-        "haley",
-        "jas",
-        "vincent",
-        "sam"
-      ],
-      "lovedBy": [
-        "demetrius"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 232,
       "isBigCraftable": true
@@ -23498,9 +25331,7 @@
       "description": "Place two on the farm to warp between them.",
       "sellValue": 0,
       "cheatId": "238",
-      "likedBy": [
-        "pam"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 238,
@@ -23513,12 +25344,8 @@
       "description": "Scans the farm and displays useful information.",
       "sellValue": 0,
       "cheatId": "239",
-      "likedBy": [
-        "sam"
-      ],
-      "lovedBy": [
-        "evelyn"
-      ],
+      "likedBy": [],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 239,
       "isBigCraftable": true
@@ -23582,9 +25409,7 @@
       "sellValue": 0,
       "cheatId": "254",
       "likedBy": [],
-      "lovedBy": [
-        "penny"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 254,
       "isBigCraftable": true
@@ -23609,10 +25434,7 @@
       "description": "Destroys crafted items, but salvages their most valuable material.",
       "sellValue": 0,
       "cheatId": "265",
-      "likedBy": [
-        "willy",
-        "krobus"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 265,
@@ -23625,9 +25447,7 @@
       "description": "Joja Co. patented technology for coops and barns. Keeps your animals content, but can't replace the full benefit of human touch. Hand-petting can be provided to supplement.",
       "sellValue": 0,
       "cheatId": "272",
-      "likedBy": [
-        "lewis"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 272,
@@ -23653,9 +25473,7 @@
       "description": "Cook on the go!",
       "sellValue": 0,
       "cheatId": "278",
-      "likedBy": [
-        "lewis"
-      ],
+      "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 278,
@@ -23669,9 +25487,7 @@
       "sellValue": 0,
       "cheatId": "280",
       "likedBy": [],
-      "lovedBy": [
-        "linus"
-      ],
+      "lovedBy": [],
       "spriteSheet": "Craftables",
       "spriteIndex": 280,
       "isBigCraftable": true
@@ -38757,8 +40573,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 48,
+      "iconX": 64,
+      "iconY": 0,
       "isFruitTree": true
     },
     {
@@ -38767,8 +40583,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 128,
+      "iconX": 64,
+      "iconY": 80,
       "isFruitTree": true
     },
     {
@@ -38777,8 +40593,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 208,
+      "iconX": 64,
+      "iconY": 160,
       "isFruitTree": true
     },
     {
@@ -38787,8 +40603,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 288,
+      "iconX": 64,
+      "iconY": 240,
       "isFruitTree": true
     },
     {
@@ -38797,8 +40613,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 368,
+      "iconX": 64,
+      "iconY": 320,
       "isFruitTree": true
     },
     {
@@ -38807,8 +40623,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 448,
+      "iconX": 64,
+      "iconY": 400,
       "isFruitTree": true
     },
     {
@@ -38817,8 +40633,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 608,
+      "iconX": 64,
+      "iconY": 560,
       "isFruitTree": true
     },
     {
@@ -38827,8 +40643,8 @@
       "spriteFile": "trees/fruitTrees.png",
       "cols": 27,
       "rows": 45,
-      "iconX": 208,
-      "iconY": 688,
+      "iconX": 64,
+      "iconY": 640,
       "isFruitTree": true
     }
   ],

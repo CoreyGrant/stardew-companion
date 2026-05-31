@@ -98,6 +98,27 @@ export const DEFAULT_FARM_LAYOUT: FarmLayout = {
   interiors: {},
 };
 
+// ── Friendship data ──────────────────────────────────────────────────────────
+
+export type FriendshipStatus =
+  | 'Friendly'
+  | 'Dating'
+  | 'Engaged'
+  | 'Married'
+  | 'Divorced'
+  | 'Housemate';
+
+export interface FriendshipEntry {
+  /** Raw SDV friendship points (0–3500). Divide by 250 to get heart level. */
+  points: number;
+  /** Relationship status with this NPC. */
+  status: FriendshipStatus;
+  /** Number of gifts given this week (0, 1, or 2). */
+  giftsThisWeek: number;
+  /** 1 if a gift was given to this NPC today, 0 otherwise. */
+  giftsToday: number;
+}
+
 // ── Save file ─────────────────────────────────────────────────────────────────
 
 export interface SaveFile {
@@ -126,6 +147,11 @@ export interface SaveFile {
   sourceFileName?: string;
   /** NPC kebab-case id → heart level (0–14). Only present when imported from a game save file. */
   heartLevels?: Record<string, number>;
+  /**
+   * Full friendship data per NPC, keyed by NPC kebab-id.
+   * Only present when imported from a game save file.
+   */
+  friendshipData?: Record<string, FriendshipEntry>;
   /** Kebab-case cooking recipe IDs the player has learned. */
   learnedCookingRecipes?: string[];
   /** Current gold on hand (display only). */
