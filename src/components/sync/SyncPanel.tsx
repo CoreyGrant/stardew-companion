@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { useSync } from '../../contexts/SyncContext';
 import { useUserData } from '../../contexts/UserDataContext';
 import { SyncApiError } from '../../utils/syncApi';
-import { extractCharacterData } from '../../utils/saveSync';
 import { Panel } from '../common/Panel';
 import type { RoomSummary } from '../../utils/syncApi';
 import type { SaveFile } from '../../types/save';
@@ -215,10 +214,15 @@ export function CreateRoomButton({ save }: CreateRoomButtonProps) {
         setError('No character data found. Re-import the save file to enable room creation.');
         return;
       }
-      const allCharacters = chars.map((c) => extractCharacterData(
-        { ...save, skills: c.skills, marriedTo: c.marriedTo, money: c.money },
-        c.charName,
-      ));
+      const allCharacters = chars.map((c) => ({
+        charName:              c.charName,
+        skills:                c.skills,
+        marriedTo:             c.marriedTo ?? null,
+        heartLevels:           c.heartLevels,
+        questProgress:         c.questProgress ?? {},
+        learnedCookingRecipes: c.learnedCookingRecipes,
+        money:                 c.money,
+      }));
       const { roomId, slots } = await createRoom(save, allCharacters);
       // Update the save with the roomId so subsequent Syncs push to the room
       const hostSlot = slots.find((s) => s.slotIndex === 0);

@@ -167,6 +167,9 @@ export interface ParsedCharacter {
   charName: string;
   skills: Record<Skill, number>;
   marriedTo: string | null;
+  heartLevels?: Record<string, number>;
+  questProgress?: Record<string, string[]>;
+  learnedCookingRecipes?: string[];
   money?: number;
 }
 

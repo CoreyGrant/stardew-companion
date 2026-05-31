@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { syncApi, SyncApiError } from '../utils/syncApi';
 import { SyncService } from '../services/SyncService';
-import { splitSaveForSync, mergeSyncData, extractCharacterData } from '../utils/saveSync';
+import { splitSaveForSync, mergeSyncData } from '../utils/saveSync';
 import type { RoomSummary } from '../utils/syncApi';
 import type { CharacterSaveData } from '../utils/saveSync';
 import { useUserData } from './UserDataContext';
@@ -188,10 +188,15 @@ export function SyncProvider({ children }: { children: ReactNode }) {
     const chars = activeSave.parsedCharacters ?? [];
     if (chars.length === 0) return;
 
-    const allCharacters = chars.map((c) => extractCharacterData(
-      { ...activeSave, skills: c.skills, marriedTo: c.marriedTo, money: c.money },
-      c.charName,
-    ));
+    const allCharacters = chars.map((c) => ({
+      charName:              c.charName,
+      skills:                c.skills,
+      marriedTo:             c.marriedTo ?? null,
+      heartLevels:           c.heartLevels,
+      questProgress:         c.questProgress ?? {},
+      learnedCookingRecipes: c.learnedCookingRecipes,
+      money:                 c.money,
+    }));
 
     pushSync(activeSave, allCharacters).catch(() => {/* non-fatal */});
   }, [syncVersion]); // eslint-disable-line react-hooks/exhaustive-deps

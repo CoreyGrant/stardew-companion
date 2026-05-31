@@ -100,10 +100,13 @@ export function SaveFileUpload() {
     if (!preview) return;
     // Store sourceFileName (for Sync button) and parsedCharacters (for room creation).
     const parsedCharacters = preview.result.characters.map(c => ({
-      charName:  c.charName,
-      skills:    c.skills,
-      marriedTo: c.marriedTo,
-      money:     c.money,
+      charName:              c.charName,
+      skills:                c.skills,
+      marriedTo:             c.marriedTo,
+      heartLevels:           c.heartLevels,
+      questProgress:         c.questProgress,
+      learnedCookingRecipes: c.learnedCookingRecipes,
+      money:                 c.money,
     }));
     const save = createSave({
       ...preview.result.save,
