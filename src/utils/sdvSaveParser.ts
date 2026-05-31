@@ -397,18 +397,15 @@ export function parseSdvSave(
   const hostCharacter = parseFarmer(player, gameData);
   const characters: CharacterSaveData[] = [hostCharacter];
 
-  // Farmhands live inside <Farm><farmhands><Farmer> in multiplayer saves.
-  // The exact tag may be <Farmer> or a subclass — we match all children of <farmhands>.
-  const farmLoc = findLocation(root, 'Farm');
-  if (farmLoc) {
-    const farmhandsEl = ch(farmLoc, 'farmhands');
-    if (farmhandsEl) {
-      for (const farmerEl of Array.from(farmhandsEl.children)) {
-        // Skip empty/placeholder entries (SDV sometimes writes stub <Farmer> with no name)
-        const fhName = txt(farmerEl, 'name');
-        if (!fhName) continue;
-        characters.push(parseFarmer(farmerEl, gameData));
-      }
+  // Farmhands live at <SaveGame><farmhands><Farmer> (direct child of root),
+  // for both local-coop and online-coop saves.
+  const farmhandsEl = ch(root, 'farmhands');
+  if (farmhandsEl) {
+    for (const farmerEl of Array.from(farmhandsEl.children)) {
+      // Skip empty/placeholder entries (SDV sometimes writes stub <Farmer> with no name)
+      const fhName = txt(farmerEl, 'name');
+      if (!fhName) continue;
+      characters.push(parseFarmer(farmerEl, gameData));
     }
   }
 
