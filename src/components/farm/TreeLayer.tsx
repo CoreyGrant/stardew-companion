@@ -47,6 +47,15 @@ export function TreeLayer({
         // Tapper: kept small so the tree sprite remains visible behind it.
         const tapperSize = Math.round(tileSize * 0.34);
 
+        // Fruit-tree sprites are visually larger than wild-tree sprites at the
+        // same 16×32 source size, so scale them down to 72% and bottom-align
+        // (trunk sits at the base of the tile, canopy floats upward).
+        const spriteScale = def?.isFruitTree ? 0.72 : 1.0;
+        const sprW = Math.round(tileSize * spriteScale);
+        const sprH = Math.round(tileSize * spriteScale);
+        const sprX = Math.round((tileSize - sprW) / 2); // centre horizontally
+        const sprY = tileSize - sprH;                   // bottom-align
+
         return (
           <svg
             key={tree.id}
@@ -57,11 +66,11 @@ export function TreeLayer({
             onPointerDown={onTreePointerDown ? (e) => onTreePointerDown(tree.id, e) : undefined}
             onContextMenu={onTreeContextMenu ? (e) => onTreeContextMenu(tree.id, e) : undefined}
           >
-            {/* Full 16×32 tree sprite (canopy + trunk) scaled to fit the tile. */}
+            {/* Tree sprite scaled to fit the tile (fruit trees shrunk further). */}
             {url && def ? (
               <svg
-                x={0} y={0}
-                width={tileSize} height={tileSize}
+                x={sprX} y={sprY}
+                width={sprW} height={sprH}
                 viewBox={`${def.iconX} ${def.iconY} 16 32`}
                 preserveAspectRatio="xMidYMid meet"
                 style={{ pointerEvents: 'none' }}
