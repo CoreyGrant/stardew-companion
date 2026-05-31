@@ -17,6 +17,8 @@ interface Props {
   buildings: PlacedBuilding[];
   buildingDefs: Map<string, BuildingDef>;
   itemMap: Map<string, Item>;
+  /** Fish-only lookup (Objects only, category=fish) — prevents BigCraftable ID collisions. */
+  fishItemMap?: Map<string, Item>;
   tileSize: number;
   selectedId: string | null;
   onBuildingPointerDown?: (id: string, e: React.PointerEvent<SVGElement>) => void;
@@ -32,7 +34,7 @@ const STROKE_STA   = '#8a7050';
 const DOOR_CLR     = 'rgba(255, 150, 50, 0.85)';
 
 export function BuildingLayer({
-  buildings, buildingDefs, itemMap, tileSize, selectedId,
+  buildings, buildingDefs, itemMap, fishItemMap, tileSize, selectedId,
   onBuildingPointerDown, onBuildingContextMenu,
 }: Props) {
   return (
@@ -50,8 +52,11 @@ export function BuildingLayer({
         const isStatic = b.isStatic ?? false;
 
         // ── Fish pond fish icon ──────────────────────────────────────────────
+        // Use fishItemMap (Objects-only, fish category) to avoid BigCraftable
+        // ID collisions in the general itemMap (e.g. Octopus=Object 149 vs
+        // Skull Brazier=BigCraftable 149; BCs come last and overwrite Objects).
         const isFishPond = b.buildingId === 'Fish Pond';
-        const fishItem   = isFishPond && b.fishId ? itemMap.get(b.fishId) : null;
+        const fishItem   = isFishPond && b.fishId ? (fishItemMap ?? itemMap).get(b.fishId) : null;
         const fishSprite = (() => {
           if (!fishItem || fishItem.spriteIndex === undefined) return null;
           const iconPx = tileSize * 2;

@@ -44,6 +44,15 @@ export function IslandFarmPlannerPage() {
     [gameData],
   );
 
+  const fishItemMap = useMemo(
+    () => new Map(
+      (gameData?.items ?? [])
+        .filter(i => i.category === 'fish' && !i.isBigCraftable)
+        .map(i => [i.cheatId, i]),
+    ),
+    [gameData],
+  );
+
   // ── Tool state ────────────────────────────────────────────────────────────────
   const [toolState, setToolState] = useState<ToolState>({ tool: 'select' });
   const [showSprinklerRanges, setShowSprinklerRanges] = useState(true);
@@ -292,6 +301,7 @@ export function IslandFarmPlannerPage() {
           layout={layout}
           buildingDefs={buildingDefMap}
           itemMap={itemMap}
+          fishItemMap={fishItemMap}
           treeDefs={treeDefs}
           cropMap={cropMap}
           zoom={zoom}

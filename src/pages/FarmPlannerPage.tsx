@@ -42,6 +42,19 @@ export function FarmPlannerPage() {
     [gameData],
   );
 
+  // Fish-only map — Objects filtered to category=fish.
+  // The general itemMap has BigCraftable IDs overwriting Object IDs for ~83 shared
+  // numeric values (e.g. Skull Brazier=BC 149 overwrites Octopus=Object 149), so
+  // fish pond lookups must use this isolated map instead.
+  const fishItemMap = useMemo(
+    () => new Map(
+      (gameData?.items ?? [])
+        .filter(i => i.category === 'fish' && !i.isBigCraftable)
+        .map(i => [i.cheatId, i]),
+    ),
+    [gameData],
+  );
+
   // ── Tool state ────────────────────────────────────────────────────────────────
   const [toolState, setToolState] = useState<ToolState>({ tool: 'select' });
   const [showSprinklerRanges, setShowSprinklerRanges] = useState(true);
@@ -311,6 +324,7 @@ export function FarmPlannerPage() {
           layout={layout}
           buildingDefs={buildingDefMap}
           itemMap={itemMap}
+          fishItemMap={fishItemMap}
           treeDefs={treeDefs}
           cropMap={cropMap}
           zoom={zoom}

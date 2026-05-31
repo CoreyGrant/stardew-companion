@@ -59,6 +59,8 @@ interface Props {
   layout: FarmLayout;
   buildingDefs: Map<string, BuildingDef>;
   itemMap: Map<string, Item>;
+  /** Fish-only lookup (Objects, category=fish) passed to BuildingLayer to avoid BC ID collisions. */
+  fishItemMap?: Map<string, Item>;
   treeDefs: TreeDef[];
   /** Crop definitions keyed by crop id — passed through to ZoneLayer for icon rendering. */
   cropMap?: Map<string, Crop>;
@@ -95,7 +97,7 @@ interface Props {
 
 export function FarmCanvas({
   gridWidth, gridHeight, zoneMap, farmBaseType,
-  layout, buildingDefs, itemMap, treeDefs, cropMap,
+  layout, buildingDefs, itemMap, fishItemMap, treeDefs, cropMap,
   zoom, pan, isPanning, showSprinklerRanges, showScarecrowRanges,
   selectedBuildingId, selectedItemId,
   hoverTile, toolState, drawRect, isDrawingRect,
@@ -306,6 +308,7 @@ export function FarmCanvas({
             buildings={layout.buildings}
             buildingDefs={buildingDefs}
             itemMap={itemMap}
+            fishItemMap={fishItemMap}
             tileSize={TILE_SIZE}
             selectedId={selectedBuildingId}
             onBuildingPointerDown={onBuildingPointerDown}
