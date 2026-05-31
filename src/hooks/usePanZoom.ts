@@ -5,6 +5,8 @@ export interface UsePanZoomReturn {
   zoom: number;
   isPanning: boolean;
   handleWheel: (e: React.WheelEvent<SVGSVGElement>) => void;
+  /** Zoom by `factor` keeping `centerX/Y` (relative to container) stationary. */
+  zoomAt: (factor: number, centerX: number, centerY: number) => void;
   startPan: (clientX: number, clientY: number) => void;
   movePan: (clientX: number, clientY: number) => void;
   endPan: () => void;
@@ -20,24 +22,28 @@ export function usePanZoom(): UsePanZoomReturn {
   const [isPanning, setIsPanning] = useState(false);
   const lastPos = useRef({ x: 0, y: 0 });
 
-  const handleWheel = useCallback((e: React.WheelEvent<SVGSVGElement>) => {
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    const cursorX = e.clientX - rect.left;
-    const cursorY = e.clientY - rect.top;
-    const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+  const zoomAt = useCallback((factor: number, centerX: number, centerY: number) => {
     setPz((prev) => {
       const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, prev.zoom * factor));
       const ratio = newZoom / prev.zoom;
       return {
         zoom: newZoom,
         pan: {
-          x: cursorX - (cursorX - prev.pan.x) * ratio,
-          y: cursorY - (cursorY - prev.pan.y) * ratio,
+          x: centerX - (centerX - prev.pan.x) * ratio,
+          y: centerY - (centerY - prev.pan.y) * ratio,
         },
       };
     });
   }, []);
+
+  const handleWheel = useCallback((e: React.WheelEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const cursorX = e.clientX - rect.left;
+    const cursorY = e.clientY - rect.top;
+    const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+    zoomAt(factor, cursorX, cursorY);
+  }, [zoomAt]);
 
   const startPan = useCallback((clientX: number, clientY: number) => {
     lastPos.current = { x: clientX, y: clientY };
@@ -78,6 +84,7 @@ export function usePanZoom(): UsePanZoomReturn {
     ...pz,
     isPanning,
     handleWheel,
+    zoomAt,
     startPan,
     movePan,
     endPan,

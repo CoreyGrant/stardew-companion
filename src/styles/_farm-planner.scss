@@ -497,29 +497,6 @@
 
 .planner-fit-btn { flex: 1; }
 
-// ── Touch notice (only shown on coarse-pointer / touch devices) ──────────────
-
-.planner-touch-notice {
-  display: none;
-  position: absolute;
-  top: $space-3;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 300;
-  background: rgba($color-brown-dark, 0.9);
-  color: $color-parchment-mid;
-  font-size: 0.72rem;
-  padding: $space-2 $space-3;
-  border: 1px solid $color-brown-mid;
-  border-radius: $radius-sm;
-  pointer-events: none;
-  white-space: nowrap;
-
-  @media (pointer: coarse) {
-    display: block;
-  }
-}
-
 // ── Canvas area ───────────────────────────────────────────────────────────────
 
 .planner-canvas-wrap {
@@ -527,6 +504,7 @@
   overflow: hidden;
   background: $color-green-dark;
   position: relative;
+  touch-action: none; // let our pointer handlers drive all touch interaction
 }
 
 // ── Context menu ──────────────────────────────────────────────────────────────
@@ -735,4 +713,54 @@
   margin-top: $space-1;
 
   &:focus { outline: 2px solid $color-gold; }
+}
+
+// ── Mobile: sidebar becomes a top panel ──────────────────────────────────────
+
+@media (max-width: 767px) {
+  .page--farm-planner {
+    flex-direction: column;
+  }
+
+  .planner-sidebar {
+    width: 100%;
+    height: 220px;
+    border-right: none;
+    border-bottom: 3px solid $color-brown;
+    flex-shrink: 0;
+    // Keep flex-direction: column — seasons/tabs/search/content/actions stack vertically
+  }
+
+  // Season buttons: spread full width
+  .planner-season {
+    gap: $space-2;
+
+    &__btn {
+      font-size: 0.65rem;
+      padding: $space-1 $space-2;
+    }
+  }
+
+  // Tabs: slightly larger tap targets
+  .planner-tabs__tab {
+    font-size: 0.6rem;
+    padding: $space-2 $space-1;
+  }
+
+  // Search: full width with box-sizing
+  .planner-search {
+    padding: $space-1 $space-2;
+  }
+
+  // Chips: 3 per row on wider phones, 2 on narrow
+  .planner-chip {
+    flex: 0 0 calc(50% - #{$space-1} / 2);
+  }
+
+  // Actions row: compact
+  .planner-sidebar__actions {
+    padding: $space-1 $space-2;
+    gap: $space-1;
+    flex-wrap: wrap;
+  }
 }

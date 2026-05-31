@@ -108,7 +108,7 @@ export function usePlannerGrid({
 }: UsePlannerGridOptions): UsePlannerGridReturn {
   const {
     pan, zoom, isPanning,
-    handleWheel, startPan, movePan, endPan, nudgePan,
+    handleWheel, zoomAt, startPan, movePan, endPan, nudgePan,
     fitToView: rawFitToView,
   } = usePanZoom();
 
@@ -125,6 +125,11 @@ export function usePlannerGrid({
 
   // Pan mode flag (middle/right-click or select-tool left-click)
   const panMode = useRef(false);
+
+  // Multi-touch tracking for pinch-to-zoom
+  const activePointers = useRef(new Map<number, { x: number; y: number }>());
+  const lastPinchDist  = useRef<number | null>(null);
+  const isPinching     = useRef(false);
 
   // Hover tile
   const [hoverTile, setHoverTile] = useState<{ tx: number; ty: number } | null>(null);
@@ -234,6 +239,22 @@ export function usePlannerGrid({
   // ── SVG pointer handlers ─────────────────────────────────────────────────────
   const handlePointerDown = useCallback((e: React.PointerEvent<SVGSVGElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
+
+    // Track every pointer (finger / stylus / mouse button)
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    // Two+ fingers → pinch mode; cancel any in-progress pan or draw
+    if (activePointers.current.size >= 2) {
+      isPinching.current = true;
+      panMode.current = false;
+      drawStart.current = null;
+      setDrawRect(null);
+      const pts = [...activePointers.current.values()];
+      lastPinchDist.current = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+      return;
+    }
+
+    // Single pointer — normal handling
     onPointerDownBefore?.();
 
     // Middle or right click → pan
@@ -267,6 +288,26 @@ export function usePlannerGrid({
   }, [isPanTool, allowRightClickPan, startPan, clientToTile, onPointerDownBefore]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent<SVGSVGElement>) => {
+    // Always keep our pointer map current
+    if (activePointers.current.has(e.pointerId)) {
+      activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    // Pinch zoom — runs whenever 2 pointers are active
+    if (isPinching.current && activePointers.current.size >= 2) {
+      const pts = [...activePointers.current.values()];
+      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+      if (lastPinchDist.current !== null && dist > 0 && wrapRef.current) {
+        const factor = dist / lastPinchDist.current;
+        const rect   = wrapRef.current.getBoundingClientRect();
+        const midX   = (pts[0].x + pts[1].x) / 2 - rect.left;
+        const midY   = (pts[0].y + pts[1].y) / 2 - rect.top;
+        zoomAt(factor, midX, midY);
+      }
+      lastPinchDist.current = dist;
+      return;
+    }
+
     const tile = clientToTile(e.clientX, e.clientY);
     setHoverTile(tile);
 
@@ -285,10 +326,21 @@ export function usePlannerGrid({
         h: Math.abs(ty - sy) + 1,
       });
     }
-  }, [clientToTile, movePan]);
+  }, [clientToTile, movePan, zoomAt]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent<SVGSVGElement>) => {
-    void e;
+    activePointers.current.delete(e.pointerId);
+
+    // Exiting pinch (one finger lifts)
+    if (isPinching.current) {
+      if (activePointers.current.size < 2) {
+        isPinching.current = false;
+        lastPinchDist.current = null;
+        endPan();
+      }
+      return;
+    }
+
     if (panMode.current) {
       panMode.current = false;
       endPan();

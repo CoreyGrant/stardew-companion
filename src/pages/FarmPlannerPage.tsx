@@ -290,11 +290,6 @@ export function FarmPlannerPage() {
 
   return (
     <div className="page--farm-planner">
-      <div className="planner-touch-notice" aria-live="polite">
-        Touch device detected — use the sidebar to select tools, then tap the map to place.
-        Pinch to zoom, drag with two fingers to pan.
-      </div>
-
       <FarmSidebar
         season={season}
         onSeasonChange={setSeason}
