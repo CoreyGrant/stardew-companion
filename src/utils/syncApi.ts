@@ -1,6 +1,6 @@
 /**
  * Typed REST client for the Stardew Companion sync server.
- * Reads VITE_SYNC_API_URL from the Vite environment.
+ * Uses VITE_SYNC_API_URL if set, otherwise uses relative URLs (same-origin self-hosted).
  */
 
 import type { CharacterSaveData } from './saveSync';
@@ -55,8 +55,6 @@ async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
-  if (!BASE_URL) throw new SyncApiError(0, 'Sync server URL is not configured (VITE_SYNC_API_URL).');
-
   const res = await fetch(`${BASE_URL}${path}`, {
     ...options,
     headers: {

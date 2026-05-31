@@ -7,9 +7,14 @@
  * Plain class (not a React hook) — instantiated once inside SyncContext.
  */
 
-const WS_BASE_URL = (import.meta.env.VITE_SYNC_API_URL as string | undefined)
-  ?.replace(/^http/, 'ws')
-  ?.replace(/\/$/, '') ?? '';
+// If VITE_SYNC_API_URL is set, convert its http(s) scheme to ws(s).
+// Otherwise derive from window.location so same-origin self-hosting works automatically.
+function getWsBaseUrl(): string {
+  const explicit = import.meta.env.VITE_SYNC_API_URL as string | undefined;
+  if (explicit) return explicit.replace(/^http/, 'ws').replace(/\/$/, '');
+  const scheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
+  return `${scheme}://${window.location.host}`;
+}
 
 export type SyncUpdateCallback = (sharedBlob: string, characterBlob: string) => void;
 export type ConnectionStateCallback = (connected: boolean) => void;
@@ -51,9 +56,9 @@ export class SyncService {
   }
 
   private openSocket(): void {
-    if (!WS_BASE_URL || !this.charCode) return;
+    if (!this.charCode) return;
 
-    const url = `${WS_BASE_URL}/ws?code=${encodeURIComponent(this.charCode)}`;
+    const url = `${getWsBaseUrl()}/ws?code=${encodeURIComponent(this.charCode)}`;
     const ws = new WebSocket(url);
     this.ws = ws;
 
