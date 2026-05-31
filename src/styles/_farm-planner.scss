@@ -724,38 +724,94 @@
 
   .planner-sidebar {
     width: 100%;
-    height: 220px;
+    height: 300px;
     border-right: none;
     border-bottom: 3px solid $color-brown;
     flex-shrink: 0;
-    // Keep flex-direction: column — seasons/tabs/search/content/actions stack vertically
+    // flex-direction: column is kept — seasons/tabs/search/content/actions stack vertically
   }
 
-  // Season buttons: spread full width
+  // Season buttons: spread full width, slightly larger tap targets
   .planner-season {
     gap: $space-2;
+    &__btn { font-size: 0.65rem; padding: $space-1 $space-2; }
+  }
 
-    &__btn {
-      font-size: 0.65rem;
-      padding: $space-1 $space-2;
+  // Tabs: slightly larger
+  .planner-tabs__tab { font-size: 0.6rem; padding: $space-2 $space-1; }
+
+  // Search: reduce padding
+  .planner-search { padding: $space-1 $space-2; }
+
+  // ── Content area: horizontal row of collapsible sections ─────────────────
+
+  .planner-sidebar__content {
+    flex-direction: row;   // sections side-by-side
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: stretch;  // each section fills the full height
+
+    &::-webkit-scrollbar         { height: 4px; }
+    &::-webkit-scrollbar-thumb   { background: $color-brown; border-radius: 2px; }
+  }
+
+  // Sections: vertical header strip on the left, body expands to the right
+  .planner-section {
+    flex-direction: row;
+    align-items: stretch;
+    flex-shrink: 0;
+    border-top: none;
+    border-left: 1px solid rgba($color-brown, 0.4);
+
+    &:first-child { border-left: none; }
+
+    // Don't let an open section grow to fill horizontal space
+    &--open { flex: none; }
+
+    // Header becomes a narrow vertical label strip
+    &__hdr {
+      writing-mode: vertical-lr;  // text flows top → bottom
+      width: 26px;
+      height: auto;               // fills section's full height via align-items: stretch
+      padding: $space-2 $space-1;
+      border-top: none;
+      border-right: 1px solid rgba($color-brown, 0.4);
+      justify-content: space-between; // label at top, caret at bottom
+      align-items: center;
+      flex-shrink: 0;
     }
+
+    // Body: fixed width column with vertical scroll
+    &__body {
+      width: 160px;
+      flex-shrink: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      align-self: stretch;
+
+      &::-webkit-scrollbar       { width: 3px; }
+      &::-webkit-scrollbar-thumb { background: $color-brown; border-radius: 2px; }
+    }
+
+    // Tighten inner padding so more content fits
+    &__body-inner { padding: $space-1 $space-2; }
   }
 
-  // Tabs: slightly larger tap targets
-  .planner-tabs__tab {
-    font-size: 0.6rem;
-    padding: $space-2 $space-1;
+  // Tapper options row (Trees tab) — becomes a narrow vertical strip
+  .planner-tapper-opts {
+    flex-direction: column;
+    gap: $space-1;
+    padding: $space-1;
+    border-bottom: none;
+    border-left: 1px solid rgba($color-brown, 0.4);
+    border-right: none;
+    margin: 0;
+    flex-shrink: 0;
+    justify-content: center;
   }
 
-  // Search: full width with box-sizing
-  .planner-search {
-    padding: $space-1 $space-2;
-  }
-
-  // Chips: 3 per row on wider phones, 2 on narrow
-  .planner-chip {
-    flex: 0 0 calc(50% - #{$space-1} / 2);
-  }
+  // Chips: 2 per row within the 160px body
+  .planner-chip { flex: 0 0 calc(50% - #{$space-1} / 2); }
 
   // Actions row: compact
   .planner-sidebar__actions {
