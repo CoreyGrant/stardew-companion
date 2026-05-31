@@ -121,7 +121,29 @@ const TAPPER_ITEM_IDS: Record<string, TapperType> = {
   '264': 'heavy-tapper',
 };
 
-/** SDV FruitTree fruit item cheatId → our TreeType */
+/**
+ * SDV FruitTree sapling item ID → our TreeType.
+ * Used in 1.6+ saves where <treeId> is an integer sapling ID (most common format).
+ *   628 = Cherry Sapling   629 = Apricot Sapling  630 = Orange Sapling
+ *   631 = Peach Sapling    632 = Pomegranate       633 = Apple Sapling
+ *    69 = Banana Sapling   835 = Mango Sapling
+ */
+const FRUIT_TREE_SAPLING_MAP: Record<string, TreeType> = {
+  '628': 'cherry',
+  '629': 'apricot',
+  '630': 'orange',
+  '631': 'peach',
+  '632': 'pomegranate',
+  '633': 'apple',
+  '69':  'banana',
+  '835': 'mango',
+};
+
+/**
+ * SDV FruitTree fruit item cheatId → our TreeType.
+ * Fallback for older pre-1.6 saves that store <indexOfFruit> (fruit item ID)
+ * or the legacy <itemId> field.
+ */
 const FRUIT_TREE_CHEAT_MAP: Record<string, TreeType> = {
   '638': 'cherry',
   '634': 'apricot',
@@ -715,18 +737,24 @@ function parseInteriorLayout(
         const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
         if (growthStage < 4) continue;
 
-        // SDV 1.6+: treeId format "(FT)cherry"
         const rawTreeId = txt(tfEl, 'treeId');
         if (rawTreeId) {
-          const key = rawTreeId.replace(/^\(FT\)/i, '').toLowerCase() as TreeType;
+          // Format A: integer sapling ID (most common in 1.6 saves)
+          const saplingType = FRUIT_TREE_SAPLING_MAP[rawTreeId];
+          if (saplingType) {
+            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: saplingType });
+            continue;
+          }
+          // Format B: string "(FT)cherry"
+          const withoutPrefix = rawTreeId.replace(/^\(FT\)/i, '').toLowerCase() as TreeType;
           const VALID_FRUIT_TYPES: TreeType[] = ['cherry', 'apricot', 'orange', 'peach', 'pomegranate', 'apple', 'banana', 'mango'];
-          if (VALID_FRUIT_TYPES.includes(key)) {
-            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: key });
+          if (VALID_FRUIT_TYPES.includes(withoutPrefix)) {
+            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: withoutPrefix });
             continue;
           }
         }
-        // Fallback: pre-1.6 itemId approach
-        const rawItemId = txt(tfEl, 'itemId');
+        // Format C: older saves — <indexOfFruit> (fruit item ID) with no <treeId>
+        const rawItemId = txt(tfEl, 'indexOfFruit') || txt(tfEl, 'itemId');
         const cheatId   = rawItemId ? stripQualifier(rawItemId) : '';
         const treeType  = FRUIT_TREE_CHEAT_MAP[cheatId];
         if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
@@ -1059,18 +1087,24 @@ function parseLayout(
         const growthStage = parseInt(txt(tfEl, 'growthStage') || '0', 10);
         if (growthStage < 4) continue;
 
-        // SDV 1.6+: treeId format "(FT)cherry"
         const rawTreeId = txt(tfEl, 'treeId');
         if (rawTreeId) {
-          const key = rawTreeId.replace(/^\(FT\)/i, '').toLowerCase() as TreeType;
+          // Format A: integer sapling ID — most common in 1.6 saves (e.g. "632" = Pomegranate Sapling)
+          const saplingType = FRUIT_TREE_SAPLING_MAP[rawTreeId];
+          if (saplingType) {
+            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: saplingType });
+            continue;
+          }
+          // Format B: string "(FT)cherry" — future-proof string form
+          const withoutPrefix = rawTreeId.replace(/^\(FT\)/i, '').toLowerCase() as TreeType;
           const VALID_FRUIT_TYPES: TreeType[] = ['cherry', 'apricot', 'orange', 'peach', 'pomegranate', 'apple', 'banana', 'mango'];
-          if (VALID_FRUIT_TYPES.includes(key)) {
-            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: key });
+          if (VALID_FRUIT_TYPES.includes(withoutPrefix)) {
+            trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType: withoutPrefix });
             continue;
           }
         }
-        // Fallback: pre-1.6 itemId approach
-        const rawItemId = txt(tfEl, 'itemId');
+        // Format C: older saves use <indexOfFruit> (fruit item ID) with no <treeId>
+        const rawItemId = txt(tfEl, 'indexOfFruit') || txt(tfEl, 'itemId');
         const cheatId   = rawItemId ? stripQualifier(rawItemId) : '';
         const treeType  = FRUIT_TREE_CHEAT_MAP[cheatId];
         if (treeType) trees.push({ id: crypto.randomUUID(), x: coord.x, y: coord.y, treeType });
