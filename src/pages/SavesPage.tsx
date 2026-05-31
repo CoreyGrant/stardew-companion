@@ -2,13 +2,11 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import QRCode from 'qrcode';
 import { useSaves } from '../hooks/useSaves';
 import { useUserData } from '../contexts/UserDataContext';
-import { useGameData } from '../contexts/GameDataContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { Panel } from '../components/common/Panel';
 import { StardewDateInput } from '../components/common/StardewDateInput';
 import { SaveFileUpload } from '../components/saves/SaveFileUpload';
 import { encodeSave, decodeSave } from '../utils/saveCodec';
-import { parseSdvSave } from '../utils/sdvSaveParser';
 import type { FarmType, SaveFile, Skill } from '../types/save';
 import type { Season } from '../types/game';
 
@@ -157,34 +155,12 @@ export function SavesPage() {
     setFormField, setSkill,
   } = useSaves();
 
-  const { syncableSaveIds, getFileHandle, updateSave } = useUserData();
-  const { data: gameData } = useGameData();
-
   usePageTitle('Save Profiles');
   const [exportingId, setExportingId] = useState<string | null>(null);
   const [deletingId, setDeletingId]   = useState<string | null>(null);
-  const [syncingId, setSyncingId]     = useState<string | null>(null);
-  const [syncError, setSyncError]     = useState<string | null>(null);
 
   const toggleExport = (id: string) =>
     setExportingId((prev) => (prev === id ? null : id));
-
-  const handleSync = async (save: SaveFile) => {
-    const handle = getFileHandle(save.id);
-    if (!handle || !gameData) return;
-    setSyncingId(save.id);
-    setSyncError(null);
-    try {
-      const file = await handle.getFile();
-      const text = await file.text();
-      const result = parseSdvSave(text, gameData);
-      updateSave({ ...result.save, id: save.id, createdAt: save.createdAt });
-    } catch (err) {
-      setSyncError(err instanceof Error ? err.message : 'Sync failed.');
-    } finally {
-      setSyncingId(null);
-    }
-  };
 
   return (
     <div className="page page--saves">
@@ -341,16 +317,6 @@ export function SavesPage() {
                       </button>
                     )}
                     <button className="btn btn--sm" onClick={() => startEdit(save)}>Edit</button>
-                    {syncableSaveIds.has(save.id) && (
-                      <button
-                        className="btn btn--sm"
-                        onClick={() => handleSync(save)}
-                        disabled={syncingId === save.id}
-                        title="Re-read save file from disk"
-                      >
-                        {syncingId === save.id ? 'Syncing...' : 'Sync'}
-                      </button>
-                    )}
                     <button
                       className={`btn btn--sm${exportingId === save.id ? ' btn--primary' : ''}`}
                       onClick={() => toggleExport(save.id)}
@@ -388,9 +354,6 @@ export function SavesPage() {
             ))}
           </div>
 
-          {syncError && (
-            <p className="save-sync-error">Sync failed: {syncError}</p>
-          )}
           {!editingId && (
             <button className="btn btn--primary" onClick={startCreate}>New Profile</button>
           )}

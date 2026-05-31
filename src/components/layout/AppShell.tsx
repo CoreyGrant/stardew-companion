@@ -1,8 +1,10 @@
-import { useState, type ReactNode } from 'react';
+import { useState, useRef, type ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { InlineNavGroups, ThemeDropdown, MobileDrawer } from './Nav';
 import { GlobalSearch } from '../common/GlobalSearch';
 import { useUserData } from '../../contexts/UserDataContext';
+import { useGameData } from '../../contexts/GameDataContext';
+import { parseSdvSave } from '../../utils/sdvSaveParser';
 
 // Only defined when VITE_DISCORD_INVITE is set at build time (GitHub Actions variable)
 const DISCORD_INVITE = import.meta.env.VITE_DISCORD_INVITE as string | undefined;
@@ -20,11 +22,41 @@ interface Props {
 }
 
 export function AppShell({ children }: Props) {
-  const { activeSave, settings } = useUserData();
+  const { activeSave, settings, updateSave } = useUserData();
+  const { data: gameData } = useGameData();
   const location = useLocation();
   const isPlanner = location.pathname === '/farm-planner' || location.pathname === '/island-farm';
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [syncing, setSyncing]       = useState(false);
+  const syncInputRef                = useRef<HTMLInputElement>(null);
+
+  const handleSyncFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !gameData || !activeSave) return;
+
+    setSyncing(true);
+    const reader = new FileReader();
+    reader.onerror = () => setSyncing(false);
+    reader.onload = (evt) => {
+      setTimeout(() => {
+        try {
+          const text   = evt.target?.result as string;
+          const result = parseSdvSave(text, gameData);
+          updateSave({
+            ...result.save,
+            id:             activeSave.id,
+            createdAt:      activeSave.createdAt,
+            sourceFileName: activeSave.sourceFileName,
+          });
+        } finally {
+          setSyncing(false);
+          if (syncInputRef.current) syncInputRef.current.value = '';
+        }
+      }, 0);
+    };
+    reader.readAsText(file, 'utf-8');
+  };
 
   return (
     <div className="app-shell">
@@ -48,8 +80,29 @@ export function AppShell({ children }: Props) {
           <InlineNavGroups />
         </div>
 
-        {/* Right group — search + discord + theme + save badge, all pushed to the right */}
+        {/* Right group — sync + search + discord + theme + save badge, all pushed to the right */}
         <div className="app-header__right">
+          {/* Sync button — shown when the active save was imported from a file */}
+          {activeSave?.sourceFileName && (
+            <>
+              <input
+                ref={syncInputRef}
+                type="file"
+                className="app-header__sync-input"
+                onChange={handleSyncFileChange}
+                aria-label="Sync from save file"
+              />
+              <button
+                className="app-header__sync-btn"
+                onClick={() => syncInputRef.current?.click()}
+                disabled={syncing}
+                title={`Re-read ${activeSave.sourceFileName} to update this profile`}
+              >
+                {syncing ? 'Syncing' : 'Sync'}
+              </button>
+            </>
+          )}
+
           <GlobalSearch />
 
           {DISCORD_INVITE && (

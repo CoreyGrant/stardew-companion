@@ -121,6 +121,9 @@ export interface SaveFile {
   islandFarmLayout?: FarmLayout;
 
   // ── Fields populated by game-save import ──────────────────────────────────
+  /** Original filename when the profile was imported from a game save file.
+   *  Stored so the Sync button in the navbar can prompt the user for the same file. */
+  sourceFileName?: string;
   /** NPC kebab-case id → heart level (0–14). Only present when imported from a game save file. */
   heartLevels?: Record<string, number>;
   /** Kebab-case cooking recipe IDs the player has learned. */

@@ -42,10 +42,6 @@ function PreviewRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-// ── File System Access API feature-detect ─────────────────────────────────────
-
-const hasFSAPI = typeof window !== 'undefined' && 'showOpenFilePicker' in window;
-
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface ParsedPreview {
@@ -54,10 +50,9 @@ interface ParsedPreview {
 }
 
 export function SaveFileUpload() {
-  const { data: gameData }           = useGameData();
-  const { createSave, setFileHandle } = useUserData();
-  const fileInputRef                 = useRef<HTMLInputElement>(null);
-  const pendingHandleRef             = useRef<FileSystemFileHandle | null>(null);
+  const { data: gameData } = useGameData();
+  const { createSave }     = useUserData();
+  const fileInputRef       = useRef<HTMLInputElement>(null);
 
   const [loading,  setLoading]  = useState(false);
   const [error,    setError]    = useState<string | null>(null);
@@ -68,14 +63,16 @@ export function SaveFileUpload() {
     setError(null);
     setPreview(null);
     setImported(null);
-    pendingHandleRef.current = null;
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  /** Parse text from a File object and populate the preview. */
-  const parseAndPreview = (file: File) => {
-    if (!gameData) return;
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !gameData) return;
+
+    reset();
     setLoading(true);
+
     const reader = new FileReader();
     reader.onerror = () => {
       setError('Could not read the file. Make sure you have permission to access it.');
@@ -99,46 +96,10 @@ export function SaveFileUpload() {
     reader.readAsText(file, 'utf-8');
   };
 
-  /** Primary pick handler — uses File System Access API when available so we
-   *  can store the handle for later re-reads (sync button).  Falls back to a
-   *  hidden <input type="file"> on browsers that don't support it (Firefox). */
-  const handlePickFile = async () => {
-    if (!gameData) return;
-    reset();
-
-    if (hasFSAPI) {
-      try {
-        const [handle] = await (window as typeof window & {
-          showOpenFilePicker: (opts?: object) => Promise<FileSystemFileHandle[]>;
-        }).showOpenFilePicker({ multiple: false });
-        pendingHandleRef.current = handle;
-        const file = await handle.getFile();
-        parseAndPreview(file);
-      } catch (err) {
-        if (err instanceof DOMException && err.name === 'AbortError') return;
-        setError('Could not open the file picker.');
-      }
-      return;
-    }
-
-    // Fallback: click the hidden file input
-    fileInputRef.current?.click();
-  };
-
-  /** Fallback handler used only when File System Access API is unavailable. */
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    reset();
-    parseAndPreview(file);
-  };
-
   const handleImport = () => {
     if (!preview) return;
-    const save = createSave(preview.result.save);
-    if (pendingHandleRef.current) {
-      setFileHandle(save.id, pendingHandleRef.current);
-    }
+    // Store the source filename so the navbar Sync button can prompt for the same file.
+    const save = createSave({ ...preview.result.save, sourceFileName: preview.fileName });
     setImported(save.name);
     setPreview(null);
   };
@@ -185,7 +146,6 @@ export function SaveFileUpload() {
       {/* ── File picker ───────────────────────────────────────────────────── */}
       {!preview && !loading && (
         <div className="sdv-upload__row">
-          {/* Hidden fallback input used only when File System Access API is unavailable */}
           <input
             ref={fileInputRef}
             type="file"
@@ -194,9 +154,9 @@ export function SaveFileUpload() {
             onChange={handleFileChange}
             aria-label="Choose Stardew Valley save file"
           />
-          <button className="btn btn--primary" onClick={handlePickFile}>
+          <label htmlFor="sdv-file-input" className="btn btn--primary">
             Choose Save File
-          </button>
+          </label>
         </div>
       )}
 
