@@ -12,6 +12,8 @@ interface UserDataContextValue {
   saves: SaveFile[];
   activeSave: SaveFile | null;
   settings: AppSettings;
+  /** Increments each time updateSave is called — lets hooks detect external save replacements. */
+  syncVersion: number;
   setActiveSave: (id: string) => void;
   createSave: (save: Omit<SaveFile, 'id' | 'createdAt'>) => SaveFile;
   updateSave: (save: SaveFile) => void;
@@ -34,6 +36,7 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<AppSettings>(() =>
     service.getSettings()
   );
+  const [syncVersion, setSyncVersion] = useState(0);
 
 
   const refresh = useCallback(() => {
@@ -62,6 +65,7 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
   const updateSave = useCallback(
     (save: SaveFile) => {
       service.updateSave(save);
+      setSyncVersion((v) => v + 1);
       refresh();
     },
     [service, refresh]
@@ -113,6 +117,7 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
         saves,
         activeSave,
         settings,
+        syncVersion,
         setActiveSave,
         createSave,
         updateSave,

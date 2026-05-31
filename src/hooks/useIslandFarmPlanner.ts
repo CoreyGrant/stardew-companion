@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
 import { useDataService } from '../contexts/DataServiceContext';
@@ -64,7 +64,7 @@ interface IslandFarmPlannerState {
 
 export function useIslandFarmPlanner(): IslandFarmPlannerState {
   const { data, loading } = useGameData();
-  const { activeSave } = useUserData();
+  const { activeSave, syncVersion } = useUserData();
   const service = useDataService();
 
   const islandFarmDef = data?.islandFarm ?? null;
@@ -121,14 +121,21 @@ export function useIslandFarmPlanner(): IslandFarmPlannerState {
 
   const treeDefs: TreeDef[] = data?.treeDefs ?? [];
 
-  const initialLayout = useMemo(
-    () => migrateFarmLayout(activeSave?.islandFarmLayout ?? DEFAULT_ISLAND_LAYOUT),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeSave?.id],
-  );
-
-  const [history, setHistory] = useState<FarmLayout[]>([initialLayout]);
+  const [history, setHistory] = useState<FarmLayout[]>(() => [
+    migrateFarmLayout(activeSave?.islandFarmLayout ?? DEFAULT_ISLAND_LAYOUT),
+  ]);
   const [historyIdx, setHistoryIdx] = useState(0);
+
+  // Reset history whenever the active save changes identity OR an external update
+  // (e.g. the Sync button) overwrites it — syncVersion bumps on every updateSave call.
+  const isMountRef = useRef(true);
+  useEffect(() => {
+    if (isMountRef.current) { isMountRef.current = false; return; }
+    const fresh = migrateFarmLayout(activeSave?.islandFarmLayout ?? DEFAULT_ISLAND_LAYOUT);
+    setHistory([fresh]);
+    setHistoryIdx(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSave?.id, syncVersion]);
 
   const layout = history[historyIdx] ?? DEFAULT_ISLAND_LAYOUT;
 
