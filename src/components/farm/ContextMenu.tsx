@@ -30,6 +30,19 @@ export function ContextMenu({ x, y, items, onClose }: Props) {
     };
   }, [onClose]);
 
+  // Clamp position so the menu never renders off-screen.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const { width, height } = el.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const clampedLeft = Math.max(0, Math.min(x, vw - width));
+    const clampedTop  = Math.max(0, Math.min(y, vh - height));
+    if (clampedLeft !== x) el.style.left = `${clampedLeft}px`;
+    if (clampedTop  !== y) el.style.top  = `${clampedTop}px`;
+  }, [x, y]);
+
   return createPortal(
     <div
       ref={ref}

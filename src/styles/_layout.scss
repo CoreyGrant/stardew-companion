@@ -154,6 +154,7 @@ body {
 
   // Full-screen mode for farm planner
   &--planner {
+    flex: none;  // don't flex-grow/shrink — use explicit height as-is
     padding: 0;
     overflow: hidden;
     display: flex;
