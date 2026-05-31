@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useSaves } from '../hooks/useSaves';
 import { useUserData } from '../contexts/UserDataContext';
@@ -369,6 +370,11 @@ export function SavesPage() {
       <ImportSection />
 
       <SyncPanel />
+
+      <p className="saves-page__join-hint">
+        Got a join code from a friend?{' '}
+        <Link to="/join">Enter it here →</Link>
+      </p>
     </div>
   );
 }

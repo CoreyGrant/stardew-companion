@@ -12,6 +12,11 @@ export function OnboardingModal() {
     navigate('/saves');
   };
 
+  const handleJoin = () => {
+    updateSettings({ onboardingDismissed: true });
+    navigate('/join');
+  };
+
   const handleSkip = () => {
     updateSettings({ onboardingDismissed: true });
   };
@@ -32,10 +37,17 @@ export function OnboardingModal() {
           <button className="btn btn--primary" onClick={handleSetUp}>
             Set up a profile
           </button>
+          <button className="btn" onClick={handleJoin}>
+            Join a farm
+          </button>
           <button className="btn" onClick={handleSkip}>
             Skip for now
           </button>
         </div>
+
+        <p className="onboarding-modal__hint">
+          Joining a friend's farm? Use the link they sent you, or click "Join a farm" to enter a code.
+        </p>
       </div>
     </div>
   );
