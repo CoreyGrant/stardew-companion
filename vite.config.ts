@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Update base to match your GitHub repository name
-const BASE = '/stardew-companion/';
+const BASE = '/';
 
 export default defineConfig({
   plugins: [react()],

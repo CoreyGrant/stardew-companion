@@ -74,7 +74,7 @@ export function SyncProvider({ children }: { children: ReactNode }) {
 
   const syncServiceRef = useRef(new SyncService());
 
-  const serverAvailable = !!(import.meta.env.VITE_SYNC_API_URL as string | undefined);
+  const serverAvailable = true;
 
   // ── Token management ────────────────────────────────────────────────────────
 

@@ -1,46 +1,22 @@
-name: Deploy to GitHub Pages
+name: Deploy to Fly.io
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:   # lets you trigger a deploy manually from the Actions tab
-
-permissions:
-  contents: write      # gh-pages action needs to push to the gh-pages branch
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
+      - name: Deploy
+        run: flyctl deploy --remote-only
         env:
-          # Set VITE_DISCORD_INVITE as a repository variable (not secret) in
-          # Settings → Secrets and variables → Actions → Variables tab.
-          # The Discord icon in the navbar only appears when this is set.
-          VITE_DISCORD_INVITE: ${{ vars.VITE_DISCORD_INVITE }}
-          # Set VITE_SYNC_API_URL as a repository secret in
-          # Settings → Secrets and variables → Actions → Secrets tab.
-          # The Cloud Sync panel only appears when this is set.
-          VITE_SYNC_API_URL: ${{ secrets.VITE_SYNC_API_URL }}
-
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          # One commit per deploy — keeps the branch history clean
-          force_orphan: true
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

@@ -6,6 +6,9 @@ import {
 import { wsOpen, wsClose } from './ws.ts';
 import { stmts } from './db.ts';
 import type { WsData } from './ws.ts';
+import { join, resolve } from 'node:path';
+
+const PUBLIC_DIR = resolve('./public');
 
 const PORT          = parseInt(process.env.PORT ?? '3000', 10);
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? '*';
@@ -173,6 +176,21 @@ async function route(req: Request, server: Bun.Server): Promise<Response> {
   if (method === 'GET' && path === '/health') {
     return json({ ok: true });
   }
+
+  // ── Static file serving (SPA) ───────────────────────────────────────────────
+  try {
+    const requested = resolve(join(PUBLIC_DIR, url.pathname));
+    // Path traversal guard
+    if (requested.startsWith(PUBLIC_DIR)) {
+      const file = Bun.file(requested);
+      if (await file.exists()) return new Response(file);
+    }
+    // SPA fallback — serve index.html for any client-side route
+    const index = Bun.file(join(PUBLIC_DIR, 'index.html'));
+    if (await index.exists()) {
+      return new Response(index, { headers: { 'Content-Type': 'text/html' } });
+    }
+  } catch { /* public dir not present (local API-only dev) */ }
 
   return err(404, 'Not found');
 }
