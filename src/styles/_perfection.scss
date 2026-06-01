@@ -136,7 +136,7 @@
 
 .perf-cat {
   display: grid;
-  grid-template-columns: 1.8rem 1fr auto auto auto;
+  grid-template-columns: 1.8rem 1fr auto auto;
   align-items: center;
   gap: 0.5rem 0.75rem;
   padding: 0.6rem 0.75rem;
@@ -210,71 +210,9 @@
     font-size: 0.7rem;
     color: var(--text-muted);
   }
-
-  &__manual {
-    grid-column: 1 / -1;
-    padding-top: 0.25rem;
-
-    @media (min-width: 520px) {
-      grid-column: auto;
-      padding-top: 0;
-    }
-  }
-
-  &__auto-badge {
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    background: var(--surface-alt, #3a2c1a);
-    border-radius: 3px;
-    padding: 0.1rem 0.35rem;
-    white-space: nowrap;
-  }
 }
 
-.perf-auto-hint {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-
-  a {
-    color: var(--accent, #daa520);
-    text-decoration: underline;
-  }
-}
-
-// ── Toggle button ──────────────────────────────────────────────────────────────
-
-.perf-toggle {
-  padding: 0.25rem 0.7rem;
-  border-radius: 4px;
-  border: 1px solid var(--border, #3a2c1a);
-  background: var(--surface-alt, #3a2c1a);
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
-  white-space: nowrap;
-
-  &:hover {
-    background: var(--surface-hover, #4a3c2a);
-    color: var(--text);
-  }
-
-  &--on {
-    background: var(--accent, #daa520);
-    border-color: var(--accent, #daa520);
-    color: #1a1000;
-    font-weight: 600;
-
-    &:hover {
-      background: color-mix(in srgb, var(--accent, #daa520) 85%, white);
-    }
-  }
-}
-
-// ── Counter (fish + waivers) ───────────────────────────────────────────────────
+// ── Counter (waivers) ─────────────────────────────────────────────────────────
 
 .perf-counter {
   display: flex;
@@ -440,11 +378,6 @@
 
     &__score {
       display: none;
-    }
-
-    &__auto-badge {
-      grid-column: 1 / -1;
-      justify-self: start;
     }
   }
 }
