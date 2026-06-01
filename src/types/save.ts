@@ -160,6 +160,18 @@ export interface SaveFile {
   deepestSkullCavernLevel?: number;
   /** Golden walnuts found on Ginger Island. */
   goldenWalnuts?: number;
+  /** Number of Perfection Waivers purchased from Qi's Walnut Room (20 Qi Gems each, +1% each). */
+  perfectionWaivers?: number;
+  /** Manually-tracked perfection categories (not derivable from save data). */
+  manualPerfection?: PerfectionManual;
+  /** Rod-catchable fish species caught ≥1 time (0–60). Auto-populated on import. */
+  rodFishCaughtCount?: number;
+  /** CheatIds of items shipped ≥1 time. Auto-populated on import. */
+  shippedItemIds?: string[];
+  /** Count of crafting recipes crafted ≥1 time. Auto-populated on import. */
+  craftedRecipeCount?: number;
+  /** Monster kill counts from player stats. Auto-populated on import. */
+  monstersKilled?: Record<string, number>;
   /**
    * Community Center / Joja route completion status.
    * - 'cc-restored'   — all 6 rooms completed via bundles
@@ -195,6 +207,23 @@ export interface ParsedCharacter {
   questProgress?: Record<string, string[]>;
   learnedCookingRecipes?: string[];
   money?: number;
+}
+
+// ── Perfection tracker ───────────────────────────────────────────────────────
+
+/**
+ * Manual fields for perfection categories that can't be derived from save data.
+ * Persisted per save so the player only has to set them once.
+ */
+export interface PerfectionManual {
+  /** Produce & Forage Shipped — ship every shippable item at least once */
+  produceDone?: boolean;
+  /** Fish Caught — number of rod-catchable fish species caught (0–60) */
+  fishCaught?: number;
+  /** Crafting Recipes — craft every craftable recipe at least once */
+  craftingDone?: boolean;
+  /** Monster Slayer Hero — complete all monster eradication goals */
+  monstersDone?: boolean;
 }
 
 export interface AppSettings {

@@ -423,6 +423,12 @@ export function parseSdvSave(
   // 12. Cooking recipes ───────────────────────────────────────────────────────
   const learnedCookingRecipes = parseCookingRecipes(player, gameData);
 
+  // 12b. Perfection auto-detection ────────────────────────────────────────────
+  const rodFishCaughtCount = parseRodFishCaughtCount(player, gameData);
+  const shippedItemIds     = parseShippedItemIds(player);
+  const craftedRecipeCount = parseCraftedRecipeCount(player);
+  const monstersKilled     = parseMonstersKilled(player);
+
   // 13. Farm layouts ──────────────────────────────────────────────────────────
   const farmTypeDef = gameData.farmTypes.find(f => f.id === farmType);
   const mainStaticBuildings = seedStaticBuildings(farmTypeDef?.staticBuildings ?? []);
@@ -456,6 +462,10 @@ export function parseSdvSave(
       deepestSkullCavernLevel,
       goldenWalnuts,
       communityStatus,
+      rodFishCaughtCount,
+      shippedItemIds,
+      craftedRecipeCount,
+      monstersKilled,
     },
     characters,
     warnings,
@@ -638,6 +648,61 @@ function parseMuseum(
     if (gameItem) donated.push(gameItem.id);
   }
   return [...new Set(donated)];
+}
+
+/** Count rod-catchable fish species caught at least once. */
+function parseRodFishCaughtCount(player: Element, gameData: GameData): number {
+  const rodCheatIds = new Set(gameData.fish.filter(f => !f.trapFish).map(f => f.cheatId));
+  const fishCaughtEl = ch(player, 'fishCaught');
+  if (!fishCaughtEl) return 0;
+
+  let count = 0;
+  for (const item of chs(fishCaughtEl, 'item')) {
+    const rawId = deep(item, 'key', 'string');
+    if (rawId && rodCheatIds.has(stripQualifier(rawId))) count++;
+  }
+  return count;
+}
+
+/** Collect cheatIds of all items shipped at least once. */
+function parseShippedItemIds(player: Element): string[] {
+  const shippedEl = ch(player, 'basicShipped');
+  if (!shippedEl) return [];
+
+  const ids: string[] = [];
+  for (const item of chs(shippedEl, 'item')) {
+    const rawId = deep(item, 'key', 'string');
+    if (rawId) ids.push(stripQualifier(rawId));
+  }
+  return ids;
+}
+
+/** Count crafting recipes that have been crafted at least once. */
+function parseCraftedRecipeCount(player: Element): number {
+  const craftingEl = ch(player, 'craftingRecipes');
+  if (!craftingEl) return 0;
+
+  let count = 0;
+  for (const item of chs(craftingEl, 'item')) {
+    const val = parseInt(deep(item, 'value', 'int') || '0', 10);
+    if (val > 0) count++;
+  }
+  return count;
+}
+
+/** Read the specificMonstersKilled stats dictionary. */
+function parseMonstersKilled(player: Element): Record<string, number> {
+  const result: Record<string, number> = {};
+  const statsEl = ch(player, 'stats');
+  const killedEl = ch(statsEl, 'specificMonstersKilled');
+  if (!killedEl) return result;
+
+  for (const item of chs(killedEl, 'item')) {
+    const name  = deep(item, 'key', 'string');
+    const count = parseInt(deep(item, 'value', 'int') || '0', 10);
+    if (name && count > 0) result[name] = count;
+  }
+  return result;
 }
 
 function parseCookingRecipes(

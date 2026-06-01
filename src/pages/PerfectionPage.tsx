@@ -8,13 +8,36 @@ import type { FriendshipEntry, PerfectionManual, SaveFile } from '../types/save'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const TOTAL_WALNUTS   = 130;
-const TOTAL_MUSEUM    = 94;   // minerals + gems + artifacts in our data
-const TOTAL_ROD_FISH  = 60;   // excludes crab-pot fish
-const TOTAL_RECIPES   = 81;   // cooking recipes
-const TOTAL_SKILLS    = 5;
-const OBELISK_IDS     = ['Earth Obelisk', 'Water Obelisk', 'Desert Obelisk', 'Island Obelisk'] as const;
-const CLOCK_ID        = 'Gold Clock';
+const TOTAL_WALNUTS            = 130;
+const TOTAL_MUSEUM             = 94;   // minerals + gems + artifacts in our data
+const TOTAL_ROD_FISH           = 60;   // excludes crab-pot fish
+const TOTAL_COOKING_RECIPES    = 81;   // cooking recipes
+const TOTAL_CRAFTING_RECIPES   = 129;  // crafting recipes (SDV 1.6 base game)
+const TOTAL_SKILLS             = 5;
+const OBELISK_IDS              = ['Earth Obelisk', 'Water Obelisk', 'Desert Obelisk', 'Island Obelisk'] as const;
+const CLOCK_ID                 = 'Gold Clock';
+
+/** Categories that count toward "Produce & Forage Shipped" */
+const SHIPPABLE_CATEGORIES = new Set(['crop', 'forage', 'flower', 'artisan', 'animal_product']);
+
+/**
+ * Adventurer's Guild monster eradication goals (SDV 1.6).
+ * Each goal's `monsters` array lists all monster names that count toward the target.
+ */
+const MONSTER_GOALS = [
+  { name: 'Slimes',        target: 1000, monsters: ['Green Slime', 'Frost Jelly', 'Sludge', 'Tiger Slime', 'Rock Slime'] },
+  { name: 'Void Spirits',  target: 150,  monsters: ['Shadow Guy', 'Shadow Brute', 'Shadow Shaman', 'Shadow Sniper'] },
+  { name: 'Bats',          target: 200,  monsters: ['Bat', 'Frost Bat', 'Lava Bat', 'Iridium Bat', 'Magma Bat'] },
+  { name: 'Skeletons',     target: 50,   monsters: ['Skeleton', 'Skeleton Mage', 'Haunted Skull'] },
+  { name: 'Cave Insects',  target: 125,  monsters: ['Bug', 'Cave Fly', 'Fly', 'Grub', 'Mutant Fly', 'Mutant Grub'] },
+  { name: 'Duggies',       target: 30,   monsters: ['Duggy', 'Magma Duggy'] },
+  { name: 'Dust Sprites',  target: 500,  monsters: ['Dust Spirit'] },
+  { name: 'Rock Crabs',    target: 60,   monsters: ['Rock Crab', 'Lava Crab', 'Iridium Crab', 'False Magma Cap'] },
+  { name: 'Mummies',       target: 100,  monsters: ['Mummy'] },
+  { name: 'Pepper Rex',    target: 50,   monsters: ['Pepper Rex'] },
+  { name: 'Spiders',       target: 50,   monsters: ['Spider'] },
+  { name: 'Blue Squids',   target: 150,  monsters: ['Blue Squid'] },
+] as const;
 
 const BUILDING_GOLD: Record<string, number> = {
   'Earth Obelisk':  500_000,
@@ -29,9 +52,9 @@ const BUILDING_GOLD: Record<string, number> = {
 function friendshipCap(npc: NPC, fd?: FriendshipEntry): number {
   if (!fd) return npc.marriageable ? 8 : 10;
   const s = fd.status;
-  if (s === 'Married')                 return 14;
+  if (s === 'Married')                   return 14;
   if (s === 'Dating' || s === 'Engaged') return 10;
-  if (!npc.marriageable)               return 10;
+  if (!npc.marriageable)                 return 10;
   return 8;
 }
 
@@ -46,7 +69,7 @@ function clamp(v: number, lo: number, hi: number) { return Math.min(hi, Math.max
 // ── Score ring ────────────────────────────────────────────────────────────────
 
 function ScoreRing({ score, withWaivers }: { score: number; withWaivers: number }) {
-  const pct = clamp(score, 0, 100);
+  const pct  = clamp(score, 0, 100);
   const wpct = clamp(withWaivers, 0, 100);
   const style = { '--pct': `${pct}%`, '--wpct': `${wpct}%` } as CSSProperties;
   return (
@@ -77,9 +100,9 @@ interface CatRowProps {
   label: string;
   weight: number;     // max % contribution
   earned: number;     // 0–weight
-  detail: string;     // "3/4", "✓", etc.
-  auto: boolean;      // true = derived from save data
-  children?: React.ReactNode; // manual control
+  detail: string;
+  auto: boolean;      // true = derived from save data; hides children, shows badge
+  children?: React.ReactNode;
   hint?: string;
 }
 
@@ -101,7 +124,7 @@ function CategoryRow({ icon, label, weight, earned, detail, auto, children, hint
         <span className="perf-cat__score-max">/{weight}%</span>
       </div>
       {!auto && <div className="perf-cat__manual">{children}</div>}
-      {auto && <div className="perf-cat__auto-badge">auto</div>}
+      {auto  && <div className="perf-cat__auto-badge">auto</div>}
     </div>
   );
 }
@@ -122,59 +145,88 @@ export function PerfectionPage() {
   const setWaivers = (n: number) =>
     patch({ perfectionWaivers: clamp(Math.round(n), 0, 100) });
 
-  // ── Per-category scores ────────────────────────────────────────────────────
+  // ── Shippable item set (derived from game data) ───────────────────────────
+  const shippableItems = useMemo(() => {
+    return (data?.items ?? []).filter(
+      i => i.sellValue > 0 && !i.isBigCraftable && SHIPPABLE_CATEGORIES.has(i.category),
+    );
+  }, [data]);
+
+  // ── Per-category scores ───────────────────────────────────────────────────
 
   const scores = useMemo(() => {
-    const save = activeSave;
+    const save   = activeSave;
     const manual = save?.manualPerfection ?? {};
 
-    // 1. Produce shipped (15%) — manual
-    const produceScore = manual.produceDone ? 15 : 0;
+    // ── 1. Produce & Forage Shipped (15%) ──────────────────────────────────
+    const hasAutoShipped = save?.shippedItemIds !== undefined;
+    const shippedIdSet   = new Set(save?.shippedItemIds ?? []);
+    const shippedCount   = shippableItems.filter(i => shippedIdSet.has(i.cheatId)).length;
+    const shippableTotal = shippableItems.length;
+    const produceDone    = hasAutoShipped
+      ? shippedCount >= shippableTotal
+      : (manual.produceDone ?? false);
+    const produceScore   = produceDone ? 15 : 0;
 
-    // 2. Obelisks (4%) — 1% each
-    const builtIds = new Set((save?.farmLayout.buildings ?? []).map((b) => b.buildingId));
-    const obelisksBuilt = OBELISK_IDS.filter((id) => builtIds.has(id)).length;
-    const obeliskScore = obelisksBuilt;   // 1% per obelisk
+    // ── 2. Obelisks (4%) — 1% each ────────────────────────────────────────
+    const builtIds     = new Set((save?.farmLayout.buildings ?? []).map(b => b.buildingId));
+    const obelisksBuilt = OBELISK_IDS.filter(id => builtIds.has(id)).length;
+    const obeliskScore  = obelisksBuilt;
 
-    // 3. Gold Clock (10%)
+    // ── 3. Gold Clock (10%) ────────────────────────────────────────────────
     const clockScore = builtIds.has(CLOCK_ID) ? 10 : 0;
 
-    // 4. Monster Slayer (10%) — manual
-    const monstersScore = manual.monstersDone ? 10 : 0;
+    // ── 4. Monster Slayer Hero (10%) ──────────────────────────────────────
+    const hasAutoMonsters  = save?.monstersKilled !== undefined;
+    const kills            = save?.monstersKilled ?? {};
+    const goalsComplete    = MONSTER_GOALS.filter(g =>
+      g.monsters.reduce((sum, m) => sum + (kills[m] ?? 0), 0) >= g.target,
+    ).length;
+    const monstersDone     = hasAutoMonsters
+      ? goalsComplete >= MONSTER_GOALS.length
+      : (manual.monstersDone ?? false);
+    const monstersScore    = monstersDone ? 10 : 0;
 
-    // 5. Great Friends (11%)
-    const npcs = data?.npcs ?? [];
-    const maxedFriends = npcs.filter((npc) => {
-      const fd  = save?.friendshipData?.[npc.id];
-      const hl  = save?.heartLevels?.[npc.id] ?? 0;
+    // ── 5. Great Friends (11%) ────────────────────────────────────────────
+    const npcs         = data?.npcs ?? [];
+    const maxedFriends = npcs.filter(npc => {
+      const fd = save?.friendshipData?.[npc.id];
+      const hl = save?.heartLevels?.[npc.id] ?? 0;
       return hl >= friendshipCap(npc, fd);
     }).length;
-    const friendsScore = npcs.length > 0
-      ? (maxedFriends / npcs.length) * 11
-      : 0;
+    const friendsScore = npcs.length > 0 ? (maxedFriends / npcs.length) * 11 : 0;
 
-    // 6. Farmer level (5%) — all 5 skills at 10
-    const skills = save?.skills ?? { farming: 0, mining: 0, foraging: 0, fishing: 0, combat: 0 };
-    const maxedSkills = Object.values(skills).filter((v) => v >= 10).length;
+    // ── 6. Farmer Level (5%) — all 5 skills at 10 ─────────────────────────
+    const skills      = save?.skills ?? { farming: 0, mining: 0, foraging: 0, fishing: 0, combat: 0 };
+    const maxedSkills = Object.values(skills).filter(v => v >= 10).length;
     const skillsScore = (maxedSkills / TOTAL_SKILLS) * 5;
 
-    // 7. Cooking recipes (10%)
-    const learned = save?.learnedCookingRecipes?.length ?? 0;
-    const cookingScore = Math.min(learned / TOTAL_RECIPES, 1) * 10;
+    // ── 7. Cooking Recipes (10%) ──────────────────────────────────────────
+    const learnedCooking = save?.learnedCookingRecipes?.length ?? 0;
+    const cookingScore   = Math.min(learnedCooking / TOTAL_COOKING_RECIPES, 1) * 10;
 
-    // 8. Crafting recipes (10%) — manual
-    const craftingScore = manual.craftingDone ? 10 : 0;
+    // ── 8. Crafting Recipes (10%) ─────────────────────────────────────────
+    const hasAutoCrafting = save?.craftedRecipeCount !== undefined;
+    const craftedCount    = save?.craftedRecipeCount ?? 0;
+    const craftingDone    = hasAutoCrafting
+      ? craftedCount >= TOTAL_CRAFTING_RECIPES
+      : (manual.craftingDone ?? false);
+    const craftingScore   = craftingDone ? 10 : 0;
 
-    // 9. Fish caught (10%) — manual count
-    const fishCaught = clamp(manual.fishCaught ?? 0, 0, TOTAL_ROD_FISH);
-    const fishScore = (fishCaught / TOTAL_ROD_FISH) * 10;
+    // ── 9. Fish Caught (10%) ──────────────────────────────────────────────
+    const hasAutoFish  = save?.rodFishCaughtCount !== undefined;
+    const fishCaught   = clamp(
+      hasAutoFish ? (save!.rodFishCaughtCount ?? 0) : (manual.fishCaught ?? 0),
+      0, TOTAL_ROD_FISH,
+    );
+    const fishScore    = (fishCaught / TOTAL_ROD_FISH) * 10;
 
-    // 10. Golden walnuts (5%)
-    const walnuts = clamp(save?.goldenWalnuts ?? 0, 0, TOTAL_WALNUTS);
+    // ── 10. Golden Walnuts (5%) ───────────────────────────────────────────
+    const walnuts    = clamp(save?.goldenWalnuts ?? 0, 0, TOTAL_WALNUTS);
     const walnutScore = (walnuts / TOTAL_WALNUTS) * 5;
 
-    // 11. Museum (10%)
-    const donated = save?.museumDonations?.length ?? 0;
+    // ── 11. Museum Donations (10%) ────────────────────────────────────────
+    const donated    = save?.museumDonations?.length ?? 0;
     const museumScore = Math.min(donated / TOTAL_MUSEUM, 1) * 10;
 
     const natural = produceScore + obeliskScore + clockScore + monstersScore
@@ -182,33 +234,33 @@ export function PerfectionPage() {
       + fishScore + walnutScore + museumScore;
 
     const waivers = save?.perfectionWaivers ?? 0;
-    const total = clamp(natural + waivers, 0, 100);
+    const total   = clamp(natural + waivers, 0, 100);
 
     return {
-      produce:   { earned: produceScore,  total: 15  },
+      produce:   { earned: produceScore,  total: 15,  done: produceDone,  hasAuto: hasAutoShipped,  shippedCount, shippableTotal },
       obelisks:  { earned: obeliskScore,  total: 4,   built: obelisksBuilt },
       clock:     { earned: clockScore,    total: 10,  built: builtIds.has(CLOCK_ID) },
-      monsters:  { earned: monstersScore, total: 10  },
+      monsters:  { earned: monstersScore, total: 10,  done: monstersDone, hasAuto: hasAutoMonsters, goalsComplete },
       friends:   { earned: friendsScore,  total: 11,  maxed: maxedFriends, count: npcs.length },
       skills:    { earned: skillsScore,   total: 5,   maxed: maxedSkills },
-      cooking:   { earned: cookingScore,  total: 10,  learned },
-      crafting:  { earned: craftingScore, total: 10  },
-      fish:      { earned: fishScore,     total: 10,  caught: fishCaught },
+      cooking:   { earned: cookingScore,  total: 10,  learned: learnedCooking },
+      crafting:  { earned: craftingScore, total: 10,  done: craftingDone, hasAuto: hasAutoCrafting, craftedCount },
+      fish:      { earned: fishScore,     total: 10,  caught: fishCaught, hasAuto: hasAutoFish },
       walnuts:   { earned: walnutScore,   total: 5,   found: walnuts },
       museum:    { earned: museumScore,   total: 10,  donated },
       natural: Math.round(natural * 10) / 10,
       waivers,
-      total: Math.round(total * 10) / 10,
+      total:   Math.round(total * 10) / 10,
     };
-  }, [data, activeSave]);
+  }, [data, activeSave, shippableItems]);
 
   // ── Gold cost ──────────────────────────────────────────────────────────────
 
   const goldCost = useMemo(() => {
-    const builtIds = new Set((activeSave?.farmLayout.buildings ?? []).map((b) => b.buildingId));
-    const missing = [...OBELISK_IDS, CLOCK_ID]
-      .filter((id) => !builtIds.has(id))
-      .map((id) => ({ name: id, cost: BUILDING_GOLD[id] }));
+    const builtIds = new Set((activeSave?.farmLayout.buildings ?? []).map(b => b.buildingId));
+    const missing  = [...OBELISK_IDS, CLOCK_ID]
+      .filter(id => !builtIds.has(id))
+      .map(id => ({ name: id, cost: BUILDING_GOLD[id] }));
     const total = missing.reduce((s, m) => s + m.cost, 0);
     return { missing, total };
   }, [activeSave]);
@@ -216,7 +268,7 @@ export function PerfectionPage() {
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
-  const manual = activeSave?.manualPerfection ?? {};
+  const manual  = activeSave?.manualPerfection ?? {};
   const waivers = activeSave?.perfectionWaivers ?? 0;
   const waiverShortfall = Math.max(0, Math.ceil(100 - scores.natural));
 
@@ -258,12 +310,15 @@ export function PerfectionPage() {
       {/* ── Categories ── */}
       <div className="perf-categories">
 
+        {/* 1. Produce & Forage Shipped */}
         <CategoryRow
           icon="📦" label="Produce & Forage Shipped" weight={15}
           earned={scores.produce.earned}
-          detail={manual.produceDone ? '✓ Done' : 'Incomplete'}
-          auto={false}
-          hint="Ship every shippable item at least once"
+          detail={scores.produce.hasAuto
+            ? `${scores.produce.shippedCount}/${scores.produce.shippableTotal} items`
+            : (manual.produceDone ? '✓ Done' : 'Incomplete')}
+          auto={scores.produce.hasAuto}
+          hint="Ship every crop, forage, artisan good, and animal product at least once"
         >
           <button
             className={`perf-toggle${manual.produceDone ? ' perf-toggle--on' : ''}`}
@@ -271,6 +326,7 @@ export function PerfectionPage() {
           >{manual.produceDone ? '✓ Done' : 'Mark done'}</button>
         </CategoryRow>
 
+        {/* 2. Obelisks */}
         <CategoryRow
           icon="🗺️" label="Obelisks on Farm" weight={4}
           earned={scores.obelisks.earned}
@@ -281,6 +337,7 @@ export function PerfectionPage() {
           <span className="perf-auto-hint">Detected from farm layout</span>
         </CategoryRow>
 
+        {/* 3. Gold Clock */}
         <CategoryRow
           icon="🕰️" label="Gold Clock on Farm" weight={10}
           earned={scores.clock.earned}
@@ -291,11 +348,14 @@ export function PerfectionPage() {
           <span className="perf-auto-hint">Detected from farm layout</span>
         </CategoryRow>
 
+        {/* 4. Monster Slayer Hero */}
         <CategoryRow
           icon="⚔️" label="Monster Slayer Hero" weight={10}
           earned={scores.monsters.earned}
-          detail={manual.monstersDone ? '✓ Done' : 'Incomplete'}
-          auto={false}
+          detail={scores.monsters.hasAuto
+            ? `${scores.monsters.goalsComplete}/${MONSTER_GOALS.length} goals`
+            : (manual.monstersDone ? '✓ Done' : 'Incomplete')}
+          auto={scores.monsters.hasAuto}
           hint="Complete all monster eradication goals (Adventurer's Guild)"
         >
           <button
@@ -304,6 +364,7 @@ export function PerfectionPage() {
           >{manual.monstersDone ? '✓ Done' : 'Mark done'}</button>
         </CategoryRow>
 
+        {/* 5. Great Friends */}
         <CategoryRow
           icon="💛" label="Great Friends" weight={11}
           earned={scores.friends.earned}
@@ -314,6 +375,7 @@ export function PerfectionPage() {
           <span className="perf-auto-hint">Detected from friendship data</span>
         </CategoryRow>
 
+        {/* 6. Farmer Level */}
         <CategoryRow
           icon="⭐" label="Farmer Level" weight={5}
           earned={scores.skills.earned}
@@ -324,22 +386,26 @@ export function PerfectionPage() {
           <span className="perf-auto-hint">Detected from save data</span>
         </CategoryRow>
 
+        {/* 7. Cooking Recipes */}
         <CategoryRow
           icon="🍳" label="Cooking Recipes" weight={10}
           earned={scores.cooking.earned}
-          detail={`${scores.cooking.learned}/${TOTAL_RECIPES} recipes`}
+          detail={`${scores.cooking.learned}/${TOTAL_COOKING_RECIPES} recipes`}
           auto={!!activeSave}
-          hint="Cook every cooking recipe at least once"
+          hint="Learn and cook every cooking recipe at least once"
         >
           <span className="perf-auto-hint">Based on learned recipes</span>
         </CategoryRow>
 
+        {/* 8. Crafting Recipes */}
         <CategoryRow
           icon="🔨" label="Crafting Recipes" weight={10}
           earned={scores.crafting.earned}
-          detail={manual.craftingDone ? '✓ Done' : 'Incomplete'}
-          auto={false}
-          hint="Craft every craftable item at least once"
+          detail={scores.crafting.hasAuto
+            ? `${scores.crafting.craftedCount}/${TOTAL_CRAFTING_RECIPES} crafted`
+            : (manual.craftingDone ? '✓ Done' : 'Incomplete')}
+          auto={scores.crafting.hasAuto}
+          hint="Craft every craftable recipe at least once"
         >
           <button
             className={`perf-toggle${manual.craftingDone ? ' perf-toggle--on' : ''}`}
@@ -347,11 +413,12 @@ export function PerfectionPage() {
           >{manual.craftingDone ? '✓ Done' : 'Mark done'}</button>
         </CategoryRow>
 
+        {/* 9. Fish Caught */}
         <CategoryRow
           icon="🎣" label="Fish Caught" weight={10}
           earned={scores.fish.earned}
           detail={`${scores.fish.caught}/${TOTAL_ROD_FISH} species`}
-          auto={false}
+          auto={scores.fish.hasAuto}
           hint="Catch every rod-catchable fish species (excludes crab pot fish)"
         >
           <div className="perf-counter">
@@ -370,6 +437,7 @@ export function PerfectionPage() {
           </div>
         </CategoryRow>
 
+        {/* 10. Golden Walnuts */}
         <CategoryRow
           icon="🥜" label="Golden Walnuts" weight={5}
           earned={scores.walnuts.earned}
@@ -380,6 +448,7 @@ export function PerfectionPage() {
           <span className="perf-auto-hint">Detected from save data</span>
         </CategoryRow>
 
+        {/* 11. Museum Donations */}
         <CategoryRow
           icon="🏛️" label="Museum Donations" weight={10}
           earned={scores.museum.earned}
