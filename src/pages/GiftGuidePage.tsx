@@ -111,13 +111,17 @@ export function GiftGuidePage() {
   }, [data]);
 
   // Item map for search (name → id + name)
+  // Seed from universal gifts first so items like Rabbit's Foot (which appear in
+  // no individual NPC list) are still findable in "By Item" and "My Plan" search.
   const allItems = useMemo<ItemRef[]>(() => {
     const seen = new Set<string>();
     const result: ItemRef[] = [];
+    const push = (item: ItemRef) => {
+      if (!seen.has(item.id)) { seen.add(item.id); result.push(item); }
+    };
+    [...(data?.universalGifts?.loved ?? []), ...(data?.universalGifts?.liked ?? [])].forEach(push);
     (data?.npcs ?? []).forEach((npc) => {
-      [...(npc.gifts?.loved ?? []), ...(npc.gifts?.liked ?? [])].forEach((item) => {
-        if (!seen.has(item.id)) { seen.add(item.id); result.push(item); }
-      });
+      [...(npc.gifts?.loved ?? []), ...(npc.gifts?.liked ?? [])].forEach(push);
     });
     return result.sort((a, b) => a.name.localeCompare(b.name));
   }, [data]);
