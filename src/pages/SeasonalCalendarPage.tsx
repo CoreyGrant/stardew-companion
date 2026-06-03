@@ -250,10 +250,13 @@ export function SeasonalCalendarPage() {
                 .map(crop => {
                   const isMulti = crop.seasons.length > 1;
                   const lpd      = isMulti ? 1 : lastPlantDay(crop.growDays);
+                  // First planting is on day 1, so effective growing window is 27 days.
+                  // Non-regrow: floor(27 / growDays) full plant-harvest cycles fit.
+                  // Regrow: 1 initial harvest + floor((27 − growDays) / regrowDays) regrow cycles.
                   const harvests = isMulti ? '—'
                     : crop.regrowDays
-                      ? String(1 + Math.floor((28 - crop.growDays) / crop.regrowDays)) + '×'
-                      : String(Math.floor(28 / crop.growDays)) + '×';
+                      ? String(1 + Math.floor((27 - crop.growDays) / crop.regrowDays)) + '×'
+                      : String(Math.floor(27 / crop.growDays)) + '×';
                   return (
                     <tr key={crop.id}>
                       <td className="calendar-crop-list__name">
