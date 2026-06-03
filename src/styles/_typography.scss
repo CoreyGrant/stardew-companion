@@ -26,6 +26,7 @@ code, .cheat-code {
 
 .badge {
   display: inline-block;
+  align-self: flex-start;
   font-family: $font-pixel;
   font-size: 0.55rem;
   padding: 2px $space-2;

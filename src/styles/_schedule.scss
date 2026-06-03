@@ -42,15 +42,6 @@
 .schedule-section {
   margin-top: $space-6;
 
-  .section-title {
-    font-family: $font-pixel;
-    font-size: 1rem;
-    color: $color-brown-dark;
-    margin-bottom: $space-3;
-    padding-bottom: $space-2;
-    border-bottom: 2px solid var(--border);
-  }
-
   &__filter {
     margin-bottom: $space-4;
   }

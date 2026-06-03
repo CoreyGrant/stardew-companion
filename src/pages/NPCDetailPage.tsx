@@ -111,9 +111,7 @@ export function NPCDetailPage() {
       </Panel>
 
       {/* ── Schedule section ───────────────────────────────────────────────── */}
-      <div className="schedule-section">
-        <h2 className="section-title">Schedule</h2>
-
+      <Panel title="Schedule" className="schedule-section">
         {/* Date filter */}
         <div className="schedule-section__filter">
           <StardewDateInput
@@ -186,7 +184,7 @@ export function NPCDetailPage() {
             </div>
           </details>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }
