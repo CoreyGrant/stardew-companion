@@ -212,55 +212,7 @@
   }
 }
 
-// ── Counter (waivers) ─────────────────────────────────────────────────────────
-
-.perf-counter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-
-  &__btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
-    border: 1px solid var(--border, #3a2c1a);
-    background: var(--surface-alt, #3a2c1a);
-    color: var(--text);
-    font-size: 1rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
-
-    &:hover { background: var(--surface-hover, #4a3c2a); }
-    &:active { background: var(--accent, #daa520); color: #1a1000; }
-  }
-
-  &__input {
-    width: 52px;
-    text-align: center;
-    background: var(--surface-alt, #3a2c1a);
-    border: 1px solid var(--border, #3a2c1a);
-    border-radius: 4px;
-    color: var(--text);
-    font-size: 0.85rem;
-    padding: 0.2rem 0.3rem;
-
-    &:focus {
-      outline: none;
-      border-color: var(--accent, #daa520);
-    }
-
-    /* hide number spinners */
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button { -webkit-appearance: none; }
-    -moz-appearance: textfield;
-  }
-}
-
-// ── Section blocks (waivers + gold) ───────────────────────────────────────────
+// ── Section blocks ────────────────────────────────────────────────────────────
 
 .perf-section {
   background: var(--surface, #1e1508);
@@ -312,57 +264,6 @@
     font-size: 0.8rem;
     color: var(--text-muted);
     margin: 0.5rem 0 0;
-  }
-}
-
-// ── Gold section ───────────────────────────────────────────────────────────────
-
-.perf-gold {
-  &__complete {
-    font-size: 0.85rem;
-    color: var(--accent, #daa520);
-    margin: 0;
-  }
-
-  &__list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    margin-bottom: 0.75rem;
-  }
-
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.3rem 0;
-    border-bottom: 1px solid var(--border, #3a2c1a);
-    font-size: 0.85rem;
-  }
-
-  &__name {
-    color: var(--text);
-  }
-
-  &__cost {
-    color: var(--accent, #daa520);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
-
-  &__total {
-    font-size: 0.9rem;
-    color: var(--text);
-
-    strong {
-      color: var(--accent, #daa520);
-      font-size: 1rem;
-    }
-  }
-
-  &__note {
-    font-size: 0.78rem;
-    color: var(--text-muted);
   }
 }
 

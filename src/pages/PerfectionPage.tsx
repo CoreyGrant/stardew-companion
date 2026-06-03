@@ -34,13 +34,6 @@ const MONSTER_GOALS = [
   { name: 'Blue Squids',   target: 150,  monsters: ['Blue Squid'] },
 ] as const;
 
-const BUILDING_GOLD: Record<string, number> = {
-  'Earth Obelisk':  500_000,
-  'Water Obelisk':  500_000,
-  'Desert Obelisk': 1_000_000,
-  'Island Obelisk': 1_000_000,
-  'Gold Clock':     10_000_000,
-};
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -51,12 +44,6 @@ function friendshipCap(npc: NPC, fd?: FriendshipEntry): number {
   if (s === 'Dating' || s === 'Engaged') return 10;
   if (!npc.marriageable)                 return 10;
   return 8;
-}
-
-function fmtGold(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M g`;
-  if (n >= 1_000)     return `${(n / 1_000).toFixed(0)}k g`;
-  return `${n} g`;
 }
 
 function clamp(v: number, lo: number, hi: number) { return Math.min(hi, Math.max(lo, v)); }
@@ -125,12 +112,7 @@ function CategoryRow({ icon, label, weight, earned, detail, hint }: CatRowProps)
 export function PerfectionPage() {
   usePageTitle('Perfection Tracker');
   const { data, loading, error } = useGameData();
-  const { activeSave, updateSave } = useUserData();
-
-  const setWaivers = (n: number) => {
-    if (!activeSave) return;
-    updateSave({ ...activeSave, perfectionWaivers: clamp(Math.round(n), 0, 100) });
-  };
+  const { activeSave } = useUserData();
 
   // ── Shippable item set ────────────────────────────────────────────────────
   const shippableItems = useMemo(() =>
@@ -224,15 +206,6 @@ export function PerfectionPage() {
       total:   Math.round(total * 10) / 10,
     };
   }, [data, activeSave, shippableItems]);
-
-  // ── Gold cost ──────────────────────────────────────────────────────────────
-  const goldCost = useMemo(() => {
-    const builtIds = new Set((activeSave?.farmLayout.buildings ?? []).map(b => b.buildingId));
-    const missing  = [...OBELISK_IDS, CLOCK_ID]
-      .filter(id => !builtIds.has(id))
-      .map(id => ({ name: id, cost: BUILDING_GOLD[id] }));
-    return { missing, total: missing.reduce((s, m) => s + m.cost, 0) };
-  }, [activeSave]);
 
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
@@ -338,57 +311,18 @@ export function PerfectionPage() {
           Each waiver permanently adds <strong>+1%</strong> to your perfection score.
         </p>
         <div className="perf-waiver-row">
-          <label className="perf-waiver-row__label">Waivers purchased:</label>
-          <div className="perf-counter">
-            <button className="perf-counter__btn" onClick={() => setWaivers(waivers - 1)}>−</button>
-            <input
-              type="number" min={0} max={100}
-              value={waivers}
-              onChange={(e) => setWaivers(parseInt(e.target.value) || 0)}
-              className="perf-counter__input"
-            />
-            <button className="perf-counter__btn" onClick={() => setWaivers(waivers + 1)}>+</button>
-          </div>
+          <span className="perf-waiver-row__label">
+            Waivers purchased: <strong>{waivers}</strong>
+          </span>
           {waivers > 0 && (
             <span className="perf-waiver-row__effect">+{waivers}% → score: {scores.total}%</span>
           )}
         </div>
-        {scores.total < 100 && (
+        {scores.total < 100 && waiverShortfall > waivers && (
           <p className="perf-waiver-row__shortfall">
-            {waiverShortfall - waivers > 0
-              ? `${waiverShortfall - waivers} more waiver${waiverShortfall - waivers !== 1 ? 's' : ''} needed to reach 100% (${(waiverShortfall - waivers) * 20} Qi Gems)`
-              : scores.total < 100
-                ? `${Math.ceil(100 - scores.total)} more waiver${Math.ceil(100 - scores.total) !== 1 ? 's' : ''} needed`
-                : ''}
+            {waiverShortfall - waivers} more waiver{waiverShortfall - waivers !== 1 ? 's' : ''} needed to reach 100%
+            {' '}({(waiverShortfall - waivers) * 20} Qi Gems)
           </p>
-        )}
-      </div>
-
-      {/* Gold to complete */}
-      <div className="perf-section perf-gold">
-        <h2 className="perf-section__title">💰 Gold to Complete Buildings</h2>
-        <p className="perf-section__desc">
-          Obelisks and the Gold Clock are the only perfection items with a direct gold cost.
-        </p>
-        {goldCost.missing.length === 0 ? (
-          <p className="perf-gold__complete">✓ All perfection buildings are on your farm!</p>
-        ) : (
-          <>
-            <div className="perf-gold__list">
-              {goldCost.missing.map(b => (
-                <div key={b.name} className="perf-gold__row">
-                  <span className="perf-gold__name">{b.name}</span>
-                  <span className="perf-gold__cost">{fmtGold(b.cost)}</span>
-                </div>
-              ))}
-            </div>
-            <div className="perf-gold__total">
-              Total: <strong>{fmtGold(goldCost.total)}</strong>
-              {goldCost.total >= 1_000_000 && (
-                <span className="perf-gold__note"> — plus materials from Robin</span>
-              )}
-            </div>
-          </>
         )}
       </div>
     </div>

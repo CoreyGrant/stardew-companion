@@ -391,6 +391,8 @@ export function parseSdvSave(
   const goldenWalnuts =
     parseInt(txt(root,   'goldenWalnuts') || '0', 10) ||
     parseInt(txt(player, 'goldenWalnuts') || '0', 10);
+  // perfectionWaivers: NetInt on Farmer — present once ≥1 waiver purchased
+  const perfectionWaivers = parseInt(txt(player, 'perfectionWaivers') || '0', 10);
 
   // 9. NPC heart levels & per-character data ───────────────────────────────────
   const { heartLevels, friendshipData } = parseFriendship(player, gameData);
@@ -461,6 +463,7 @@ export function parseSdvSave(
       deepestMineLevel,
       deepestSkullCavernLevel,
       goldenWalnuts,
+      perfectionWaivers,
       communityStatus,
       rodFishCaughtCount,
       shippedItemIds,
