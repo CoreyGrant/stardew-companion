@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useNPCDetail } from '../hooks/useNPCDetail';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -50,6 +50,12 @@ export function NPCDetailPage() {
   const [schedYear,   setSchedYear]   = useState(1);
   const [schedWeather, setSchedWeather] = useState<Weather>('sunny');
   const [showAllVariants, setShowAllVariants] = useState(false);
+
+  // Keep schedule filter in sync when the active save profile changes
+  useEffect(() => {
+    if (activeSave?.season) setSchedSeason(activeSave.season);
+    if (activeSave?.day)    setSchedDay(activeSave.day);
+  }, [activeSave?.id]);
 
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;

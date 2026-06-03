@@ -307,8 +307,8 @@ export function PerfectionPage() {
       <div className="perf-section perf-waivers">
         <h2 className="perf-section__title">✦ Perfection Waivers</h2>
         <p className="perf-section__desc">
-          Purchasable from Qi's Walnut Room for <strong>20 Qi Gems</strong> each.
-          Each waiver permanently adds <strong>+1%</strong> to your perfection score.
+          Purchased from <strong>Fizz</strong> in the Mushroom Cave on Ginger Island
+          for <strong>500,000g</strong> each. Each waiver permanently adds <strong>+1%</strong> to your perfection score.
         </p>
         <div className="perf-waiver-row">
           <span className="perf-waiver-row__label">
@@ -321,7 +321,7 @@ export function PerfectionPage() {
         {scores.total < 100 && waiverShortfall > waivers && (
           <p className="perf-waiver-row__shortfall">
             {waiverShortfall - waivers} more waiver{waiverShortfall - waivers !== 1 ? 's' : ''} needed to reach 100%
-            {' '}({(waiverShortfall - waivers) * 20} Qi Gems)
+            {' '}({((waiverShortfall - waivers) * 500_000).toLocaleString()}g)
           </p>
         )}
       </div>

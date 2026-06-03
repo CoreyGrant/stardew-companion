@@ -160,7 +160,7 @@ export interface SaveFile {
   deepestSkullCavernLevel?: number;
   /** Golden walnuts found on Ginger Island. */
   goldenWalnuts?: number;
-  /** Number of Perfection Waivers purchased from Qi's Walnut Room (20 Qi Gems each, +1% each). */
+  /** Number of Perfection Waivers purchased from Fizz in the Mushroom Cave (500,000g each, +1% each). */
   perfectionWaivers?: number;
   /** Rod-catchable fish species caught ≥1 time (0–60). Auto-populated on import. */
   rodFishCaughtCount?: number;

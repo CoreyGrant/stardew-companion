@@ -15,7 +15,9 @@ export class DataService {
   // ── Saves ────────────────────────────────────────────────────────────────
 
   getSaves(): SaveFile[] {
-    return this.data.saves;
+    // Return a shallow copy so React's useState always receives a new reference
+    // and triggers re-renders, even when the underlying array was mutated.
+    return [...this.data.saves];
   }
 
   getActiveSave(): SaveFile | null {
@@ -34,7 +36,8 @@ export class DataService {
       id: crypto.randomUUID(),
       createdAt: Date.now(),
     };
-    this.data.saves.push(newSave);
+    // Immutable update — new array reference so React detects the change
+    this.data.saves = [...this.data.saves, newSave];
     if (!this.data.activeSaveId) {
       this.data.activeSaveId = newSave.id;
     }
@@ -43,9 +46,8 @@ export class DataService {
   }
 
   updateSave(save: SaveFile): void {
-    const idx = this.data.saves.findIndex((s) => s.id === save.id);
-    if (idx === -1) return;
-    this.data.saves[idx] = save;
+    // Immutable update — new array + new save object reference
+    this.data.saves = this.data.saves.map((s) => (s.id === save.id ? save : s));
     this.persist();
   }
 
@@ -71,39 +73,40 @@ export class DataService {
   // ── Quest & bundle progress ───────────────────────────────────────────────
 
   updateQuestProgress(saveId: string, questId: string, stepIds: string[]): void {
-    const save = this.data.saves.find((s) => s.id === saveId);
-    if (!save) return;
-    save.questProgress[questId] = stepIds;
+    // Immutable update — new save object so getActiveSave() returns a new reference
+    this.data.saves = this.data.saves.map((s) =>
+      s.id !== saveId ? s : { ...s, questProgress: { ...s.questProgress, [questId]: stepIds } },
+    );
     this.persist();
   }
 
   updateBundleProgress(saveId: string, bundleId: string, itemIds: string[]): void {
-    const save = this.data.saves.find((s) => s.id === saveId);
-    if (!save) return;
-    save.bundleProgress[bundleId] = itemIds;
+    this.data.saves = this.data.saves.map((s) =>
+      s.id !== saveId ? s : { ...s, bundleProgress: { ...s.bundleProgress, [bundleId]: itemIds } },
+    );
     this.persist();
   }
 
   updateMuseumDonations(saveId: string, itemIds: string[]): void {
-    const save = this.data.saves.find((s) => s.id === saveId);
-    if (!save) return;
-    save.museumDonations = itemIds;
+    this.data.saves = this.data.saves.map((s) =>
+      s.id !== saveId ? s : { ...s, museumDonations: itemIds },
+    );
     this.persist();
   }
 
   // ── Farm layout ───────────────────────────────────────────────────────────
 
   updateFarmLayout(saveId: string, layout: FarmLayout): void {
-    const save = this.data.saves.find((s) => s.id === saveId);
-    if (!save) return;
-    save.farmLayout = layout;
+    this.data.saves = this.data.saves.map((s) =>
+      s.id !== saveId ? s : { ...s, farmLayout: layout },
+    );
     this.persist();
   }
 
   updateIslandFarmLayout(saveId: string, layout: FarmLayout): void {
-    const save = this.data.saves.find((s) => s.id === saveId);
-    if (!save) return;
-    save.islandFarmLayout = layout;
+    this.data.saves = this.data.saves.map((s) =>
+      s.id !== saveId ? s : { ...s, islandFarmLayout: layout },
+    );
     this.persist();
   }
 }

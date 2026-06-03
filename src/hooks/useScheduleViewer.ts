@@ -58,7 +58,7 @@ export function useScheduleViewer(): ScheduleViewerState {
         const locations = DISPLAY_TIMES.map((t) => locationAtTime(entries, t));
         return { npc, locations };
       });
-  }, [data, season, weather, year, search, marriedTo]);
+  }, [data, season, day, weather, year, search, marriedTo]);
 
   return {
     loading,
