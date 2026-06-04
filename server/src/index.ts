@@ -13,6 +13,30 @@ const PUBLIC_DIR = resolve('./public');
 const PORT          = parseInt(process.env.PORT ?? '3000', 10);
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? '*';
 
+// ── Static asset cache headers ────────────────────────────────────────────────
+// sw.js / workbox-*.js  → no-cache so browsers always check for SW updates.
+// index.html            → no-cache so the app shell is always fresh.
+// Hashed assets (app-<hash>.js, app-<hash>.css, fonts, sprites)
+//                       → immutable for 1 year; hash in filename guarantees a
+//                         new URL on every deploy, so no stale content is served.
+// Everything else       → revalidate after 1 hour.
+
+function staticCacheHeaders(pathname: string): HeadersInit {
+  if (/\/(sw\.js|workbox-[^/]+\.js)$/.test(pathname)) {
+    return { 'Cache-Control': 'no-cache' };
+  }
+  // Hashed assets: Vite puts them under /assets/ with a content hash in the name
+  if (/^\/assets\//.test(pathname)) {
+    return { 'Cache-Control': 'public, max-age=31536000, immutable' };
+  }
+  // Sprites / fonts — stable game assets, cache for 90 days
+  if (/^\/(sprites|fonts)\//.test(pathname)) {
+    return { 'Cache-Control': 'public, max-age=7776000' };
+  }
+  // Everything else (manifest, icons, gamedata.json …) — revalidate hourly
+  return { 'Cache-Control': 'public, max-age=3600' };
+}
+
 // ── CORS helper ───────────────────────────────────────────────────────────────
 
 function corsHeaders(): HeadersInit {
@@ -183,12 +207,16 @@ async function route(req: Request, server: Bun.Server): Promise<Response> {
     // Path traversal guard
     if (requested.startsWith(PUBLIC_DIR)) {
       const file = Bun.file(requested);
-      if (await file.exists()) return new Response(file);
+      if (await file.exists()) {
+        return new Response(file, { headers: staticCacheHeaders(url.pathname) });
+      }
     }
     // SPA fallback — serve index.html for any client-side route
     const index = Bun.file(join(PUBLIC_DIR, 'index.html'));
     if (await index.exists()) {
-      return new Response(index, { headers: { 'Content-Type': 'text/html' } });
+      return new Response(index, {
+        headers: { 'Content-Type': 'text/html', 'Cache-Control': 'no-cache' },
+      });
     }
   } catch { /* public dir not present (local API-only dev) */ }
 
