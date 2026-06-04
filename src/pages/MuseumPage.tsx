@@ -80,10 +80,10 @@ export function MuseumPage() {
   const { data, loading, error } = useGameData();
   const { activeSave, updateMuseumDonations } = useUserData();
 
-  const [tab,        setTab]    = useState<TabId>('artifacts');
-  const [missingOnly, setMissing] = useState(false);
-  const [search,     setSearch] = useState('');
-  const [sorts,      setSorts]  = useState<ActiveSort[]>(DEFAULT_MUSEUM_SORTS);
+  const [tab,            setTab]           = useState<TabId>('artifacts');
+  const [donationFilter, setDonationFilter] = useState<'all' | 'donated' | 'missing'>('all');
+  const [search,         setSearch]         = useState('');
+  const [sorts,          setSorts]          = useState<ActiveSort[]>(DEFAULT_MUSEUM_SORTS);
 
   const { artifacts, minerals } = useMemo(() => {
     if (!data) return { artifacts: [], minerals: [] };
@@ -109,13 +109,14 @@ export function MuseumPage() {
   const baseTabItems = useMemo(() => {
     const base = tab === 'artifacts' ? artifacts : minerals;
     let list = base;
-    if (missingOnly) list = list.filter(i => !donatedSet.has(i.id));
+    if (donationFilter === 'missing') list = list.filter(i => !donatedSet.has(i.id));
+    if (donationFilter === 'donated') list = list.filter(i =>  donatedSet.has(i.id));
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       list = list.filter(i => i.name.toLowerCase().includes(q));
     }
     return list;
-  }, [tab, artifacts, minerals, missingOnly, search, donatedSet]);
+  }, [tab, artifacts, minerals, donationFilter, search, donatedSet]);
 
   const tabItems = useMultiSort(baseTabItems, sorts, museumSortFields);
 
@@ -168,10 +169,17 @@ export function MuseumPage() {
           onChange={(e) => setSearch(e.target.value)}
         />
         {interactive && (
-          <label className="filter-bar__checkbox">
-            <input type="checkbox" checked={missingOnly} onChange={(e) => setMissing(e.target.checked)} />
-            Missing only
-          </label>
+          <div className="filter-bar__categories" role="group" aria-label="Filter by donation status">
+            {(['all', 'donated', 'missing'] as const).map(f => (
+              <button
+                key={f}
+                className={`category-btn${donationFilter === f ? ' category-btn--active' : ''}`}
+                onClick={() => setDonationFilter(f)}
+              >
+                {f === 'all' ? 'All' : f === 'donated' ? '✓ Donated' : '✗ Missing'}
+              </button>
+            ))}
+          </div>
         )}
         {interactive && (
           <button
@@ -202,7 +210,7 @@ export function MuseumPage() {
         ))}
         {tabItems.length === 0 && (
           <p className="page-empty">
-            {missingOnly ? 'All items in this section are donated!' : 'No items match your search.'}
+            {donationFilter === 'missing' ? 'All items in this section are donated!' : donationFilter === 'donated' ? 'No donated items found.' : 'No items match your search.'}
           </p>
         )}
       </div>
