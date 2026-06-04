@@ -141,10 +141,11 @@
 $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
 
 .gift-table-wrap {
-  overflow-x: auto;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border);
   border-radius: 6px;
+  max-height: 65vh;
 }
 
 .gift-table {
@@ -155,6 +156,10 @@ $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
 // ── Header ────────────────────────────────────────────────────────────────────
 
 .gift-table__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-mid);   // covers rows scrolling underneath
   display: grid;
   grid-template-columns: $gift-template;
   align-items: stretch;     // spans fill full row height so border-bottom is flush at bottom

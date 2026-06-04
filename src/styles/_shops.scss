@@ -61,8 +61,13 @@
 
 .shop-table {
   @include scroll-x;
+  overflow-y: auto;
+  max-height: 70vh;
 
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     display: grid;
     grid-template-columns: 1.2fr 170px 65px 145px;
     gap: $space-2;

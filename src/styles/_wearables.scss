@@ -41,10 +41,14 @@
 // ── Shared table ──────────────────────────────────────────────────────────────
 
 .wear-table {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  overflow: auto;
+  max-height: 70vh;
 
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     display: grid;
     gap: $space-2;
     padding: $space-2 $space-3;

@@ -546,10 +546,14 @@
 // ── Crops page ────────────────────────────────────────────────────────────────
 
 .crop-table {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  overflow: auto;
+  max-height: 70vh;
 
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     display: grid;
     grid-template-columns: 1fr 64px 1fr 72px 60px;
     gap: $space-3;
@@ -558,7 +562,7 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-mid);  // was --text-light: too faint at this small size
+    color: var(--text-mid);
     border-bottom: 2px solid $color-brown;
     background: var(--surface-mid);
   }
@@ -829,10 +833,14 @@
 }
 
 .fish-table {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  overflow: auto;
+  max-height: 70vh;
 
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     display: grid;
     grid-template-columns: 2fr 64px 48px 80px 1fr 100px 56px;
     gap: $space-2;
@@ -841,7 +849,7 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    background: var(--surface-mid);  // header floats on body-bg; needs own bg
+    background: var(--surface-mid);
     color: var(--text-mid);
     border-bottom: 2px solid $color-brown;
   }
@@ -980,10 +988,14 @@
 // ── Item table view ───────────────────────────────────────────────────────────
 
 .item-table {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  overflow: auto;
+  max-height: 70vh;
 
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     display: grid;
     grid-template-columns: 1fr 130px 80px 80px;
     gap: $space-3;
@@ -992,7 +1004,7 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-mid);  // was --text-light: too faint at this small size
+    color: var(--text-mid);
     border-bottom: 2px solid $color-brown;
     background: var(--surface-mid);
   }
