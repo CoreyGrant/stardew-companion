@@ -301,7 +301,7 @@ export function GiftGuidePage() {
 
           {/* Rows */}
           {rows.map(row => {
-            const { npc, isBirthday, giftsThisWeek, canGift, lovedMatches, likedMatches, locations, priority } = row;
+            const { npc, isBirthday, lovedMatches, likedMatches, locations, priority } = row;
             const rowClass = [
               'gift-row',
               isBirthday  ? 'gift-row--birthday'   : '',
