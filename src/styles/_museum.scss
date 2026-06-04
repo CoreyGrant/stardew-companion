@@ -13,26 +13,27 @@
   &__track {
     flex: 1;
     height: 10px;
-    background: rgba($color-brown, 0.15);
-    border: 1px solid rgba($color-brown, 0.3);
+    // Semi-transparent dark pit — visible against both light and dark backgrounds
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 2px;
     overflow: hidden;
   }
 
   &__fill {
     height: 100%;
-    background: $color-brown-mid;
+    background: $color-gold;        // bright gold fill — stands out on dark track
     transition: width 0.25s ease;
   }
 
   &__label {
     font-family: $font-pixel;
-    font-size: 0.55rem;
-    color: var(--text-light);
+    font-size: 0.65rem;             // bumped from 0.55rem
+    color: var(--label-muted);      // #d4ba80 — 5.79:1 on body-bg, designed for this context
     white-space: nowrap;
   }
 
-  &--full .museum-progress__fill { background: $color-green-light; }
+  &--full .museum-progress__fill  { background: $color-green-light; }
   &--full .museum-progress__label { color: $color-green-light; }
 }
 
