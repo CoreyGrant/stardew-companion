@@ -276,13 +276,13 @@ $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
   overflow: hidden;
 
   &--loved {
-    background: rgba($color-loved, 0.12);
-    border: 1px solid rgba($color-loved, 0.35);
+    background: rgba($color-loved, 0.18);
+    border: 2px solid $color-loved;
   }
 
   &--liked {
-    background: rgba($color-liked, 0.12);
-    border: 1px solid rgba($color-liked, 0.3);
+    background: rgba($color-liked, 0.18);
+    border: 2px solid $color-liked;
   }
 }
 
