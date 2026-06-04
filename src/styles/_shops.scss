@@ -67,11 +67,13 @@
     grid-template-columns: 1fr 90px 90px 140px;
     gap: $space-2;
     padding: $space-2 $space-3;
-    background: $color-brown;
-    color: $color-parchment;
+    background: var(--surface-mid);
+    color: var(--text-mid);
     font-family: $font-pixel;
-    font-size: 0.55rem;
-    border-radius: 3px 3px 0 0;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid $color-brown;
     min-width: 560px;
   }
 }
@@ -83,7 +85,7 @@
   grid-template-columns: 1fr 90px 90px 140px;
   gap: $space-2;
   padding: $space-2 $space-3;
-  border-bottom: 1px solid $color-parchment-dark;
+  border-bottom: 1px solid rgba($color-brown, 0.2);
   align-items: center;
   min-width: 560px;
   background: var(--surface);
