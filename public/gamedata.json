@@ -17843,7 +17843,13 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 441
+      "spriteIndex": 441,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 300
+        }
+      ]
     },
     {
       "id": "duck-egg",
@@ -18842,7 +18848,13 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 529
+      "spriteIndex": 529,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 1000
+        }
+      ]
     },
     {
       "id": "topaz-ring",
@@ -18854,7 +18866,13 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 530
+      "spriteIndex": 530,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 1000
+        }
+      ]
     },
     {
       "id": "aquamarine-ring",
@@ -18866,7 +18884,14 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 531
+      "spriteIndex": 531,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 2500,
+          "minMineLevel": 40
+        }
+      ]
     },
     {
       "id": "jade-ring",
@@ -18878,7 +18903,14 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 532
+      "spriteIndex": 532,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 2500,
+          "minMineLevel": 40
+        }
+      ]
     },
     {
       "id": "emerald-ring",
@@ -18890,7 +18922,14 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 533
+      "spriteIndex": 533,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 5000,
+          "minMineLevel": 80
+        }
+      ]
     },
     {
       "id": "ruby-ring",
@@ -18902,7 +18941,14 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 534
+      "spriteIndex": 534,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 5000,
+          "minMineLevel": 80
+        }
+      ]
     },
     {
       "id": "geode",
@@ -40897,5 +40943,4989 @@
         "height": 4
       }
     ]
-  }
+  },
+  "weapons": [
+    {
+      "id": "W0",
+      "name": "Rusty Sword",
+      "description": "A rusty, dull old sword.",
+      "weaponType": "other",
+      "minDamage": 2,
+      "maxDamage": 5,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 0,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "W1",
+      "name": "Silver Saber",
+      "description": "Plated with silver to deter rust.",
+      "weaponType": "sword",
+      "minDamage": 8,
+      "maxDamage": 15,
+      "speed": 0,
+      "defense": 1,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 1,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 750,
+          "minMineLevel": 20
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "name": "Dark Sword",
+      "description": "It's glowing with vampire energy.",
+      "weaponType": "sword",
+      "minDamage": 30,
+      "maxDamage": 45,
+      "speed": -10,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.04,
+      "critMultiplier": 3,
+      "spriteIndex": 2
+    },
+    {
+      "id": "W3",
+      "name": "Holy Blade",
+      "description": "It feels hopeful to wield.",
+      "weaponType": "sword",
+      "minDamage": 20,
+      "maxDamage": 27,
+      "speed": 8,
+      "defense": 2,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 3
+    },
+    {
+      "id": "W4",
+      "name": "Galaxy Sword",
+      "description": "It's unlike anything you've ever seen.",
+      "weaponType": "sword",
+      "minDamage": 60,
+      "maxDamage": 80,
+      "speed": 8,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 4,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 50000
+        }
+      ]
+    },
+    {
+      "id": "W5",
+      "name": "Bone Sword",
+      "description": "A very light piece of sharpened bone.",
+      "weaponType": "sword",
+      "minDamage": 20,
+      "maxDamage": 30,
+      "speed": 8,
+      "defense": 0,
+      "knockback": 0.8,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 5,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 6000,
+          "minMineLevel": 75
+        }
+      ]
+    },
+    {
+      "id": "W6",
+      "name": "Iron Edge",
+      "description": "A heavy broadsword.",
+      "weaponType": "other",
+      "minDamage": 12,
+      "maxDamage": 25,
+      "speed": -4,
+      "defense": 1,
+      "knockback": 1.2,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 6
+    },
+    {
+      "id": "W7",
+      "name": "Templar's Blade",
+      "description": "It once belonged to an honorable knight.",
+      "weaponType": "other",
+      "minDamage": 22,
+      "maxDamage": 29,
+      "speed": 0,
+      "defense": 1,
+      "knockback": 1,
+      "critChance": 0,
+      "critMultiplier": 3,
+      "spriteIndex": 7,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 4000,
+          "minMineLevel": 55
+        }
+      ]
+    },
+    {
+      "id": "W8",
+      "name": "Obsidian Edge",
+      "description": "It's incredibly sharp.",
+      "weaponType": "sword",
+      "minDamage": 30,
+      "maxDamage": 45,
+      "speed": -2,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3.2,
+      "spriteIndex": 8,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 9000,
+          "minMineLevel": 90
+        }
+      ]
+    },
+    {
+      "id": "W9",
+      "name": "Lava Katana",
+      "description": "A powerful blade forged in a pool of churning lava.",
+      "weaponType": "sword",
+      "minDamage": 55,
+      "maxDamage": 64,
+      "speed": 0,
+      "defense": 3,
+      "knockback": 1.2,
+      "critChance": 0.015,
+      "critMultiplier": 3.5,
+      "spriteIndex": 9,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 25000,
+          "minMineLevel": 120
+        }
+      ]
+    },
+    {
+      "id": "W10",
+      "name": "Claymore",
+      "description": "It's really heavy.",
+      "weaponType": "other",
+      "minDamage": 20,
+      "maxDamage": 32,
+      "speed": -8,
+      "defense": 2,
+      "knockback": 1.3,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 10,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 2000,
+          "minMineLevel": 45
+        }
+      ]
+    },
+    {
+      "id": "W11",
+      "name": "Steel Smallsword",
+      "description": "A standard metal blade.",
+      "weaponType": "sword",
+      "minDamage": 4,
+      "maxDamage": 8,
+      "speed": 4,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 11,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 750,
+          "minMineLevel": 20
+        }
+      ]
+    },
+    {
+      "id": "W12",
+      "name": "Wooden Blade",
+      "description": "Not bad for a piece of carved wood.",
+      "weaponType": "sword",
+      "minDamage": 3,
+      "maxDamage": 7,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 12,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "W13",
+      "name": "Insect Head",
+      "description": "Not very pleasant to wield.",
+      "weaponType": "sword",
+      "minDamage": 20,
+      "maxDamage": 30,
+      "speed": 4,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.04,
+      "critMultiplier": 3,
+      "spriteIndex": 13
+    },
+    {
+      "id": "W14",
+      "name": "Neptune's Glaive",
+      "description": "An heirloom from beyond the Gem Sea.",
+      "weaponType": "other",
+      "minDamage": 18,
+      "maxDamage": 35,
+      "speed": -2,
+      "defense": 2,
+      "knockback": 1.4,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 14
+    },
+    {
+      "id": "W15",
+      "name": "Forest Sword",
+      "description": "Made powerful by forest magic.",
+      "weaponType": "sword",
+      "minDamage": 8,
+      "maxDamage": 18,
+      "speed": 4,
+      "defense": 1,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 15
+    },
+    {
+      "id": "W16",
+      "name": "Carving Knife",
+      "description": "A small, light blade.",
+      "weaponType": "dagger",
+      "minDamage": 1,
+      "maxDamage": 3,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.04,
+      "critMultiplier": 3,
+      "spriteIndex": 16
+    },
+    {
+      "id": "W17",
+      "name": "Iron Dirk",
+      "description": "A common dagger.",
+      "weaponType": "dagger",
+      "minDamage": 2,
+      "maxDamage": 4,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.03,
+      "critMultiplier": 3,
+      "spriteIndex": 17,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 500,
+          "minMineLevel": 15
+        }
+      ]
+    },
+    {
+      "id": "W18",
+      "name": "Burglar's Shank",
+      "description": "A weapon of choice for the swift and silent.",
+      "weaponType": "dagger",
+      "minDamage": 7,
+      "maxDamage": 12,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.04,
+      "critMultiplier": 3.5,
+      "spriteIndex": 18
+    },
+    {
+      "id": "W19",
+      "name": "Shadow Dagger",
+      "description": "When you hold the blade to your ear you can hear 1,000 souls shrieking.",
+      "weaponType": "dagger",
+      "minDamage": 10,
+      "maxDamage": 20,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.04,
+      "critMultiplier": 3,
+      "spriteIndex": 19
+    },
+    {
+      "id": "W20",
+      "name": "Elf Blade",
+      "description": "Only the nimble hands of an elf could craft this.",
+      "weaponType": "dagger",
+      "minDamage": 3,
+      "maxDamage": 5,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.04,
+      "critMultiplier": 3,
+      "spriteIndex": 20,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 750,
+          "minMineLevel": 20
+        }
+      ]
+    },
+    {
+      "id": "W21",
+      "name": "Crystal Dagger",
+      "description": "The blade is made of purified quartz.",
+      "weaponType": "dagger",
+      "minDamage": 4,
+      "maxDamage": 10,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.03,
+      "critMultiplier": 4,
+      "spriteIndex": 21,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 4500,
+          "minMineLevel": 60
+        }
+      ]
+    },
+    {
+      "id": "W22",
+      "name": "Wind Spire",
+      "description": "A swift little blade.",
+      "weaponType": "dagger",
+      "minDamage": 1,
+      "maxDamage": 5,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3.2,
+      "spriteIndex": 22
+    },
+    {
+      "id": "W23",
+      "name": "Galaxy Dagger",
+      "description": "It's unlike anything you've seen.",
+      "weaponType": "dagger",
+      "minDamage": 30,
+      "maxDamage": 40,
+      "speed": 3,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 23,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 35000
+        }
+      ]
+    },
+    {
+      "id": "W24",
+      "name": "Wood Club",
+      "description": "A solid piece of wood, crudely chiseled into a club shape.",
+      "weaponType": "club",
+      "minDamage": 9,
+      "maxDamage": 16,
+      "speed": -8,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 24
+    },
+    {
+      "id": "W25",
+      "name": "Alex's Bat",
+      "description": "The sweet spot is dented from Alex's famous Grand Slam.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 25
+    },
+    {
+      "id": "W26",
+      "name": "Lead Rod",
+      "description": "It's incredibly heavy.",
+      "weaponType": "club",
+      "minDamage": 18,
+      "maxDamage": 27,
+      "speed": -16,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 26
+    },
+    {
+      "id": "W27",
+      "name": "Wood Mallet",
+      "description": "The solid head packs a punch. Relatively light for a club.",
+      "weaponType": "club",
+      "minDamage": 15,
+      "maxDamage": 24,
+      "speed": -4,
+      "defense": 0,
+      "knockback": 1.3,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 27,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 2000,
+          "minMineLevel": 40
+        }
+      ]
+    },
+    {
+      "id": "W28",
+      "name": "The Slammer",
+      "description": "An extremely heavy gavel that'll send foes flying.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 28
+    },
+    {
+      "id": "W29",
+      "name": "Galaxy Hammer",
+      "description": "It's made from an ultra-light material you've never seen before.",
+      "weaponType": "club",
+      "minDamage": 70,
+      "maxDamage": 90,
+      "speed": -4,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 29,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 75000
+        }
+      ]
+    },
+    {
+      "id": "W30",
+      "name": "Sam's Old Guitar",
+      "description": "It's seen better days.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 30
+    },
+    {
+      "id": "W31",
+      "name": "Femur",
+      "description": "An old, heavy bone caked in centuries of grime.",
+      "weaponType": "club",
+      "minDamage": 6,
+      "maxDamage": 11,
+      "speed": -4,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 31,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 350,
+          "minMineLevel": 10
+        }
+      ]
+    },
+    {
+      "id": "W32",
+      "name": "Slingshot",
+      "description": "Requires stones for ammo.",
+      "weaponType": "slingshot",
+      "minDamage": 1,
+      "maxDamage": 3,
+      "speed": 308,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 32,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 500,
+          "minMineLevel": 40
+        }
+      ]
+    },
+    {
+      "id": "W33",
+      "name": "Master Slingshot",
+      "description": "Requires stones for ammo.",
+      "weaponType": "slingshot",
+      "minDamage": 1,
+      "maxDamage": 3,
+      "speed": 308,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 33,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 1000,
+          "minMineLevel": 70
+        }
+      ]
+    },
+    {
+      "id": "W34",
+      "name": "Galaxy Slingshot",
+      "description": "It looks really powerful.",
+      "weaponType": "slingshot",
+      "minDamage": 1,
+      "maxDamage": 3,
+      "speed": 308,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 34
+    },
+    {
+      "id": "W35",
+      "name": "Elliott's Pencil",
+      "description": "Elliott used this to write his book. It's sharp!",
+      "weaponType": "dagger",
+      "minDamage": 24,
+      "maxDamage": 30,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.06,
+      "critMultiplier": 3,
+      "spriteIndex": 35
+    },
+    {
+      "id": "W36",
+      "name": "Maru's Wrench",
+      "description": "A big, metal wrench. It smells like Maru.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 36
+    },
+    {
+      "id": "W37",
+      "name": "Harvey's Mallet",
+      "description": "It brings back memories of Harvey's clinic.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 37
+    },
+    {
+      "id": "W38",
+      "name": "Penny's Fryer",
+      "description": "Penny's favorite frying pan. There's some rubbery gunk stuck to the inside.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 38
+    },
+    {
+      "id": "W39",
+      "name": "Leah's Whittler",
+      "description": "Leah's favorite tool for shaping driftwood.",
+      "weaponType": "sword",
+      "minDamage": 30,
+      "maxDamage": 45,
+      "speed": -2,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3.2,
+      "spriteIndex": 39
+    },
+    {
+      "id": "W40",
+      "name": "Abby's Planchette",
+      "description": "It's made from fine marblewood.",
+      "weaponType": "dagger",
+      "minDamage": 24,
+      "maxDamage": 30,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.06,
+      "critMultiplier": 3,
+      "spriteIndex": 40
+    },
+    {
+      "id": "W41",
+      "name": "Seb's Lost Mace",
+      "description": "One of Sebastian's medieval replicas.",
+      "weaponType": "club",
+      "minDamage": 40,
+      "maxDamage": 55,
+      "speed": -12,
+      "defense": 0,
+      "knockback": 1.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 41
+    },
+    {
+      "id": "W42",
+      "name": "Haley's Iron",
+      "description": "It's searing hot and smells like Haley's hair.",
+      "weaponType": "sword",
+      "minDamage": 30,
+      "maxDamage": 45,
+      "speed": -2,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3.2,
+      "spriteIndex": 42
+    },
+    {
+      "id": "W43",
+      "name": "Pirate's Sword",
+      "description": "It looks like a pirate owned this once.",
+      "weaponType": "other",
+      "minDamage": 8,
+      "maxDamage": 14,
+      "speed": 4,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 43,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 850,
+          "minMineLevel": 25
+        }
+      ]
+    },
+    {
+      "id": "W44",
+      "name": "Cutlass",
+      "description": "A finely crafted blade.",
+      "weaponType": "sword",
+      "minDamage": 9,
+      "maxDamage": 17,
+      "speed": 4,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 44,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 1500,
+          "minMineLevel": 25
+        }
+      ]
+    },
+    {
+      "id": "W45",
+      "name": "Wicked Kris",
+      "description": "The blade is made of an iridium alloy.",
+      "weaponType": "dagger",
+      "minDamage": 24,
+      "maxDamage": 30,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.06,
+      "critMultiplier": 3,
+      "spriteIndex": 45
+    },
+    {
+      "id": "W46",
+      "name": "Kudgel",
+      "description": "A brute's companion.",
+      "weaponType": "club",
+      "minDamage": 27,
+      "maxDamage": 40,
+      "speed": -10,
+      "defense": 0,
+      "knockback": 1.6,
+      "critChance": 0.02,
+      "critMultiplier": 4,
+      "spriteIndex": 46
+    },
+    {
+      "id": "W47",
+      "name": "Scythe",
+      "description": "It can cut grass into hay, if you've built a silo.",
+      "weaponType": "sword",
+      "minDamage": 1,
+      "maxDamage": 3,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 47
+    },
+    {
+      "id": "W48",
+      "name": "Yeti Tooth",
+      "description": "It's icy cold to the touch.",
+      "weaponType": "sword",
+      "minDamage": 26,
+      "maxDamage": 42,
+      "speed": 0,
+      "defense": 4,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3.2,
+      "spriteIndex": 48
+    },
+    {
+      "id": "W49",
+      "name": "Rapier",
+      "description": "An elegant blade.",
+      "weaponType": "sword",
+      "minDamage": 15,
+      "maxDamage": 25,
+      "speed": 4,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 49
+    },
+    {
+      "id": "W50",
+      "name": "Steel Falchion",
+      "description": "Light and powerful.",
+      "weaponType": "sword",
+      "minDamage": 28,
+      "maxDamage": 46,
+      "speed": 8,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3.4,
+      "spriteIndex": 50,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 9000,
+          "minMineLevel": 90
+        }
+      ]
+    },
+    {
+      "id": "W51",
+      "name": "Broken Trident",
+      "description": "It came from the sea, but it's still sharp.",
+      "weaponType": "dagger",
+      "minDamage": 15,
+      "maxDamage": 26,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 51
+    },
+    {
+      "id": "W52",
+      "name": "Tempered Broadsword",
+      "description": "It looks like it could withstand anything.",
+      "weaponType": "sword",
+      "minDamage": 29,
+      "maxDamage": 44,
+      "speed": -6,
+      "defense": 3,
+      "knockback": 1.2,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 52
+    },
+    {
+      "id": "W53",
+      "name": "Golden Scythe",
+      "description": "It's more powerful than a normal scythe.",
+      "weaponType": "sword",
+      "minDamage": 13,
+      "maxDamage": 13,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 4,
+      "spriteIndex": 53
+    },
+    {
+      "id": "W54",
+      "name": "Dwarf Sword",
+      "description": "It's ancient, but the blade never dulls.",
+      "weaponType": "sword",
+      "minDamage": 65,
+      "maxDamage": 75,
+      "speed": 4,
+      "defense": 4,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 54
+    },
+    {
+      "id": "W55",
+      "name": "Dwarf Hammer",
+      "description": "It emits a very faint whirring sound.",
+      "weaponType": "club",
+      "minDamage": 75,
+      "maxDamage": 85,
+      "speed": -8,
+      "defense": 2,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 55
+    },
+    {
+      "id": "W56",
+      "name": "Dwarf Dagger",
+      "description": "It's ancient, but the blade never dulls.",
+      "weaponType": "dagger",
+      "minDamage": 32,
+      "maxDamage": 38,
+      "speed": 3,
+      "defense": 6,
+      "knockback": 1,
+      "critChance": 0.03,
+      "critMultiplier": 3,
+      "spriteIndex": 56
+    },
+    {
+      "id": "W57",
+      "name": "Dragontooth Cutlass",
+      "description": "The blade was forged from a magical tooth.",
+      "weaponType": "sword",
+      "minDamage": 75,
+      "maxDamage": 90,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 4,
+      "spriteIndex": 57
+    },
+    {
+      "id": "W58",
+      "name": "Dragontooth Club",
+      "description": "This club was crafted from a magical tooth.",
+      "weaponType": "club",
+      "minDamage": 80,
+      "maxDamage": 100,
+      "speed": -8,
+      "defense": 0,
+      "knockback": 1.3,
+      "critChance": 0.02,
+      "critMultiplier": 4,
+      "spriteIndex": 58
+    },
+    {
+      "id": "W59",
+      "name": "Dragontooth Shiv",
+      "description": "The blade was forged from a magical tooth.",
+      "weaponType": "dagger",
+      "minDamage": 40,
+      "maxDamage": 50,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.05,
+      "critMultiplier": 5,
+      "spriteIndex": 59
+    },
+    {
+      "id": "W60",
+      "name": "Ossified Blade",
+      "description": "A large, sharp blade formed from bone.",
+      "weaponType": "sword",
+      "minDamage": 26,
+      "maxDamage": 42,
+      "speed": -4,
+      "defense": 1,
+      "knockback": 1.1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 60
+    },
+    {
+      "id": "W61",
+      "name": "Iridium Needle",
+      "description": "The point is unbelievably sharp, even down to the atomic level.",
+      "weaponType": "dagger",
+      "minDamage": 20,
+      "maxDamage": 35,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 0.5,
+      "critChance": 0.1,
+      "critMultiplier": 7,
+      "spriteIndex": 61
+    },
+    {
+      "id": "W62",
+      "name": "Infinity Blade",
+      "description": "The true form of the Galaxy Sword.",
+      "weaponType": "sword",
+      "minDamage": 80,
+      "maxDamage": 100,
+      "speed": 8,
+      "defense": 2,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 62
+    },
+    {
+      "id": "W63",
+      "name": "Infinity Gavel",
+      "description": "The true form of the Galaxy Hammer.",
+      "weaponType": "club",
+      "minDamage": 100,
+      "maxDamage": 120,
+      "speed": -4,
+      "defense": 1,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 63
+    },
+    {
+      "id": "W64",
+      "name": "Infinity Dagger",
+      "description": "The true form of the Galaxy Dagger.",
+      "weaponType": "dagger",
+      "minDamage": 50,
+      "maxDamage": 70,
+      "speed": 3,
+      "defense": 3,
+      "knockback": 1,
+      "critChance": 0.06,
+      "critMultiplier": 3,
+      "spriteIndex": 64
+    },
+    {
+      "id": "W65",
+      "name": "Meowmere",
+      "description": "An unusual weapon from a far away land...",
+      "weaponType": "sword",
+      "minDamage": 20,
+      "maxDamage": 20,
+      "speed": 8,
+      "defense": 0,
+      "knockback": 0.8,
+      "critChance": 0.02,
+      "critMultiplier": 3,
+      "spriteIndex": 65
+    },
+    {
+      "id": "W66",
+      "name": "Iridium Scythe",
+      "description": "Can be used to harvest any crops. It's also excellent at gathering hay.",
+      "weaponType": "sword",
+      "minDamage": 20,
+      "maxDamage": 20,
+      "speed": 0,
+      "defense": 0,
+      "knockback": 1,
+      "critChance": 0.02,
+      "critMultiplier": 4,
+      "spriteIndex": 66
+    }
+  ],
+  "boots": [
+    {
+      "id": "B504",
+      "name": "Sneakers",
+      "description": "A little flimsy... but fashionable!",
+      "sellValue": 50,
+      "defense": 1,
+      "immunity": 0,
+      "spriteIndex": 504,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 500
+        }
+      ]
+    },
+    {
+      "id": "B505",
+      "name": "Rubber Boots",
+      "description": "Protection from the elements.",
+      "sellValue": 50,
+      "defense": 0,
+      "immunity": 1,
+      "spriteIndex": 505
+    },
+    {
+      "id": "B506",
+      "name": "Leather Boots",
+      "description": "The leather is very supple.",
+      "sellValue": 50,
+      "defense": 1,
+      "immunity": 1,
+      "spriteIndex": 506,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 500,
+          "minMineLevel": 10
+        }
+      ]
+    },
+    {
+      "id": "B507",
+      "name": "Work Boots",
+      "description": "Steel-toed for extra protection.",
+      "sellValue": 50,
+      "defense": 2,
+      "immunity": 0,
+      "spriteIndex": 507,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 700,
+          "minMineLevel": 10
+        }
+      ]
+    },
+    {
+      "id": "B508",
+      "name": "Combat Boots",
+      "description": "Reinforced with iron mesh.",
+      "sellValue": 150,
+      "defense": 3,
+      "immunity": 0,
+      "spriteIndex": 508,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 1250,
+          "minMineLevel": 40
+        }
+      ]
+    },
+    {
+      "id": "B509",
+      "name": "Tundra Boots",
+      "description": "The fuzzy lining keeps your ankles so warm.",
+      "sellValue": 150,
+      "defense": 2,
+      "immunity": 1,
+      "spriteIndex": 509,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 750,
+          "minMineLevel": 50
+        }
+      ]
+    },
+    {
+      "id": "B510",
+      "name": "Thermal Boots",
+      "description": "Designed with extreme weather in mind.",
+      "sellValue": 50,
+      "defense": 1,
+      "immunity": 2,
+      "spriteIndex": 510
+    },
+    {
+      "id": "B511",
+      "name": "Dark Boots",
+      "description": "Made from thick black leather.",
+      "sellValue": 250,
+      "defense": 4,
+      "immunity": 2,
+      "spriteIndex": 511,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 2500,
+          "minMineLevel": 80
+        }
+      ]
+    },
+    {
+      "id": "B512",
+      "name": "Firewalker Boots",
+      "description": "It's said these can withstand the hottest magma.",
+      "sellValue": 250,
+      "defense": 3,
+      "immunity": 3,
+      "spriteIndex": 512,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 2000,
+          "minMineLevel": 80
+        }
+      ]
+    },
+    {
+      "id": "B513",
+      "name": "Genie Shoes",
+      "description": "A curious energy permeates the fabric.",
+      "sellValue": 250,
+      "defense": 1,
+      "immunity": 6,
+      "spriteIndex": 513
+    },
+    {
+      "id": "B514",
+      "name": "Space Boots",
+      "description": "An iridium weave gives them a purple sheen.",
+      "sellValue": 450,
+      "defense": 4,
+      "immunity": 4,
+      "spriteIndex": 514,
+      "soldBy": [
+        {
+          "shop": "Adventurer's Guild",
+          "price": 5000,
+          "minMineLevel": 110
+        }
+      ]
+    },
+    {
+      "id": "B515",
+      "name": "Cowboy Boots",
+      "description": "It's the height of country fashion.",
+      "sellValue": 250,
+      "defense": 2,
+      "immunity": 2,
+      "spriteIndex": 515
+    },
+    {
+      "id": "B804",
+      "name": "Emily's Magic Boots",
+      "description": "Made with love by Emily. 100% compostable!",
+      "sellValue": 250,
+      "defense": 4,
+      "immunity": 4,
+      "spriteIndex": 804
+    },
+    {
+      "id": "B806",
+      "name": "Leprechaun Shoes",
+      "description": "The buckle's made of solid gold.",
+      "sellValue": 250,
+      "defense": 2,
+      "immunity": 1,
+      "spriteIndex": 806
+    },
+    {
+      "id": "B853",
+      "name": "Cinderclown Shoes",
+      "description": "These magic shoes belonged to a famous Dwarvish jester.",
+      "sellValue": 1000,
+      "defense": 6,
+      "immunity": 5,
+      "spriteIndex": 853,
+      "soldBy": [
+        {
+          "shop": "Volcano Dwarf",
+          "currency": "Cinder Shard",
+          "currencyAmount": 100
+        }
+      ]
+    },
+    {
+      "id": "B854",
+      "name": "Mermaid Boots",
+      "description": "Mermaid scales gives these boots a protective aura.",
+      "sellValue": 1000,
+      "defense": 5,
+      "immunity": 8,
+      "spriteIndex": 854
+    },
+    {
+      "id": "B855",
+      "name": "Dragonscale Boots",
+      "description": "These shimmering boots are extremely tough.",
+      "sellValue": 1000,
+      "defense": 7,
+      "immunity": 0,
+      "spriteIndex": 855
+    },
+    {
+      "id": "B878",
+      "name": "Crystal Shoes",
+      "description": "These sparkling shoes will keep your feet very safe.",
+      "sellValue": 1000,
+      "defense": 3,
+      "immunity": 5,
+      "spriteIndex": 878
+    }
+  ],
+  "hats": [
+    {
+      "id": "H0",
+      "name": "Cowboy Hat",
+      "description": "The leather is old and cracked, but surprisingly supple. It smells musty.",
+      "spriteIndex": 0,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "H1",
+      "name": "Bowler Hat",
+      "description": "Made from smooth felt.",
+      "spriteIndex": 1,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "H2",
+      "name": "Top Hat",
+      "description": "A gentleman's classic.",
+      "spriteIndex": 2
+    },
+    {
+      "id": "H3",
+      "name": "Sombrero",
+      "description": "A festively decorated hat made from woven straw.",
+      "spriteIndex": 3,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 25000
+        }
+      ]
+    },
+    {
+      "id": "H4",
+      "name": "Straw Hat",
+      "description": "Light and cool, it's a farmer's delight.",
+      "spriteIndex": 4,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H5",
+      "name": "Official Cap",
+      "description": "Looks like it belonged to a postman or policeman. Either way, it's still very soft and smells okay.",
+      "spriteIndex": 5,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H6",
+      "name": "Blue Bonnet",
+      "description": "Harken back to simpler times with this prairie bonnet.",
+      "spriteIndex": 6,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H7",
+      "name": "Plum Chapeau",
+      "description": "Looks alright.",
+      "spriteIndex": 7,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H8",
+      "name": "Skeleton Mask",
+      "description": "The red eyes are glowing mysteriously.",
+      "spriteIndex": 8
+    },
+    {
+      "id": "H9",
+      "name": "Goblin Mask",
+      "description": "Freak out the neighborhood with this creepy mask. Rubber ear joints for effect.",
+      "spriteIndex": 9,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "H10",
+      "name": "Chicken Mask",
+      "description": "You'll be sure to get them grinning with this one.",
+      "spriteIndex": 10,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H11",
+      "name": "Earmuffs",
+      "description": "Keep your ears toasty. Lined with artisanal velvet from Castle Village.",
+      "spriteIndex": 11,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "H12",
+      "name": "Delicate Bow",
+      "description": "Little pink jewels glisten as you examine it.",
+      "spriteIndex": 12,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H13",
+      "name": "Tropiclip",
+      "description": "It's shaped like a little palm tree.",
+      "spriteIndex": 13,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H14",
+      "name": "Butterfly Bow",
+      "description": "This one is very soft.",
+      "spriteIndex": 14,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H15",
+      "name": "Hunter's Cap",
+      "description": "The wool lining should stay warm deep into the forest.",
+      "spriteIndex": 15,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H16",
+      "name": "Trucker Hat",
+      "description": "Mesh in the back to keep your head cool.",
+      "spriteIndex": 16,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H17",
+      "name": "Sailor's Cap",
+      "description": "It's fresh and starchy.",
+      "spriteIndex": 17,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H18",
+      "name": "Good Ol' Cap",
+      "description": "A floppy old topper with a creased bill. Looks like it's been through a lot.",
+      "spriteIndex": 18,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H19",
+      "name": "Fedora",
+      "description": "A city-slicker's standard.",
+      "spriteIndex": 19
+    },
+    {
+      "id": "H20",
+      "name": "Cool Cap",
+      "description": "It looks really faded, but it used to be a vibrant blue.",
+      "spriteIndex": 20,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H21",
+      "name": "Lucky Bow",
+      "description": "The middle is made of solid gold.",
+      "spriteIndex": 21,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H22",
+      "name": "Polka Bow",
+      "description": "This one's sure to be turn heads.",
+      "spriteIndex": 22,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H23",
+      "name": "Gnome's Cap",
+      "description": "This gnome had a very large head.",
+      "spriteIndex": 23,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H24",
+      "name": "Eye Patch",
+      "description": "You can't tell if it's real or just from a costume shop.",
+      "spriteIndex": 24,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H25",
+      "name": "Santa Hat",
+      "description": "Celebrate the magical season.",
+      "spriteIndex": 25,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H26",
+      "name": "Tiara",
+      "description": "This one has a big amethyst encircled by gold.",
+      "spriteIndex": 26,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H27",
+      "name": "Hard Hat",
+      "description": "Keep your dome in one piece.",
+      "spriteIndex": 27
+    },
+    {
+      "id": "H28",
+      "name": "Sou'wester",
+      "description": "The shape helps to keep sailors dry during storms.",
+      "spriteIndex": 28,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H29",
+      "name": "Daisy",
+      "description": "A fresh spring daisy to put in your hair.",
+      "spriteIndex": 29,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H30",
+      "name": "Watermelon Band",
+      "description": "The color scheme was inspired by the beloved summer melon.",
+      "spriteIndex": 30,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "H31",
+      "name": "Mouse Ears",
+      "description": "Made from synthetic fibers.",
+      "spriteIndex": 31,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "H32",
+      "name": "Cat Ears",
+      "description": "Whiskers included.",
+      "spriteIndex": 32,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H33",
+      "name": "Cowgal Hat",
+      "description": "The band is studded with fake diamonds.",
+      "spriteIndex": 33,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H34",
+      "name": "Cowpoke Hat",
+      "description": "For dairy experts.",
+      "spriteIndex": 34,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "H35",
+      "name": "Archer's Cap",
+      "description": "Fashionable whether you're an archer or not.",
+      "spriteIndex": 35,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "H36",
+      "name": "Panda Hat",
+      "description": "A lovely panda hat.",
+      "spriteIndex": 36
+    },
+    {
+      "id": "H37",
+      "name": "Blue Cowboy Hat",
+      "description": "A denim cowboy hat in cool blue.",
+      "spriteIndex": 37
+    },
+    {
+      "id": "H38",
+      "name": "Red Cowboy Hat",
+      "description": "An eye-catching cowboy hat in red suede.",
+      "spriteIndex": 38
+    },
+    {
+      "id": "H39",
+      "name": "Cone Hat",
+      "description": "A curiosity from a distant land.",
+      "spriteIndex": 39
+    },
+    {
+      "id": "H40",
+      "name": "Living Hat",
+      "description": "It absorbs moisture from your scalp. No watering needed!",
+      "spriteIndex": 40
+    },
+    {
+      "id": "H41",
+      "name": "Emily's Magic Hat",
+      "description": "Made with love by Emily. It's 100% organic!",
+      "spriteIndex": 41
+    },
+    {
+      "id": "H42",
+      "name": "Mushroom Cap",
+      "description": "It smells earthy.",
+      "spriteIndex": 42
+    },
+    {
+      "id": "H43",
+      "name": "Dinosaur Hat",
+      "description": "A hat fashioned to look like a small dinosaur.",
+      "spriteIndex": 43
+    },
+    {
+      "id": "H44",
+      "name": "Totem Mask",
+      "description": "Don't worry, it won't warp your face...",
+      "spriteIndex": 44
+    },
+    {
+      "id": "H45",
+      "name": "Logo Cap",
+      "description": "A pink cap with a sleek profile.",
+      "spriteIndex": 45
+    },
+    {
+      "id": "H46",
+      "name": "Wearable Dwarf Helm",
+      "description": "A slightly larger, human sized version of the helmets worn by dwarves.",
+      "spriteIndex": 46
+    },
+    {
+      "id": "H47",
+      "name": "Fashion Hat",
+      "description": "A fashionable hat with a feather in the brim.",
+      "spriteIndex": 47
+    },
+    {
+      "id": "H48",
+      "name": "Pumpkin Mask",
+      "description": "This must have been a pretty big pumpkin once...",
+      "spriteIndex": 48
+    },
+    {
+      "id": "H49",
+      "name": "Hair Bone",
+      "description": "A prehistoric version of the hair bow.",
+      "spriteIndex": 49
+    },
+    {
+      "id": "H50",
+      "name": "Knight's Helmet",
+      "description": "It looks just like the real thing!",
+      "spriteIndex": 50
+    },
+    {
+      "id": "H51",
+      "name": "Squire's Helmet",
+      "description": "The face is exposed to increase air flow.",
+      "spriteIndex": 51
+    },
+    {
+      "id": "H52",
+      "name": "Spotted Headscarf",
+      "description": "A red polka-dot scarf tied around the head.",
+      "spriteIndex": 52
+    },
+    {
+      "id": "H53",
+      "name": "Beanie",
+      "description": "A warm hat with a pretty tight fit.",
+      "spriteIndex": 53
+    },
+    {
+      "id": "H54",
+      "name": "Floppy Beanie",
+      "description": "A warm hat with a looser fit.",
+      "spriteIndex": 54
+    },
+    {
+      "id": "H55",
+      "name": "Fishing Hat",
+      "description": "The wide brim keeps you shaded when you're fishing on the riverbank.",
+      "spriteIndex": 55
+    },
+    {
+      "id": "H56",
+      "name": "Blobfish Mask",
+      "description": "Just as spongy as the real thing!",
+      "spriteIndex": 56
+    },
+    {
+      "id": "H57",
+      "name": "Party Hat",
+      "description": "A goofy red hat that makes any celebration more fun.",
+      "spriteIndex": 57
+    },
+    {
+      "id": "H58",
+      "name": "Party Hat",
+      "description": "A goofy blue hat that makes any celebration more fun.",
+      "spriteIndex": 58
+    },
+    {
+      "id": "H59",
+      "name": "Party Hat",
+      "description": "A goofy green hat that makes any celebration more fun.",
+      "spriteIndex": 59
+    },
+    {
+      "id": "H60",
+      "name": "Arcane Hat",
+      "description": "The type of cowboy hat worn by a wizard.",
+      "spriteIndex": 60
+    },
+    {
+      "id": "H61",
+      "name": "Chef Hat",
+      "description": "The traditional hat worn by a head chef.",
+      "spriteIndex": 61,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "H62",
+      "name": "Pirate Hat",
+      "description": "A captain's hat with a horrible skull on the front.",
+      "spriteIndex": 62
+    },
+    {
+      "id": "H63",
+      "name": "Flat Topped Hat",
+      "description": "An old style of hat once considered very fashionable.",
+      "spriteIndex": 63
+    },
+    {
+      "id": "H64",
+      "name": "Elegant Turban",
+      "description": "A fine black silk turban with gold trim.",
+      "spriteIndex": 64,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 50000
+        }
+      ]
+    },
+    {
+      "id": "H65",
+      "name": "White Turban",
+      "description": "A fine white silk turban with blue trim.",
+      "spriteIndex": 65
+    },
+    {
+      "id": "H66",
+      "name": "Garbage Hat",
+      "description": "It's a garbage can lid 'upcycled' into a hat...",
+      "spriteIndex": 66
+    },
+    {
+      "id": "H67",
+      "name": "Golden Mask",
+      "description": "A faithful recreation of the Calico Desert relic!",
+      "spriteIndex": 67
+    },
+    {
+      "id": "H68",
+      "name": "Propeller Hat",
+      "description": "A goofy hat with a propeller on top.",
+      "spriteIndex": 68
+    },
+    {
+      "id": "H69",
+      "name": "Bridal Veil",
+      "description": "The traditional headwear for a bride.",
+      "spriteIndex": 69
+    },
+    {
+      "id": "H70",
+      "name": "Witch Hat",
+      "description": "A pointy hat popular with witches.",
+      "spriteIndex": 70
+    },
+    {
+      "id": "H71",
+      "name": "Copper Pan",
+      "description": "You place the copper pan on your head...",
+      "spriteIndex": 71
+    },
+    {
+      "id": "H72",
+      "name": "Green Turban",
+      "description": "A green silk turban with a gold ornament on the front.",
+      "spriteIndex": 72,
+      "soldBy": [
+        {
+          "shop": "Desert Trader",
+          "currency": "Omni Geode",
+          "currencyAmount": 50
+        }
+      ]
+    },
+    {
+      "id": "H73",
+      "name": "Magic Cowboy Hat",
+      "description": "It's shimmering with prismatic energy",
+      "spriteIndex": 73,
+      "soldBy": [
+        {
+          "shop": "Desert Trader",
+          "currency": "Omni Geode",
+          "currencyAmount": 333
+        }
+      ]
+    },
+    {
+      "id": "H74",
+      "name": "Magic Turban",
+      "description": "It's shimmering with prismatic energy",
+      "spriteIndex": 74,
+      "soldBy": [
+        {
+          "shop": "Desert Trader",
+          "currency": "Omni Geode",
+          "currencyAmount": 333
+        }
+      ]
+    },
+    {
+      "id": "H75",
+      "name": "Golden Helmet",
+      "description": "It's half of a golden coconut.",
+      "spriteIndex": 75
+    },
+    {
+      "id": "H76",
+      "name": "Deluxe Pirate Hat",
+      "description": "Only the most infamous pirate could pull off this look.",
+      "spriteIndex": 76
+    },
+    {
+      "id": "H77",
+      "name": "Pink Bow",
+      "description": "This huge bow makes quite a statement!",
+      "spriteIndex": 77,
+      "soldBy": [
+        {
+          "shop": "Volcano Dwarf",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "H78",
+      "name": "Frog Hat",
+      "description": "A slimy friend that lives on your dome.",
+      "spriteIndex": 78
+    },
+    {
+      "id": "H79",
+      "name": "Small Cap",
+      "description": "It's a more aerodynamic style of cap.",
+      "spriteIndex": 79,
+      "soldBy": [
+        {
+          "shop": "Island Trader",
+          "currency": "Taro Root",
+          "currencyAmount": 30,
+          "day": "Monday"
+        }
+      ]
+    },
+    {
+      "id": "H80",
+      "name": "Bluebird Mask",
+      "description": "Wear this to look just like your favorite island trader.",
+      "spriteIndex": 80,
+      "soldBy": [
+        {
+          "shop": "Island Trader",
+          "currency": "Taro Root",
+          "currencyAmount": 30,
+          "day": "Wednesday"
+        }
+      ]
+    },
+    {
+      "id": "H81",
+      "name": "Deluxe Cowboy Hat",
+      "description": "A cowboy hat with a more extreme shape.",
+      "spriteIndex": 81,
+      "soldBy": [
+        {
+          "shop": "Island Trader",
+          "currency": "Taro Root",
+          "currencyAmount": 30,
+          "day": "Friday"
+        }
+      ]
+    },
+    {
+      "id": "H82",
+      "name": "Mr. Qi's Hat",
+      "description": "A replica of Mr. Qi's iconic hat.",
+      "spriteIndex": 82,
+      "soldBy": [
+        {
+          "shop": "Qi's Walnut Room",
+          "currency": "Qi Gem",
+          "currencyAmount": 5
+        }
+      ]
+    },
+    {
+      "id": "H83",
+      "name": "Dark Cowboy Hat",
+      "description": "A cowboy hat in fashionable black.",
+      "spriteIndex": 83
+    },
+    {
+      "id": "H84",
+      "name": "Radioactive Goggles",
+      "description": "Doesn't actually provide any protection from radiation.",
+      "spriteIndex": 84
+    },
+    {
+      "id": "H85",
+      "name": "Swashbuckler Hat",
+      "description": "The classic swashbuckler look.",
+      "spriteIndex": 85
+    },
+    {
+      "id": "H86",
+      "name": "Qi Mask",
+      "description": "???",
+      "spriteIndex": 86
+    },
+    {
+      "id": "H87",
+      "name": "Star Helmet",
+      "description": "A red hat with stars on it.",
+      "spriteIndex": 87
+    },
+    {
+      "id": "H88",
+      "name": "Sunglasses",
+      "description": "These give you a relaxed look.",
+      "spriteIndex": 88
+    },
+    {
+      "id": "H89",
+      "name": "Goggles",
+      "description": "These will make you look very safe.",
+      "spriteIndex": 89
+    },
+    {
+      "id": "H90",
+      "name": "Forager's Hat",
+      "description": "It's a forager's delight.",
+      "spriteIndex": 90
+    },
+    {
+      "id": "H91",
+      "name": "Tiger Hat",
+      "description": "Makes you look like a beautiful tiger.",
+      "spriteIndex": 91
+    },
+    {
+      "id": "H92",
+      "name": "???",
+      "description": "???",
+      "spriteIndex": 92
+    },
+    {
+      "id": "H93",
+      "name": "Warrior Helmet",
+      "description": "An Ostrich eggshell repurposed into a helmet.",
+      "spriteIndex": 93
+    },
+    {
+      "id": "HAbigailsBow",
+      "name": "Abigail's Bow",
+      "description": "It's just like Abby's.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HTricornHat",
+      "name": "Tricorn Hat",
+      "description": "It's a traditional hat for naval officers.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HJojaCap",
+      "name": "Joja Cap",
+      "description": "An official Joja Cap. Made from 100% polyester.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HLaurelWreathCrown",
+      "name": "Laurel Wreath Crown",
+      "description": "A garland of leaves shaped into a lovely crown.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HGilsHat",
+      "name": "Gil's Hat",
+      "description": "It's the same hat that Gil wears.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HBlueBow",
+      "name": "Blue Bow",
+      "description": "This huge bow makes quite a statement!",
+      "spriteIndex": null
+    },
+    {
+      "id": "HDarkVelvetBow",
+      "name": "Dark Velvet Bow",
+      "description": "A big, floppy bow made of dark velvet.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HMummyMask",
+      "name": "Mummy Mask",
+      "description": "A large mummy mask... frightening!",
+      "spriteIndex": null
+    },
+    {
+      "id": "HBucketHat",
+      "name": "Bucket Hat",
+      "description": "A simple hat with a short brim.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HSquidHat",
+      "name": "Squid Hat",
+      "description": "It's your chance to wear a squid on the head.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HSportsCap",
+      "name": "Sports Cap",
+      "description": "The cap has a vintage team logo on it.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "HRedFez",
+      "name": "Red Fez",
+      "description": "A unique hat made popular by the famous merchant pig.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Traveling Merchant",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "HRaccoonHat",
+      "name": "Raccoon Hat",
+      "description": "A classic hat from the old frontier days.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HSteelPanHat",
+      "name": "Steel Pan",
+      "description": "You place the steel pan on your head...",
+      "spriteIndex": null
+    },
+    {
+      "id": "HGoldPanHat",
+      "name": "Gold Pan",
+      "description": "You place the gold pan on your head...",
+      "spriteIndex": null
+    },
+    {
+      "id": "HIridiumPanHat",
+      "name": "Iridium Pan",
+      "description": "You place the iridium pan on your head...",
+      "spriteIndex": null
+    },
+    {
+      "id": "HMysteryHat",
+      "name": "Mystery Hat",
+      "description": "Made from the leftovers of a Mystery Box.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HDarkBallcap",
+      "name": "Dark Ballcap",
+      "description": "It fits perfectly on your head.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HLeprechuanHat",
+      "name": "Leprechaun Hat",
+      "description": "The previous owner must've had a big head for a Leprechaun.",
+      "spriteIndex": null
+    },
+    {
+      "id": "HJunimoHat",
+      "name": "Junimo Hat",
+      "description": "To honor our little buddies...",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 25000
+        }
+      ]
+    },
+    {
+      "id": "HPaperHat",
+      "name": "Paper Hat",
+      "description": "It's made out of special paper that won't disintegrate in the rain.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "HPageboyCap",
+      "name": "Pageboy Cap",
+      "description": "For some reason, it makes you want to sell newspapers.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "HJesterHat",
+      "name": "Jester Hat",
+      "description": "Put your inner clown on display.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 25000
+        }
+      ]
+    },
+    {
+      "id": "HBlueRibbon",
+      "name": "Blue Ribbon",
+      "description": "A lovely ribbon that sits behind the head.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "HGovernorsHat",
+      "name": "Governor's Hat",
+      "description": "A replica of the Governor's iconic hat.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "HWhiteBow",
+      "name": "White Bow",
+      "description": "A bow as white as snow.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "HSpaceHelmet",
+      "name": "Space Helmet",
+      "description": "Warning: This helmet has not actually been tested in outer space.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 20000
+        }
+      ]
+    },
+    {
+      "id": "HInfinityCrown",
+      "name": "Infinity Crown",
+      "description": "It's made from an exotic metal you've never seen before.",
+      "spriteIndex": null,
+      "soldBy": [
+        {
+          "shop": "Hat Mouse",
+          "price": 20000
+        }
+      ]
+    }
+  ],
+  "clothing": [
+    {
+      "id": "S1000",
+      "name": "Classic Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 0
+    },
+    {
+      "id": "S1001",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 1
+    },
+    {
+      "id": "S1002",
+      "name": "Mint Blouse",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 2
+    },
+    {
+      "id": "S1003",
+      "name": "Dark Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 3
+    },
+    {
+      "id": "S1004",
+      "name": "Skull Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 4
+    },
+    {
+      "id": "S1005",
+      "name": "Light Blue Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 5
+    },
+    {
+      "id": "S1006",
+      "name": "Tan Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 6
+    },
+    {
+      "id": "S1007",
+      "name": "Green Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 7
+    },
+    {
+      "id": "S1008",
+      "name": "\"Good Grief\" Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 8
+    },
+    {
+      "id": "S1009",
+      "name": "Aquamarine Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 9
+    },
+    {
+      "id": "S1010",
+      "name": "Suit Top",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 10
+    },
+    {
+      "id": "S1011",
+      "name": "Green Belted Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 11
+    },
+    {
+      "id": "S1012",
+      "name": "Lime Green Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 12
+    },
+    {
+      "id": "S1013",
+      "name": "Red Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 13
+    },
+    {
+      "id": "S1014",
+      "name": "Skeleton Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 14
+    },
+    {
+      "id": "S1015",
+      "name": "Orange Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 15
+    },
+    {
+      "id": "S1016",
+      "name": "Night Sky Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 16
+    },
+    {
+      "id": "S1017",
+      "name": "Mayoral Suspenders",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 17
+    },
+    {
+      "id": "S1018",
+      "name": "Brown Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 18
+    },
+    {
+      "id": "S1019",
+      "name": "Sailor Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 19
+    },
+    {
+      "id": "S1020",
+      "name": "Green Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 20
+    },
+    {
+      "id": "S1021",
+      "name": "Yellow and Green Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 21
+    },
+    {
+      "id": "S1022",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 22
+    },
+    {
+      "id": "S1023",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 23
+    },
+    {
+      "id": "S1024",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 24
+    },
+    {
+      "id": "S1025",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 25
+    },
+    {
+      "id": "S1026",
+      "name": "Light Blue Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 26
+    },
+    {
+      "id": "S1027",
+      "name": "Pink Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 27
+    },
+    {
+      "id": "S1028",
+      "name": "Heart Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 28
+    },
+    {
+      "id": "S1029",
+      "name": "Work Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 29
+    },
+    {
+      "id": "S1030",
+      "name": "Store Owner's Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 30
+    },
+    {
+      "id": "S1031",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 31
+    },
+    {
+      "id": "S1032",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 32
+    },
+    {
+      "id": "S1033",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 33
+    },
+    {
+      "id": "S1034",
+      "name": "Green Tunic",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 34
+    },
+    {
+      "id": "S1035",
+      "name": "Fancy Red Blouse",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 35
+    },
+    {
+      "id": "S1036",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 36
+    },
+    {
+      "id": "S1037",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 37
+    },
+    {
+      "id": "S1038",
+      "name": "Plain Shirt (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 38
+    },
+    {
+      "id": "S1039",
+      "name": "Retro Rainbow Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 39
+    },
+    {
+      "id": "S1040",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 40
+    },
+    {
+      "id": "S1041",
+      "name": "Plain Shirt (F)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 41
+    },
+    {
+      "id": "S1042",
+      "name": "Lime Green Tunic",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 42
+    },
+    {
+      "id": "S1043",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 43
+    },
+    {
+      "id": "S1044",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 44
+    },
+    {
+      "id": "S1045",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 45
+    },
+    {
+      "id": "S1046",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 46
+    },
+    {
+      "id": "S1047",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 47
+    },
+    {
+      "id": "S1048",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 48
+    },
+    {
+      "id": "S1049",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 49
+    },
+    {
+      "id": "S1050",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 50
+    },
+    {
+      "id": "S1051",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 51
+    },
+    {
+      "id": "S1052",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 52
+    },
+    {
+      "id": "S1053",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 53
+    },
+    {
+      "id": "S1054",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 54
+    },
+    {
+      "id": "S1055",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 55
+    },
+    {
+      "id": "S1056",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 56
+    },
+    {
+      "id": "S1057",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 57
+    },
+    {
+      "id": "S1058",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 58
+    },
+    {
+      "id": "S1059",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 59
+    },
+    {
+      "id": "S1060",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 60
+    },
+    {
+      "id": "S1061",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 61
+    },
+    {
+      "id": "S1062",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 62
+    },
+    {
+      "id": "S1063",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 63
+    },
+    {
+      "id": "S1064",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 64
+    },
+    {
+      "id": "S1065",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 65
+    },
+    {
+      "id": "S1066",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 66
+    },
+    {
+      "id": "S1067",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 67
+    },
+    {
+      "id": "S1068",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 68
+    },
+    {
+      "id": "S1069",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 69
+    },
+    {
+      "id": "S1070",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 70
+    },
+    {
+      "id": "S1071",
+      "name": "White Overalls Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 71
+    },
+    {
+      "id": "S1072",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 72
+    },
+    {
+      "id": "S1073",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 73
+    },
+    {
+      "id": "S1074",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 74
+    },
+    {
+      "id": "S1075",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 75
+    },
+    {
+      "id": "S1076",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 76
+    },
+    {
+      "id": "S1077",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 77
+    },
+    {
+      "id": "S1078",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 78
+    },
+    {
+      "id": "S1079",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 79
+    },
+    {
+      "id": "S1080",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 80
+    },
+    {
+      "id": "S1081",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 81
+    },
+    {
+      "id": "S1082",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 82
+    },
+    {
+      "id": "S1083",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 83
+    },
+    {
+      "id": "S1084",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 84
+    },
+    {
+      "id": "S1085",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 85
+    },
+    {
+      "id": "S1086",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 86
+    },
+    {
+      "id": "S1087",
+      "name": "Neat Bow Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 87
+    },
+    {
+      "id": "S1088",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 88
+    },
+    {
+      "id": "S1089",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 89
+    },
+    {
+      "id": "S1090",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 90
+    },
+    {
+      "id": "S1091",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 91
+    },
+    {
+      "id": "S1092",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 92
+    },
+    {
+      "id": "S1093",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 93
+    },
+    {
+      "id": "S1094",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 94
+    },
+    {
+      "id": "S1095",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 95
+    },
+    {
+      "id": "S1096",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 96
+    },
+    {
+      "id": "S1097",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 97
+    },
+    {
+      "id": "S1098",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 98
+    },
+    {
+      "id": "S1099",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 99
+    },
+    {
+      "id": "S1100",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 100
+    },
+    {
+      "id": "S1101",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 101
+    },
+    {
+      "id": "S1102",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 102
+    },
+    {
+      "id": "S1103",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 103
+    },
+    {
+      "id": "S1104",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 104
+    },
+    {
+      "id": "S1105",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 105
+    },
+    {
+      "id": "S1106",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 106
+    },
+    {
+      "id": "S1107",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 107
+    },
+    {
+      "id": "S1108",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 108
+    },
+    {
+      "id": "S1109",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 109
+    },
+    {
+      "id": "S1110",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 110
+    },
+    {
+      "id": "S1111",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 111
+    },
+    {
+      "id": "S1112",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 112
+    },
+    {
+      "id": "S1113",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 113
+    },
+    {
+      "id": "S1114",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 114
+    },
+    {
+      "id": "S1115",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 115
+    },
+    {
+      "id": "S1116",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 116
+    },
+    {
+      "id": "S1117",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 117
+    },
+    {
+      "id": "S1118",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 118
+    },
+    {
+      "id": "S1119",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 119
+    },
+    {
+      "id": "S1120",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 120
+    },
+    {
+      "id": "S1121",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 121
+    },
+    {
+      "id": "S1122",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 122
+    },
+    {
+      "id": "S1123",
+      "name": "Shirt And Tie",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 123
+    },
+    {
+      "id": "S1124",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 124
+    },
+    {
+      "id": "S1125",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 125
+    },
+    {
+      "id": "S1126",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 126
+    },
+    {
+      "id": "S1127",
+      "name": "Emily's Magic Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 127
+    },
+    {
+      "id": "S1128",
+      "name": "Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 128
+    },
+    {
+      "id": "S1129",
+      "name": "Tank Top (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 129
+    },
+    {
+      "id": "S1130",
+      "name": "Tank Top (F)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 130
+    },
+    {
+      "id": "S1131",
+      "name": "Cowboy Poncho",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 131
+    },
+    {
+      "id": "S1132",
+      "name": "Crop Tank Top (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 132
+    },
+    {
+      "id": "S1133",
+      "name": "Crop Tank Top (F)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 133
+    },
+    {
+      "id": "S1134",
+      "name": "Bikini Top",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 134
+    },
+    {
+      "id": "S1135",
+      "name": "Wumbus Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 135
+    },
+    {
+      "id": "S1136",
+      "name": "80's Shirt (F)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 136
+    },
+    {
+      "id": "S1137",
+      "name": "Letterman Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 137
+    },
+    {
+      "id": "S1138",
+      "name": "Black Leather Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 138
+    },
+    {
+      "id": "S1139",
+      "name": "Strapped Top",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 139
+    },
+    {
+      "id": "S1140",
+      "name": "Button Down Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 140
+    },
+    {
+      "id": "S1141",
+      "name": "Crop Top Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 141
+    },
+    {
+      "id": "S1142",
+      "name": "Tube Top",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 142
+    },
+    {
+      "id": "S1143",
+      "name": "Tie Dye Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 143
+    },
+    {
+      "id": "S1144",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 144
+    },
+    {
+      "id": "S1145",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 145
+    },
+    {
+      "id": "S1146",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 146
+    },
+    {
+      "id": "S1147",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 147
+    },
+    {
+      "id": "S1148",
+      "name": "Steel Breastplate",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 148
+    },
+    {
+      "id": "S1149",
+      "name": "Copper Breastplate",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 149
+    },
+    {
+      "id": "S1150",
+      "name": "Gold Breastplate",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 150
+    },
+    {
+      "id": "S1151",
+      "name": "Iridium Breastplate",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 151
+    },
+    {
+      "id": "S1152",
+      "name": "80's Shirt (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 152
+    },
+    {
+      "id": "S1153",
+      "name": "Fake Muscles Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 153
+    },
+    {
+      "id": "S1154",
+      "name": "Flannel Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 154
+    },
+    {
+      "id": "S1155",
+      "name": "Bomber Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 155
+    },
+    {
+      "id": "S1156",
+      "name": "Caveman Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 156
+    },
+    {
+      "id": "S1157",
+      "name": "Fishing Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 157
+    },
+    {
+      "id": "S1158",
+      "name": "Fish Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 158
+    },
+    {
+      "id": "S1159",
+      "name": "Shirt And Belt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 159
+    },
+    {
+      "id": "S1160",
+      "name": "Gray Hoodie",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 160
+    },
+    {
+      "id": "S1161",
+      "name": "Blue Hoodie",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 161
+    },
+    {
+      "id": "S1162",
+      "name": "Red Hoodie",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 162
+    },
+    {
+      "id": "S1163",
+      "name": "Denim Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 163
+    },
+    {
+      "id": "S1164",
+      "name": "Track Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 164
+    },
+    {
+      "id": "S1165",
+      "name": "White Gi",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 165
+    },
+    {
+      "id": "S1166",
+      "name": "Orange Gi",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 166
+    },
+    {
+      "id": "S1167",
+      "name": "Gray Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 167
+    },
+    {
+      "id": "S1168",
+      "name": "Kelp Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 168
+    },
+    {
+      "id": "S1169",
+      "name": "Studded Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 169
+    },
+    {
+      "id": "S1170",
+      "name": "Gaudy Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 170
+    },
+    {
+      "id": "S1171",
+      "name": "Oasis Gown",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 171
+    },
+    {
+      "id": "S1172",
+      "name": "Blacksmith Apron",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 172
+    },
+    {
+      "id": "S1173",
+      "name": "Neat Bow Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 173
+    },
+    {
+      "id": "S1174",
+      "name": "High-Waisted Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 174
+    },
+    {
+      "id": "S1175",
+      "name": "High-Waisted Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 175
+    },
+    {
+      "id": "S1176",
+      "name": "Basic Pullover (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 176
+    },
+    {
+      "id": "S1177",
+      "name": "Basic Pullover (F)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 177
+    },
+    {
+      "id": "S1178",
+      "name": "Turtleneck Sweater",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 178
+    },
+    {
+      "id": "S1179",
+      "name": "Iridium Energy Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 179
+    },
+    {
+      "id": "S1180",
+      "name": "Tunnelers Jersey",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 180
+    },
+    {
+      "id": "S1181",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 181
+    },
+    {
+      "id": "S1182",
+      "name": "Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 182
+    },
+    {
+      "id": "S1183",
+      "name": "Gray Suit",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 183
+    },
+    {
+      "id": "S1184",
+      "name": "Red Tuxedo",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 184
+    },
+    {
+      "id": "S1185",
+      "name": "Navy Tuxedo",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 185
+    },
+    {
+      "id": "S1186",
+      "name": "Holiday Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 186
+    },
+    {
+      "id": "S1187",
+      "name": "Leafy Top",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 187
+    },
+    {
+      "id": "S1188",
+      "name": "Goodnight Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 188
+    },
+    {
+      "id": "S1189",
+      "name": "Green Belted Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 189
+    },
+    {
+      "id": "S1190",
+      "name": "Happy Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 190
+    },
+    {
+      "id": "S1191",
+      "name": "Shirt with Bow",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 191
+    },
+    {
+      "id": "S1192",
+      "name": "Jester Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 192
+    },
+    {
+      "id": "S1193",
+      "name": "Ocean Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 193
+    },
+    {
+      "id": "S1194",
+      "name": "Dark Striped Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 194
+    },
+    {
+      "id": "S1195",
+      "name": "Bandana Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 195
+    },
+    {
+      "id": "S1196",
+      "name": "Backpack Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 196
+    },
+    {
+      "id": "S1197",
+      "name": "Purple Blouse",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 197
+    },
+    {
+      "id": "S1198",
+      "name": "Vintage Polo",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 198
+    },
+    {
+      "id": "S1199",
+      "name": "Toga Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 199
+    },
+    {
+      "id": "S1200",
+      "name": "Star Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 200
+    },
+    {
+      "id": "S1201",
+      "name": "Classy Top (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 201
+    },
+    {
+      "id": "S1202",
+      "name": "Classy Top (F)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 202
+    },
+    {
+      "id": "S1203",
+      "name": "Bandana Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 203
+    },
+    {
+      "id": "S1204",
+      "name": "Vacation Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 204
+    },
+    {
+      "id": "S1205",
+      "name": "Green Thumb Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 205
+    },
+    {
+      "id": "S1206",
+      "name": "Bandana Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 206
+    },
+    {
+      "id": "S1207",
+      "name": "Slime Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 207
+    },
+    {
+      "id": "S1208",
+      "name": "Excavator Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 208
+    },
+    {
+      "id": "S1209",
+      "name": "Sports Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 209
+    },
+    {
+      "id": "S1210",
+      "name": "Heart Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 210
+    },
+    {
+      "id": "S1211",
+      "name": "Dark Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 211
+    },
+    {
+      "id": "S1212",
+      "name": "Sunset Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 212
+    },
+    {
+      "id": "S1213",
+      "name": "Chef Coat",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 213
+    },
+    {
+      "id": "S1214",
+      "name": "Shirt O' The Sea",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 214
+    },
+    {
+      "id": "S1215",
+      "name": "Arcane Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 215
+    },
+    {
+      "id": "S1216",
+      "name": "Plain Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 216
+    },
+    {
+      "id": "S1217",
+      "name": "Sleeveless Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 217
+    },
+    {
+      "id": "S1218",
+      "name": "Cardigan",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 218
+    },
+    {
+      "id": "S1219",
+      "name": "Yoba Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 219
+    },
+    {
+      "id": "S1220",
+      "name": "Necklace Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 220
+    },
+    {
+      "id": "S1221",
+      "name": "Belted Coat",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 221
+    },
+    {
+      "id": "S1222",
+      "name": "Gold Trimmed Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 222
+    },
+    {
+      "id": "S1223",
+      "name": "Prismatic Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 223
+    },
+    {
+      "id": "S1224",
+      "name": "Pendant Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 224
+    },
+    {
+      "id": "S1225",
+      "name": "High Heat Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 225
+    },
+    {
+      "id": "S1226",
+      "name": "Flames Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 226
+    },
+    {
+      "id": "S1227",
+      "name": "Antiquity Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 227
+    },
+    {
+      "id": "S1228",
+      "name": "Soft Arrow Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 228
+    },
+    {
+      "id": "S1229",
+      "name": "Doll Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 229
+    },
+    {
+      "id": "S1230",
+      "name": "Jewelry Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 230
+    },
+    {
+      "id": "S1231",
+      "name": "Canvas Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 231
+    },
+    {
+      "id": "S1232",
+      "name": "Trash Can Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 232
+    },
+    {
+      "id": "S1233",
+      "name": "Rusty Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 233
+    },
+    {
+      "id": "S1234",
+      "name": "Circuitboard Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 234
+    },
+    {
+      "id": "S1235",
+      "name": "Fluffy Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 235
+    },
+    {
+      "id": "S1236",
+      "name": "Sauce-Stained Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 236
+    },
+    {
+      "id": "S1237",
+      "name": "Brown Suit",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 237
+    },
+    {
+      "id": "S1238",
+      "name": "Golden Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 238
+    },
+    {
+      "id": "S1239",
+      "name": "Captain's Uniform",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 239
+    },
+    {
+      "id": "S1240",
+      "name": "Officer Uniform",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 240
+    },
+    {
+      "id": "S1241",
+      "name": "Ranger Uniform",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 241
+    },
+    {
+      "id": "S1242",
+      "name": "Blue Long Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 242
+    },
+    {
+      "id": "S1243",
+      "name": "Regal Mantle",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 243
+    },
+    {
+      "id": "S1244",
+      "name": "Relic Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 244
+    },
+    {
+      "id": "S1245",
+      "name": "Bobo Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 245
+    },
+    {
+      "id": "S1246",
+      "name": "Fried Egg Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 246
+    },
+    {
+      "id": "S1247",
+      "name": "Burger Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 247
+    },
+    {
+      "id": "S1248",
+      "name": "Collared Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 248
+    },
+    {
+      "id": "S1249",
+      "name": "Toasted Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 249
+    },
+    {
+      "id": "S1250",
+      "name": "Carp Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 250
+    },
+    {
+      "id": "S1251",
+      "name": "Red Flannel Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 251
+    },
+    {
+      "id": "S1252",
+      "name": "Tortilla Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 252
+    },
+    {
+      "id": "S1253",
+      "name": "Warm Flannel Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 253
+    },
+    {
+      "id": "S1254",
+      "name": "Sugar Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 254
+    },
+    {
+      "id": "S1255",
+      "name": "Green Flannel Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 255
+    },
+    {
+      "id": "S1256",
+      "name": "Oil Stained Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 256
+    },
+    {
+      "id": "S1257",
+      "name": "Morel Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 257
+    },
+    {
+      "id": "S1258",
+      "name": "Spring Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 258
+    },
+    {
+      "id": "S1259",
+      "name": "Sailor Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 259
+    },
+    {
+      "id": "S1260",
+      "name": "Rain Coat",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 260
+    },
+    {
+      "id": "S1261",
+      "name": "Sailor Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 261
+    },
+    {
+      "id": "S1262",
+      "name": "Dark Bandana Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 262
+    },
+    {
+      "id": "S1263",
+      "name": "Dark Highlight Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 263
+    },
+    {
+      "id": "S1264",
+      "name": "Omni Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 264
+    },
+    {
+      "id": "S1265",
+      "name": "Bridal Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 265
+    },
+    {
+      "id": "S1266",
+      "name": "Brown Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 266
+    },
+    {
+      "id": "S1267",
+      "name": "Orange Bow Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 267
+    },
+    {
+      "id": "S1268",
+      "name": "White Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 268
+    },
+    {
+      "id": "S1269",
+      "name": "Pour-Over Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 269
+    },
+    {
+      "id": "S1270",
+      "name": "Green Jacket Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 270
+    },
+    {
+      "id": "S1271",
+      "name": "Short Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 271
+    },
+    {
+      "id": "S1272",
+      "name": "Polka Dot Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 272
+    },
+    {
+      "id": "S1273",
+      "name": "White Dot Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 273
+    },
+    {
+      "id": "S1274",
+      "name": "Camo Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 274
+    },
+    {
+      "id": "S1275",
+      "name": "Dirt Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 275
+    },
+    {
+      "id": "S1276",
+      "name": "Crab Cake Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 276
+    },
+    {
+      "id": "S1277",
+      "name": "Silky Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 277
+    },
+    {
+      "id": "S1278",
+      "name": "Blue Buttoned Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 278
+    },
+    {
+      "id": "S1279",
+      "name": "Faded Denim Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 279
+    },
+    {
+      "id": "S1280",
+      "name": "Red Buttoned Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 280
+    },
+    {
+      "id": "S1281",
+      "name": "Green Buttoned Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 281
+    },
+    {
+      "id": "S1282",
+      "name": "Tomato Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 282
+    },
+    {
+      "id": "S1283",
+      "name": "Fringed Vest",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 283
+    },
+    {
+      "id": "S1284",
+      "name": "Globby Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 284
+    },
+    {
+      "id": "S1285",
+      "name": "Midnight Dog Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 285
+    },
+    {
+      "id": "S1286",
+      "name": "Shrimp Enthusiast Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 286
+    },
+    {
+      "id": "S1287",
+      "name": "Tea Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 287
+    },
+    {
+      "id": "S1288",
+      "name": "Trinket Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 290
+    },
+    {
+      "id": "S1289",
+      "name": "Darkness Suit",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 291
+    },
+    {
+      "id": "S1290",
+      "name": "Mineral Dog Jacket",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 292
+    },
+    {
+      "id": "S1291",
+      "name": "Magenta Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 293
+    },
+    {
+      "id": "S1292",
+      "name": "Ginger Overalls",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 294
+    },
+    {
+      "id": "S1293",
+      "name": "Banana Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 295
+    },
+    {
+      "id": "S1294",
+      "name": "Yellow Suit",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 296
+    },
+    {
+      "id": "S1295",
+      "name": "Hot Pink Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 297
+    },
+    {
+      "id": "S1296",
+      "name": "Tropical Sunrise Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 298
+    },
+    {
+      "id": "S1297",
+      "name": "Island Bikini",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 299
+    },
+    {
+      "id": "S1997",
+      "name": "Magic Sprinkle Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 272
+    },
+    {
+      "id": "S1998",
+      "name": "Prismatic Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 289
+    },
+    {
+      "id": "S1999",
+      "name": "Prismatic Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 288
+    },
+    {
+      "id": "SMysteryShirt",
+      "name": "Mystery Shirt",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 300
+    },
+    {
+      "id": "SSoftEdgePullover",
+      "name": "Basic Pullover (M)",
+      "type": "shirt",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 301
+    },
+    {
+      "id": "P0",
+      "name": "Farmer Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 0,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Shorts",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 1,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Long Dress",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 2,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Skirt",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 3,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Pleated Skirt",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 4,
+      "soldBy": [
+        {
+          "shop": "Sandy (Oasis)",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Dinosaur Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 5
+    },
+    {
+      "id": "P6",
+      "name": "Grass Skirt",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 6
+    },
+    {
+      "id": "P7",
+      "name": "Luau Skirt",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 7,
+      "soldBy": [
+        {
+          "shop": "Island Trader",
+          "currency": "Taro Root",
+          "currencyAmount": 50
+        }
+      ]
+    },
+    {
+      "id": "P8",
+      "name": "Genie Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 8
+    },
+    {
+      "id": "P9",
+      "name": "Tight Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 9
+    },
+    {
+      "id": "P10",
+      "name": "Baggy Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 10
+    },
+    {
+      "id": "P11",
+      "name": "Simple Dress",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 11
+    },
+    {
+      "id": "P12",
+      "name": "Relaxed Fit Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 12
+    },
+    {
+      "id": "P13",
+      "name": "Relaxed Fit Shorts",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": true,
+      "spriteIndex": 13
+    },
+    {
+      "id": "P14",
+      "name": "Polka Dot Shorts",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 14
+    },
+    {
+      "id": "P15",
+      "name": "Trimmed Lucky Purple Shorts",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 15
+    },
+    {
+      "id": "P998",
+      "name": "Prismatic Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 0
+    },
+    {
+      "id": "P999",
+      "name": "Prismatic Genie Pants",
+      "type": "pants",
+      "price": 50,
+      "canBeDyed": false,
+      "spriteIndex": 8
+    }
+  ]
 }

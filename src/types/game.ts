@@ -130,6 +130,67 @@ export interface ShopEntry {
   day?: string;
   /** Minimum year to be available, e.g. 2 means "Year 2 onward" */
   yearMin?: number;
+  /** Minimum mine floor reached before item appears (Adventure Guild). */
+  minMineLevel?: number;
+}
+
+// ── Wearables ─────────────────────────────────────────────────────────────────
+
+export type WeaponType = 'sword' | 'dagger' | 'club' | 'slingshot' | 'other';
+
+export interface WeaponDef {
+  /** 'W0', 'W4', … */
+  id: string;
+  name: string;
+  description?: string;
+  weaponType: WeaponType;
+  minDamage: number;
+  maxDamage: number;
+  /** Positive = faster than average, negative = slower. */
+  speed: number;
+  defense: number;
+  knockback: number;
+  /** 0–1, e.g. 0.02 = 2% */
+  critChance: number;
+  critMultiplier: number;
+  /** Index into weapons.png (16×16 tiles, 8 cols). */
+  spriteIndex: number;
+  soldBy?: ShopEntry[];
+}
+
+export interface BootsDef {
+  /** 'B504', 'B853', … */
+  id: string;
+  name: string;
+  description?: string;
+  defense: number;
+  immunity: number;
+  sellValue: number;
+  /** Index into springobjects.png (same grid as items). */
+  spriteIndex: number;
+  soldBy?: ShopEntry[];
+}
+
+export interface HatDef {
+  /** 'H0', 'H1', … */
+  id: string;
+  name: string;
+  description?: string;
+  /** Index into hats.png (20×20 tiles, 12 cols). */
+  spriteIndex: number;
+  soldBy?: ShopEntry[];
+}
+
+export interface ClothingDef {
+  /** 'S1000' for shirts, 'P0' for pants. */
+  id: string;
+  name: string;
+  type: 'shirt' | 'pants';
+  price: number;
+  canBeDyed: boolean;
+  /** Index into the clothing sprite sheet. */
+  spriteIndex: number;
+  soldBy?: ShopEntry[];
 }
 
 export interface FoodBuff {
@@ -494,4 +555,8 @@ export interface GameData {
   treeDefs: TreeDef[];
   /** Ginger Island farm (IslandWest). Separate from farmTypes — no seasons, no Robin buildings. */
   islandFarm?: IslandFarmDefinition;
+  weapons: WeaponDef[];
+  boots: BootsDef[];
+  hats: HatDef[];
+  clothing: ClothingDef[];
 }

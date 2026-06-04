@@ -24,6 +24,7 @@ import { MachinesPage } from './pages/MachinesPage';
 import { MuseumPage } from './pages/MuseumPage';
 import { ForagingPage } from './pages/ForagingPage';
 import { ShopsPage } from './pages/ShopsPage';
+import { WearablesPage } from './pages/WearablesPage';
 import { FishPondPage } from './pages/FishPondPage';
 import { JoinPage } from './pages/JoinPage';
 import { PerfectionPage } from './pages/PerfectionPage';
@@ -76,6 +77,7 @@ export function App() {
         <Route path="/museum" element={<MuseumPage />} />
         <Route path="/foraging" element={<ForagingPage />} />
         <Route path="/shops" element={<ShopsPage />} />
+        <Route path="/wearables" element={<WearablesPage />} />
         <Route path="/fish-pond" element={<FishPondPage />} />
         <Route path="/perfection" element={<PerfectionPage />} />
         <Route path="/join/:charCode" element={<JoinPage />} />

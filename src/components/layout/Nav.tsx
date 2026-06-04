@@ -29,6 +29,7 @@ const NAV_GROUPS: NavGroup[] = [
       { to: '/recipes',   label: 'Recipes',    icon: '🍳' },
       { to: '/foraging',  label: 'Foraging',   icon: '🍄' },
       { to: '/shops',     label: 'Shops',      icon: '🛒' },
+      { to: '/wearables', label: 'Wearables',  icon: '⚔️' },
       { to: '/fish',      label: 'Fish Guide', icon: '🎣' },
       { to: '/fish-pond', label: 'Fish Pond',  icon: '🐟' },
     ],

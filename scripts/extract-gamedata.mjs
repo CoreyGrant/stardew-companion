@@ -1500,20 +1500,22 @@ function extractMachineDefs(items) {
  * ShopId → display name.
  */
 const KEY_SHOP_NAMES = {
-  SeedShop:    "Pierre's General Store",
-  FishShop:    "Willy's Fish Shop",
-  Blacksmith:  'Clint (Blacksmith)',
-  Saloon:      'Saloon (Gus)',
-  Hospital:    'Harvey (Clinic)',
-  AnimalShop:  "Marnie's Ranch",
-  Sandy:       'Sandy (Oasis)',
-  IslandTrade: 'Island Trader',
-  Traveler:    'Traveling Merchant',
-  VolcanoShop: 'Volcano Dwarf',
-  Dwarf:       'Dwarf (mines)',
-  ShadowShop:  'Krobus (Sewer)',
-  DesertTrade: 'Desert Trader',
-  QiGemShop:   "Qi's Walnut Room",
+  SeedShop:      "Pierre's General Store",
+  FishShop:      "Willy's Fish Shop",
+  Blacksmith:    'Clint (Blacksmith)',
+  Saloon:        'Saloon (Gus)',
+  Hospital:      'Harvey (Clinic)',
+  AnimalShop:    "Marnie's Ranch",
+  Sandy:         'Sandy (Oasis)',
+  IslandTrade:   'Island Trader',
+  Traveler:      'Traveling Merchant',
+  VolcanoShop:   'Volcano Dwarf',
+  Dwarf:         'Dwarf (mines)',
+  ShadowShop:    'Krobus (Sewer)',
+  DesertTrade:   'Desert Trader',
+  QiGemShop:     "Qi's Walnut Room",
+  AdventureShop: "Adventurer's Guild",
+  HatMouse:      'Hat Mouse',
 };
 
 /**
@@ -1539,6 +1541,9 @@ function parseShopCondition(condition) {
     const d = dayM[1];
     result.day = d.charAt(0).toUpperCase() + d.slice(1).toLowerCase();
   }
+  // Mine floor requirement (Adventure Guild)
+  const mineM = condition.match(/MINE_LOWEST_LEVEL_REACHED\s+(\d+)/i);
+  if (mineM) result.minMineLevel = Number(mineM[1]);
   return result;
 }
 
@@ -1561,12 +1566,16 @@ function buildShopIndex() {
     for (const entry of shop.Items) {
       const itemId = entry.ItemId ?? entry.Id;
       if (!itemId || typeof itemId !== 'string') continue;
-      // Only process regular (O) items — skip BigCraftables, Furniture, Tools, recipes, random slots
-      if (!itemId.startsWith('(O)')) continue;
+      // Process (O) items and wearable types (W)=weapon, (B)=boots, (H)=hat, (S)=shirt, (P)=pants
+      const ALLOWED = ['(O)', '(W)', '(B)', '(H)', '(S)', '(P)'];
+      const prefix = ALLOWED.find(p => itemId.startsWith(p));
+      if (!prefix) continue;
       if (entry.IsRecipe) continue;
-      if (itemId.startsWith('RANDOM')) continue; // just in case
+      if (itemId.startsWith('RANDOM')) continue;
 
-      const cheatId = itemId.slice(3); // strip "(O)"
+      // cheatId: for (O) keep numeric ID; for wearables include type prefix: W4, B504, H0, S1000, P0
+      const rawId = itemId.slice(prefix.length);
+      const cheatId = prefix === '(O)' ? rawId : prefix.slice(1, 2) + rawId;
 
       const cond = parseShopCondition(entry.Condition);
 
@@ -1583,10 +1592,11 @@ function buildShopIndex() {
       const shopEntry = {
         shop: displayName,
         ...(entry.Price > 0 ? { price: entry.Price }                    : {}),
-        ...(currency        ? { currency, currencyAmount }               : {}),
-        ...(cond.season  ? { season: cond.season }                      : {}),
-        ...(cond.day     ? { day: cond.day }                            : {}),
-        ...(cond.yearMin ? { yearMin: cond.yearMin }                    : {}),
+        ...(currency             ? { currency, currencyAmount }          : {}),
+        ...(cond.season          ? { season: cond.season }               : {}),
+        ...(cond.day             ? { day: cond.day }                     : {}),
+        ...(cond.yearMin         ? { yearMin: cond.yearMin }             : {}),
+        ...(cond.minMineLevel    ? { minMineLevel: cond.minMineLevel }   : {}),
       };
 
       if (!index.has(cheatId)) index.set(cheatId, []);
@@ -1893,6 +1903,124 @@ function extractFishPondData(items) {
   return result;
 }
 
+// ── Wearable Extraction ───────────────────────────────────────────────────────
+
+const WEAPON_TYPE_MAP = { 0: 'sword', 1: 'dagger', 2: 'club', 3: 'other', 4: 'slingshot' };
+
+function resolveWearableText(raw, strings) {
+  if (!raw || !raw.startsWith('[LocalizedText')) return raw ?? null;
+  const key = raw.replace(/^\[LocalizedText [^\]]*:/, '').replace(/\]$/, '');
+  return strings?.[key] ?? key;
+}
+
+function extractWeapons(shopIndex) {
+  const path = join(DATA_DIR, 'Weapons.json');
+  if (!existsSync(path)) return [];
+  const raw     = JSON.parse(readFileSync(path, 'utf8'));
+  const strPath = join(STARDEW_CONTENT, 'Strings', 'Weapons.json');
+  const strings = existsSync(strPath) ? JSON.parse(readFileSync(strPath, 'utf8')) : {};
+  return Object.entries(raw).map(([id, w]) => {
+    const cheatId = 'W' + id;
+    return {
+      id: cheatId,
+      name: resolveWearableText(w.DisplayName, strings) ?? w.Name,
+      description: resolveWearableText(w.Description, strings) ?? undefined,
+      weaponType: WEAPON_TYPE_MAP[w.Type] ?? 'other',
+      minDamage: w.MinDamage,
+      maxDamage: w.MaxDamage,
+      speed: w.Speed,
+      defense: w.Defense,
+      knockback: w.Knockback,
+      critChance: w.CritChance,
+      critMultiplier: w.CritMultiplier,
+      spriteIndex: w.SpriteIndex,
+      ...(shopIndex.has(cheatId) ? { soldBy: shopIndex.get(cheatId) } : {}),
+    };
+  });
+}
+
+function extractBoots(shopIndex) {
+  const path = join(DATA_DIR, 'Boots.json');
+  if (!existsSync(path)) return [];
+  const raw = JSON.parse(readFileSync(path, 'utf8'));
+  return Object.entries(raw).map(([id, v]) => {
+    const parts   = typeof v === 'string' ? v.split('/') : Object.values(v);
+    const cheatId = 'B' + id;
+    return {
+      id: cheatId,
+      name:        parts[0] ?? id,
+      description: parts[1] ?? undefined,
+      sellValue:   parseInt(parts[2] ?? '0', 10),
+      defense:     parseInt(parts[3] ?? '0', 10),
+      immunity:    parseInt(parts[4] ?? '0', 10),
+      spriteIndex: parseInt(id, 10),   // boots use their numeric ID in springobjects.png
+      ...(shopIndex.has(cheatId) ? { soldBy: shopIndex.get(cheatId) } : {}),
+    };
+  });
+}
+
+function extractHats(shopIndex) {
+  const path = join(DATA_DIR, 'Hats.json');
+  if (!existsSync(path)) return [];
+  const raw = JSON.parse(readFileSync(path, 'utf8'));
+  return Object.entries(raw).map(([id, v]) => {
+    const parts   = typeof v === 'string' ? v.split('/') : Object.values(v);
+    const cheatId = 'H' + id;
+    return {
+      id: cheatId,
+      name:        parts[0] ?? id,
+      description: parts[1] ?? undefined,
+      spriteIndex: parseInt(id, 10),
+      ...(shopIndex.has(cheatId) ? { soldBy: shopIndex.get(cheatId) } : {}),
+    };
+  });
+}
+
+function extractClothing(shopIndex) {
+  const clothing = [];
+  // Shirts
+  const shirtsPath = join(DATA_DIR, 'Shirts.json');
+  if (existsSync(shirtsPath)) {
+    const raw = JSON.parse(readFileSync(shirtsPath, 'utf8'));
+    const strPath = join(STARDEW_CONTENT, 'Strings', 'Shirts.json');
+    const strings = existsSync(strPath) ? JSON.parse(readFileSync(strPath, 'utf8')) : {};
+    for (const [id, s] of Object.entries(raw)) {
+      if (!s.DisplayName) continue;
+      const cheatId = 'S' + id;
+      clothing.push({
+        id: cheatId,
+        name: resolveWearableText(s.DisplayName, strings) ?? s.Name ?? id,
+        type: 'shirt',
+        price: s.Price ?? 500,
+        canBeDyed: s.CanBeDyed ?? false,
+        spriteIndex: s.SpriteIndex ?? parseInt(id, 10),
+        ...(shopIndex.has(cheatId) ? { soldBy: shopIndex.get(cheatId) } : {}),
+      });
+    }
+  }
+  // Pants
+  const pantsPath = join(DATA_DIR, 'Pants.json');
+  if (existsSync(pantsPath)) {
+    const raw = JSON.parse(readFileSync(pantsPath, 'utf8'));
+    const strPath = join(STARDEW_CONTENT, 'Strings', 'Pants.json');
+    const strings = existsSync(strPath) ? JSON.parse(readFileSync(strPath, 'utf8')) : {};
+    for (const [id, p] of Object.entries(raw)) {
+      if (!p.DisplayName) continue;
+      const cheatId = 'P' + id;
+      clothing.push({
+        id: cheatId,
+        name: resolveWearableText(p.DisplayName, strings) ?? p.Name ?? id,
+        type: 'pants',
+        price: p.Price ?? 500,
+        canBeDyed: p.CanBeDyed ?? false,
+        spriteIndex: p.SpriteIndex ?? parseInt(id, 10),
+        ...(shopIndex.has(cheatId) ? { soldBy: shopIndex.get(cheatId) } : {}),
+      });
+    }
+  }
+  return clothing;
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -1947,6 +2075,14 @@ async function main() {
     }
   }
   console.log(`  ${shopTagged} items with shop source data (${priceResolved} prices computed from sell value)\n`);
+
+  // ── Wearables ──
+  console.log('Extracting wearables …');
+  const weapons  = extractWeapons(shopIndex);
+  const boots    = extractBoots(shopIndex);
+  const hats     = extractHats(shopIndex);
+  const clothing = extractClothing(shopIndex);
+  console.log(`  ${weapons.length} weapons · ${boots.length} boots · ${hats.length} hats · ${clothing.length} clothing\n`);
 
   // ── Geode sources ──
   console.log('Building geode index …');
@@ -2130,6 +2266,10 @@ async function main() {
     buildingDefs,
     treeDefs,
     ...(islandFarm ? { islandFarm } : {}),
+    weapons,
+    boots,
+    hats,
+    clothing,
   };
 
   writeFileSync(OUT_FILE, JSON.stringify(output, null, 2));
