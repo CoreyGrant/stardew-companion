@@ -3,83 +3,50 @@ import { useGameData } from '../contexts/GameDataContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { GameLink } from '../components/common/GameLink';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
+import { MultiSort, useMultiSort } from '../components/common/MultiSort';
+import type { ActiveSort, SortFieldDef } from '../components/common/MultiSort';
 import type { FishPondEntry, PondProduceItem, PondPopGate, Item } from '../types/game';
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
-
-function pct(chance: number): string {
-  return `${Math.round(chance * 100)}%`;
-}
-
+function pct(chance: number): string { return `${Math.round(chance * 100)}%`; }
 function spawnLabel(spawnTime: number): string {
-  if (spawnTime === -1 || spawnTime === 0) return 'Daily';
-  if (spawnTime === 1) return 'Daily';
+  if (spawnTime === -1 || spawnTime <= 1) return 'Daily';
   return `Every ${spawnTime}d`;
 }
 
-/** Derive a label for tag-based (non-specific-fish) entries */
 const TAG_LABELS: Record<string, string> = {
-  fish_legendary:    'Legendary Fish',
-  fish_desert:       'Desert Fish',
-  fish_semi_rare:    'Semi-Rare Fish',
-  fish_carnivorous:  'Carnivorous Fish',
-  'fish_freshwater,fish_crab_pot': 'Freshwater Crab Pot Fish',
-  'fish_ocean,fish_crab_pot':      'Ocean Crab Pot Fish',
-  fish_ocean:        'Ocean Fish',
-  fish_river:        'River Fish',
-  fish_lake:         'Lake Fish',
-  category_fish:     'All Other Fish (default)',
+  fish_legendary: 'Legendary Fish', fish_desert: 'Desert Fish', fish_semi_rare: 'Semi-Rare Fish',
+  fish_carnivorous: 'Carnivorous Fish', 'fish_freshwater,fish_crab_pot': 'Freshwater Crab Pot Fish',
+  'fish_ocean,fish_crab_pot': 'Ocean Crab Pot Fish', fish_ocean: 'Ocean Fish',
+  fish_river: 'River Fish', fish_lake: 'Lake Fish', category_fish: 'All Other Fish (default)',
 };
-
 function tagLabel(tags: string[]): string {
   const key = tags.join(',');
   if (TAG_LABELS[key]) return TAG_LABELS[key];
   return tags.map(t => t.replace(/^fish_|^category_/, '').replace(/_/g, ' ')).join(', ');
 }
 
-// ── Sub-components ─────────────────────────────────────────────────────────────
-
-interface ProduceTableProps {
-  produce: PondProduceItem[];
-  itemMap: Map<string, Item>;
-}
-
-function ProduceTable({ produce, itemMap }: ProduceTableProps) {
+function ProduceTable({ produce, itemMap }: { produce: PondProduceItem[]; itemMap: Map<string, Item> }) {
   if (produce.length === 0) return <p className="pond-empty">No special produce data.</p>;
-
   return (
     <div className="pond-produce">
       <div className="pond-produce__header">
-        <span>Population</span>
-        <span>Item</span>
-        <span className="pond-produce__col-chance">Chance</span>
-        <span>Qty</span>
+        <span>Population</span><span>Item</span>
+        <span className="pond-produce__col-chance">Chance</span><span>Qty</span>
       </div>
       {produce.map((p, i) => {
         const item = itemMap.get(p.itemId);
-        const qtyLabel = p.minStack === p.maxStack
-          ? String(p.minStack)
-          : `${p.minStack}–${p.maxStack}`;
+        const qtyLabel = p.minStack === p.maxStack ? String(p.minStack) : `${p.minStack}–${p.maxStack}`;
         return (
           <div key={i} className="pond-produce__row">
-            <span className="pond-produce__pop">
-              {p.minPop === 0 ? 'Any' : `${p.minPop}+`}
-            </span>
+            <span className="pond-produce__pop">{p.minPop === 0 ? 'Any' : `${p.minPop}+`}</span>
             <span className="pond-produce__item">
-              {item && item.spriteSheet && item.spriteIndex !== undefined && (
-                <SpriteIcon
-                  spriteSheet={item.spriteSheet}
-                  spriteIndex={item.spriteIndex}
-                  size={16}
-                />
+              {item?.spriteSheet && item.spriteIndex !== undefined && (
+                <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} size={16} />
               )}
               <GameLink type="item" id={item?.id ?? p.itemId}>{p.itemName}</GameLink>
             </span>
             <span className="pond-produce__col-chance">
-              <span
-                className="pond-produce__chance-bar"
-                style={{ '--pct': pct(p.chance) } as React.CSSProperties}
-              />
+              <span className="pond-produce__chance-bar" style={{ '--pct': pct(p.chance) } as React.CSSProperties} />
               <span className="pond-produce__chance-label">{pct(p.chance)}</span>
             </span>
             <span className="pond-produce__qty">{qtyLabel}</span>
@@ -90,15 +57,8 @@ function ProduceTable({ produce, itemMap }: ProduceTableProps) {
   );
 }
 
-interface GateListProps {
-  gates: PondPopGate[];
-  itemMap: Map<string, Item>;
-}
-
-function GateList({ gates, itemMap }: GateListProps) {
-  if (gates.length === 0) {
-    return <p className="pond-empty">No population quests.</p>;
-  }
+function GateList({ gates, itemMap }: { gates: PondPopGate[]; itemMap: Map<string, Item> }) {
+  if (gates.length === 0) return <p className="pond-empty">No population quests.</p>;
   return (
     <ul className="pond-gates">
       {gates.map((gate) => (
@@ -111,12 +71,8 @@ function GateList({ gates, itemMap }: GateListProps) {
               return (
                 <span key={idx} className="pond-gate__item">
                   {gi.quantity > 1 && <span className="pond-gate__qty">{gi.quantity}×</span>}
-                  {item && item.spriteSheet && item.spriteIndex !== undefined && (
-                    <SpriteIcon
-                      spriteSheet={item.spriteSheet}
-                      spriteIndex={item.spriteIndex}
-                      size={16}
-                    />
+                  {item?.spriteSheet && item.spriteIndex !== undefined && (
+                    <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} size={16} />
                   )}
                   <GameLink type="item" id={item?.id ?? gi.itemId}>{gi.itemName}</GameLink>
                   {idx < gate.items.length - 1 && <span className="pond-gate__sep">,</span>}
@@ -131,39 +87,26 @@ function GateList({ gates, itemMap }: GateListProps) {
 }
 
 interface PondCardProps {
-  entry: FishPondEntry;
-  itemMap: Map<string, Item>;
-  fishItemMap: Map<string, Item>;
-  expanded: boolean;
-  onToggle: () => void;
+  entry: FishPondEntry; itemMap: Map<string, Item>; fishItemMap: Map<string, Item>;
+  expanded: boolean; onToggle: () => void;
 }
-
 function PondCard({ entry, itemMap, fishItemMap, expanded, onToggle }: PondCardProps) {
-  const isSpecific = entry.fishItemIds.length > 0;
-  const primaryFishId = isSpecific ? entry.fishItemIds[0] : null;
-  const primaryFish   = primaryFishId ? fishItemMap.get(primaryFishId) : null;
-  const displayName   = isSpecific
-    ? entry.fishNames.join(' / ')
-    : tagLabel(entry.requiredTags);
-
+  const isSpecific  = entry.fishItemIds.length > 0;
+  const primaryFish = isSpecific ? fishItemMap.get(entry.fishItemIds[0]) : null;
+  const displayName = isSpecific ? entry.fishNames.join(' / ') : tagLabel(entry.requiredTags);
   return (
     <div className={`pond-card${expanded ? ' pond-card--open' : ''}`}>
       <button className="pond-card__head" onClick={onToggle} aria-expanded={expanded}>
         <div className="pond-card__fish">
-          {primaryFish && primaryFish.spriteSheet && primaryFish.spriteIndex !== undefined ? (
-            <SpriteIcon
-              spriteSheet={primaryFish.spriteSheet}
-              spriteIndex={primaryFish.spriteIndex}
-              size={24}
-            />
+          {primaryFish?.spriteSheet && primaryFish.spriteIndex !== undefined ? (
+            <SpriteIcon spriteSheet={primaryFish.spriteSheet} spriteIndex={primaryFish.spriteIndex} size={24} />
           ) : (
             <span className="pond-card__fish-emoji" aria-hidden="true">🐟</span>
           )}
           <span className="pond-card__name">
             {isSpecific
               ? <GameLink type="item" id={primaryFish?.id ?? entry.fishItemIds[0]}>{displayName}</GameLink>
-              : <span className="pond-card__generic-label">{displayName}</span>
-            }
+              : <span className="pond-card__generic-label">{displayName}</span>}
           </span>
         </div>
         <div className="pond-card__meta">
@@ -175,7 +118,6 @@ function PondCard({ entry, itemMap, fishItemMap, expanded, onToggle }: PondCardP
         </div>
         <span className="pond-card__chevron" aria-hidden="true">{expanded ? '▲' : '▼'}</span>
       </button>
-
       {expanded && (
         <div className="pond-card__body">
           <div className="pond-card__section">
@@ -192,24 +134,30 @@ function PondCard({ entry, itemMap, fishItemMap, expanded, onToggle }: PondCardP
   );
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
-
 type ViewMode = 'specific' | 'generic';
+
+const FISH_POND_SORT_FIELDS: SortFieldDef<FishPondEntry>[] = [
+  { id: 'name',    label: 'Name',           compareFn: (a, b) => (a.fishNames[0] ?? a.id).localeCompare(b.fishNames[0] ?? b.id), defaultDirection: 'asc'  },
+  { id: 'maxPop',  label: 'Max Population', compareFn: (a, b) => a.maxPopulation - b.maxPopulation,                              defaultDirection: 'desc' },
+  { id: 'produce', label: 'Produce Count',  compareFn: (a, b) => a.produce.length - b.produce.length,                            defaultDirection: 'desc' },
+  { id: 'spawn',   label: 'Spawn Frequency',compareFn: (a, b) => {
+    const ta = a.spawnTime <= 0 ? 1 : a.spawnTime;
+    const tb = b.spawnTime <= 0 ? 1 : b.spawnTime;
+    return ta - tb;
+  }, defaultDirection: 'asc' },
+];
+
+const DEFAULT_POND_SORTS: ActiveSort[] = [{ fieldId: 'name', direction: 'asc' }];
 
 export function FishPondPage() {
   usePageTitle('Fish Pond Guide');
   const { data } = useGameData();
-  const [query, setQuery]     = useState('');
-  const [view, setView]       = useState<ViewMode>('specific');
+  const [query,    setQuery]    = useState('');
+  const [view,     setView]     = useState<ViewMode>('specific');
+  const [sorts,    setSorts]    = useState<ActiveSort[]>(DEFAULT_POND_SORTS);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   const itemMap = useMemo(() => {
-    if (!data) return new Map<string, Item>();
-    return new Map(data.items.map(i => [i.cheatId, i]));
-  }, [data]);
-
-  // For fish-icon lookup, map fishItemIds (cheat IDs) to items
-  const fishItemMap = useMemo(() => {
     if (!data) return new Map<string, Item>();
     return new Map(data.items.map(i => [i.cheatId, i]));
   }, [data]);
@@ -222,8 +170,6 @@ export function FishPondPage() {
       if (e.fishItemIds.length > 0) specific.push(e);
       else generic.push(e);
     }
-    // Sort specific by fish name
-    specific.sort((a, b) => a.fishNames[0]?.localeCompare(b.fishNames[0] ?? '') ?? 0);
     return { specific, generic };
   }, [data]);
 
@@ -234,9 +180,11 @@ export function FishPondPage() {
     return list.filter(e =>
       e.fishNames.some(n => n.toLowerCase().includes(q)) ||
       e.produce.some(p => p.itemName.toLowerCase().includes(q)) ||
-      e.id.toLowerCase().includes(q)
+      e.id.toLowerCase().includes(q),
     );
   }, [view, specific, generic, query]);
+
+  const sorted = useMultiSort(filtered, sorts, FISH_POND_SORT_FIELDS);
 
   function toggle(id: string) {
     setExpanded(prev => {
@@ -264,31 +212,27 @@ export function FishPondPage() {
           onChange={(e) => setQuery(e.target.value)}
         />
         <div className="pond-view-tabs">
-          <button
-            className={`pond-view-tab${view === 'specific' ? ' pond-view-tab--active' : ''}`}
-            onClick={() => setView('specific')}
-          >
+          <button className={`pond-view-tab${view === 'specific' ? ' pond-view-tab--active' : ''}`} onClick={() => setView('specific')}>
             Named Fish ({specific.length})
           </button>
-          <button
-            className={`pond-view-tab${view === 'generic' ? ' pond-view-tab--active' : ''}`}
-            onClick={() => setView('generic')}
-          >
+          <button className={`pond-view-tab${view === 'generic' ? ' pond-view-tab--active' : ''}`} onClick={() => setView('generic')}>
             Fish Groups ({generic.length})
           </button>
         </div>
       </div>
 
+      <div className="fish-sort-bar">
+        <MultiSort fields={FISH_POND_SORT_FIELDS} value={sorts} onChange={setSorts} />
+      </div>
+
       <div className="pond-list">
-        {filtered.length === 0 && (
-          <p className="pond-empty">No matches.</p>
-        )}
-        {filtered.map(entry => (
+        {sorted.length === 0 && <p className="pond-empty">No matches.</p>}
+        {sorted.map(entry => (
           <PondCard
             key={entry.id}
             entry={entry}
             itemMap={itemMap}
-            fishItemMap={fishItemMap}
+            fishItemMap={itemMap}
             expanded={expanded.has(entry.id)}
             onToggle={() => toggle(entry.id)}
           />

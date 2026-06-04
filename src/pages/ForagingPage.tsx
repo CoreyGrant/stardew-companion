@@ -5,70 +5,60 @@ import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { SeasonSelector } from '../components/common/SeasonSelector';
 import { SeasonPips } from '../components/common/SeasonPips';
 import { ViewToggle } from '../components/common/ViewToggle';
+import { MultiSort, useMultiSort } from '../components/common/MultiSort';
+import type { ActiveSort, SortFieldDef } from '../components/common/MultiSort';
 import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
 import type { Item, Season } from '../types/game';
 
 type SeasonTab = Season | 'all';
-
 type LocationFilter = 'all' | 'outdoor' | 'beach' | 'cave' | 'desert' | 'island';
 
 const LOCATION_FILTERS: { id: LocationFilter; label: string; emoji: string }[] = [
-  { id: 'all',     label: 'All',      emoji: '' },
-  { id: 'outdoor', label: 'Outdoor',  emoji: '🌿' },
-  { id: 'beach',   label: 'Beach',    emoji: '🐚' },
-  { id: 'cave',    label: 'Cave',     emoji: '🕯️' },
-  { id: 'desert',  label: 'Desert',   emoji: '🌵' },
-  { id: 'island',  label: 'Island',   emoji: '🌴' },
+  { id: 'all',     label: 'All',     emoji: '' },
+  { id: 'outdoor', label: 'Outdoor', emoji: '🌿' },
+  { id: 'beach',   label: 'Beach',   emoji: '🐚' },
+  { id: 'cave',    label: 'Cave',    emoji: '🕯️' },
+  { id: 'desert',  label: 'Desert',  emoji: '🌵' },
+  { id: 'island',  label: 'Island',  emoji: '🌴' },
 ];
 
 export const FORAGE_LOCATION_COLOR: Record<string, string> = {
-  outdoor: '#4a7c59',
-  beach:   '#e6a817',
-  cave:    '#7c5cba',
-  desert:  '#c2620a',
-  island:  '#1e8ab4',
+  outdoor: '#4a7c59', beach: '#e6a817', cave: '#7c5cba', desert: '#c2620a', island: '#1e8ab4',
+};
+export const FORAGE_LOCATION_EMOJI: Record<string, string> = {
+  outdoor: '🌿', beach: '🐚', cave: '🕯️', desert: '🌵', island: '🌴',
 };
 
-export const FORAGE_LOCATION_EMOJI: Record<string, string> = {
-  outdoor: '🌿',
-  beach:   '🐚',
-  cave:    '🕯️',
-  desert:  '🌵',
-  island:  '🌴',
+const LOCATION_ORDER: Record<string, number> = {
+  outdoor: 0, beach: 1, cave: 2, desert: 3, island: 4,
 };
+
+const FORAGE_SORT_FIELDS: SortFieldDef<Item>[] = [
+  { id: 'name',     label: 'Name',       compareFn: (a, b) => a.name.localeCompare(b.name),                                                                       defaultDirection: 'asc'  },
+  { id: 'value',    label: 'Sell Value', compareFn: (a, b) => (a.sellValue ?? 0) - (b.sellValue ?? 0),                                                            defaultDirection: 'desc' },
+  { id: 'location', label: 'Location',   compareFn: (a, b) => (LOCATION_ORDER[a.forageLocation ?? ''] ?? 9) - (LOCATION_ORDER[b.forageLocation ?? ''] ?? 9),     defaultDirection: 'asc'  },
+];
+
+const DEFAULT_FORAGE_SORTS: ActiveSort[] = [{ fieldId: 'name', direction: 'asc' }];
 
 function ForageCard({ item, highlightSeason }: { item: Item; highlightSeason?: Season }) {
-  const loc = item.forageLocation ?? 'outdoor';
+  const loc   = item.forageLocation ?? 'outdoor';
   const color = FORAGE_LOCATION_COLOR[loc] ?? '#666';
   const emoji = FORAGE_LOCATION_EMOJI[loc] ?? '';
-  const isYearRound = ((item.seasons as string[] | undefined) ?? []).includes('all');
   const itemSeasons = (item.seasons as string[] | undefined) ?? [];
-
+  const isYearRound = itemSeasons.includes('all');
   return (
     <div className="forage-card">
       <span className="forage-card__sprite" aria-hidden="true">
         {item.spriteSheet && item.spriteIndex !== undefined ? (
-          <SpriteIcon
-            spriteSheet={item.spriteSheet}
-            spriteIndex={item.spriteIndex}
-            size={24}
-          />
-        ) : (
-          <span className="forage-card__sprite--fallback">🌿</span>
-        )}
+          <SpriteIcon spriteSheet={item.spriteSheet} spriteIndex={item.spriteIndex} size={24} />
+        ) : <span className="forage-card__sprite--fallback">🌿</span>}
       </span>
-
       <span className="forage-card__body">
-        <GameLink type="item" id={item.id} className="forage-card__name">
-          {item.name}
-        </GameLink>
+        <GameLink type="item" id={item.id} className="forage-card__name">{item.name}</GameLink>
         <span className="forage-card__meta">
-          <span
-            className="forage-card__loc"
-            style={{ background: color }}
-            title={`Found: ${loc}`}
-          >
+          <span className="forage-card__loc" style={{ background: color }} title={`Found: ${loc}`}>
             {emoji} {loc.charAt(0).toUpperCase() + loc.slice(1)}
           </span>
           {isYearRound && highlightSeason && (
@@ -76,7 +66,6 @@ function ForageCard({ item, highlightSeason }: { item: Item; highlightSeason?: S
           )}
         </span>
       </span>
-
       <span className="forage-card__right">
         <SeasonPips seasons={itemSeasons} highlight={highlightSeason} />
         <span className="forage-card__sell">{item.sellValue}g</span>
@@ -89,19 +78,17 @@ export function ForagingPage() {
   usePageTitle('Foraging Guide');
   const { data, loading, error } = useGameData();
 
-  const [seasonTab, setSeasonTab]       = useState<SeasonTab>('spring');
-  const [locationFilter, setLocFilter]  = useState<LocationFilter>('all');
-  const [search, setSearch]             = useState('');
-  const [viewMode, setViewMode]         = useViewMode('forage', 'tile');
+  const [seasonTab,      setSeasonTab] = useState<SeasonTab>('spring');
+  const [locationFilter, setLocFilter] = useState<LocationFilter>('all');
+  const [search,         setSearch]    = useState('');
+  const [sorts,          setSorts]     = useState<ActiveSort[]>(DEFAULT_FORAGE_SORTS);
+  const [viewMode,       setViewMode]  = useViewMode('forage', 'tile');
 
   const forageItems = useMemo(() => {
     if (!data) return [];
-    return data.items
-      .filter((i) => i.forageLocation !== undefined)
-      .sort((a, b) => a.name.localeCompare(b.name));
+    return data.items.filter((i) => i.forageLocation !== undefined);
   }, [data]);
 
-  // Counts per season (for tab badges)
   const seasonCounts = useMemo(() => {
     const counts: Record<string, number> = { all: 0, spring: 0, summer: 0, fall: 0, winter: 0 };
     for (const item of forageItems) {
@@ -117,22 +104,19 @@ export function ForagingPage() {
 
   const filtered = useMemo(() => {
     return forageItems.filter((item) => {
-      // Season tab filter
       if (seasonTab !== 'all') {
         const seasons: string[] = (item.seasons as string[] | undefined) ?? ['all'];
-        const isAll = seasons.includes('all');
-        if (!isAll && !seasons.includes(seasonTab)) return false;
+        if (!seasons.includes('all') && !seasons.includes(seasonTab)) return false;
       }
-      // Location filter
       if (locationFilter !== 'all' && item.forageLocation !== locationFilter) return false;
-      // Search
       if (search.trim()) {
-        const q = search.trim().toLowerCase();
-        if (!item.name.toLowerCase().includes(q)) return false;
+        if (!item.name.toLowerCase().includes(search.trim().toLowerCase())) return false;
       }
       return true;
     });
   }, [forageItems, seasonTab, locationFilter, search]);
+
+  const sorted = useMultiSort(filtered, sorts, FORAGE_SORT_FIELDS);
 
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
@@ -146,14 +130,8 @@ export function ForagingPage() {
         {forageItems.length} forageable items — wild plants, mushrooms, shells, and more
       </p>
 
-      {/* Season selector */}
-      <SeasonSelector
-        value={seasonTab}
-        onChange={setSeasonTab}
-        counts={seasonCounts}
-      />
+      <SeasonSelector value={seasonTab} onChange={setSeasonTab} counts={seasonCounts} />
 
-      {/* Location + search filters */}
       <div className="filter-bar filter-bar--top-gap">
         <input
           className="filter-bar__search"
@@ -176,21 +154,23 @@ export function ForagingPage() {
             {emoji} {label}
           </button>
         ))}
+      </div>
+
+      <div className="fish-sort-bar">
+        <MultiSort fields={FORAGE_SORT_FIELDS} value={sorts} onChange={setSorts} />
         <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
-      {/* Result count */}
       <p className="forage-result-count" role="status" aria-live="polite">
-        {filtered.length} item{filtered.length !== 1 ? 's' : ''}
+        {sorted.length} item{sorted.length !== 1 ? 's' : ''}
         {seasonTab !== 'all' && ` in ${seasonTab.charAt(0).toUpperCase() + seasonTab.slice(1)}`}
         {locationFilter !== 'all' && ` · ${LOCATION_FILTERS.find(l => l.id === locationFilter)?.label}`}
       </p>
 
-      {/* Item views */}
-      {filtered.length === 0 ? (
+      {sorted.length === 0 ? (
         <div className="empty-state">
           <p>No forage items match your filters.</p>
-          <button className="btn" onClick={() => { setSeasonTab('all'); setLocFilter('all'); setSearch(''); }}>
+          <button className="btn" onClick={() => { setSeasonTab('all'); setLocFilter('all'); setSearch(''); setSorts(DEFAULT_FORAGE_SORTS); }}>
             Clear filters
           </button>
         </div>
@@ -198,21 +178,17 @@ export function ForagingPage() {
         <>
           {viewMode === 'tile' && (
             <div className="forage-grid">
-              {filtered.map((item) => (
+              {sorted.map((item) => (
                 <ForageCard key={item.id} item={item} highlightSeason={highlight} />
               ))}
             </div>
           )}
-
           {viewMode === 'table' && (
             <div className="forage-table">
               <div className="forage-table__header">
-                <span>Item</span>
-                <span>Seasons</span>
-                <span>Location</span>
-                <span>Sell</span>
+                <span>Item</span><span>Seasons</span><span>Location</span><span>Sell</span>
               </div>
-              {filtered.map((item) => {
+              {sorted.map((item) => {
                 const loc   = item.forageLocation ?? 'outdoor';
                 const color = FORAGE_LOCATION_COLOR[loc] ?? '#666';
                 const emoji = FORAGE_LOCATION_EMOJI[loc] ?? '';
@@ -225,13 +201,8 @@ export function ForagingPage() {
                       ) : <span>🌿</span>}
                       <GameLink type="item" id={item.id}>{item.name}</GameLink>
                     </div>
-                    <div className="forage-row__seasons">
-                      <SeasonPips seasons={itemSeasons} />
-                    </div>
-                    <span
-                      className="forage-row__loc"
-                      style={{ background: color }}
-                    >
+                    <div className="forage-row__seasons"><SeasonPips seasons={itemSeasons} /></div>
+                    <span className="forage-row__loc" style={{ background: color }}>
                       {emoji} {loc.charAt(0).toUpperCase() + loc.slice(1)}
                     </span>
                     <span className="forage-row__sell">{item.sellValue}g</span>
