@@ -114,10 +114,10 @@ export function RecipesPage() {
         ))}
       </div>
 
-      <div className="recipe-search-bar">
+      <div className="filter-bar">
         <input
           type="search"
-          className="recipe-search-bar__input"
+          className="filter-bar__search"
           placeholder="Search recipes or ingredients"
           value={search}
           onChange={e => setSearch(e.target.value)}

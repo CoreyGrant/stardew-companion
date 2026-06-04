@@ -204,13 +204,15 @@ export function FishPondPage() {
       </p>
 
       <div className="pond-toolbar">
-        <input
-          type="search"
-          className="pond-search"
-          placeholder="Search fish or produce"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        <div className="filter-bar">
+          <input
+            type="search"
+            className="filter-bar__search"
+            placeholder="Search fish or produce"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
         <div className="pond-view-tabs">
           <button className={`pond-view-tab${view === 'specific' ? ' pond-view-tab--active' : ''}`} onClick={() => setView('specific')}>
             Named Fish ({specific.length})
