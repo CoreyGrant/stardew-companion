@@ -4,13 +4,16 @@ import { GameLink } from '../components/common/GameLink';
 import { SeasonSelector } from '../components/common/SeasonSelector';
 import { SeasonPips } from '../components/common/SeasonPips';
 import { ViewToggle } from '../components/common/ViewToggle';
+import { MultiSort, useMultiSort } from '../components/common/MultiSort';
+import type { SortFieldDef } from '../components/common/MultiSort';
+import type { ActiveSort } from '../components/common/MultiSort';
 import { useViewMode } from '../hooks/useViewMode';
 import { usePageTitle } from '../hooks/usePageTitle';
+import type { FishData } from '../types/game';
 import type { Season } from '../types/game';
 
-type SeasonFilter = Season | 'all';
+type SeasonFilter  = Season | 'all';
 type WeatherFilter = 'any' | 'sunny' | 'rainy';
-type SortKey = 'name' | 'difficulty' | 'value';
 
 const WEATHER_FILTERS: { id: WeatherFilter; label: string; icon: string }[] = [
   { id: 'any',   label: 'Any Weather', icon: '🌤️' },
@@ -44,54 +47,94 @@ function DifficultyBar({ value }: { value: number }) {
   );
 }
 
+const DEFAULT_FISH_SORTS: ActiveSort[] = [{ fieldId: 'name', direction: 'asc' }];
+
 export function FishGuidePage() {
   usePageTitle('Fish Guide');
   const { data, loading, error } = useGameData();
-  const [season, setSeason]   = useState<SeasonFilter>('all');
-  const [weather, setWeather] = useState<WeatherFilter>('any');
-  const [sort, setSort]       = useState<SortKey>('name');
-  const [search, setSearch]   = useState('');
-  const [showTrap, setShowTrap] = useState(true);
+  const [season,       setSeason]       = useState<SeasonFilter>('all');
+  const [weather,      setWeather]      = useState<WeatherFilter>('any');
+  const [sorts,        setSorts]        = useState<ActiveSort[]>(DEFAULT_FISH_SORTS);
+  const [search,       setSearch]       = useState('');
+  const [showTrap,     setShowTrap]     = useState(true);
   const [showLegendary, setShowLegendary] = useState(true);
-  const [viewMode, setViewMode] = useViewMode('fish', 'table');
+  const [viewMode,     setViewMode]     = useViewMode('fish', 'table');
 
   const itemMap = useMemo(
     () => new Map((data?.items ?? []).map((i) => [i.id, i])),
     [data],
   );
 
+  // Sort field definitions — value comparator closes over itemMap
+  const fishSortFields = useMemo<SortFieldDef<FishData>[]>(() => [
+    {
+      id: 'name',
+      label: 'Name',
+      compareFn: (a, b) => a.name.localeCompare(b.name),
+      defaultDirection: 'asc',
+    },
+    {
+      id: 'difficulty',
+      label: 'Difficulty',
+      compareFn: (a, b) => a.difficulty - b.difficulty,
+      defaultDirection: 'desc',
+    },
+    {
+      id: 'value',
+      label: 'Sell Value',
+      compareFn: (a, b) =>
+        (itemMap.get(a.itemId)?.sellValue ?? 0) - (itemMap.get(b.itemId)?.sellValue ?? 0),
+      defaultDirection: 'desc',
+    },
+    {
+      id: 'level',
+      label: 'Min Level',
+      compareFn: (a, b) => a.minFishingLevel - b.minFishingLevel,
+      defaultDirection: 'asc',
+    },
+  ], [itemMap]);
+
+  // Filtering — in useMemo so useMultiSort can be called before early returns
+  const filtered = useMemo(() => {
+    const allFish = data?.fish ?? [];
+    return allFish.filter((f) => {
+      if (!showTrap && f.trapFish) return false;
+      if (!showLegendary && f.legendary) return false;
+      if (search && !f.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (season !== 'all') {
+        if (!f.seasons.includes('all' as Season) && !f.seasons.includes(season as Season)) return false;
+      }
+      if (weather !== 'any' && !f.trapFish) {
+        if (f.weather !== 'any' && f.weather !== weather) return false;
+      }
+      return true;
+    });
+  }, [data, showTrap, showLegendary, search, season, weather]);
+
+  // Multi-sort — hook must be called before any conditional returns
+  const sorted = useMultiSort(filtered, sorts, fishSortFields);
+
   if (loading) return <div className="page-loading">Loading fish data</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
-  const allFish = data?.fish ?? [];
+  const allFish = data!.fish;
 
-  const filtered = allFish.filter((f) => {
-    if (!showTrap && f.trapFish) return false;
-    if (!showLegendary && f.legendary) return false;
-    if (search && !f.name.toLowerCase().includes(search.toLowerCase())) return false;
-    if (season !== 'all') {
-      if (!f.seasons.includes('all' as Season) && !f.seasons.includes(season as Season)) return false;
-    }
-    if (weather !== 'any' && !f.trapFish) {
-      if (f.weather !== 'any' && f.weather !== weather) return false;
-    }
-    return true;
-  });
-
-  const sorted = [...filtered].sort((a, b) => {
-    if (sort === 'difficulty') return b.difficulty - a.difficulty;
-    if (sort === 'value') {
-      const av = itemMap.get(a.itemId)?.sellValue ?? 0;
-      const bv = itemMap.get(b.itemId)?.sellValue ?? 0;
-      return bv - av;
-    }
-    return a.name.localeCompare(b.name);
-  });
+  function clearFilters() {
+    setSeason('all');
+    setWeather('any');
+    setSearch('');
+    setShowTrap(true);
+    setShowLegendary(true);
+    setSorts(DEFAULT_FISH_SORTS);
+  }
 
   return (
     <div className="page page--fish-guide">
       <h1 className="page__title">Fish Guide</h1>
-      <p className="page__subtitle">{allFish.length} fish · {allFish.filter(f => !f.trapFish).length} rod fish · {allFish.filter(f => f.trapFish).length} crab pot</p>
+      <p className="page__subtitle">
+        {allFish.length} fish · {allFish.filter(f => !f.trapFish).length} rod ·{' '}
+        {allFish.filter(f => f.trapFish).length} crab pot
+      </p>
 
       {/* ── Filters ── */}
       <div className="filter-bar">
@@ -112,13 +155,8 @@ export function FishGuidePage() {
         </label>
       </div>
 
-      {/* Season selector */}
-      <SeasonSelector
-        value={season}
-        onChange={(v) => setSeason(v as SeasonFilter)}
-      />
+      <SeasonSelector value={season} onChange={(v) => setSeason(v as SeasonFilter)} />
 
-      {/* Weather filter */}
       <div className="filter-bar filter-bar--weather" role="group" aria-label="Filter by weather">
         {WEATHER_FILTERS.map(({ id, label, icon }) => (
           <button
@@ -135,20 +173,11 @@ export function FishGuidePage() {
 
       {/* ── Sort bar ── */}
       <div className="fish-sort-bar">
-        <span className="fish-sort-bar__label">Sort:</span>
-        {(['name', 'difficulty', 'value'] as SortKey[]).map((k) => (
-          <button
-            key={k}
-            className={`fish-sort-btn${sort === k ? ' fish-sort-btn--active' : ''}`}
-            onClick={() => setSort(k)}
-          >
-            {k === 'name' ? 'Name' : k === 'difficulty' ? 'Difficulty' : 'Sell Value'}
-          </button>
-        ))}
+        <MultiSort fields={fishSortFields} value={sorts} onChange={setSorts} />
         <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
-      {/* ── Tile grid view ── */}
+      {/* ── Tile view ── */}
       {viewMode === 'tile' && (
         <div className="fish-grid">
           {sorted.map((f) => {
@@ -169,8 +198,7 @@ export function FishGuidePage() {
                       >
                         <image
                           href={`${import.meta.env.BASE_URL}sprites/springobjects.png`}
-                          x={0} y={0}
-                          width={24 * 16} height={39 * 16}
+                          x={0} y={0} width={24 * 16} height={39 * 16}
                           imageRendering="pixelated"
                         />
                       </svg>
@@ -200,7 +228,7 @@ export function FishGuidePage() {
         </div>
       )}
 
-      {/* ── Fish table view ── */}
+      {/* ── Table view ── */}
       {viewMode === 'table' && (
         <div className="fish-table">
           <div className="fish-table__header">
@@ -216,10 +244,8 @@ export function FishGuidePage() {
           {sorted.map((f) => {
             const item = itemMap.get(f.itemId);
             const val  = item?.sellValue ?? '—';
-
             return (
               <div key={f.id} className={`fish-row${f.legendary ? ' fish-row--legendary' : ''}${f.trapFish ? ' fish-row--trap' : ''}`}>
-                {/* Name + sprite */}
                 <div className="fish-row__name">
                   {item?.spriteIndex !== undefined && (
                     <div className="fish-row__icon">
@@ -230,8 +256,7 @@ export function FishGuidePage() {
                       >
                         <image
                           href={`${import.meta.env.BASE_URL}sprites/springobjects.png`}
-                          x={0} y={0}
-                          width={24 * 16} height={39 * 16}
+                          x={0} y={0} width={24 * 16} height={39 * 16}
                           imageRendering="pixelated"
                         />
                       </svg>
@@ -243,20 +268,10 @@ export function FishGuidePage() {
                     {f.trapFish  && <span className="fish-badge fish-badge--trap">Crab Pot</span>}
                   </div>
                 </div>
-
-                {/* Season pips */}
-                <div className="fish-row__seasons">
-                  <SeasonPips seasons={f.seasons} />
-                </div>
-
-                {/* Weather */}
+                <div className="fish-row__seasons"><SeasonPips seasons={f.seasons} /></div>
                 <div className="fish-row__weather">
-                  {f.trapFish ? '—' :
-                    f.weather === 'sunny' ? '☀️' :
-                    f.weather === 'rainy' ? '🌧️' : '🌤️'}
+                  {f.trapFish ? '—' : f.weather === 'sunny' ? '☀️' : f.weather === 'rainy' ? '🌧️' : '🌤️'}
                 </div>
-
-                {/* Time */}
                 <div className="fish-row__time">
                   {f.trapFish || !f.times?.length ? '—' :
                     f.times.map((t, i) => (
@@ -266,20 +281,12 @@ export function FishGuidePage() {
                     ))
                   }
                 </div>
-
-                {/* Location */}
                 <div className="fish-row__location">
-                  {f.locations.length > 0
-                    ? f.locations.join(', ')
-                    : '—'}
+                  {f.locations.length > 0 ? f.locations.join(', ') : '—'}
                 </div>
-
-                {/* Difficulty */}
                 <div className="fish-row__difficulty">
                   {f.trapFish ? <span className="fish-row__trap-label">Trap</span> : <DifficultyBar value={f.difficulty} />}
                 </div>
-
-                {/* Sell value */}
                 <div className="fish-row__sell">{val}g</div>
               </div>
             );
@@ -288,12 +295,7 @@ export function FishGuidePage() {
           {sorted.length === 0 && (
             <div className="empty-state" style={{ padding: '24px 16px' }}>
               <p>No fish match your filters.</p>
-              <button className="btn" onClick={() => {
-                setSeason('all'); setWeather('any'); setSearch('');
-                setShowTrap(true); setShowLegendary(true);
-              }}>
-                Clear filters
-              </button>
+              <button className="btn" onClick={clearFilters}>Clear filters</button>
             </div>
           )}
         </div>

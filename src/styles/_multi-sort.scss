@@ -1,0 +1,123 @@
+@use 'variables' as *;
+
+// ── Multi-sort tag bar ────────────────────────────────────────────────────────
+
+.multi-sort {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+
+  // ── Active sort tag ──────────────────────────────────────────────────────
+
+  &__tag {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  &__tag-label {
+    padding: 0.28rem 0.45rem;
+    color: var(--text);
+    background: var(--surface-mid);
+    white-space: nowrap;
+    // Pixel font gives it a game-UI feel
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    display: flex;
+    align-items: center;
+  }
+
+  &__tag-dir {
+    padding: 0.28rem 0.35rem;
+    background: var(--surface-dark);
+    border: none;
+    border-left:  1px solid var(--border);
+    border-right: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.8rem;
+    line-height: 1;
+    transition: background 0.12s, color 0.12s;
+
+    &:hover {
+      background: var(--accent, #daa520);
+      color: var(--surface, #f5e6c8);
+    }
+  }
+
+  &__tag-remove {
+    padding: 0.28rem 0.4rem;
+    background: var(--surface-mid);
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: background 0.12s, color 0.12s;
+
+    &:hover {
+      background: #fde8e8;
+      color: #dc2626;
+    }
+  }
+
+  // ── Add-sort control ─────────────────────────────────────────────────────
+
+  &__add-wrap {
+    position: relative;
+  }
+
+  &__add {
+    padding: 0.28rem 0.6rem;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: border-color 0.12s, color 0.12s;
+
+    &:hover {
+      border-color: var(--accent, #daa520);
+      color: var(--accent, #daa520);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 0;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0.2rem 0;
+    min-width: 130px;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  &__dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.38rem 0.7rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text);
+    transition: background 0.1s;
+
+    &:hover {
+      background: var(--surface-mid);
+      color: var(--accent, #daa520);
+    }
+  }
+}

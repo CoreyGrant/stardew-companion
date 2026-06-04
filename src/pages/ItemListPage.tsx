@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useItemList } from '../hooks/useItemList';
-import type { ItemSortKey } from '../hooks/useItemList';
+import { useItemList, ITEM_SORT_FIELDS } from '../hooks/useItemList';
+import { MultiSort } from '../components/common/MultiSort';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { ViewToggle } from '../components/common/ViewToggle';
 import { useViewMode } from '../hooks/useViewMode';
@@ -12,20 +12,19 @@ const CATEGORIES: Array<ItemCategory | 'all'> = [
   'artisan', 'food', 'animal_product', 'forage', 'resource', 'machine', 'book', 'other',
 ];
 
-const SORT_OPTIONS: { id: ItemSortKey; label: string }[] = [
-  { id: 'name',   label: 'Name' },
-  { id: 'value',  label: 'Sell Value' },
-  { id: 'energy', label: 'Energy' },
-];
-
 export function ItemListPage() {
   usePageTitle('Items');
   const { items, loading, error, search, setSearch, category, setCategory,
-          sort, setSort, hasEnergy } = useItemList();
+          sorts, setSorts, hasEnergy } = useItemList();
   const [viewMode, setViewMode] = useViewMode('items', 'tile');
 
+  // Hide energy sort field when no items in the current result set have energy data
+  const visibleSortFields = hasEnergy
+    ? ITEM_SORT_FIELDS
+    : ITEM_SORT_FIELDS.filter((f) => f.id !== 'energy');
+
   if (loading) return <div className="page-loading">Loading items</div>;
-  if (error) return <div className="page-error">{error}</div>;
+  if (error)   return <div className="page-error">{error}</div>;
 
   return (
     <div className="page page--item-list">
@@ -56,26 +55,14 @@ export function ItemListPage() {
 
       {/* Sort bar */}
       <div className="fish-sort-bar">
-        <span className="fish-sort-bar__label">Sort:</span>
-        {SORT_OPTIONS.map(({ id, label }) => (
-          // Hide energy sort when no items have energy data
-          id === 'energy' && !hasEnergy ? null : (
-            <button
-              key={id}
-              className={`fish-sort-btn${sort === id ? ' fish-sort-btn--active' : ''}`}
-              onClick={() => setSort(id)}
-            >
-              {label}
-            </button>
-          )
-        ))}
+        <MultiSort fields={visibleSortFields} value={sorts} onChange={setSorts} />
         <ViewToggle mode={viewMode} onChange={setViewMode} />
       </div>
 
       {items.length === 0 ? (
         <div className="empty-state">
           <p>No items match your filters.</p>
-          <button className="btn" onClick={() => { setSearch(''); setCategory('all'); setSort('name'); }}>
+          <button className="btn" onClick={() => { setSearch(''); setCategory('all'); setSorts([{ fieldId: 'name', direction: 'asc' }]); }}>
             Clear filters
           </button>
         </div>
