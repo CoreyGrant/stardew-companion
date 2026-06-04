@@ -60,8 +60,8 @@ interface GiftRow {
   giftsThisWeek: number;
   /** Can give at least one more gift this week */
   canGift: boolean;
-  lovedMatches: ItemRef[];
-  likedMatches: ItemRef[];
+  lovedMatches: TypeaheadOption[];
+  likedMatches: TypeaheadOption[];
   /** location string for each SLOT_TIMES entry */
   locations: string[];
   /** 0=birthday 1=loved+canGift 2=liked+canGift 3=canGift 4=giftedOut 5=maxed */
@@ -85,7 +85,8 @@ function ItemPicker({ options, selected, onAdd, onRemove }: ItemPickerProps) {
         {selected.map(id => {
           const opt = options.find(o => o.id === id);
           return opt ? (
-            <span key={id} className="gift-picker__tag">
+            <span key={id} className="gift-picker__tag" title={opt.sublabel}>
+              <span className="gift-picker__tag-icon" aria-hidden="true">{opt.icon}</span>
               {opt.label}
               <button className="gift-picker__tag-remove" onClick={() => onRemove(id)} aria-label={`Remove ${opt.label}`}>×</button>
             </span>
@@ -157,12 +158,11 @@ export function GiftGuidePage() {
     return opts.sort((a, b) => a.label.localeCompare(b.label));
   }, [data]);
 
-  // ItemRef slice for gift-match computation in rows
-  const myItems = useMemo<ItemRef[]>(
+  // Selected items as TypeaheadOptions so icon + label are available in the table
+  const myItems = useMemo<TypeaheadOption[]>(
     () => myItemIds
       .map(id => allOptions.find(o => o.id === id))
-      .filter((o): o is TypeaheadOption => !!o)
-      .map(o => ({ id: o.id, name: o.label })),
+      .filter((o): o is TypeaheadOption => !!o),
     [myItemIds, allOptions],
   );
 
@@ -312,13 +312,13 @@ export function GiftGuidePage() {
                   ) : (
                     <>
                       {lovedMatches.map(item => (
-                        <span key={item.id} className="gift-match gift-match--loved" title="Loved">
-                          💖 {item.name}
+                        <span key={item.id} className="gift-match gift-match--loved" title={`${item.label} (loved)`}>
+                          {item.icon}
                         </span>
                       ))}
                       {likedMatches.map(item => (
-                        <span key={item.id} className="gift-match gift-match--liked" title="Liked">
-                          💛 {item.name}
+                        <span key={item.id} className="gift-match gift-match--liked" title={`${item.label} (liked)`}>
+                          {item.icon}
                         </span>
                       ))}
                     </>

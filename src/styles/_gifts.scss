@@ -92,14 +92,24 @@
   &__tag {
     display: inline-flex;
     align-items: center;
-    gap: 0;
+    gap: $space-1;
     background: var(--surface-mid);
     border: 1px solid var(--border);
     border-radius: 4px;
     font-size: 0.78rem;
     color: var(--text);
     overflow: hidden;
-    padding: 0.2rem 0 0.2rem 0.5rem;
+    padding: 0.2rem 0 0.2rem 0.4rem;
+  }
+
+  &__tag-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
 
   &__tag-remove {
@@ -255,22 +265,23 @@ $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
 }
 
 .gift-match {
-  display: inline-block;
-  font-size: 0.72rem;
-  padding: 2px 6px;
+  // Icon-only square — name visible on hover via title attribute
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
   border-radius: 3px;
-  white-space: nowrap;
   flex-shrink: 0;
+  overflow: hidden;
 
   &--loved {
     background: rgba($color-loved, 0.12);
-    color: $color-loved;
-    border: 1px solid rgba($color-loved, 0.3);
+    border: 1px solid rgba($color-loved, 0.35);
   }
 
   &--liked {
     background: rgba($color-liked, 0.12);
-    color: $color-liked;
     border: 1px solid rgba($color-liked, 0.3);
   }
 }
