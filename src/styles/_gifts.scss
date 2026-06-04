@@ -265,12 +265,12 @@ $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
 }
 
 .gift-match {
-  // Icon-only square — name visible on hover via title attribute
+  // Icon-only square — same size as NPC portrait (28px), name on hover via title
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 3px;
   flex-shrink: 0;
   overflow: hidden;

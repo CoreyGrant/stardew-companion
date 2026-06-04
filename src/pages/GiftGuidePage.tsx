@@ -145,9 +145,9 @@ export function GiftGuidePage() {
             spriteSheet={full.spriteSheet}
             spriteIndex={full.spriteIndex}
             isBigCraftable={full.isBigCraftable}
-            size={16}
+            size={20}
           />
-        ) : <span style={{ fontSize: '0.9rem' }}>📦</span>,
+        ) : <span style={{ fontSize: '1.1rem' }}>📦</span>,
       });
     };
 
