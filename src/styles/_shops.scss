@@ -64,7 +64,7 @@
 
   &__header {
     display: grid;
-    grid-template-columns: 1fr 90px 90px 140px;
+    grid-template-columns: 1.2fr 170px 65px 145px;
     gap: $space-2;
     padding: $space-2 $space-3;
     background: var(--surface-mid);
@@ -147,12 +147,22 @@
     color: var(--gold);        // monetary buy price
   }
 
-  // Non-gold trade currency: "5× Omni Geode", "20× Qi Gem", etc.
+  // Non-gold trade currency: "5× 🪨 Omni Geode", etc.
   &__trade {
+    display: flex;
+    align-items: center;
+    gap: 3px;
     font-family: $font-pixel;
     font-size: 0.65rem;
     color: var(--text-mid);
     white-space: nowrap;
+    flex-wrap: wrap;
+  }
+
+  &__trade-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
   }
 
   &__sell-val {

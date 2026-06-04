@@ -16866,6 +16866,11 @@
         {
           "shop": "Clint (Blacksmith)",
           "price": 75,
+          "yearMax": 1
+        },
+        {
+          "shop": "Clint (Blacksmith)",
+          "price": 150,
           "yearMin": 2
         }
       ]
@@ -16885,6 +16890,11 @@
         {
           "shop": "Clint (Blacksmith)",
           "price": 150,
+          "yearMax": 1
+        },
+        {
+          "shop": "Clint (Blacksmith)",
+          "price": 250,
           "yearMin": 2
         }
       ]
@@ -16904,6 +16914,11 @@
         {
           "shop": "Clint (Blacksmith)",
           "price": 150,
+          "yearMax": 1
+        },
+        {
+          "shop": "Clint (Blacksmith)",
+          "price": 250,
           "yearMin": 2
         }
       ]
@@ -16923,6 +16938,11 @@
         {
           "shop": "Clint (Blacksmith)",
           "price": 400,
+          "yearMax": 1
+        },
+        {
+          "shop": "Clint (Blacksmith)",
+          "price": 750,
           "yearMin": 2
         }
       ]
@@ -16952,7 +16972,13 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 388
+      "spriteIndex": 388,
+      "soldBy": [
+        {
+          "shop": "Robin (Carpenter)",
+          "price": 4
+        }
+      ]
     },
     {
       "id": "stone",
@@ -16964,7 +16990,13 @@
       "likedBy": [],
       "lovedBy": [],
       "spriteSheet": "springobjects",
-      "spriteIndex": 390
+      "spriteIndex": 390,
+      "soldBy": [
+        {
+          "shop": "Robin (Carpenter)",
+          "price": 4
+        }
+      ]
     },
     {
       "id": "nautilus-shell",
@@ -21601,7 +21633,8 @@
         {
           "shop": "Desert Trader",
           "currency": "Void Essence",
-          "currencyAmount": 200
+          "currencyAmount": 200,
+          "note": "House upgrade req."
         }
       ]
     },
@@ -41030,7 +41063,8 @@
       "soldBy": [
         {
           "shop": "Adventurer's Guild",
-          "price": 50000
+          "price": 50000,
+          "note": "Galaxy sword obtained"
         }
       ]
     },
@@ -41371,7 +41405,8 @@
       "soldBy": [
         {
           "shop": "Adventurer's Guild",
-          "price": 35000
+          "price": 35000,
+          "note": "Galaxy sword obtained"
         }
       ]
     },
@@ -41468,7 +41503,8 @@
       "soldBy": [
         {
           "shop": "Adventurer's Guild",
-          "price": 75000
+          "price": 75000,
+          "note": "Galaxy sword obtained"
         }
       ]
     },
@@ -42268,7 +42304,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 10000
+          "price": 10000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42280,7 +42317,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 10000
+          "price": 10000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42298,7 +42336,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 25000
+          "price": 25000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42322,7 +42361,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42334,7 +42374,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42346,7 +42387,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42364,7 +42406,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 10000
+          "price": 10000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42376,7 +42419,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42388,7 +42432,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 4000
+          "price": 4000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42400,7 +42445,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42412,7 +42458,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42424,7 +42471,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42436,7 +42484,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42448,7 +42497,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42472,7 +42522,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42490,7 +42541,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42502,7 +42554,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42514,7 +42567,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42526,7 +42580,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42538,7 +42593,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42550,7 +42606,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42562,7 +42619,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42580,7 +42638,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42592,7 +42651,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42604,7 +42664,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42616,7 +42677,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 2000
+          "price": 2000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42628,7 +42690,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42640,7 +42703,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42652,7 +42716,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42664,7 +42729,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 4000
+          "price": 4000,
+          "note": "Achievement"
         }
       ]
     },
@@ -42826,7 +42892,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 10000
+          "price": 10000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43220,7 +43287,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 25000
+          "price": 25000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43232,7 +43300,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 10000
+          "price": 10000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43244,7 +43313,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43256,7 +43326,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 25000
+          "price": 25000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43268,7 +43339,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 1000
+          "price": 1000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43280,7 +43352,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43292,7 +43365,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 5000
+          "price": 5000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43304,7 +43378,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 20000
+          "price": 20000,
+          "note": "Achievement"
         }
       ]
     },
@@ -43316,7 +43391,8 @@
       "soldBy": [
         {
           "shop": "Hat Mouse",
-          "price": 20000
+          "price": 20000,
+          "note": "Achievement"
         }
       ]
     }

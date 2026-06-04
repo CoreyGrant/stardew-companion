@@ -1516,6 +1516,7 @@ const KEY_SHOP_NAMES = {
   QiGemShop:     "Qi's Walnut Room",
   AdventureShop: "Adventurer's Guild",
   HatMouse:      'Hat Mouse',
+  Carpenter:     "Robin (Carpenter)",
 };
 
 /**
@@ -1532,9 +1533,24 @@ function parseShopCondition(condition) {
     const seasons = seasonM[1].toLowerCase().split(/[\s,]+/).filter(s => SEASON_WORDS.has(s));
     if (seasons.length) result.season = seasons.join(',');
   }
-  // YEAR condition — minimum year to appear (e.g. "YEAR 2")
-  const yearM = condition.match(/\bYEAR\s+(\d+)/i);
-  if (yearM) result.yearMin = Number(yearM[1]);
+  // !YEAR N — only available BEFORE year N (e.g. "!YEAR 2" = year 1 pricing)
+  const negYearM = condition.match(/!YEAR\s+(\d+)/i);
+  if (negYearM) {
+    result.yearMax = Number(negYearM[1]) - 1;
+  } else {
+    // YEAR N — minimum year to appear (e.g. "YEAR 2" = Year 2+)
+    const yearM = condition.match(/\bYEAR\s+(\d+)/i);
+    if (yearM) result.yearMin = Number(yearM[1]);
+  }
+
+  // Galaxy sword gated items
+  if (condition.includes('galaxySword')) result.note = 'Galaxy sword obtained';
+
+  // Achievement-gated items (Hat Mouse)
+  if (condition.includes('PLAYER_HAS_ACHIEVEMENT')) result.note = 'Achievement';
+
+  // House upgrade requirement
+  if (condition.includes('PLAYER_FARMHOUSE_UPGRADE')) result.note = 'House upgrade req.';
   // DAY_OF_WEEK condition (first occurrence)
   const dayM = condition.match(/DAY_OF_WEEK\s+(\w+)/i);
   if (dayM) {
@@ -1596,13 +1612,15 @@ function buildShopIndex() {
         ...(cond.season          ? { season: cond.season }               : {}),
         ...(cond.day             ? { day: cond.day }                     : {}),
         ...(cond.yearMin         ? { yearMin: cond.yearMin }             : {}),
+        ...(cond.yearMax         ? { yearMax: cond.yearMax }             : {}),
         ...(cond.minMineLevel    ? { minMineLevel: cond.minMineLevel }   : {}),
+        ...(cond.note            ? { note: cond.note }                   : {}),
       };
 
       if (!index.has(cheatId)) index.set(cheatId, []);
       // Avoid duplicates (same shop may list the item for multiple conditions)
       const existing = index.get(cheatId);
-      if (!existing.some(e => e.shop === displayName && e.season === shopEntry.season && e.day === shopEntry.day && e.yearMin === shopEntry.yearMin)) {
+      if (!existing.some(e => e.shop === displayName && e.season === shopEntry.season && e.day === shopEntry.day && e.yearMin === shopEntry.yearMin && e.yearMax === shopEntry.yearMax)) {
         existing.push(shopEntry);
       }
     }

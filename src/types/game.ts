@@ -132,6 +132,10 @@ export interface ShopEntry {
   yearMin?: number;
   /** Minimum mine floor reached before item appears (Adventure Guild). */
   minMineLevel?: number;
+  /** Maximum year for this price tier (e.g. 1 = only available / cheaper in Year 1). */
+  yearMax?: number;
+  /** Free-form availability note, e.g. 'Achievement', 'Galaxy sword obtained'. */
+  note?: string;
 }
 
 // ── Wearables ─────────────────────────────────────────────────────────────────
