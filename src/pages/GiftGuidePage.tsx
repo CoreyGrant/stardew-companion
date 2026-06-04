@@ -127,7 +127,7 @@ export function GiftGuidePage() {
   }, [data]);
 
   const filteredItems = useMemo(() => {
-    if (!search.trim()) return allItems.slice(0, 40); // show first 40 when no search
+    if (!search.trim()) return allItems;
     const q = search.toLowerCase();
     return allItems.filter((i) => i.name.toLowerCase().includes(q));
   }, [allItems, search]);
@@ -345,10 +345,6 @@ export function GiftGuidePage() {
               autoFocus
             />
           </div>
-
-          {!search.trim() && (
-            <p className="gift-guide-prompt">Search for an item to see which villagers love or like it.</p>
-          )}
 
           <div className="gift-item-list">
             {filteredItems.map((item) => {
