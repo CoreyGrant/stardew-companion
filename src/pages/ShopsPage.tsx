@@ -11,13 +11,15 @@ import type { Item, ShopEntry } from '../types/game';
 const ALL_SHOPS = [
   "Pierre's General Store", "Willy's Fish Shop", 'Clint (Blacksmith)',
   "Marnie's Ranch", 'Harvey (Clinic)', 'Saloon (Gus)', 'Sandy (Oasis)',
-  'Krobus (Sewer)', 'Dwarf (mines)', 'Traveling Merchant', 'Volcano Dwarf', 'Island Trader',
+  'Krobus (Sewer)', 'Dwarf (mines)', 'Traveling Merchant', 'Volcano Dwarf',
+  'Island Trader', 'Desert Trader', "Qi's Walnut Room",
 ];
 
 const SHOP_EMOJI: Record<string, string> = {
   "Pierre's General Store": '🌱', "Willy's Fish Shop": '🎣', 'Clint (Blacksmith)': '⚒️',
   "Marnie's Ranch": '🐄', 'Harvey (Clinic)': '💊', 'Saloon (Gus)': '🍺',
   'Sandy (Oasis)': '🌵', 'Krobus (Sewer)': '👻', 'Dwarf (mines)': '⛏️',
+  'Desert Trader': '🐪', "Qi's Walnut Room": '💎',
   'Traveling Merchant': '🛒', 'Volcano Dwarf': '🌋', 'Island Trader': '🏝️',
 };
 
@@ -69,8 +71,6 @@ export function ShopsPage() {
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
 
-  const isIslandTrader = activeShop === 'Island Trader';
-
   return (
     <div className="page page--shops">
       <h1 className="page__title">Shops &amp; Vendors</h1>
@@ -108,16 +108,10 @@ export function ShopsPage() {
         <MultiSort fields={SHOP_SORT_FIELDS} value={sorts} onChange={setSorts} />
       </div>
 
-      {isIslandTrader && (
-        <p className="notice" style={{ marginBottom: 8 }}>
-          Island Trader uses item-for-item barter — buy prices shown here are sell values for reference only.
-        </p>
-      )}
-
       <div className="shop-table">
         <div className="shop-table__header">
           <span className="shop-table__col-item">Item</span>
-          <span className="shop-table__col-price">Buy Price</span>
+          <span className="shop-table__col-price">Cost</span>
           <span className="shop-table__col-sell">Sell Value</span>
           <span className="shop-table__col-avail">Availability</span>
         </div>
@@ -136,10 +130,12 @@ export function ShopsPage() {
               </span>
             </div>
             <div className="shop-row__price">
-              {!isIslandTrader && entry.price ? (
-                <strong className="shop-row__gold">{entry.price}g</strong>
-              ) : isIslandTrader ? (
-                <span className="shop-row__barter">🔄 Barter</span>
+              {entry.price ? (
+                <strong className="shop-row__gold">{entry.price.toLocaleString()}g</strong>
+              ) : entry.currency ? (
+                <span className="shop-row__trade">
+                  {entry.currencyAmount}× {entry.currency}
+                </span>
               ) : '—'}
             </div>
             <div className="shop-row__sell">

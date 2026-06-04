@@ -747,8 +747,13 @@ export function ItemDetailPage() {
                   </span>
                 )}
                 {entry.price && (
-                  <span style={{ color: 'var(--color-gold, #daa520)', marginLeft: 8, fontWeight: 700 }}>
-                    {entry.price}g
+                  <span style={{ color: 'var(--gold-text)', marginLeft: 8, fontWeight: 700 }}>
+                    {entry.price.toLocaleString()}g
+                  </span>
+                )}
+                {!entry.price && entry.currency && (
+                  <span style={{ color: 'var(--text-mid)', marginLeft: 8 }}>
+                    {entry.currencyAmount}× {entry.currency}
                   </span>
                 )}
               </li>

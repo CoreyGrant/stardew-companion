@@ -1512,6 +1512,8 @@ const KEY_SHOP_NAMES = {
   VolcanoShop: 'Volcano Dwarf',
   Dwarf:       'Dwarf (mines)',
   ShadowShop:  'Krobus (Sewer)',
+  DesertTrade: 'Desert Trader',
+  QiGemShop:   "Qi's Walnut Room",
 };
 
 /**
@@ -1547,8 +1549,10 @@ function buildShopIndex() {
   const shopsPath = join(DATA_DIR, 'Shops.json');
   if (!existsSync(shopsPath)) return new Map();
 
-  const shops = JSON.parse(readFileSync(shopsPath, 'utf8'));
-  const index  = new Map(); // cheatId (string) → ShopEntry[]
+  const shops      = JSON.parse(readFileSync(shopsPath, 'utf8'));
+  // Load objects for resolving barter/trade item names
+  const allObjects = JSON.parse(readFileSync(join(DATA_DIR, 'Objects.json'), 'utf8'));
+  const index      = new Map(); // cheatId (string) → ShopEntry[]
 
   for (const [shopId, displayName] of Object.entries(KEY_SHOP_NAMES)) {
     const shop = shops[shopId];
@@ -1565,14 +1569,24 @@ function buildShopIndex() {
       const cheatId = itemId.slice(3); // strip "(O)"
 
       const cond = parseShopCondition(entry.Condition);
-      const isBarter = !!entry.TradeItemId;
+
+      // Resolve barter/trade currency
+      let currency = null;
+      let currencyAmount = null;
+      if (entry.TradeItemId) {
+        const tradeObjId = String(entry.TradeItemId).replace(/^\([A-Z]+\)/, '');
+        const tradeObj   = allObjects[tradeObjId];
+        currency       = tradeObj?.Name ?? tradeObjId;
+        currencyAmount = entry.TradeItemAmount ?? 1;
+      }
+
       const shopEntry = {
         shop: displayName,
-        ...(entry.Price > 0 ? { price: entry.Price } : {}),
-        ...(isBarter         ? { _barter: true }       : {}),
-        ...(cond.season  ? { season: cond.season }     : {}),
-        ...(cond.day     ? { day: cond.day }           : {}),
-        ...(cond.yearMin ? { yearMin: cond.yearMin }   : {}),
+        ...(entry.Price > 0 ? { price: entry.Price }                    : {}),
+        ...(currency        ? { currency, currencyAmount }               : {}),
+        ...(cond.season  ? { season: cond.season }                      : {}),
+        ...(cond.day     ? { day: cond.day }                            : {}),
+        ...(cond.yearMin ? { yearMin: cond.yearMin }                    : {}),
       };
 
       if (!index.has(cheatId)) index.set(cheatId, []);
@@ -1924,8 +1938,8 @@ async function main() {
   for (const item of items) {
     if (!item.soldBy) continue;
     for (const entry of item.soldBy) {
-      if (entry._barter) {
-        delete entry._barter;   // barter trade — no gold price
+      if (entry.currency) {
+        // Trade/barter entry — currency already resolved, no gold price needed
       } else if (entry.price === undefined) {
         entry.price = Math.max(1, item.sellValue * 2);
         priceResolved++;

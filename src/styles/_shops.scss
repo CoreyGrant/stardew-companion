@@ -147,10 +147,12 @@
     color: var(--gold);        // monetary buy price
   }
 
-  &__barter {
+  // Non-gold trade currency: "5× Omni Geode", "20× Qi Gem", etc.
+  &__trade {
     font-family: $font-pixel;
-    font-size: 0.5rem;
-    color: var(--text-light);
+    font-size: 0.65rem;
+    color: var(--text-mid);
+    white-space: nowrap;
   }
 
   &__sell-val {

@@ -115,8 +115,15 @@ export interface Crop {
 
 export interface ShopEntry {
   shop: string;
-  /** Explicit price override in gold (absent = shop uses item base price × margin) */
+  /** Gold cost (absent for barter/trade shops). */
   price?: number;
+  /**
+   * Non-gold trade currency name, e.g. 'Omni Geode', 'Qi Gems', 'Taro Root'.
+   * Present for barter shops (Desert Trader, Island Trader, Qi's Walnut Room).
+   */
+  currency?: string;
+  /** Quantity of the trade currency required. */
+  currencyAmount?: number;
   /** Seasonal availability, e.g. 'spring' or 'spring,summer' */
   season?: string;
   /** Day-of-week availability, e.g. 'Monday', 'Friday' */
