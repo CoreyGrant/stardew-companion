@@ -83,6 +83,8 @@ $bp-nav: 1000px;
   --text:          #{$color-text};
   --text-mid:      #{$color-text-mid};
   --text-light:    #7a5535;   // darkened from #8b6242 → 5.4:1 on --surface
+  // Alias for muted secondary text inside parchment panels
+  --text-muted:    #7a5535;
   // Borders (panel frames etc.)
   --border:        #{$color-brown};
   // Links — dark enough for parchment panels
@@ -105,6 +107,7 @@ $bp-nav: 1000px;
   --text:          #1e293b;
   --text-mid:      #475569;
   --text-light:    #4b5563;   // darkened from #64748b → 5.9:1 on --surface
+  --text-muted:    #4b5563;
   --border:        #94a3b8;
   --link:          #166534;
   --label-muted:   #374151;
@@ -122,6 +125,7 @@ $bp-nav: 1000px;
   --text:          #d4d8e0;
   --text-mid:      #9ea6b4;
   --text-light:    #8b97a8;   // lightened from #6b7685 → 4.6:1 on --surface
+  --text-muted:    #8b97a8;
   --border:        #354060;
   --link:          #4ade80;   // bright green readable on dark surfaces
   --label-muted:   #9ea6b4;

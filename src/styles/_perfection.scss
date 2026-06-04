@@ -23,8 +23,9 @@
   }
 
   &__natural {
-    color: var(--text-muted);
-    strong { color: var(--text); }
+    // perf-header renders on body-bg (dark green) — use label-muted, not text-muted
+    color: var(--label-muted);
+    strong { color: var(--label-muted); }
   }
 
   &__waiver-note {
@@ -34,7 +35,7 @@
   }
 
   &__remaining {
-    color: var(--text-muted);
+    color: var(--label-muted);
     font-size: 0.85rem;
   }
 
