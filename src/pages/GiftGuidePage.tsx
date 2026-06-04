@@ -97,12 +97,17 @@ export function GiftGuidePage() {
   const planSearchRef = useRef<HTMLInputElement>(null);
 
   // Index: itemId → { loved: npc[], liked: npc[] }
+  // Universal gifts are seeded with all NPCs so the null-guard in By Item
+  // (which checks lovedBy.length) never silently drops them.
   const itemIndex = useMemo(() => {
     const idx = new Map<string, { loved: NPC[]; liked: NPC[] }>();
     const ensure = (id: string) => {
       if (!idx.has(id)) idx.set(id, { loved: [], liked: [] });
       return idx.get(id)!;
     };
+    const allNpcs = data?.npcs ?? [];
+    (data?.universalGifts?.loved ?? []).forEach((item) => { ensure(item.id).loved = [...allNpcs]; });
+    (data?.universalGifts?.liked ?? []).forEach((item) => { ensure(item.id).liked = [...allNpcs]; });
     (data?.npcs ?? []).forEach((npc) => {
       npc.gifts?.loved?.forEach((item) => ensure(item.id).loved.push(npc));
       npc.gifts?.liked?.forEach((item) => ensure(item.id).liked.push(npc));
@@ -353,7 +358,12 @@ export function GiftGuidePage() {
               const isUnivLiked = univ.liked.some((u) => u.id === item.id);
               const lovedBy = aff?.loved ?? [];
               const likedBy = aff?.liked ?? [];
+              // Universal gifts are guaranteed non-empty in itemIndex; this guard is a safety net
               if (!lovedBy.length && !likedBy.length && !isUnivLoved && !isUnivLiked) return null;
+              // Suppress individual portrait chips for universal gifts — the badge covers them.
+              // For items individually loved/liked by specific NPCs, still show those portraits.
+              const displayLovedBy = isUnivLoved ? [] : lovedBy;
+              const displayLikedBy = isUnivLiked ? [] : likedBy;
 
               return (
                 <div key={item.id} className="gift-item-row">
@@ -362,10 +372,10 @@ export function GiftGuidePage() {
                     {isUnivLoved && <span className="gift-item-row__badge gift-item-row__badge--loved">★ All love</span>}
                     {isUnivLiked && <span className="gift-item-row__badge gift-item-row__badge--liked">★ All like</span>}
                   </div>
-                  {lovedBy.length > 0 && (
+                  {displayLovedBy.length > 0 && (
                     <div className="gift-item-row__npc-list gift-item-row__npc-list--loved">
                       <span className="gift-item-row__taste">❤️</span>
-                      {lovedBy.map((npc) => (
+                      {displayLovedBy.map((npc) => (
                         <Link key={npc.id} to={`/characters/${npc.id}`} className="npc-mini-chip" title={npc.name}>
                           {npc.portrait ? (
                             <PortraitImg src={`${BASE}sprites/portraits/${npc.portrait}`} size={24} alt={npc.name} />
@@ -376,10 +386,10 @@ export function GiftGuidePage() {
                       ))}
                     </div>
                   )}
-                  {likedBy.length > 0 && (
+                  {displayLikedBy.length > 0 && (
                     <div className="gift-item-row__npc-list gift-item-row__npc-list--liked">
                       <span className="gift-item-row__taste">👍</span>
-                      {likedBy.map((npc) => (
+                      {displayLikedBy.map((npc) => (
                         <Link key={npc.id} to={`/characters/${npc.id}`} className="npc-mini-chip" title={npc.name}>
                           {npc.portrait ? (
                             <PortraitImg src={`${BASE}sprites/portraits/${npc.portrait}`} size={24} alt={npc.name} />
