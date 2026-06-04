@@ -104,13 +104,16 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       output: {
-        entryFileNames: 'app.js',
-        chunkFileNames: 'app.js',
+        // Keep hashed filenames for JS and CSS so every cache layer (browser,
+        // CDN, service worker) is guaranteed to fetch new content when the
+        // bundle changes — no revision query-param fragility.
+        entryFileNames: 'assets/app-[hash].js',
+        chunkFileNames: 'assets/app-[hash].js',
         assetFileNames: (assetInfo) => {
           const name = assetInfo.name ?? '';
-          if (name.endsWith('.css')) return 'app.css';
+          if (name.endsWith('.css')) return 'assets/app-[hash].css';
           if (/\.(png|jpg|jpeg|gif|svg|webp|ico)$/i.test(name)) return 'images/[name][extname]';
-          return '[name][extname]';
+          return 'assets/[name]-[hash][extname]';
         },
       },
     },
