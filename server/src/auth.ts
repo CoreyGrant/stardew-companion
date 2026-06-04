@@ -10,8 +10,8 @@ const JWT_EXPIRY = '30d';
 
 // ── JWT ───────────────────────────────────────────────────────────────────────
 
-export function signToken(accountId: string): string {
-  return jwt.sign({ sub: accountId }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
+export function signToken(accountId: string, email: string): string {
+  return jwt.sign({ sub: accountId, email }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 }
 
 export function verifyToken(token: string): string | null {
@@ -53,9 +53,10 @@ export async function register(
 
   const hash = await bcrypt.hash(password, 12);
   const id = crypto.randomUUID();
-  stmts.insertAccount.run(id, email.toLowerCase().trim(), hash, Date.now());
+  const normalised = email.toLowerCase().trim();
+  stmts.insertAccount.run(id, normalised, hash, Date.now());
 
-  return { token: signToken(id) };
+  return { token: signToken(id, normalised) };
 }
 
 export async function login(
@@ -68,7 +69,7 @@ export async function login(
   const ok = await bcrypt.compare(password, account.password_hash);
   if (!ok) throw new ApiError(401, 'Invalid email or password.');
 
-  return { token: signToken(account.id) };
+  return { token: signToken(account.id, account.email) };
 }
 
 // ── Rate limiter (in-memory, per IP) ─────────────────────────────────────────
