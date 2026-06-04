@@ -74,15 +74,17 @@
 
   &__add {
     padding: 0.28rem 0.6rem;
-    background: transparent;
+    // Parchment background so it's readable regardless of page background
+    background: var(--surface);
     border: 1px dashed var(--border);
     border-radius: 4px;
-    color: var(--text-light);
+    color: var(--text-mid);
     cursor: pointer;
     font-size: 0.75rem;
-    transition: border-color 0.12s, color 0.12s;
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
 
     &:hover {
+      background: var(--surface-mid);
       border-color: var(--gold-text);
       color: var(--gold-text);
     }

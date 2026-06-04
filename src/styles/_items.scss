@@ -841,7 +841,8 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-mid);  // was --text-light: too faint at this small size
+    background: var(--surface-mid);  // header floats on body-bg; needs own bg
+    color: var(--text-mid);
     border-bottom: 2px solid $color-brown;
   }
 }
