@@ -197,7 +197,15 @@ export function GiftGuidePage() {
     const univLovedIds = new Set((data.universalGifts?.loved ?? []).map(u => u.id));
     const univLikedIds = new Set((data.universalGifts?.liked ?? []).map(u => u.id));
 
-    return data.npcs.map(npc => {
+    const npcList = activeSave
+      ? data.npcs.filter(npc => {
+          const hl = activeSave.heartLevels?.[npc.id] ?? 0;
+          const fd = activeSave.friendshipData?.[npc.id];
+          return hl < friendshipCap(npc, fd); // only show improvable
+        })
+      : data.npcs;
+
+    return npcList.map(npc => {
       const fd         = activeSave?.friendshipData?.[npc.id];
       const heartLevel = activeSave?.heartLevels?.[npc.id] ?? 0;
       const cap        = friendshipCap(npc, fd);
@@ -217,8 +225,11 @@ export function GiftGuidePage() {
         return univLikedIds.has(item.id) || npc.gifts?.liked?.some(g => g.id === item.id);
       });
 
-      // Schedule locations
-      const entries   = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day);
+      // Schedule locations — fall back to first variant if nothing matches the date
+      let entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day);
+      if (entries.length === 0 && npc.schedules.length > 0) {
+        entries = npc.schedules[0].entries;
+      }
       const locations = SLOT_TIMES.map(t => locationAtTime(entries, t));
 
       // Priority
@@ -271,7 +282,7 @@ export function GiftGuidePage() {
 
       {!activeSave && (
         <p className="gift-guide__no-save">
-          💡 <a href="/saves">Load a save</a> to see heart levels, gifts remaining, and have the date pre-filled.
+          💡 <a href="/saves">Load a save</a> to filter out maxed relationships and pre-fill the current date.
         </p>
       )}
 
@@ -282,7 +293,6 @@ export function GiftGuidePage() {
           {/* Header */}
           <div className="gift-table__head">
             <span className="gift-col--npc">Character</span>
-            <span className="gift-col--hearts">Hearts</span>
             <span className="gift-col--gifts">Gift match</span>
             {SLOT_LABELS.map((l, i) => (
               <span key={i} className="gift-col--time">{l}</span>
@@ -291,11 +301,10 @@ export function GiftGuidePage() {
 
           {/* Rows */}
           {rows.map(row => {
-            const { npc, isBirthday, heartLevel, cap, isMaxed, hasSave, giftsThisWeek, canGift, lovedMatches, likedMatches, locations, priority } = row;
+            const { npc, isBirthday, giftsThisWeek, canGift, lovedMatches, likedMatches, locations, priority } = row;
             const rowClass = [
               'gift-row',
-              isBirthday ? 'gift-row--birthday' : '',
-              isMaxed    ? 'gift-row--maxed'    : '',
+              isBirthday  ? 'gift-row--birthday'   : '',
               priority === 4 ? 'gift-row--gifted-out' : '',
             ].filter(Boolean).join(' ');
 
@@ -315,24 +324,6 @@ export function GiftGuidePage() {
                     <a href={`/characters/${npc.id}`} className="gift-npc__name">{npc.name}</a>
                     {isBirthday && <span className="gift-npc__bday" title="Birthday today!">🎂</span>}
                   </div>
-                </div>
-
-                {/* Hearts */}
-                <div className="gift-col--hearts">
-                  {hasSave ? (
-                    <>
-                      <div className="gift-hearts">
-                        {Array.from({ length: cap }, (_, i) => (
-                          <span key={i} className={`gift-heart${i < heartLevel ? ' gift-heart--filled' : ''}`}>♥</span>
-                        ))}
-                      </div>
-                      <span className={`gift-status ${isMaxed ? 'gift-status--maxed' : canGift ? 'gift-status--ok' : 'gift-status--out'}`}>
-                        {isMaxed ? 'Max' : canGift ? `${2 - giftsThisWeek} left` : 'Gifted out'}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="gift-status gift-status--nosave">—</span>
-                  )}
                 </div>
 
                 {/* Gift matches */}

@@ -165,6 +165,13 @@
 }
 
 // ── Main gift table ───────────────────────────────────────────────────────────
+// Each row AND the header use display:grid with the SAME template —
+// this is the only reliable way to get column alignment across sibling elements.
+// (flex with per-child widths produces sub-pixel mismatches; display:contents
+// breaks hover backgrounds.)
+//
+// Template: NPC | Gift Match | 6 × time slot (no hearts — we filter by gifting status)
+$gift-template: 150px minmax(160px, 1fr) repeat(6, 88px);
 
 .gift-table-wrap {
   overflow-x: auto;
@@ -174,39 +181,37 @@
 }
 
 .gift-table {
-  min-width: 860px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;   // rows stack vertically, no gap
+  min-width: 840px;
 }
 
-// Shared column widths (used in both header and rows)
-.gift-col--npc     { width: 160px; flex-shrink: 0; }
-.gift-col--hearts  { width: 120px; flex-shrink: 0; }
-.gift-col--gifts   { min-width: 180px; flex: 1; }
-.gift-col--time    { width: 90px; flex-shrink: 0; }
+// ── Header ────────────────────────────────────────────────────────────────────
 
-// Header
 .gift-table__head {
-  display: flex;
+  display: grid;
+  grid-template-columns: $gift-template;
   align-items: center;
-  padding: $space-2 $space-3;
-  background: var(--surface-mid);
-  border-bottom: 2px solid $color-brown;
-  font-family: $font-pixel;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-mid);
-  gap: $space-2;
+  padding: 0;               // padding is on each cell
+
+  > span {
+    padding: $space-2 $space-3;
+    background: var(--surface-mid);
+    border-bottom: 2px solid $color-brown;
+    font-family: $font-pixel;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-mid);
+  }
 }
 
-// ── Rows ──────────────────────────────────────────────────────────────────────
+// ── Data rows ─────────────────────────────────────────────────────────────────
 
 .gift-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: $gift-template;
   align-items: center;
-  gap: $space-2;
-  padding: $space-2 $space-3;
   border-bottom: 1px solid rgba($color-brown, 0.15);
   background: var(--surface);
   transition: background 0.1s;
@@ -222,14 +227,27 @@
     &:hover { background: color-mix(in srgb, #daa520 14%, var(--surface)); }
   }
 
-  // Maxed out — muted
-  &--maxed { opacity: 0.55; }
+  // Gifted out this week (not maxed)
+  &--gifted-out { opacity: 0.72; }
+}
 
-  // Gifted out this week (not maxed, just used both gifts)
-  &--gifted-out { opacity: 0.7; }
+// ── Cell base styles ──────────────────────────────────────────────────────────
+// Each direct child of gift-row is a grid cell — give them padding + flex layout.
+
+.gift-row > * {
+  padding: $space-2 $space-3;
+  display: flex;
+  align-items: center;
+  min-width: 0;             // allow truncation
 }
 
 // ── NPC column ────────────────────────────────────────────────────────────────
+
+.gift-col--npc {
+  gap: $space-2;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
 
 .gift-npc__portrait {
   flex-shrink: 0;
@@ -249,12 +267,6 @@
   color: $color-gold;
 }
 
-.gift-col--npc {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-}
-
 .gift-npc__info {
   display: flex;
   align-items: center;
@@ -263,8 +275,6 @@
 }
 
 .gift-npc__name {
-  font-size: 0.82rem;
-  font-weight: 600;
   color: var(--text);
   text-decoration: none;
   white-space: nowrap;
@@ -279,47 +289,11 @@
   flex-shrink: 0;
 }
 
-// ── Hearts column ─────────────────────────────────────────────────────────────
-
-.gift-col--hearts {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.gift-hearts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1px;
-  font-size: 0.55rem;
-  line-height: 1;
-  max-width: 110px;
-}
-
-.gift-heart {
-  color: var(--border);
-
-  &--filled { color: $color-loved; }
-}
-
-.gift-status {
-  font-family: $font-pixel;
-  font-size: 0.55rem;
-  white-space: nowrap;
-
-  &--ok      { color: var(--gold-text); }
-  &--out     { color: var(--text-light); }
-  &--maxed   { color: var(--text-light); }
-  &--nosave  { color: var(--text-light); }
-}
-
 // ── Gift match column ─────────────────────────────────────────────────────────
 
 .gift-col--gifts {
-  display: flex;
   flex-wrap: wrap;
   gap: $space-1;
-  align-items: center;
 }
 
 .gift-match {
@@ -328,6 +302,7 @@
   padding: 2px 6px;
   border-radius: 3px;
   white-space: nowrap;
+  flex-shrink: 0;
 
   &--loved {
     background: rgba($color-loved, 0.12);
@@ -353,9 +328,9 @@
   color: var(--text-light);
 }
 
-// ── Schedule / time columns ───────────────────────────────────────────────────
+// ── Time / location columns ───────────────────────────────────────────────────
 
-.gift-location {
+.gift-col--time {
   font-size: 0.7rem;
   color: var(--text-mid);
   white-space: nowrap;
