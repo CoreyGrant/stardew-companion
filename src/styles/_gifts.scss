@@ -140,12 +140,16 @@
 // Template: NPC | Gift Match (capped so it doesn't balloon) | 6 × time slot (flex-grow equally)
 $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
 
+// Header sits ABOVE .gift-table-wrap so it can be page-sticky.
+// overflow-x: clip on the outer wrapper clips any header overflow on narrow
+// viewports without creating a scroll container (unlike overflow: hidden).
+.gift-table-outer {
+  overflow-x: clip;
+}
+
 .gift-table-wrap {
-  overflow: auto;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  max-height: 65vh;
 }
 
 .gift-table {
@@ -157,7 +161,7 @@ $gift-template: 150px minmax(160px, 220px) repeat(6, minmax(90px, 1fr));
 
 .gift-table__head {
   position: sticky;
-  top: 0;
+  top: $header-height;
   z-index: 2;
   background: var(--surface-mid);   // covers rows scrolling underneath
   display: grid;

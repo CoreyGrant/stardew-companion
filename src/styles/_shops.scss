@@ -58,29 +58,35 @@
 }
 
 // ── Shop table ────────────────────────────────────────────────────────────────
+// Header sits ABOVE the h-scroll container (.shop-table) so it can be
+// page-sticky.  overflow-x: clip on the outer wrapper clips any header
+// overflow on narrow viewports without creating a scroll container (unlike
+// overflow: hidden), so the sticky still resolves against the body scroll.
+
+.shop-table-outer {
+  overflow-x: clip;
+}
 
 .shop-table {
   @include scroll-x;
-  overflow-y: auto;
-  max-height: 70vh;
+}
 
-  &__header {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1.2fr 170px 65px 145px;
-    gap: $space-2;
-    padding: $space-2 $space-3;
-    background: var(--surface-mid);
-    color: var(--text-mid);
-    font-family: $font-pixel;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    border-bottom: 2px solid $color-brown;
-    min-width: 560px;
-  }
+.shop-table__header {
+  position: sticky;
+  top: $header-height;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.2fr 170px 65px 145px;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  background: var(--surface-mid);
+  color: var(--text-mid);
+  font-family: $font-pixel;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid $color-brown;
+  min-width: 560px;
 }
 
 // ── Shop row ─────────────────────────────────────────────────────────────────

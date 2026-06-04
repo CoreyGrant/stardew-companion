@@ -264,20 +264,25 @@ export function GiftGuidePage() {
       )}
 
       {/* ── Table ── */}
-      <div className="gift-table-wrap">
-        <div className="gift-table">
+      {/* gift-table-outer clips any header overflow on narrow screens (overflow-x: clip
+          doesn't create a scroll container, so the header's sticky still resolves
+          against the body scroll — unlike overflow: hidden which would trap it). */}
+      <div className="gift-table-outer">
 
-          {/* Header */}
-          <div className="gift-table__head">
-            <span className="gift-col--npc">Character</span>
-            <span className="gift-col--gifts">Gift match</span>
-            {SLOT_LABELS.map((l, i) => (
-              <span key={i} className="gift-col--time">{l}</span>
-            ))}
-          </div>
+        {/* Header sits ABOVE the h-scroll wrapper so page-scroll sticky works */}
+        <div className="gift-table__head">
+          <span className="gift-col--npc">Character</span>
+          <span className="gift-col--gifts">Gift match</span>
+          {SLOT_LABELS.map((l, i) => (
+            <span key={i} className="gift-col--time">{l}</span>
+          ))}
+        </div>
 
-          {/* Rows */}
-          {rows.map(row => {
+        <div className="gift-table-wrap">
+          <div className="gift-table">
+
+            {/* Rows */}
+            {rows.map(row => {
             const { npc, isBirthday, lovedMatches, likedMatches, locations, priority } = row;
             const rowClass = [
               'gift-row',
@@ -334,6 +339,7 @@ export function GiftGuidePage() {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
     </div>

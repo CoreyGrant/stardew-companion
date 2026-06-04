@@ -223,7 +223,8 @@ export function ShopsPage() {
         <MultiSort fields={SHOP_SORT_FIELDS} value={sorts} onChange={setSorts} />
       </div>
 
-      <div className="shop-table">
+      <div className="shop-table-outer">
+        {/* Header above the h-scroll container for page-level sticky */}
         <div className="shop-table__header">
           <span className="shop-table__col-item">Item</span>
           <span className="shop-table__col-price">Cost</span>
@@ -231,6 +232,7 @@ export function ShopsPage() {
           <span className="shop-table__col-avail">Availability</span>
         </div>
 
+        <div className="shop-table">
         {sorted.map(({ id, name, category, statsLabel, spriteType, spriteSheet, spriteIndex, isBigCraftable, sellValue, itemId, entry }, idx) => {
           // Look up currency item sprite
           const ci = entry.currency ? currencyItemMap.get(entry.currency) : undefined;
@@ -291,7 +293,8 @@ export function ShopsPage() {
             {search ? 'No items match your search.' : 'No items found for this vendor.'}
           </p>
         )}
-      </div>
+        </div>{/* .shop-table */}
+      </div>{/* .shop-table-outer */}
     </div>
   );
 }

@@ -216,12 +216,10 @@
 
 .npc-table {
   display: block;
-  overflow: auto;
-  max-height: 70vh;
 
   &__header {
     position: sticky;
-    top: 0;
+    top: $header-height;
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr 150px 130px;

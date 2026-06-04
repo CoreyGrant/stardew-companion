@@ -547,12 +547,10 @@
 
 .crop-table {
   display: block;
-  overflow: auto;
-  max-height: 70vh;
 
   &__header {
     position: sticky;
-    top: 0;
+    top: $header-height;
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr 64px 1fr 72px 60px;
@@ -834,12 +832,10 @@
 
 .fish-table {
   display: block;
-  overflow: auto;
-  max-height: 70vh;
 
   &__header {
     position: sticky;
-    top: 0;
+    top: $header-height;
     z-index: 2;
     display: grid;
     grid-template-columns: 2fr 64px 48px 80px 1fr 100px 56px;
@@ -989,12 +985,10 @@
 
 .item-table {
   display: block;
-  overflow: auto;
-  max-height: 70vh;
 
   &__header {
     position: sticky;
-    top: 0;
+    top: $header-height;
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr 130px 80px 80px;
