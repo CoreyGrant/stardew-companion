@@ -1,0 +1,116 @@
+@use 'variables' as *;
+
+// ── TypeaheadInput — reusable search-with-dropdown component ──────────────────
+// Used anywhere a user types to pick from a filtered list.
+// Mirrors the GlobalSearch result-item pattern (icon + label + sublabel)
+// but styled for in-page use rather than the nav bar.
+
+.typeahead {
+  position: relative;
+  display: inline-block;
+}
+
+// ── Input ─────────────────────────────────────────────────────────────────────
+
+.typeahead__input {
+  padding: 0.22rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-mid);
+  color: var(--text);
+  font-size: 0.8rem;
+  min-width: 140px;
+  max-width: 220px;
+  transition: border-color 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent, #{$color-gold});
+  }
+
+  &::placeholder { color: var(--text-light); }
+
+  // Remove WebKit search clear button — we clear on select
+  &::-webkit-search-cancel-button { display: none; }
+}
+
+// ── Dropdown ──────────────────────────────────────────────────────────────────
+
+.typeahead__dropdown {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  z-index: 300;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  min-width: 220px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.22);
+
+  li { display: block; }
+}
+
+// ── Item ──────────────────────────────────────────────────────────────────────
+
+.typeahead__item {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-2 $space-3;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+
+  &:hover,
+  &--focused {
+    background: var(--surface-mid);
+  }
+}
+
+// 20×20 icon slot (sprite or emoji fallback)
+.typeahead__item-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+// Label + optional sublabel stacked vertically
+.typeahead__item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.typeahead__item-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  .typeahead__item--focused & { color: var(--gold-text); }
+}
+
+.typeahead__item-sub {
+  font-size: 0.62rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}

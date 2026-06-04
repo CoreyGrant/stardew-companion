@@ -117,7 +117,8 @@
     color: var(--text);
     transition: background 0.1s;
 
-    &:hover {
+    &:hover,
+    &--focused {
       background: var(--surface-mid);
       color: var(--gold-text);
     }

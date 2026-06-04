@@ -63,7 +63,8 @@ interface MultiSortProps {
 }
 
 export function MultiSort({ fields, value, onChange }: MultiSortProps) {
-  const [open, setOpen] = useState(false);
+  const [open,   setOpen]   = useState(false);
+  const [cursor, setCursor] = useState(-1);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
@@ -72,6 +73,7 @@ export function MultiSort({ fields, value, onChange }: MultiSortProps) {
     function onDown(e: MouseEvent) {
       if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
         setOpen(false);
+        setCursor(-1);
       }
     }
     document.addEventListener('mousedown', onDown);
@@ -87,6 +89,24 @@ export function MultiSort({ fields, value, onChange }: MultiSortProps) {
     if (!def) return;
     onChange([...value, { fieldId, direction: def.defaultDirection ?? 'asc' }]);
     setOpen(false);
+    setCursor(-1);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (!open) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setCursor(c => Math.min(c + 1, available.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setCursor(c => Math.max(c - 1, 0));
+    } else if (e.key === 'Enter' && cursor >= 0) {
+      e.preventDefault();
+      add(available[cursor].id);
+    } else if (e.key === 'Escape') {
+      setOpen(false);
+      setCursor(-1);
+    }
   }
 
   function flip(fieldId: string) {
@@ -124,10 +144,10 @@ export function MultiSort({ fields, value, onChange }: MultiSortProps) {
       ))}
 
       {available.length > 0 && (
-        <div className="multi-sort__add-wrap" ref={wrapRef}>
+        <div className="multi-sort__add-wrap" ref={wrapRef} onKeyDown={handleKeyDown}>
           <button
             className="multi-sort__add"
-            onClick={() => setOpen((o) => !o)}
+            onClick={() => { setOpen((o) => !o); setCursor(-1); }}
             aria-haspopup="listbox"
             aria-expanded={open}
           >
@@ -135,12 +155,13 @@ export function MultiSort({ fields, value, onChange }: MultiSortProps) {
           </button>
           {open && (
             <ul className="multi-sort__dropdown" role="listbox">
-              {available.map((f) => (
+              {available.map((f, idx) => (
                 <li key={f.id}>
                   <button
-                    className="multi-sort__dropdown-item"
+                    className={`multi-sort__dropdown-item${cursor === idx ? ' multi-sort__dropdown-item--focused' : ''}`}
                     role="option"
                     onMouseDown={() => add(f.id)}
+                    onMouseEnter={() => setCursor(idx)}
                   >
                     {f.label}
                   </button>

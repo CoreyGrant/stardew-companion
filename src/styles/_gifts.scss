@@ -114,53 +114,10 @@
     &:hover { color: $color-danger; }
   }
 
-  &__input-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  &__input {
-    padding: 0.22rem 0.5rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--surface-mid);
-    color: var(--text);
-    font-size: 0.8rem;
-    min-width: 140px;
-    max-width: 200px;
-
-    &:focus { outline: none; border-color: var(--accent); }
-    &::placeholder { color: var(--text-light); }
-  }
-
-  &__dropdown {
-    position: absolute;
-    top: calc(100% + 3px);
-    left: 0;
-    z-index: 200;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    list-style: none;
-    margin: 0;
-    padding: 0.2rem 0;
-    min-width: 180px;
-    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.18);
-  }
-
-  &__dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 0.35rem 0.7rem;
-    background: none;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    font-size: 0.82rem;
-    color: var(--text);
-
-    &:hover { background: var(--surface-mid); color: var(--gold-text); }
+  // The TypeaheadInput sits inline among the tags — constrain its input width
+  .typeahead__input {
+    min-width: 130px;
+    max-width: 180px;
   }
 }
 

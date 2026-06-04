@@ -5,11 +5,13 @@
  * and which of your chosen items they love or like.
  * Birthday NPCs always float to the top.
  */
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
 import { StardewDateInput } from '../components/common/StardewDateInput';
 import { PortraitImg } from '../components/common/PortraitImg';
+import { SpriteIcon } from '../components/farm/SpriteIcon';
+import { TypeaheadInput, type TypeaheadOption } from '../components/common/TypeaheadInput';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { bestVariantEntries } from '../utils/scheduleUtils';
 import type { NPC, ItemRef, Season, Weather } from '../types/game';
@@ -69,80 +71,33 @@ interface GiftRow {
 // ── Item picker ───────────────────────────────────────────────────────────────
 
 interface ItemPickerProps {
-  allItems: ItemRef[];
+  options: TypeaheadOption[];
   selected: string[];
   onAdd: (id: string) => void;
   onRemove: (id: string) => void;
 }
 
-function ItemPicker({ allItems, selected, onAdd, onRemove }: ItemPickerProps) {
-  const [query,      setQuery]      = useState('');
-  const [dropOpen,   setDropOpen]   = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const wrapRef  = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!dropOpen) return;
-    function close(e: MouseEvent) {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setDropOpen(false);
-    }
-    document.addEventListener('mousedown', close);
-    return () => document.removeEventListener('mousedown', close);
-  }, [dropOpen]);
-
-  const selectedSet = new Set(selected);
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return allItems
-      .filter(i => !selectedSet.has(i.id) && i.name.toLowerCase().includes(q))
-      .slice(0, 8);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allItems, query, selected]);
-
-  function pick(id: string) {
-    onAdd(id);
-    setQuery('');
-    setDropOpen(false);
-    inputRef.current?.focus();
-  }
-
+function ItemPicker({ options, selected, onAdd, onRemove }: ItemPickerProps) {
   return (
     <div className="gift-picker">
       <span className="gift-picker__label">Items in hand:</span>
       <div className="gift-picker__tags">
         {selected.map(id => {
-          const item = allItems.find(i => i.id === id);
-          return item ? (
+          const opt = options.find(o => o.id === id);
+          return opt ? (
             <span key={id} className="gift-picker__tag">
-              {item.name}
-              <button className="gift-picker__tag-remove" onClick={() => onRemove(id)} aria-label={`Remove ${item.name}`}>×</button>
+              {opt.label}
+              <button className="gift-picker__tag-remove" onClick={() => onRemove(id)} aria-label={`Remove ${opt.label}`}>×</button>
             </span>
           ) : null;
         })}
-        <div className="gift-picker__input-wrap" ref={wrapRef}>
-          <input
-            ref={inputRef}
-            className="gift-picker__input"
-            type="search"
-            placeholder="+ Add item…"
-            value={query}
-            autoComplete="off"
-            onChange={e => { setQuery(e.target.value); setDropOpen(true); }}
-            onFocus={() => { if (query.trim()) setDropOpen(true); }}
-          />
-          {dropOpen && results.length > 0 && (
-            <ul className="gift-picker__dropdown">
-              {results.map(i => (
-                <li key={i.id}>
-                  <button className="gift-picker__dropdown-item" onMouseDown={() => pick(i.id)}>
-                    {i.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <TypeaheadInput
+          options={options}
+          excludeIds={selected}
+          onSelect={onAdd}
+          placeholder="+ Add item…"
+          maxResults={8}
+        />
       </div>
     </div>
   );
@@ -170,23 +125,45 @@ export function GiftGuidePage() {
   // ── Item selection ──────────────────────────────────────────────────────────
   const [myItemIds, setMyItemIds] = useState<string[]>([]);
 
-  // All giftable items (universal + NPC-specific, deduplicated)
-  const allItems = useMemo<ItemRef[]>(() => {
-    const seen = new Set<string>();
-    const result: ItemRef[] = [];
-    const push = (item: ItemRef) => {
-      if (!seen.has(item.id)) { seen.add(item.id); result.push(item); }
+  // All giftable items as TypeaheadOptions (with sprite icons + category sublabel)
+  const allOptions = useMemo<TypeaheadOption[]>(() => {
+    const seen    = new Set<string>();
+    const opts: TypeaheadOption[] = [];
+    const itemMap = new Map((data?.items ?? []).map(i => [i.id, i]));
+
+    const push = (ref: ItemRef) => {
+      if (seen.has(ref.id)) return;
+      seen.add(ref.id);
+      const full = itemMap.get(ref.id);
+      opts.push({
+        id:       ref.id,
+        label:    ref.name,
+        sublabel: full?.category,
+        icon: full?.spriteSheet && full?.spriteIndex !== undefined ? (
+          <SpriteIcon
+            spriteSheet={full.spriteSheet}
+            spriteIndex={full.spriteIndex}
+            isBigCraftable={full.isBigCraftable}
+            size={16}
+          />
+        ) : <span style={{ fontSize: '0.9rem' }}>📦</span>,
+      });
     };
+
     [...(data?.universalGifts?.loved ?? []), ...(data?.universalGifts?.liked ?? [])].forEach(push);
     (data?.npcs ?? []).forEach(npc => {
       [...(npc.gifts?.loved ?? []), ...(npc.gifts?.liked ?? [])].forEach(push);
     });
-    return result.sort((a, b) => a.name.localeCompare(b.name));
+    return opts.sort((a, b) => a.label.localeCompare(b.label));
   }, [data]);
 
+  // ItemRef slice for gift-match computation in rows
   const myItems = useMemo<ItemRef[]>(
-    () => myItemIds.map(id => allItems.find(i => i.id === id)).filter((x): x is ItemRef => !!x),
-    [myItemIds, allItems],
+    () => myItemIds
+      .map(id => allOptions.find(o => o.id === id))
+      .filter((o): o is TypeaheadOption => !!o)
+      .map(o => ({ id: o.id, name: o.label })),
+    [myItemIds, allOptions],
   );
 
   // ── Row computation ─────────────────────────────────────────────────────────
@@ -273,7 +250,7 @@ export function GiftGuidePage() {
           />
         </div>
         <ItemPicker
-          allItems={allItems}
+          options={allOptions}
           selected={myItemIds}
           onAdd={id => setMyItemIds(prev => prev.includes(id) ? prev : [...prev, id])}
           onRemove={id => setMyItemIds(prev => prev.filter(i => i !== id))}
