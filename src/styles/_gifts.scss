@@ -1,545 +1,367 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// ── Mode tabs ─────────────────────────────────────────────────────────────────
+// ── Gift section (used in NPCDetailPage) ──────────────────────────────────────
 
-.gift-guide-tabs {
-  display: flex;
-  gap: $space-2;
-  margin-bottom: $space-4;
-}
-
-.gift-guide-tab {
-  @include btn-base;
-  font-size: 0.7rem;
-
-  &--active {
-    background: $color-brown-mid;
-    color: $color-parchment;
-    box-shadow: none;
-    transform: translate(2px, 2px);
-  }
-}
-
-// ── NPC chip grid ─────────────────────────────────────────────────────────────
-
-.npc-chip-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-2;
-  margin-bottom: $space-4;
-}
-
-.npc-chip {
-  @include btn-base;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: $space-1 $space-2;
-  min-width: 52px;
-  transition: transform 0.1s, box-shadow 0.1s;
-
-  img { display: block; overflow: hidden; }
-
-  &__initial {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: $color-brown-dark;
-    font-family: $font-pixel;
-    font-size: 0.8rem;
-    color: $color-gold;
-  }
-
-  &__name {
-    font-family: $font-pixel;
-    font-size: 0.45rem;
-    color: var(--text-light);
-    white-space: nowrap;
-    max-width: 52px;
-    overflow: hidden;
-  }
-
-  &--selected {
-    background: $color-brown-dark;  // darkened from brown-mid: parchment now 14.5:1
-    color: $color-parchment;
-    box-shadow: none;
-    transform: translate(2px, 2px);
-
-    .npc-chip__name { color: $color-parchment; }
-  }
-
-  &--universal {
-    .npc-chip__initial {
-      color: $color-gold;
-      font-size: 1.2rem;
-    }
-  }
-}
-
-// ── Gift panel ────────────────────────────────────────────────────────────────
-
-.gift-guide-panel {
-  @include panel-frame;
-  padding: $space-4;
-  margin-bottom: $space-4;
-
-  &__header {
-    display: flex;
-    gap: $space-4;
-    align-items: flex-start;
-    margin-bottom: $space-4;
-    padding-bottom: $space-3;
-    border-bottom: 1px solid $color-parchment-dark;
-  }
-
-  &__portrait {
-    width: 64px;
-    height: 64px;
-    flex-shrink: 0;
-    background: $color-brown-dark;
-    border: 2px solid $color-brown;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: $font-pixel;
-    font-size: 1.8rem;
-    color: $color-gold;
-    overflow: hidden;
-
-    img { display: block; }
-
-    &--universal {
-      background: rgba($color-gold, 0.15);
-      border-color: rgba($color-gold, 0.4);
-    }
-  }
-
-  &__info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: $space-1;
-  }
-
-  &__name {
-    font-family: $font-pixel;
-    font-size: 0.85rem;
-    color: var(--gold-text);
-    text-shadow: 1px 1px 0 $color-brown-dark;
-
-    a { color: inherit; text-decoration: none; &:hover { text-decoration: underline; } }
-  }
-
-  &__desc {
-    font-size: 0.8rem;
-    color: var(--text-light);
-  }
-
-  &__badge {
-    display: inline-block;
-    font-family: $font-pixel;
-    font-size: 0.48rem;
-    padding: 1px $space-1;
-    border: 1px solid $color-loved;
-    color: $color-loved;
-    background: rgba($color-loved, 0.1);
-    margin-left: $space-2;
-    vertical-align: middle;
-  }
-
-  &__gifts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-4;
-  }
-
-  &__empty {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    font-style: italic;
-  }
-
-  &__note {
-    margin-top: $space-3;
-    font-size: 0.75rem;
-    color: var(--text-light);
-  }
-
-  &__univ-link {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--gold-text);
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: inherit;
-
-    &:hover { color: $color-gold-light; }
-  }
-}
-
-// ── Gift sections (inside panel) ──────────────────────────────────────────────
-
-.gift-guide-section {
-  flex: 1;
-  min-width: 180px;
+.gift-section {
+  margin-bottom: $space-3;
 
   &__title {
     font-family: $font-pixel;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-mid);
     margin-bottom: $space-2;
+
+    &.gift-guide-section--loved { color: var(--text); }
+    &.gift-guide-section--liked { color: var(--text-mid); }
   }
 
   &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-direction: column;
-    gap: $space-1;
+    flex-wrap: wrap;
+    gap: $space-1 $space-2;
     font-size: 0.85rem;
   }
-
-  &--loved &__title { color: $color-loved; }
-  &--liked &__title { color: $color-liked; }
 }
 
-// ── Prompt text ───────────────────────────────────────────────────────────────
+// ── Gift Guide page ───────────────────────────────────────────────────────────
 
-.gift-guide-prompt {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  text-align: center;
-  padding: $space-6;
+.page--gift-guide { max-width: 1100px; }
+
+.gift-guide__birthday-hint {
+  color: var(--gold-text);
+  font-weight: 600;
 }
 
-// ── By-item list ──────────────────────────────────────────────────────────────
+.gift-guide__no-save {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: $space-2 $space-3;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  margin-bottom: $space-3;
 
-.gift-item-list {
+  a { color: var(--link); text-decoration: underline; }
+}
+
+// ── Controls (date input + item picker) ───────────────────────────────────────
+
+.gift-controls {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: $space-3;
+  margin-bottom: $space-4;
+  padding: $space-3 $space-4;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
 }
 
-.gift-item-row {
-  @include panel-frame;
-  padding: $space-2 $space-3;
+// ── Item picker ───────────────────────────────────────────────────────────────
+
+.gift-picker {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: $space-2 $space-4;
+  align-items: flex-start;
+  gap: $space-2;
 
-  &__name {
-    font-size: 0.85rem;
-    min-width: 160px;
-    display: flex;
-    align-items: center;
-    gap: $space-2;
-  }
-
-  &__badge {
+  &__label {
     font-family: $font-pixel;
-    font-size: 0.45rem;
-    padding: 1px $space-1;
-    border-radius: 2px;
-    border: 1px solid;
-
-    &--loved { color: $color-loved; border-color: $color-loved; background: rgba($color-loved, 0.1); }
-    &--liked { color: $color-liked; border-color: $color-liked; background: rgba($color-liked, 0.1); }
+    font-size: 0.7rem;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    align-self: center;
   }
 
-  &__npc-list {
+  &__tags {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: $space-1;
+    flex: 1;
   }
 
-  &__taste {
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: var(--surface-mid);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    color: var(--text);
+    overflow: hidden;
+    padding: 0.2rem 0 0.2rem 0.5rem;
+  }
+
+  &__tag-remove {
+    padding: 0.2rem 0.4rem;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
     font-size: 0.85rem;
-  }
-}
+    line-height: 1;
 
-// ── My Plan — notice ─────────────────────────────────────────────────────────
-
-.plan-notice {
-  font-size: 0.82rem;
-  color: var(--text-light);
-  background: rgba($color-gold, 0.08);
-  border: 1px solid rgba($color-gold, 0.3);
-  padding: $space-2 $space-3;
-  margin-bottom: $space-4;
-
-  a { color: var(--link); }
-}
-
-// ── My Plan — item picker ─────────────────────────────────────────────────────
-
-.plan-picker {
-  @include panel-frame;
-  padding: $space-3 $space-4;
-  margin-bottom: $space-4;
-  display: flex;
-  flex-direction: column;
-  gap: $space-3;
-
-  &__label {
-    font-family: $font-pixel;
-    font-size: 0.65rem;
-    color: var(--gold-text);
+    &:hover { color: $color-danger; }
   }
 
   &__input-wrap {
     position: relative;
+    display: flex;
+    align-items: center;
   }
 
   &__input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: $space-2 $space-3;
+    padding: 0.22rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
     background: var(--surface-mid);
-    border: 2px solid var(--border);
     color: var(--text);
-    font-family: $font-body;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    min-width: 140px;
+    max-width: 200px;
 
-    &:focus {
-      outline: none;
-      border-color: $color-brown-mid;
-    }
+    &:focus { outline: none; border-color: var(--accent); }
+    &::placeholder { color: var(--text-light); }
   }
 
   &__dropdown {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 3px);
     left: 0;
-    right: 0;
+    z-index: 200;
     background: var(--surface);
-    border: 2px solid $color-brown-mid;
-    border-top: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
     list-style: none;
     margin: 0;
-    padding: 0;
-    z-index: 20;
-    max-height: 240px;
-    overflow-y: auto;
+    padding: 0.2rem 0;
+    min-width: 180px;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.18);
   }
 
   &__dropdown-item {
     display: block;
     width: 100%;
-    padding: $space-2 $space-3;
+    padding: 0.35rem 0.7rem;
     background: none;
     border: none;
     text-align: left;
-    font-size: 0.85rem;
+    cursor: pointer;
+    font-size: 0.82rem;
     color: var(--text);
-    cursor: pointer;
 
-    &:hover {
-      background: var(--surface-mid);
-      color: $color-brown-mid;
-    }
-  }
-
-  &__chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-2;
+    &:hover { background: var(--surface-mid); color: var(--gold-text); }
   }
 }
 
-.plan-item-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-1;
-  padding: 2px $space-2;
-  background: var(--surface-mid);
+// ── Main gift table ───────────────────────────────────────────────────────────
+
+.gift-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border);
-  font-size: 0.8rem;
-
-  a { color: var(--link); text-decoration: none; &:hover { text-decoration: underline; } }
-
-  &__remove {
-    background: none;
-    border: none;
-    padding: 0 2px;
-    cursor: pointer;
-    color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1;
-
-    &:hover { color: $color-danger; }
-  }
+  border-radius: 6px;
 }
 
-// ── My Plan — NPC rows ────────────────────────────────────────────────────────
-
-.plan-npc-list {
+.gift-table {
+  min-width: 860px;
   display: flex;
   flex-direction: column;
-  gap: 1px;
 }
 
-.plan-npc-row {
-  @include panel-frame;
-  padding: $space-2 $space-3;
+// Shared column widths (used in both header and rows)
+.gift-col--npc     { width: 160px; flex-shrink: 0; }
+.gift-col--hearts  { width: 120px; flex-shrink: 0; }
+.gift-col--gifts   { min-width: 180px; flex: 1; }
+.gift-col--time    { width: 90px; flex-shrink: 0; }
+
+// Header
+.gift-table__head {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: $space-2 $space-3;
-
-  &__portrait {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: $color-brown-dark;
-    border: 1px solid $color-brown;
-    overflow: hidden;
-    flex-shrink: 0;
-
-    img { display: block; }
-  }
-
-  &__initial {
-    font-family: $font-pixel;
-    font-size: 0.7rem;
-    color: $color-gold;
-  }
-
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    min-width: 110px;
-  }
-
-  &__name {
-    font-family: $font-pixel;
-    font-size: 0.6rem;
-    color: var(--gold-text);
-    text-decoration: none;
-
-    &:hover { text-decoration: underline; }
-  }
-
-  &__status {
-    min-width: 80px;
-  }
-
-  &__matches {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-1 $space-2;
-    flex: 1;
-  }
-
-  // State variants
-  &--maxed {
-    opacity: 0.5;
-  }
-
-  &--gifted-out {
-    opacity: 0.7;
-  }
-
-  &--match {
-    border-color: $color-loved;
-    background: rgba($color-loved, 0.04);
-  }
+  padding: $space-2 $space-3;
+  background: var(--surface-mid);
+  border-bottom: 2px solid $color-brown;
+  font-family: $font-pixel;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-mid);
+  gap: $space-2;
 }
 
-// ── Heart bar ─────────────────────────────────────────────────────────────────
+// ── Rows ──────────────────────────────────────────────────────────────────────
 
-.plan-hearts {
+.gift-row {
   display: flex;
-  gap: 1px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid rgba($color-brown, 0.15);
+  background: var(--surface);
+  transition: background 0.1s;
 
-  &--maxed .plan-heart--filled { color: var(--gold-text); }
+  &:last-child { border-bottom: none; }
+  &:hover      { background: var(--surface-mid); }
+
+  // Birthday row — golden highlight
+  &--birthday {
+    background: color-mix(in srgb, #daa520 8%, var(--surface));
+    border-left: 3px solid $color-gold;
+
+    &:hover { background: color-mix(in srgb, #daa520 14%, var(--surface)); }
+  }
+
+  // Maxed out — muted
+  &--maxed { opacity: 0.55; }
+
+  // Gifted out this week (not maxed, just used both gifts)
+  &--gifted-out { opacity: 0.7; }
 }
 
-.plan-heart {
-  font-size: 0.6rem;
-  color: var(--surface-dark);   // empty heart
+// ── NPC column ────────────────────────────────────────────────────────────────
+
+.gift-npc__portrait {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: $color-brown-dark;
+  border: 1px solid $color-brown;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gift-npc__initial {
+  font-family: $font-pixel;
+  font-size: 0.7rem;
+  color: $color-gold;
+}
+
+.gift-col--npc {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.gift-npc__info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.gift-npc__name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover { color: var(--link); text-decoration: underline; }
+}
+
+.gift-npc__bday {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+// ── Hearts column ─────────────────────────────────────────────────────────────
+
+.gift-col--hearts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gift-hearts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  font-size: 0.55rem;
+  line-height: 1;
+  max-width: 110px;
+}
+
+.gift-heart {
+  color: var(--border);
 
   &--filled { color: $color-loved; }
 }
 
-// ── Plan match chips ──────────────────────────────────────────────────────────
+.gift-status {
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  white-space: nowrap;
 
-.plan-match {
-  font-size: 0.75rem;
-  padding: 1px $space-2;
-  border: 1px solid;
+  &--ok      { color: var(--gold-text); }
+  &--out     { color: var(--text-light); }
+  &--maxed   { color: var(--text-light); }
+  &--nosave  { color: var(--text-light); }
+}
+
+// ── Gift match column ─────────────────────────────────────────────────────────
+
+.gift-col--gifts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+  align-items: center;
+}
+
+.gift-match {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
 
   &--loved {
+    background: rgba($color-loved, 0.12);
     color: $color-loved;
-    border-color: rgba($color-loved, 0.4);
-    background: rgba($color-loved, 0.08);
+    border: 1px solid rgba($color-loved, 0.3);
   }
 
   &--liked {
+    background: rgba($color-liked, 0.12);
     color: $color-liked;
-    border-color: rgba($color-liked, 0.4);
-    background: rgba($color-liked, 0.08);
-  }
-
-  &--none {
-    color: var(--text-light);
-    border-color: transparent;
-    font-style: italic;
+    border: 1px solid rgba($color-liked, 0.3);
   }
 }
 
-// ── Plan status badges ────────────────────────────────────────────────────────
-
-.plan-badge {
-  display: inline-block;
-  font-family: $font-pixel;
-  font-size: 0.45rem;
-  padding: 2px $space-2;
-  border: 1px solid;
-
-  &--maxed {
-    color: var(--gold-text);
-    border-color: rgba($color-gold, 0.4);
-    background: rgba($color-gold, 0.1);
-  }
-
-  &--gifted-out {
-    color: var(--text-light);
-    border-color: var(--border);
-    background: transparent;
-  }
+.gift-match--empty {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  font-style: italic;
 }
 
-// ── NPC mini portrait chip (by-item mode) ─────────────────────────────────────
+.gift-match--none {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
 
-.npc-mini-chip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: $color-brown-dark;
-  border: 1px solid $color-brown-mid;
+// ── Schedule / time columns ───────────────────────────────────────────────────
+
+.gift-location {
+  font-size: 0.7rem;
+  color: var(--text-mid);
+  white-space: nowrap;
   overflow: hidden;
-  transition: border-color 0.1s, transform 0.1s;
+  text-overflow: ellipsis;
+  line-height: 1.3;
 
-  img { display: block; }
-
-  &__initial {
-    font-family: $font-pixel;
-    font-size: 0.6rem;
-    color: $color-gold;
-  }
-
-  &:hover {
-    border-color: var(--gold-text);
-    transform: scale(1.1);
-  }
+  .gift-row--birthday & { color: var(--text); }
 }
