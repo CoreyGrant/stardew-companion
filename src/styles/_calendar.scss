@@ -110,7 +110,7 @@
     background: var(--surface);
 
     .cal-day__number {
-      color: $color-gold;
+      color: var(--gold-text);
       font-weight: 700;
     }
   }

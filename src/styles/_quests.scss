@@ -20,7 +20,7 @@
   &:hover { transform: translate(-1px, -1px); }
 
   &--featured {
-    border-color: $color-gold;
+    border-color: var(--gold-text);
     background: rgba($color-gold, 0.06);
     margin-bottom: $space-2;
   }
@@ -36,13 +36,13 @@
     color: var(--text-light);
 
     &--community_center { color: $color-sky; }
-    &--story            { color: $color-gold; }
+    &--story            { color: var(--gold-text); }
     &--special_order    { color: $color-green-light; }
   }
 
   &__reward {
     font-size: 0.75rem;
-    color: $color-gold;
+    color: var(--gold-text);
   }
 }
 
@@ -191,7 +191,7 @@
 
   &__reward {
     font-size: 0.75rem;
-    color: $color-gold;
+    color: var(--gold-text);
   }
 
   &__requirement {

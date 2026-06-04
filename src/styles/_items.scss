@@ -102,7 +102,7 @@
   &__name {
     font-family: $font-pixel;
     font-size: 1rem;
-    color: $color-gold;
+    color: var(--gold-text);
     text-shadow: 1px 1px 0 $color-brown-dark;
   }
 
@@ -555,10 +555,10 @@
     gap: $space-3;
     padding: $space-2 $space-3;
     font-family: $font-pixel;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-light);
+    color: var(--text-mid);  // was --text-light: too faint at this small size
     border-bottom: 2px solid $color-brown;
     background: var(--surface-mid);
   }
@@ -838,10 +838,10 @@
     gap: $space-2;
     padding: $space-2 $space-3;
     font-family: $font-pixel;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-light);
+    color: var(--text-mid);  // was --text-light: too faint at this small size
     border-bottom: 2px solid $color-brown;
   }
 }
@@ -929,7 +929,7 @@
   &__sell {
     font-family: $font-pixel;
     font-size: 0.65rem;
-    color: $color-gold;
+    color: var(--gold-text);
     text-align: right;
   }
 }
@@ -943,7 +943,7 @@
   border: 1px solid;
   white-space: nowrap;
 
-  &--legendary { color: $color-gold; border-color: rgba($color-gold, 0.6); background: rgba($color-gold, 0.1); }
+  &--legendary { color: var(--gold-text); border-color: rgba($color-gold, 0.6); background: rgba($color-gold, 0.1); }
   &--trap { color: var(--text-light); border-color: rgba($color-text-light, 0.4); background: rgba(0,0,0,0.2); }
 }
 
@@ -988,10 +988,10 @@
     gap: $space-3;
     padding: $space-2 $space-3;
     font-family: $font-pixel;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-light);
+    color: var(--text-mid);  // was --text-light: too faint at this small size
     border-bottom: 2px solid $color-brown;
     background: var(--surface-mid);
   }
@@ -1040,7 +1040,7 @@
   &__value {
     font-family: $font-pixel;
     font-size: 0.75rem;
-    color: $color-gold;
+    color: var(--gold-text);
   }
 
   &__energy {
@@ -1097,7 +1097,7 @@
     justify-content: center;
     border-radius: 2px;
 
-    &--ph { font-family: $font-pixel; font-size: 1rem; color: $color-gold; }
+    &--ph { font-family: $font-pixel; font-size: 1rem; color: var(--gold-text); }
   }
 
   &__name {
@@ -1121,7 +1121,7 @@
   }
 
   &__days { color: var(--text-mid); }
-  &__sell { color: $color-gold; }
+  &__sell { color: var(--gold-text); }
   &__gpd  { color: $color-green-light; }
 }
 
@@ -1200,7 +1200,7 @@
   &__sell {
     font-family: $font-pixel;
     font-size: 0.7rem;
-    color: $color-gold;
+    color: var(--gold-text);
     flex-shrink: 0;
   }
 }

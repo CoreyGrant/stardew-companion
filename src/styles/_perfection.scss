@@ -28,9 +28,9 @@
   }
 
   &__waiver-note {
-    color: var(--accent-muted, #a07020);
+    color: var(--gold-text);
     font-size: 0.85rem;
-    strong { color: var(--accent, #daa520); }
+    strong { color: var(--gold-text); }
   }
 
   &__remaining {
@@ -41,7 +41,7 @@
   &__complete {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--accent, #daa520);
+    color: var(--gold-text);
     letter-spacing: 0.05em;
   }
 }
@@ -58,7 +58,7 @@
 
   // Waiver ring (slightly wider, lighter) behind the natural ring
   background: conic-gradient(
-    var(--accent-muted, #a07020) var(--wpct),
+    var(--gold-text) var(--wpct),
     var(--surface-alt, #3a2c1a) var(--wpct)
   );
 
@@ -146,7 +146,7 @@
   transition: border-color 0.2s;
 
   &--done {
-    border-color: var(--accent, #daa520);
+    border-color: var(--gold-text);
     background: color-mix(in srgb, var(--accent, #daa520) 6%, var(--surface, #1e1508));
   }
 
@@ -201,7 +201,7 @@
     text-align: right;
 
     &--done {
-      color: var(--accent, #daa520);
+      color: var(--gold-text);
       font-weight: 700;
     }
   }
@@ -256,7 +256,7 @@
 
   &__effect {
     font-size: 0.82rem;
-    color: var(--accent, #daa520);
+    color: var(--gold-text);
     font-weight: 600;
   }
 

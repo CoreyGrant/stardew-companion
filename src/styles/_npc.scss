@@ -113,7 +113,7 @@
   &__name {
     font-family: $font-pixel;
     font-size: 1.1rem;
-    color: $color-gold;
+    color: var(--gold-text);
     text-shadow: 1px 1px 0 $color-brown-dark;
     display: flex;
     align-items: center;
@@ -123,7 +123,7 @@
 
   &__married-badge {
     font-size: 0.65rem;
-    color: $color-gold;
+    color: var(--gold-text);
     border: 1px solid $color-gold;
     padding: 2px $space-2;
   }

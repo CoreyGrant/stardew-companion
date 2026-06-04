@@ -90,7 +90,7 @@
   &__time {
     font-family: $font-pixel;
     font-size: 0.65rem;
-    color: $color-gold;
+    color: var(--gold-text);
     min-width: 44px;
     white-space: nowrap;
   }

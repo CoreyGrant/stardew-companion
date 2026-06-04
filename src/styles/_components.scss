@@ -103,7 +103,7 @@
   @include btn-base;
 
   &--primary {
-    background: $color-green;
+    background: #3a6448;       // darker than $color-green — 4.90:1 on parchment (was 3.94:1)
     border-color: $color-green-dark;
     color: $color-parchment;
     @include pixel-shadow($color-green-dark);
@@ -380,7 +380,7 @@
   &__title {
     font-family: $font-pixel;
     font-size: 0.9rem;
-    color: $color-gold;
+    color: var(--gold-text);
     margin-bottom: $space-3;
     line-height: 1.4;
   }
@@ -443,7 +443,7 @@
 
   &--today {
     background: color.mix($color-gold-light, $color-parchment, 25%);
-    border-color: $color-gold;
+    border-color: var(--gold-text);
   }
 
   &__portrait {

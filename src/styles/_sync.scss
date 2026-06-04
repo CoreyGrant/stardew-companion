@@ -38,7 +38,7 @@
 
     &:focus {
       outline: none;
-      border-color: $color-gold;
+      border-color: var(--gold-text);
     }
 
     &::placeholder { color: var(--text-light); }
@@ -90,7 +90,7 @@
   &__name {
     font-family: $font-pixel;
     font-size: 0.8rem;
-    color: $color-gold;
+    color: var(--gold-text);
     margin-bottom: $space-3;
   }
 
@@ -212,7 +212,7 @@
   &__farm {
     font-family: $font-pixel;
     font-size: 0.9rem;
-    color: $color-gold;
+    color: var(--gold-text);
   }
 
   &__char {
@@ -267,7 +267,7 @@
 
     &:focus {
       outline: none;
-      border-color: $color-gold;
+      border-color: var(--gold-text);
     }
   }
 

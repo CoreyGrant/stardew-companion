@@ -64,12 +64,12 @@
   }
 
   &--selected {
-    background: $color-brown-mid;
+    background: $color-brown-dark;  // darkened from brown-mid: parchment now 14.5:1
     color: $color-parchment;
     box-shadow: none;
     transform: translate(2px, 2px);
 
-    .npc-chip__name { color: $color-gold; }
+    .npc-chip__name { color: $color-parchment; }
   }
 
   &--universal {
@@ -128,7 +128,7 @@
   &__name {
     font-family: $font-pixel;
     font-size: 0.85rem;
-    color: $color-gold;
+    color: var(--gold-text);
     text-shadow: 1px 1px 0 $color-brown-dark;
 
     a { color: inherit; text-decoration: none; &:hover { text-decoration: underline; } }
@@ -173,7 +173,7 @@
     background: none;
     border: none;
     padding: 0;
-    color: $color-gold;
+    color: var(--gold-text);
     text-decoration: underline;
     cursor: pointer;
     font-size: inherit;
@@ -287,7 +287,7 @@
   &__label {
     font-family: $font-pixel;
     font-size: 0.65rem;
-    color: $color-gold;
+    color: var(--gold-text);
   }
 
   &__input-wrap {
@@ -420,7 +420,7 @@
   &__name {
     font-family: $font-pixel;
     font-size: 0.6rem;
-    color: $color-gold;
+    color: var(--gold-text);
     text-decoration: none;
 
     &:hover { text-decoration: underline; }
@@ -459,7 +459,7 @@
   gap: 1px;
   flex-wrap: wrap;
 
-  &--maxed .plan-heart--filled { color: $color-gold; }
+  &--maxed .plan-heart--filled { color: var(--gold-text); }
 }
 
 .plan-heart {
@@ -505,7 +505,7 @@
   border: 1px solid;
 
   &--maxed {
-    color: $color-gold;
+    color: var(--gold-text);
     border-color: rgba($color-gold, 0.4);
     background: rgba($color-gold, 0.1);
   }
@@ -539,7 +539,7 @@
   }
 
   &:hover {
-    border-color: $color-gold;
+    border-color: var(--gold-text);
     transform: scale(1.1);
   }
 }

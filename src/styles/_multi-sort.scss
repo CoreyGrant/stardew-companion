@@ -83,8 +83,8 @@
     transition: border-color 0.12s, color 0.12s;
 
     &:hover {
-      border-color: var(--accent, #daa520);
-      color: var(--accent, #daa520);
+      border-color: var(--gold-text);
+      color: var(--gold-text);
     }
   }
 
@@ -117,7 +117,7 @@
 
     &:hover {
       background: var(--surface-mid);
-      color: var(--accent, #daa520);
+      color: var(--gold-text);
     }
   }
 }

@@ -89,8 +89,10 @@ $bp-nav: 1000px;
   --link:          #2d6b42;   // 5.2:1 on --surface
   // Muted labels rendered directly on --body-bg (not inside panels)
   --label-muted:   #{$color-parchment-dark};
-  // Gold — monetary amounts; adapts per theme so it stays readable
-  --gold:          #{$color-gold};       // #daa520 on parchment (warm accent, acceptable)
+  // Gold — decorative / dark-background use only (#daa520 fails on parchment)
+  --gold:          #{$color-gold};
+  // Gold safe for TEXT on parchment surfaces — #745500 → 5.30:1 on --surface, 4.60:1 on --surface-mid
+  --gold-text:     #745500;
 }
 
 [data-theme="light"] {
@@ -107,6 +109,7 @@ $bp-nav: 1000px;
   --link:          #166534;
   --label-muted:   #374151;
   --gold:          #8c6600;   // darker amber — 5.0:1 on white
+  --gold-text:     #8c6600;   // same value — already text-safe on white surfaces
 }
 
 [data-theme="dark"] {
@@ -123,4 +126,5 @@ $bp-nav: 1000px;
   --link:          #4ade80;   // bright green readable on dark surfaces
   --label-muted:   #9ea6b4;
   --gold:          #{$color-gold-light}; // #f5c842 — bright gold, 9.5:1 on dark surface
+  --gold-text:     #{$color-gold-light}; // same — bright gold is fine as text on dark surfaces
 }
