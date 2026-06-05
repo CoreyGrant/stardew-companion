@@ -316,32 +316,22 @@ $gift-template: 150px minmax(160px, 220px) 1fr;
   padding: 0 !important;
   min-width: 240px;
   overflow: hidden;
+  // No column lines in rows — row separators come from .gift-row border-bottom
+}
 
-  // Grid lines drawn above bars via ::after
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: repeating-linear-gradient(
-      to right,
-      rgba($color-brown, 0.18) 0,
-      rgba($color-brown, 0.18) 1px,
-      transparent 1px,
-      transparent 5%
-    );
-  }
-
-  // Header cell: stronger lines, labels above grid lines
-  .gift-table__head &::after {
-    background-image: repeating-linear-gradient(
-      to right,
-      rgba($color-brown, 0.45) 0,
-      rgba($color-brown, 0.45) 1px,
-      transparent 1px,
-      transparent 5%
-    );
-  }
+// Header cell only: column lines (no bars to read against here)
+.gift-table__head .gift-col--sched::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba($color-brown, 0.45) 0,
+    rgba($color-brown, 0.45) 1px,
+    transparent 1px,
+    transparent 5%
+  );
 }
 
 // Hour labels inside the header schedule cell
