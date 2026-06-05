@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
 import type { NPC, Season, Weather } from '../types/game';
-import { bestVariantEntries, getDayName, locationLabel } from '../utils/scheduleUtils';
+import { bestVariantEntries, getDayName, locationLabel, type SaveContext } from '../utils/scheduleUtils';
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -46,12 +46,23 @@ export function useScheduleViewer(): ScheduleViewerState {
 
   const marriedTo = settings.tailorToSave ? (activeSave?.marriedTo ?? null) : null;
 
+  // Build save-state context for schedule scoring (gated on tailorToSave so the
+  // schedule reflects the user's actual game when a save is loaded).
+  const saveCtx = useMemo<SaveContext>(() => {
+    if (!settings.tailorToSave || !activeSave) return {};
+    return {
+      communityStatus: activeSave.communityStatus,
+      heartLevels:     activeSave.heartLevels,
+      islandUnlocked:  Boolean(activeSave.islandFarmLayout),
+    };
+  }, [activeSave, settings.tailorToSave]);
+
   const npcRows = useMemo<NPCRow[]>(() => {
     if (!data) return [];
     return data.npcs
       .filter(npc => !search || npc.name.toLowerCase().includes(search.toLowerCase()))
       .map(npc => {
-        const entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day);
+        const entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day, saveCtx);
 
         // Build time-range segments from sequential schedule entries.
         const raw = entries
@@ -75,7 +86,7 @@ export function useScheduleViewer(): ScheduleViewerState {
 
         return { npc, segments, hasSchedule: segments.length > 0 };
       });
-  }, [data, season, day, weather, year, search, marriedTo]);
+  }, [data, season, day, weather, year, search, marriedTo, saveCtx]);
 
   return {
     loading,

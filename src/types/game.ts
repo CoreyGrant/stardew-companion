@@ -44,6 +44,20 @@ export interface ScheduleCondition {
   day?: number;
   /** Day-of-week abbreviation matching Stardew schedule keys: Mon/Tue/Wed/Thu/Fri/Sat/Sun. */
   dayOfWeek?: string;
+
+  // ── Save-state conditions (checked when a save is loaded) ─────────────────
+  /** true = CC must be fully restored; false = CC must NOT be fully restored. */
+  ccRestored?: boolean;
+  /** true = bus to desert must be repaired (CC vault complete or Joja route done). */
+  busRepaired?: boolean;
+  /** true = Ginger Island must be accessible (player has island farm layout). */
+  islandUnlocked?: boolean;
+  /**
+   * Variant only applies when the player has FEWER than `minHearts` with `npc`.
+   * Used for companion-date schedule variants (Abigail/Sebastian, Alex/Haley, etc.)
+   * Already present in extracted gamedata.json for 7 variants — just wasn't typed.
+   */
+  notFriendship?: { npc: string; minHearts: number };
 }
 
 export interface ScheduleEntry {

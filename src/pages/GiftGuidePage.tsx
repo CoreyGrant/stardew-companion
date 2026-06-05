@@ -13,7 +13,7 @@ import { PortraitImg } from '../components/common/PortraitImg';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { TypeaheadInput, type TypeaheadOption } from '../components/common/TypeaheadInput';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { bestVariantEntries, locationLabel } from '../utils/scheduleUtils';
+import { bestVariantEntries, locationLabel, type SaveContext } from '../utils/scheduleUtils';
 import type { Segment } from '../hooks/useScheduleViewer';
 import type { NPC, ItemRef, Season, Weather } from '../types/game';
 import type { FriendshipEntry } from '../types/save';
@@ -204,6 +204,15 @@ export function GiftGuidePage() {
   // ── Row computation ─────────────────────────────────────────────────────────
   const marriedTo = settings.tailorToSave ? (activeSave?.marriedTo ?? null) : null;
 
+  const saveCtx = useMemo<SaveContext>(() => {
+    if (!settings.tailorToSave || !activeSave) return {};
+    return {
+      communityStatus: activeSave.communityStatus,
+      heartLevels:     activeSave.heartLevels,
+      islandUnlocked:  Boolean(activeSave.islandFarmLayout),
+    };
+  }, [activeSave, settings.tailorToSave]);
+
   const rows = useMemo<GiftRow[]>(() => {
     if (!data) return [];
     const univLovedIds = new Set((data.universalGifts?.loved ?? []).map(u => u.id));
@@ -238,7 +247,7 @@ export function GiftGuidePage() {
       });
 
       // Schedule segments — fall back to first variant if nothing matches the date
-      let entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day);
+      let entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day, saveCtx);
       if (entries.length === 0 && npc.schedules.length > 0) {
         entries = npc.schedules[0].entries;
       }
@@ -255,7 +264,7 @@ export function GiftGuidePage() {
 
       return { npc, isBirthday, heartLevel, cap, isMaxed, hasSave, giftsThisWeek, canGift, lovedMatches, likedMatches, segments, priority };
     }).sort((a, b) => a.priority - b.priority || a.npc.name.localeCompare(b.npc.name));
-  }, [data, activeSave, season, day, year, weather, myItems, marriedTo, settings]);
+  }, [data, activeSave, season, day, year, weather, myItems, marriedTo, settings, saveCtx]);
 
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;

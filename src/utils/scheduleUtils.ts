@@ -15,73 +15,76 @@ const DAYS_OF_WEEK = new Set<string>(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 
  */
 function weatherFromPart(part: string): Weather | null {
   const lc = part.toLowerCase();
-  if (lc.startsWith('rain'))        return 'rainy';
-  if (lc === 'greenrain')           return 'stormy';
-  if (lc === 'storm' || lc === 'thunder') return 'stormy';
-  if (lc === 'snow' || lc === 'snowy')    return 'snowy';
-  if (lc === 'wind' || lc === 'windy')    return 'windy';
+  if (lc.startsWith('rain'))               return 'rainy';
+  if (lc === 'greenrain')                  return 'stormy';
+  if (lc === 'storm' || lc === 'thunder')  return 'stormy';
+  if (lc === 'snow'  || lc === 'snowy')    return 'snowy';
+  if (lc === 'wind'  || lc === 'windy')    return 'windy';
   return null;
 }
 
 /**
  * Parse a schedule variant ID into conditions.
- * IDs follow the pattern: `{season}`, `{dayOfWeek}`, `{day}`, `{weather}`,
- * `{season}_{dayOfWeek}`, `{season}_{day}`, etc. — split on `_`.
  *
- * The `marriage_` prefix is handled specially — it implies `married: true`
- * and the remainder of the key is parsed for further conditions.
+ * Special prefixes / whole-ID tokens:
+ *   marriage_  → married: true (remainder parsed normally)
+ *   marriageJob → married: true (post-marriage work schedule; Harvey/Maru/Penny)
+ *   bus         → busRepaired: true (Pam's bus-driving variant)
+ *   noBridge    → ignored (bridge repair has no save field)
+ *   normal      → ignored (event-flag gate with no save equivalent)
+ *   SquidFest / TroutDerby / DesertFestival
+ *               → ignored (festival-day gates; need specific date ranges in data)
  *
  * Examples:
  *   "spring"        → { season: "spring" }
  *   "Wed"           → { dayOfWeek: "Wed" }
  *   "rain"          → { weather: "rainy" }
- *   "rain2"         → { weather: "rainy" }
  *   "GreenRain"     → { weather: "stormy" }
  *   "11"            → { day: 11 }
  *   "spring_4"      → { season: "spring", day: 4 }
  *   "fall_Mon"      → { season: "fall", dayOfWeek: "Mon" }
  *   "marriage_Mon"  → { married: true, dayOfWeek: "Mon" }
+ *   "marriageJob"   → { married: true }
+ *   "bus"           → { busRepaired: true }
  */
 export function parseConditionsFromId(id: string): ScheduleCondition {
   const result: ScheduleCondition = {};
 
-  // Handle marriage_ prefix: these variants only apply after the player marries this NPC.
+  // marriage_ prefix: variants that only apply after the player marries this NPC.
   let workId = id;
   if (workId.startsWith('marriage_')) {
     result.married = true;
     workId = workId.slice('marriage_'.length);
   }
 
-  const parts = workId.split('_');
+  // Whole-ID special cases (checked before splitting on '_')
+  if (workId === 'marriageJob') { result.married = true; return result; }
+  if (workId === 'bus')         { result.busRepaired = true; return result; }
 
-  for (const part of parts) {
-    // Season
+  for (const part of workId.split('_')) {
+    // Tokens with no save-state equivalent — skip silently
+    if (part === 'noBridge' || part === 'normal') continue;
+    // Festival-day gates — skip until exact dates are added to gamedata
+    if (part === 'SquidFest' || part === 'TroutDerby' || part === 'DesertFestival') continue;
+
     if (SEASONS.has(part.toLowerCase())) {
       result.season = part.toLowerCase() as Season;
       continue;
     }
 
-    // Day of week (3-letter abbreviation, case-sensitive as game uses it)
     if (DAYS_OF_WEEK.has(part)) {
       result.dayOfWeek = part;
       continue;
     }
 
-    // Weather
     const w = weatherFromPart(part);
-    if (w) {
-      result.weather = w;
-      continue;
-    }
+    if (w) { result.weather = w; continue; }
 
     // Specific day of season (pure integer token, e.g. "6", "11", "15")
     const n = parseInt(part, 10);
-    if (!isNaN(n) && String(n) === part) {
-      result.day = n;
-      continue;
-    }
+    if (!isNaN(n) && String(n) === part) { result.day = n; continue; }
 
-    // Unknown token (e.g. festival name, event id) — leave unhandled
+    // Unknown token — leave unhandled
   }
 
   return result;
@@ -92,13 +95,26 @@ export function parseConditionsFromId(id: string): ScheduleCondition {
 // Priority (highest wins) mirrors the Stardew Valley schedule-key resolution:
 //   specific day  > day-of-week > weather  > season  ≈ year/married
 //
-// Score contributions (accumulated, not exclusive):
-//   season match:    +1
-//   weather match:   +2
-//   dayOfWeek match: +3
-//   day match:       +8   (beats any combination of the others)
-//   married match:   +4
-//   minYear match:   +1
+// Score contributions (accumulated):
+//   season match:      +1
+//   weather match:     +2
+//   dayOfWeek match:   +3
+//   day match:         +8   (beats any combination of the others)
+//   married match:     +4
+//   minYear match:     +1
+//   ccRestored match:  +2   (save-state gate — more specific than bare season)
+//   busRepaired match: +2
+//   islandUnlocked:    +2
+
+/**
+ * Extra save-state context to refine schedule selection.
+ * All fields are optional — scoring degrades gracefully without them.
+ */
+export interface SaveContext {
+  communityStatus?: string;              // 'cc-restored' | 'joja-complete' | 'joja-member'
+  heartLevels?:     Record<string, number>; // NPC id → heart level (0–14)
+  islandUnlocked?:  boolean;            // true once player has island farm layout
+}
 
 /**
  * Score how well a variant matches the given conditions.
@@ -115,39 +131,76 @@ export function scoreVariant(
   year: number,
   married: boolean,
   day: number,
+  ctx: SaveContext = {},
 ): number {
-  // Merge stored conditions (extraction) with ID-derived ones.
-  // Stored conditions win when set; parsed fills in when missing.
-  // `variant.conditions` may be absent from older gamedata.json — default to {}.
+  // Merge stored conditions with ID-derived ones.
+  // Stored conditions take precedence (explicit extraction data beats heuristic parsing).
   const stored = variant.conditions ?? {};
   const parsed = parseConditionsFromId(variant.id);
+
   const c: ScheduleCondition = {
-    season:     stored.season     ?? parsed.season,
-    weather:    stored.weather    ?? parsed.weather,
-    minYear:    stored.minYear    ?? parsed.minYear,
-    married:    stored.married    ?? parsed.married,
-    dayOfWeek:  stored.dayOfWeek  ?? parsed.dayOfWeek,
-    day:        stored.day        ?? parsed.day,
+    season:         stored.season         ?? parsed.season,
+    weather:        stored.weather        ?? parsed.weather,
+    minYear:        stored.minYear        ?? parsed.minYear,
+    married:        stored.married        ?? parsed.married,
+    dayOfWeek:      stored.dayOfWeek      ?? parsed.dayOfWeek,
+    day:            stored.day            ?? parsed.day,
+    ccRestored:     stored.ccRestored     ?? parsed.ccRestored,
+    busRepaired:    stored.busRepaired    ?? parsed.busRepaired,
+    islandUnlocked: stored.islandUnlocked ?? parsed.islandUnlocked,
+    // notFriendship only comes from stored conditions (can't be parsed from ID)
+    notFriendship:  stored.notFriendship,
   };
 
-  // Hard-fail on mismatches
-  const seasonMatch  = !c.season  || (Array.isArray(c.season)  ? c.season.includes(season)   : c.season === season);
+  // ── Hard-fail checks ──────────────────────────────────────────────────────
+
+  const seasonMatch  = !c.season  || (Array.isArray(c.season)  ? c.season.includes(season)   : c.season  === season);
   const weatherMatch = !c.weather || (Array.isArray(c.weather) ? c.weather.includes(weather) : c.weather === weather);
-  const yearMatch    = c.minYear === undefined || year >= c.minYear;
-  const marriedMatch = c.married === undefined || c.married === married;
+  const yearMatch    = c.minYear   === undefined || year >= c.minYear;
+  const marriedMatch = c.married   === undefined || c.married === married;
   const dowMatch     = !c.dayOfWeek || c.dayOfWeek === getDayName(day);
-  const dayMatch     = c.day === undefined || c.day === day;
+  const dayMatch     = c.day       === undefined || c.day    === day;
 
   if (!seasonMatch || !weatherMatch || !yearMatch || !marriedMatch || !dowMatch || !dayMatch) return -1;
 
-  // Accumulate specificity score
+  // Save-state conditions (only checked when the relevant save field is available)
+
+  if (c.ccRestored !== undefined && ctx.communityStatus !== undefined) {
+    const isRestored = ctx.communityStatus === 'cc-restored';
+    if (c.ccRestored !== isRestored) return -1;
+  }
+
+  if (c.busRepaired !== undefined && ctx.communityStatus !== undefined) {
+    const isRepaired = ctx.communityStatus === 'cc-restored' || ctx.communityStatus === 'joja-complete';
+    if (c.busRepaired !== isRepaired) return -1;
+  }
+
+  if (c.islandUnlocked !== undefined && ctx.islandUnlocked !== undefined) {
+    if (c.islandUnlocked !== ctx.islandUnlocked) return -1;
+  }
+
+  // notFriendship: variant only applies when player has < minHearts with the named NPC.
+  // Example: Abigail day-11 variant only fires if player has < 6 hearts with Sebastian.
+  if (c.notFriendship && ctx.heartLevels) {
+    const npcKey   = c.notFriendship.npc.toLowerCase();
+    const actual   = ctx.heartLevels[npcKey] ?? 0;
+    if (actual >= c.notFriendship.minHearts) return -1;
+  }
+
+  // ── Specificity score ─────────────────────────────────────────────────────
+
   let score = 0;
-  if (c.season)             score += 1;
-  if (c.weather)            score += 2;
-  if (c.dayOfWeek)          score += 3;
-  if (c.day !== undefined)  score += 8;
+  if (c.season)               score += 1;
+  if (c.weather)              score += 2;
+  if (c.dayOfWeek)            score += 3;
+  if (c.day !== undefined)    score += 8;
   if (c.married !== undefined) score += 4;
   if (c.minYear !== undefined) score += 1;
+  // Save-state gates add moderate specificity — more specific than a bare season,
+  // less specific than a day-of-week.
+  if (c.ccRestored     !== undefined) score += 2;
+  if (c.busRepaired    !== undefined) score += 2;
+  if (c.islandUnlocked !== undefined) score += 2;
 
   return score;
 }
@@ -164,15 +217,16 @@ export function bestVariant(
   year: number,
   marriedToNpc: boolean,
   day: number = 1,
+  ctx: SaveContext = {},
 ): ScheduleVariant | null {
   let best: ScheduleVariant | null = null;
   let bestScore = -1;
 
   for (const variant of npc.schedules) {
-    const score = scoreVariant(variant, season, weather, year, marriedToNpc, day);
+    const score = scoreVariant(variant, season, weather, year, marriedToNpc, day, ctx);
     if (score > bestScore) {
       bestScore = score;
-      best = variant;
+      best      = variant;
     }
   }
 
@@ -189,8 +243,9 @@ export function bestVariantEntries(
   year: number,
   marriedToNpc: boolean,
   day: number = 1,
+  ctx: SaveContext = {},
 ): ScheduleEntry[] {
-  return bestVariant(npc, season, weather, year, marriedToNpc, day)?.entries ?? [];
+  return bestVariant(npc, season, weather, year, marriedToNpc, day, ctx)?.entries ?? [];
 }
 
 // ── Location display-name mapping ─────────────────────────────────────────────
