@@ -355,6 +355,9 @@ $gift-template: 150px minmax(160px, 220px) 1fr;
   pointer-events: none;
   user-select: none;
   z-index: 2;  // above grid lines ::after
+
+  &:first-child { padding-left: 3px; }
+  &:last-child  { padding-right: 3px; }
 }
 
 // Location bars inside each row's schedule cell

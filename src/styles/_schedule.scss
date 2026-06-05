@@ -173,18 +173,24 @@ $sched-npc-w:  130px;
 $sched-row-h:   38px;
 $sched-head-h:  40px;
 
-.sched-wrap {
+// .sched-outer clips without creating a scroll container (unlike overflow:hidden),
+// so the header's position:sticky resolves against the page, not the scroll box.
+.sched-outer {
   @include panel-frame;
   padding: 0;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: clip;
   margin-top: $space-4;
 }
 
+// Horizontal scroll lives here — only wraps the body rows, not the header.
+.sched-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 // ── Header row ────────────────────────────────────────────────────────────────
-// NOT sticky — overflow-x: auto on .sched-wrap makes it a scroll container,
-// which traps position:sticky and offsets the header by top: $header-height,
-// pushing it down and overlapping the first row.  Keep it in normal flow.
+// Lives OUTSIDE .sched-wrap so sticky resolves against the page (not the
+// overflow-x:auto scroll container, which would trap and offset it).
 
 .sched-header {
   display: flex;
@@ -192,6 +198,9 @@ $sched-head-h:  40px;
   background: $color-brown-dark;
   border-bottom: 2px solid $color-brown;
   min-width: #{$sched-npc-w + 600px};
+  position: sticky;
+  top: $header-height;
+  z-index: 10;
 }
 
 .sched-header__label {
@@ -238,45 +247,36 @@ $sched-head-h:  40px;
 }
 
 // ── Timeline column ───────────────────────────────────────────────────────────
-// Grid lines drawn via ::after so they render ON TOP of the location bars.
-// The header timeline uses stronger gold lines; body rows use subtle brown.
+// Grid lines are background-image on the element itself so they render BEHIND
+// the absolutely-positioned location bars (bars cover the lines).
+// The header uses stronger gold lines; body rows use subtle brown.
 
 .sched-timeline {
   flex: 1;
   position: relative;
   min-width: 600px;
   height: $sched-row-h;
-
-  // Grid lines above bars (::after is painted after all absolute children)
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: repeating-linear-gradient(
-      to right,
-      rgba($color-brown, 0.22) 0,
-      rgba($color-brown, 0.22) 1px,
-      transparent 1px,
-      transparent 5%
-    );
-  }
+  // Subtle hour marks — bars render on top and naturally cover them
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba($color-brown, 0.22) 0,
+    rgba($color-brown, 0.22) 1px,
+    transparent 1px,
+    transparent 5%
+  );
 
   &--header {
     height: $sched-head-h;
     background-color: $color-brown-dark;
     overflow: visible; // allow edge labels to bleed into adjacent dark area
-
-    &::after {
-      // Prominent gold lines in the header
-      background-image: repeating-linear-gradient(
-        to right,
-        rgba($color-gold, 0.55) 0,
-        rgba($color-gold, 0.55) 1px,
-        transparent 1px,
-        transparent 5%
-      );
-    }
+    // Prominent gold lines — no bars to obscure them in the header
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba($color-gold, 0.55) 0,
+      rgba($color-gold, 0.55) 1px,
+      transparent 1px,
+      transparent 5%
+    );
   }
 }
 
@@ -292,6 +292,10 @@ $sched-head-h:  40px;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
+
+  // Tiny inset so the edge labels don't sit flush against the panel border
+  &:first-child { padding-left: 4px; }
+  &:last-child  { padding-right: 4px; }
 }
 
 // ── Body rows ─────────────────────────────────────────────────────────────────

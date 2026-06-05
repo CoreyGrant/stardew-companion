@@ -88,9 +88,11 @@ export function ScheduleViewerPage() {
       </div>
 
       {/* ── Gantt timeline ── */}
-      <div className="sched-wrap">
+      {/* .sched-outer uses overflow-x:clip (not hidden) so it doesn't create a
+          scroll container — the sticky header resolves against the page body. */}
+      <div className="sched-outer">
 
-        {/* Sticky header row: NPC label + hour marks */}
+        {/* Header sits ABOVE the h-scroll wrapper so sticky works correctly */}
         <div className="sched-header">
           <div className="sched-npc-col sched-npc-col--header">
             <span className="sched-header__label">Villager</span>
@@ -117,49 +119,51 @@ export function ScheduleViewerPage() {
           </div>
         </div>
 
-        {/* NPC rows */}
-        <div className="sched-body">
-          {npcRows.map(({ npc, segments, hasSchedule }) => (
-            <div
-              key={npc.id}
-              className={`sched-row${!hasSchedule ? ' sched-row--empty' : ''}`}
-            >
-              {/* NPC name — sticky left */}
-              <div className="sched-npc-col">
-                {npc.portrait ? (
-                  <PortraitImg
-                    src={`${BASE}sprites/portraits/${npc.portrait}`}
-                    size={24}
-                    alt=""
-                    className="sched-portrait"
-                  />
-                ) : (
-                  <span className="sched-portrait-initial">{npc.name.charAt(0)}</span>
-                )}
-                <GameLink type="npc" id={npc.id}>{npc.name}</GameLink>
-              </div>
+        {/* Horizontal-scroll wrapper — only the rows scroll, not the header */}
+        <div className="sched-wrap">
+          <div className="sched-body">
+            {npcRows.map(({ npc, segments, hasSchedule }) => (
+              <div
+                key={npc.id}
+                className={`sched-row${!hasSchedule ? ' sched-row--empty' : ''}`}
+              >
+                {/* NPC name — sticky left */}
+                <div className="sched-npc-col">
+                  {npc.portrait ? (
+                    <PortraitImg
+                      src={`${BASE}sprites/portraits/${npc.portrait}`}
+                      size={24}
+                      alt=""
+                      className="sched-portrait"
+                    />
+                  ) : (
+                    <span className="sched-portrait-initial">{npc.name.charAt(0)}</span>
+                  )}
+                  <GameLink type="npc" id={npc.id}>{npc.name}</GameLink>
+                </div>
 
-              {/* Timeline with location bars */}
-              <div className="sched-timeline">
-                {segments.map((seg, i) => {
-                  const barLeft  = pct(seg.startTime);
-                  const barRight = pct(seg.endTime);
-                  const barWidth = barRight - barLeft;
-                  if (barWidth <= 0) return null;
-                  return (
-                    <div
-                      key={i}
-                      className="sched-bar"
-                      style={{ left: `${barLeft}%`, width: `${barWidth}%` }}
-                      title={`${formatTime(seg.startTime)} – ${formatTime(seg.endTime)}: ${seg.location}`}
-                    >
-                      <span className="sched-bar__label">{seg.location}</span>
-                    </div>
-                  );
-                })}
+                {/* Timeline with location bars */}
+                <div className="sched-timeline">
+                  {segments.map((seg, i) => {
+                    const barLeft  = pct(seg.startTime);
+                    const barRight = pct(seg.endTime);
+                    const barWidth = barRight - barLeft;
+                    if (barWidth <= 0) return null;
+                    return (
+                      <div
+                        key={i}
+                        className="sched-bar"
+                        style={{ left: `${barLeft}%`, width: `${barWidth}%` }}
+                        title={`${formatTime(seg.startTime)} – ${formatTime(seg.endTime)}: ${seg.location}`}
+                      >
+                        <span className="sched-bar__label">{seg.location}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
