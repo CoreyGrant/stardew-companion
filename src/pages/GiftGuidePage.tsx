@@ -14,26 +14,61 @@ import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { TypeaheadInput, type TypeaheadOption } from '../components/common/TypeaheadInput';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { bestVariantEntries, locationLabel } from '../utils/scheduleUtils';
+import type { Segment } from '../hooks/useScheduleViewer';
 import type { NPC, ItemRef, Season, Weather } from '../types/game';
 import type { FriendshipEntry } from '../types/save';
 
 const BASE = import.meta.env.BASE_URL;
 
-// ── Schedule helpers ──────────────────────────────────────────────────────────
+// ── Schedule / Gantt helpers ──────────────────────────────────────────────────
 
-const SLOT_TIMES  = [600, 1000, 1200, 1500, 1800, 2000];
-const SLOT_LABELS = ['6am', '10am', '12pm', '3pm', '6pm', '8pm'];
+const GIFT_RANGE_START = 600;
+const GIFT_RANGE_END   = 2600;
+const GIFT_RANGE       = GIFT_RANGE_END - GIFT_RANGE_START; // 2000
 
-function locationAtTime(
-  entries: ReturnType<typeof bestVariantEntries>,
-  time: number,
-): string {
-  let loc = entries[0]?.location ?? '—';
-  for (const e of entries) {
-    if (e.time <= time) loc = e.location;
-    else break;
+// Labels every 2 hours (6am … 2am = 11 marks)
+const GIFT_LABEL_HOURS = Array.from({ length: 11 }, (_, i) => GIFT_RANGE_START + i * 200);
+
+function giftPct(t: number): number {
+  return (Math.max(GIFT_RANGE_START, Math.min(GIFT_RANGE_END, t)) - GIFT_RANGE_START) / GIFT_RANGE * 100;
+}
+
+function formatGiftHour(t: number): string {
+  let h = Math.floor(t / 100);
+  if (h >= 24) h -= 24;
+  const pm = h >= 12;
+  return `${h > 12 ? h - 12 : h === 0 ? 12 : h}${pm ? 'pm' : 'am'}`;
+}
+
+function formatGiftTime(t: number): string {
+  let h = Math.floor(t / 100);
+  const m = t % 100;
+  if (h >= 24) h -= 24;
+  const pm = h >= 12;
+  const d  = h > 12 ? h - 12 : h === 0 ? 12 : h;
+  return `${d}${m > 0 ? `:${String(m).padStart(2, '0')}` : ''}${pm ? 'pm' : 'am'}`;
+}
+
+/** Build merged Gantt segments from schedule entries. */
+function buildSegments(entries: ReturnType<typeof bestVariantEntries>): Segment[] {
+  const raw = entries
+    .map((e, i) => ({
+      startTime: e.time,
+      endTime:   entries[i + 1]?.time ?? GIFT_RANGE_END,
+      location:  locationLabel(e.location),
+    }))
+    .filter(s => s.endTime > GIFT_RANGE_START && s.startTime < GIFT_RANGE_END);
+
+  const merged: Segment[] = [];
+  for (const seg of raw) {
+    const last = merged[merged.length - 1];
+    if (last && last.location === seg.location) {
+      last.endTime = seg.endTime;
+    } else {
+      merged.push({ ...seg });
+    }
   }
-  return loc ? locationLabel(loc) : '—';
+  return merged;
 }
 
 // ── Gift helpers ──────────────────────────────────────────────────────────────
@@ -62,8 +97,8 @@ interface GiftRow {
   canGift: boolean;
   lovedMatches: TypeaheadOption[];
   likedMatches: TypeaheadOption[];
-  /** location string for each SLOT_TIMES entry */
-  locations: string[];
+  /** Merged time-range segments for the Gantt timeline */
+  segments: Segment[];
   /** 0=birthday 1=loved+canGift 2=liked+canGift 3=canGift 4=giftedOut 5=maxed */
   priority: number;
 }
@@ -202,12 +237,12 @@ export function GiftGuidePage() {
         return univLikedIds.has(item.id) || npc.gifts?.liked?.some(g => g.id === item.id);
       });
 
-      // Schedule locations — fall back to first variant if nothing matches the date
+      // Schedule segments — fall back to first variant if nothing matches the date
       let entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day);
       if (entries.length === 0 && npc.schedules.length > 0) {
         entries = npc.schedules[0].entries;
       }
-      const locations = SLOT_TIMES.map(t => locationAtTime(entries, t));
+      const segments = buildSegments(entries);
 
       // Priority
       let priority: number;
@@ -218,7 +253,7 @@ export function GiftGuidePage() {
       else if (!isMaxed)                              priority = 4; // gifted out this week
       else                                            priority = 5; // maxed
 
-      return { npc, isBirthday, heartLevel, cap, isMaxed, hasSave, giftsThisWeek, canGift, lovedMatches, likedMatches, locations, priority };
+      return { npc, isBirthday, heartLevel, cap, isMaxed, hasSave, giftsThisWeek, canGift, lovedMatches, likedMatches, segments, priority };
     }).sort((a, b) => a.priority - b.priority || a.npc.name.localeCompare(b.npc.name));
   }, [data, activeSave, season, day, year, weather, myItems, marriedTo, settings]);
 
@@ -273,9 +308,23 @@ export function GiftGuidePage() {
         <div className="gift-table__head">
           <span className="gift-col--npc">Character</span>
           <span className="gift-col--gifts">Gift match</span>
-          {SLOT_LABELS.map((l, i) => (
-            <span key={i} className="gift-col--time">{l}</span>
-          ))}
+          {/* Schedule Gantt header — hour marks every 2h */}
+          <span className="gift-col--sched">
+            {GIFT_LABEL_HOURS.map((t, i) => {
+              const isFirst = i === 0;
+              const isLast  = i === GIFT_LABEL_HOURS.length - 1;
+              const tx = isFirst ? '0%' : isLast ? '-100%' : '-50%';
+              return (
+                <span
+                  key={t}
+                  className="gift-sched__label"
+                  style={{ left: `${giftPct(t)}%`, transform: `translate(${tx}, -50%)` }}
+                >
+                  {formatGiftHour(t)}
+                </span>
+              );
+            })}
+          </span>
         </div>
 
         <div className="gift-table-wrap">
@@ -283,7 +332,7 @@ export function GiftGuidePage() {
 
             {/* Rows */}
             {rows.map(row => {
-            const { npc, isBirthday, lovedMatches, likedMatches, locations, priority } = row;
+            const { npc, isBirthday, lovedMatches, likedMatches, segments, priority } = row;
             const rowClass = [
               'gift-row',
               isBirthday  ? 'gift-row--birthday'   : '',
@@ -330,12 +379,24 @@ export function GiftGuidePage() {
                   )}
                 </div>
 
-                {/* Schedule locations */}
-                {locations.map((loc, i) => (
-                  <div key={i} className="gift-col--time gift-location" title={loc}>
-                    {loc}
-                  </div>
-                ))}
+                {/* Schedule Gantt */}
+                <div className="gift-col--sched">
+                  {segments.map((seg, i) => {
+                    const left  = giftPct(seg.startTime);
+                    const width = giftPct(seg.endTime) - left;
+                    if (width <= 0) return null;
+                    return (
+                      <div
+                        key={i}
+                        className="gift-sched__bar"
+                        style={{ left: `${left}%`, width: `${width}%` }}
+                        title={`${formatGiftTime(seg.startTime)} – ${formatGiftTime(seg.endTime)}: ${seg.location}`}
+                      >
+                        <span className="gift-sched__bar-label">{seg.location}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}

@@ -181,7 +181,10 @@ $sched-head-h:  40px;
   margin-top: $space-4;
 }
 
-// ── Sticky header ─────────────────────────────────────────────────────────────
+// ── Header row ────────────────────────────────────────────────────────────────
+// NOT sticky — overflow-x: auto on .sched-wrap makes it a scroll container,
+// which traps position:sticky and offsets the header by top: $header-height,
+// pushing it down and overlapping the first row.  Keep it in normal flow.
 
 .sched-header {
   display: flex;
@@ -189,9 +192,6 @@ $sched-head-h:  40px;
   background: $color-brown-dark;
   border-bottom: 2px solid $color-brown;
   min-width: #{$sched-npc-w + 600px};
-  position: sticky;
-  top: $header-height;
-  z-index: 10;
 }
 
 .sched-header__label {
@@ -238,27 +238,45 @@ $sched-head-h:  40px;
 }
 
 // ── Timeline column ───────────────────────────────────────────────────────────
-// Grid lines via repeating-linear-gradient — one 1px rule per 5% = 1 hour.
+// Grid lines drawn via ::after so they render ON TOP of the location bars.
+// The header timeline uses stronger gold lines; body rows use subtle brown.
 
 .sched-timeline {
   flex: 1;
   position: relative;
   min-width: 600px;
   height: $sched-row-h;
-  // One vertical grid line per hour (every 5% of 20-column space)
-  background-image: repeating-linear-gradient(
-    to right,
-    rgba($color-brown, 0.18) 0,
-    rgba($color-brown, 0.18) 1px,
-    transparent 1px,
-    transparent 5%
-  );
+
+  // Grid lines above bars (::after is painted after all absolute children)
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba($color-brown, 0.22) 0,
+      rgba($color-brown, 0.22) 1px,
+      transparent 1px,
+      transparent 5%
+    );
+  }
 
   &--header {
     height: $sched-head-h;
-    background-image: none;
     background-color: $color-brown-dark;
     overflow: visible; // allow edge labels to bleed into adjacent dark area
+
+    &::after {
+      // Prominent gold lines in the header
+      background-image: repeating-linear-gradient(
+        to right,
+        rgba($color-gold, 0.55) 0,
+        rgba($color-gold, 0.55) 1px,
+        transparent 1px,
+        transparent 5%
+      );
+    }
   }
 }
 
@@ -324,14 +342,15 @@ $sched-head-h:  40px;
 }
 
 // ── Location bars ─────────────────────────────────────────────────────────────
+// Full row height (top/bottom: 0). No border-radius — they span wall-to-wall.
+// Grid lines from ::after sit above bars so they always show through.
 
 .sched-bar {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
-  border-radius: 2px;
-  background: rgba($color-brown, 0.12);
-  border: 1px solid rgba($color-brown, 0.35);
+  top: 0;
+  bottom: 0;
+  background: rgba($color-brown, 0.13);
+  border-right: 1px solid rgba($color-brown, 0.25);
   display: flex;
   align-items: center;
   padding: 0 $space-1;
@@ -340,19 +359,7 @@ $sched-head-h:  40px;
   cursor: default;
   transition: background 0.1s;
 
-  &:hover {
-    background: rgba($color-brown, 0.28);
-    z-index: 2;
-    overflow: visible;
-
-    .sched-bar__label {
-      overflow: visible;
-      background: var(--surface);
-      padding: 1px $space-1;
-      border-radius: 2px;
-      border: 1px solid rgba($color-brown, 0.3);
-    }
-  }
+  &:hover { background: rgba($color-brown, 0.28); }
 }
 
 .sched-bar__label {

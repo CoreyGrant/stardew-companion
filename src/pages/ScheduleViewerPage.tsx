@@ -13,11 +13,8 @@ const RANGE_START = 600;
 const RANGE_END   = 2600;
 const RANGE       = RANGE_END - RANGE_START; // 2000 SDV time units
 
-// Hour boundaries for grid lines (21 marks = 20 columns)
-const GRID_HOURS = Array.from({ length: 21 }, (_, i) => RANGE_START + i * 100);
-
-// Every-2-hour labels shown in the header
-const LABEL_HOURS = GRID_HOURS.filter((_, i) => i % 2 === 0); // 6am 8am … 2am
+// Every-2-hour labels shown in the header (6am, 8am … 2am = 11 marks)
+const LABEL_HOURS = Array.from({ length: 11 }, (_, i) => RANGE_START + i * 200);
 
 /** Clamp t to [RANGE_START, RANGE_END] then convert to a % position. */
 function pct(t: number): number {
@@ -102,15 +99,21 @@ export function ScheduleViewerPage() {
             </span>
           </div>
           <div className="sched-timeline sched-timeline--header" aria-hidden="true">
-            {LABEL_HOURS.map(t => (
-              <span
-                key={t}
-                className="sched-hour-label"
-                style={{ left: `${pct(t)}%` }}
-              >
-                {formatHour(t)}
-              </span>
-            ))}
+            {LABEL_HOURS.map((t, i) => {
+              // Edge labels: left-align first, right-align last, centre the rest
+              const isFirst = i === 0;
+              const isLast  = i === LABEL_HOURS.length - 1;
+              const tx = isFirst ? '0%' : isLast ? '-100%' : '-50%';
+              return (
+                <span
+                  key={t}
+                  className="sched-hour-label"
+                  style={{ left: `${pct(t)}%`, transform: `translate(${tx}, -50%)` }}
+                >
+                  {formatHour(t)}
+                </span>
+              );
+            })}
           </div>
         </div>
 

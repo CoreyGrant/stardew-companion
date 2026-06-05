@@ -54,15 +54,24 @@ export function useScheduleViewer(): ScheduleViewerState {
         const entries = bestVariantEntries(npc, season, weather, year, npc.id === marriedTo, day);
 
         // Build time-range segments from sequential schedule entries.
-        // Each entry's end time is the next entry's start time (or RANGE_END for the last).
-        const segments: Segment[] = entries
+        const raw = entries
           .map((entry, i) => ({
             startTime: entry.time,
             endTime:   entries[i + 1]?.time ?? RANGE_END,
             location:  locationLabel(entry.location),
           }))
-          // Discard segments entirely outside the visible range
           .filter(s => s.endTime > RANGE_START && s.startTime < RANGE_END);
+
+        // Merge consecutive segments at the same location (e.g. Linus: Mountain ×4 → ×1)
+        const segments: Segment[] = [];
+        for (const seg of raw) {
+          const last = segments[segments.length - 1];
+          if (last && last.location === seg.location) {
+            last.endTime = seg.endTime;
+          } else {
+            segments.push({ ...seg });
+          }
+        }
 
         return { npc, segments, hasSchedule: segments.length > 0 };
       });
