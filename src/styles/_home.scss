@@ -225,16 +225,6 @@
     padding: 3px $space-2;
   }
 
-  &__portrait {
-    display: block;
-    width: 24px;
-    height: 24px;
-    overflow: hidden;
-    flex-shrink: 0;
-    border-radius: 2px;
-    position: relative;
-  }
-
   &__initial {
     display: flex;
     align-items: center;

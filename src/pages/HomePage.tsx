@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useGameData } from '../contexts/GameDataContext';
 import { useUserData } from '../contexts/UserDataContext';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { PortraitImg } from '../components/common/PortraitImg';
 import type { Season } from '../types/game';
 
 const BASE = import.meta.env.BASE_URL;
@@ -125,24 +126,11 @@ export function HomePage() {
                   return (
                     <li key={npc.id} className={`dash-bday-row${isToday ? ' dash-bday-row--today' : ''}`}>
                       {/* Portrait */}
-                      <span className="dash-bday-row__portrait" aria-hidden="true">
-                        {portraitSrc ? (
-                          <img
-                            src={portraitSrc}
-                            alt=""
-                            style={{
-                              width: 64,
-                              height: 64,
-                              imageRendering: 'pixelated',
-                              transform: 'scale(0.375)',
-                              transformOrigin: '0 0',
-                              display: 'block',
-                            }}
-                          />
-                        ) : (
-                          <span className="dash-bday-row__initial">{npc.name.charAt(0)}</span>
-                        )}
-                      </span>
+                      {portraitSrc ? (
+                        <PortraitImg src={portraitSrc} size={24} />
+                      ) : (
+                        <span className="dash-bday-row__initial">{npc.name.charAt(0)}</span>
+                      )}
                       {/* Name → character page */}
                       <Link to={`/characters/${npc.id}`} className="dash-bday-row__name">
                         {npc.name}
