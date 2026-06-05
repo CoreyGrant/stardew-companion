@@ -13,7 +13,7 @@ import { PortraitImg } from '../components/common/PortraitImg';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { TypeaheadInput, type TypeaheadOption } from '../components/common/TypeaheadInput';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { bestVariantEntries } from '../utils/scheduleUtils';
+import { bestVariantEntries, locationLabel } from '../utils/scheduleUtils';
 import type { NPC, ItemRef, Season, Weather } from '../types/game';
 import type { FriendshipEntry } from '../types/save';
 
@@ -33,7 +33,7 @@ function locationAtTime(
     if (e.time <= time) loc = e.location;
     else break;
   }
-  return loc || '—';
+  return loc ? locationLabel(loc) : '—';
 }
 
 // ── Gift helpers ──────────────────────────────────────────────────────────────

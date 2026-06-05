@@ -193,6 +193,22 @@ export function bestVariantEntries(
   return bestVariant(npc, season, weather, year, marriedToNpc, day)?.entries ?? [];
 }
 
+// ── Location display-name mapping ─────────────────────────────────────────────
+//
+// SDV stores internal map names in schedule data that are not player-facing.
+// Map them to the names players recognise before any UI renders them.
+
+const LOCATION_LABELS: Record<string, string> = {
+  'Josh House':          "Alex's House",      // Internal map name for George/Evelyn/Alex's home
+  'Science House':       'Mountain Rd. Home', // Robin/Demetrius/Maru/Sebastian's house interior
+  'The Mines (Level 5)': 'The Mines',         // Dwarf — fixed spot near entrance, never level 5
+};
+
+/** Return a player-friendly label for a raw SDV location string. */
+export function locationLabel(raw: string): string {
+  return LOCATION_LABELS[raw] ?? raw;
+}
+
 // ── Date helpers ───────────────────────────────────────────────────────────────
 
 export const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

@@ -166,141 +166,200 @@
   }
 }
 
-// ── Calendar date label (in thead) ───────────────────────────────────────────
-.schedule-cal__date-label {
-  display: block;
-  font-family: $font-body;
-  font-size: 0.65rem;
-  font-weight: normal;
-  color: $color-gold;
-  opacity: 0.8;
-  margin-top: 2px;
-  white-space: nowrap;
-}
+// ── Gantt/timeline calendar ───────────────────────────────────────────────────
+// 20 equal hour columns (6 am → 2 am).  NPC column sticky left; header sticky top.
 
-// ── Calendar table ────────────────────────────────────────────────────────────
-.schedule-cal-wrap {
+$sched-npc-w:  130px;
+$sched-row-h:   38px;
+$sched-head-h:  40px;
+
+.sched-wrap {
   @include panel-frame;
   padding: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  margin-top: $space-4;
 }
 
-.schedule-cal {
-  width: 100%;
-  min-width: 540px;
-  border-collapse: collapse;
+// ── Sticky header ─────────────────────────────────────────────────────────────
 
-  // NPC column: fixed narrow width
-  &__npc-col { width: 100px; }
+.sched-header {
+  display: flex;
+  align-items: stretch;
+  background: $color-brown-dark;
+  border-bottom: 2px solid $color-brown;
+  min-width: #{$sched-npc-w + 600px};
+  position: sticky;
+  top: $header-height;
+  z-index: 10;
+}
 
-  // ── Header row ──────────────────────────────────────────────────────────────
-  thead th {
+.sched-header__label {
+  display: block;
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  color: $color-gold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sched-header__date {
+  font-size: 0.58rem;
+  color: $color-gold;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+// ── NPC name column (sticky left in both header and rows) ─────────────────────
+
+.sched-npc-col {
+  flex-shrink: 0;
+  width: $sched-npc-w;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  border-right: 2px solid $color-brown;
+  padding: $space-1 $space-2;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 0.8rem;
+  // Background set per-context (header vs odd/even row) — see below
+
+  &--header {
     background: $color-brown-dark;
-    color: $color-gold;
-    font-family: $font-pixel;
-    font-size: 0.55rem;
-    padding: $space-2 $space-3;
-    text-align: center;
-    white-space: nowrap;
-    border-bottom: 2px solid $color-brown;
-    border-right: 1px solid rgba($color-brown, 0.4);
-
-    &:last-child { border-right: none; }
-  }
-
-  &__npc-head {
-    text-align: left !important;
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    border-right: 2px solid $color-brown !important;
-  }
-
-  // ── Body rows ────────────────────────────────────────────────────────────────
-  tbody tr {
-    &:last-child td { border-bottom: none; }
-
-    // Subtle row hover
-    &:hover .schedule-cal__block    { background: rgba($color-gold, 0.06); }
-    &:hover .schedule-cal__npc-cell { filter: brightness(0.97); }
-  }
-
-  // Alternate row shading
-  tbody tr:nth-child(even) {
-    .schedule-cal__npc-cell { background: var(--surface-mid); }
-    .schedule-cal__block    { background: var(--surface-mid); }
-  }
-
-  // ── NPC name cell (sticky left) ──────────────────────────────────────────────
-  &__npc-cell {
-    background: var(--surface);
-    padding: $space-1 $space-3;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    vertical-align: middle;
-    border-right: 2px solid $color-parchment-dark;
-    border-bottom: 1px solid $color-parchment-dark;
-    position: sticky;
-    left: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: $space-2;
-  }
-
-  // ── Portrait thumbnail in NPC cell ───────────────────────────────────────────
-  &__portrait {
-    display: block;
-    flex-shrink: 0;
-    border: 1px solid $color-brown;
-    background: $color-brown-dark;
-    overflow: hidden;
-  }
-
-  &__portrait-initial {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    background: $color-brown-dark;
-    border: 1px solid $color-brown;
-    font-family: $font-pixel;
-    font-size: 0.55rem;
-    color: $color-gold;
+    gap: 2px;
+    height: $sched-head-h;
+    z-index: 11; // above the header timeline
   }
+}
 
-  // ── Empty-schedule row ───────────────────────────────────────────────────────
-  &__row--empty {
-    opacity: 0.45;
+// ── Timeline column ───────────────────────────────────────────────────────────
+// Grid lines via repeating-linear-gradient — one 1px rule per 5% = 1 hour.
+
+.sched-timeline {
+  flex: 1;
+  position: relative;
+  min-width: 600px;
+  height: $sched-row-h;
+  // One vertical grid line per hour (every 5% of 20-column space)
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba($color-brown, 0.18) 0,
+    rgba($color-brown, 0.18) 1px,
+    transparent 1px,
+    transparent 5%
+  );
+
+  &--header {
+    height: $sched-head-h;
+    background-image: none;
+    background-color: $color-brown-dark;
+    overflow: visible; // allow edge labels to bleed into adjacent dark area
   }
+}
 
-  // ── Location block (calendar event cell) ─────────────────────────────────────
-  &__block {
-    background: var(--surface);
-    color: var(--text-mid);
-    padding: $space-2 $space-3;
-    font-size: 0.72rem;
-    text-align: center;
-    vertical-align: middle;
-    border-bottom: 1px solid $color-parchment-dark;
-    border-right: 1px solid $color-parchment-dark;
-    line-height: 1.35;
+// ── Hour labels ───────────────────────────────────────────────────────────────
 
-    &:last-child { border-right: none; }
+.sched-hour-label {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: $font-pixel;
+  font-size: 0.5rem;
+  color: rgba($color-gold, 0.85);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
 
-    // Spans >1 column get a subtle left accent to mark transition
-    &[colspan]:not([colspan="1"]) {
-      border-left: 2px solid rgba($color-brown-light, 0.35);
+// ── Body rows ─────────────────────────────────────────────────────────────────
+
+.sched-body {
+  // Explicit backgrounds so the sticky NPC cell always matches its row
+  .sched-row:nth-child(odd) {
+    .sched-npc-col  { background: var(--surface); }
+    .sched-timeline { background-color: var(--surface); }
+  }
+  .sched-row:nth-child(even) {
+    .sched-npc-col  { background: var(--surface-mid); }
+    .sched-timeline { background-color: var(--surface-mid); }
+  }
+}
+
+.sched-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid rgba($color-brown, 0.2);
+  min-width: #{$sched-npc-w + 600px};
+
+  &:last-child { border-bottom: none; }
+  &--empty     { opacity: 0.4; }
+}
+
+// ── NPC portrait ──────────────────────────────────────────────────────────────
+
+.sched-portrait {
+  flex-shrink: 0;
+  border: 1px solid $color-brown;
+  background: $color-brown-dark;
+  overflow: hidden;
+}
+
+.sched-portrait-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  background: $color-brown-dark;
+  border: 1px solid $color-brown;
+  font-family: $font-pixel;
+  font-size: 0.55rem;
+  color: $color-gold;
+}
+
+// ── Location bars ─────────────────────────────────────────────────────────────
+
+.sched-bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 2px;
+  background: rgba($color-brown, 0.12);
+  border: 1px solid rgba($color-brown, 0.35);
+  display: flex;
+  align-items: center;
+  padding: 0 $space-1;
+  overflow: hidden;
+  min-width: 2px;
+  cursor: default;
+  transition: background 0.1s;
+
+  &:hover {
+    background: rgba($color-brown, 0.28);
+    z-index: 2;
+    overflow: visible;
+
+    .sched-bar__label {
+      overflow: visible;
+      background: var(--surface);
+      padding: 1px $space-1;
+      border-radius: 2px;
+      border: 1px solid rgba($color-brown, 0.3);
     }
-
-    // No schedule data for this slot
-    &--empty {
-      color: var(--text-light);
-      opacity: 0.5;
-      font-style: italic;
-    }
   }
+}
+
+.sched-bar__label {
+  font-size: 0.6rem;
+  color: var(--text-mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
 }
