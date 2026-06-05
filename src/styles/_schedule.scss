@@ -256,14 +256,6 @@ $sched-head-h:  40px;
   position: relative;
   min-width: 600px;
   height: $sched-row-h;
-  // Subtle hour marks — bars render on top and naturally cover them
-  background-image: repeating-linear-gradient(
-    to right,
-    rgba($color-brown, 0.22) 0,
-    rgba($color-brown, 0.22) 1px,
-    transparent 1px,
-    transparent 5%
-  );
 
   &--header {
     height: $sched-head-h;
