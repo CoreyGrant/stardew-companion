@@ -26,6 +26,8 @@ interface Props {
   onMarriedTo:       (v: string)  => void;
   islandUnlocked:    boolean;
   onIslandUnlocked:  (v: boolean) => void;
+  busRepaired:       boolean;
+  onBusRepaired:     (v: boolean) => void;
   marriageableNpcs:  NPC[];
 }
 
@@ -33,6 +35,7 @@ export function ScheduleFilters({
   communityStatus, onCommunityStatus,
   marriedTo,       onMarriedTo,
   islandUnlocked,  onIslandUnlocked,
+  busRepaired,     onBusRepaired,
   marriageableNpcs,
 }: Props) {
   return (
@@ -67,7 +70,17 @@ export function ScheduleFilters({
         </select>
       </div>
 
-      {/* Island unlocked */}
+      {/* Desert bus */}
+      <label className="sched-filter sched-filter--check">
+        <input
+          type="checkbox"
+          checked={busRepaired}
+          onChange={e => onBusRepaired(e.target.checked)}
+        />
+        <span className="sched-filter__label">Bus repaired</span>
+      </label>
+
+      {/* Ginger Island */}
       <label className="sched-filter sched-filter--check">
         <input
           type="checkbox"

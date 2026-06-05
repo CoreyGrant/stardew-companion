@@ -111,9 +111,15 @@ export function parseConditionsFromId(id: string): ScheduleCondition {
  * All fields are optional — scoring degrades gracefully without them.
  */
 export interface SaveContext {
-  communityStatus?: string;              // 'cc-restored' | 'joja-complete' | 'joja-member'
+  communityStatus?: string;                 // 'cc-restored' | 'joja-complete' | 'joja-member'
   heartLevels?:     Record<string, number>; // NPC id → heart level (0–14)
-  islandUnlocked?:  boolean;            // true once player has island farm layout
+  islandUnlocked?:  boolean;               // true once player has island farm layout
+  /**
+   * Whether the desert bus is repaired. Distinct from communityStatus because
+   * the Vault room bundles restore the bus independently of full CC completion
+   * or Joja route completion.
+   */
+  busRepaired?:     boolean;
 }
 
 /**
@@ -170,9 +176,8 @@ export function scoreVariant(
     if (c.ccRestored !== isRestored) return -1;
   }
 
-  if (c.busRepaired !== undefined && ctx.communityStatus !== undefined) {
-    const isRepaired = ctx.communityStatus === 'cc-restored' || ctx.communityStatus === 'joja-complete';
-    if (c.busRepaired !== isRepaired) return -1;
+  if (c.busRepaired !== undefined && ctx.busRepaired !== undefined) {
+    if (c.busRepaired !== ctx.busRepaired) return -1;
   }
 
   if (c.islandUnlocked !== undefined && ctx.islandUnlocked !== undefined) {

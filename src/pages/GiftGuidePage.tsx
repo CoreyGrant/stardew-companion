@@ -208,6 +208,7 @@ export function GiftGuidePage() {
     communityStatus, setCommunityStatus,
     marriedTo:    marriedToFilter, setMarriedTo,
     islandUnlocked, setIslandUnlocked,
+    busRepaired, setBusRepaired,
     saveCtx,
     marriageableNpcs,
   } = useScheduleFilters();
@@ -301,6 +302,7 @@ export function GiftGuidePage() {
           communityStatus={communityStatus} onCommunityStatus={setCommunityStatus}
           marriedTo={marriedToFilter}       onMarriedTo={setMarriedTo}
           islandUnlocked={islandUnlocked}   onIslandUnlocked={setIslandUnlocked}
+          busRepaired={busRepaired}         onBusRepaired={setBusRepaired}
           marriageableNpcs={marriageableNpcs}
         />
         <ItemPicker

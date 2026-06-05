@@ -57,6 +57,7 @@ export function ScheduleViewerPage() {
     communityStatus, setCommunityStatus,
     marriedTo, setMarriedTo,
     islandUnlocked, setIslandUnlocked,
+    busRepaired, setBusRepaired,
     marriageableNpcs,
   } = useScheduleViewer();
 
@@ -82,6 +83,7 @@ export function ScheduleViewerPage() {
             communityStatus={communityStatus} onCommunityStatus={setCommunityStatus}
             marriedTo={marriedTo}             onMarriedTo={setMarriedTo}
             islandUnlocked={islandUnlocked}   onIslandUnlocked={setIslandUnlocked}
+            busRepaired={busRepaired}         onBusRepaired={setBusRepaired}
             marriageableNpcs={marriageableNpcs}
           />
         </div>
