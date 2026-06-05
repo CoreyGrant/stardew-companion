@@ -152,7 +152,7 @@ export function WearablesPage() {
 
       {/* ── Weapons ── */}
       {tab === 'weapons' && (
-        <div className="wear-table">
+        <div className="wear-table wear-table--weapon">
           <div className="wear-table__header">
             <span>Weapon</span>
             <span>Type</span>
@@ -182,7 +182,7 @@ export function WearablesPage() {
 
       {/* ── Boots ── */}
       {tab === 'boots' && (
-        <div className="wear-table">
+        <div className="wear-table wear-table--boots">
           <div className="wear-table__header">
             <span>Boots</span>
             <span>Defense</span>
@@ -222,7 +222,7 @@ export function WearablesPage() {
 
       {/* ── Clothing ── */}
       {tab === 'clothing' && (
-        <div className="wear-table">
+        <div className="wear-table wear-table--clothing">
           <div className="wear-table__header">
             <span>Clothing</span>
             <span>Type</span>

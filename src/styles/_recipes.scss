@@ -96,7 +96,7 @@
     align-items: center;
     gap: $space-2;
     font-size: 0.8rem;
-    color: var(--text-mid);
+    color: var(--label-muted);  // body-bg text: parchment-dark on dark green
     cursor: pointer;
     white-space: nowrap;
 

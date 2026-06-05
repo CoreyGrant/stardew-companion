@@ -52,7 +52,7 @@
 .shop-item-count {
   font-family: $font-pixel;
   font-size: 0.55rem;
-  color: var(--text-light);
+  color: var(--label-muted);  // body-bg text: parchment-dark on dark green
   white-space: nowrap;
   margin-left: auto;
 }

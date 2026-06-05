@@ -60,6 +60,11 @@
   }
 }
 
+// Per-type column templates — header MUST match the corresponding .wear-row template
+.wear-table--weapon   .wear-table__header { grid-template-columns: 2fr 80px 70px 60px 60px 50px 1fr; }
+.wear-table--boots    .wear-table__header { grid-template-columns: 2fr 80px 80px 1fr; }
+.wear-table--clothing .wear-table__header { grid-template-columns: 2fr 70px 70px 70px 1fr; }
+
 .wear-row {
   display: grid;
   gap: $space-2;
@@ -213,6 +218,11 @@
     &--weapon .wear-stat:nth-child(6) { display: none; }
   }
 
-  .wear-table__header span:nth-child(5),
-  .wear-table__header span:nth-child(6) { display: none; }
+  // Responsive header column templates — match the row templates above
+  .wear-table--weapon   .wear-table__header { grid-template-columns: 1fr 70px 60px 1fr; }
+  .wear-table--boots    .wear-table__header { grid-template-columns: 1fr 60px 60px; }
+  .wear-table--clothing .wear-table__header { grid-template-columns: 1fr 60px 60px; }
+  // Weapon: hide Defense (col 5) and Crit% (col 6) to match hidden row cells
+  .wear-table--weapon .wear-table__header span:nth-child(5),
+  .wear-table--weapon .wear-table__header span:nth-child(6) { display: none; }
 }

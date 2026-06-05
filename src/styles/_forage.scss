@@ -64,7 +64,7 @@
 .forage-result-count {
   font-family: $font-pixel;
   font-size: 0.7rem;
-  color: var(--text-light);
+  color: var(--label-muted);  // body-bg text: parchment-dark on dark green
   margin-bottom: $space-2;
 }
 

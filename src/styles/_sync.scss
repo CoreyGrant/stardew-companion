@@ -282,7 +282,7 @@
 .saves-page__join-hint {
   margin-top: 0.5rem;
   font-size: 0.85rem;
-  color: var(--text-light);
+  color: var(--label-muted);  // body-bg text: parchment-dark on dark green
   text-align: center;
 
   a {
