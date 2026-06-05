@@ -1,5 +1,6 @@
 import { useScheduleViewer } from '../hooks/useScheduleViewer';
 import { StardewDateInput } from '../components/common/StardewDateInput';
+import { ScheduleFilters } from '../components/common/ScheduleFilters';
 import { PortraitImg } from '../components/common/PortraitImg';
 import { GameLink } from '../components/common/GameLink';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -51,9 +52,12 @@ export function ScheduleViewerPage() {
     day, setDay,
     weather, setWeather,
     year, setYear,
-    search, setSearch,
     dayName,
     npcRows,
+    communityStatus, setCommunityStatus,
+    marriedTo, setMarriedTo,
+    islandUnlocked, setIslandUnlocked,
+    marriageableNpcs,
   } = useScheduleViewer();
 
   if (loading) return <div className="page-loading">Loading</div>;
@@ -74,16 +78,12 @@ export function ScheduleViewerPage() {
             onYearChange={setYear} onWeatherChange={setWeather}
             showYear showWeather
           />
-          <label className="schedule-controls__search">
-            <span className="schedule-controls__search-label">Search</span>
-            <input
-              type="search"
-              placeholder="Filter by name"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="schedule-controls__search-input"
-            />
-          </label>
+          <ScheduleFilters
+            communityStatus={communityStatus} onCommunityStatus={setCommunityStatus}
+            marriedTo={marriedTo}             onMarriedTo={setMarriedTo}
+            islandUnlocked={islandUnlocked}   onIslandUnlocked={setIslandUnlocked}
+            marriageableNpcs={marriageableNpcs}
+          />
         </div>
       </div>
 

@@ -13,7 +13,9 @@ import { PortraitImg } from '../components/common/PortraitImg';
 import { SpriteIcon } from '../components/farm/SpriteIcon';
 import { TypeaheadInput, type TypeaheadOption } from '../components/common/TypeaheadInput';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { bestVariantEntries, locationLabel, type SaveContext } from '../utils/scheduleUtils';
+import { bestVariantEntries, locationLabel } from '../utils/scheduleUtils';
+import { useScheduleFilters } from '../hooks/useScheduleFilters';
+import { ScheduleFilters } from '../components/common/ScheduleFilters';
 import type { Segment } from '../hooks/useScheduleViewer';
 import type { NPC, ItemRef, Season, Weather } from '../types/game';
 import type { FriendshipEntry } from '../types/save';
@@ -144,7 +146,7 @@ function ItemPicker({ options, selected, onAdd, onRemove }: ItemPickerProps) {
 export function GiftGuidePage() {
   usePageTitle('Gift Guide');
   const { data, loading, error } = useGameData();
-  const { activeSave, settings }  = useUserData();
+  const { activeSave }  = useUserData();
 
   // ── Date / weather state ────────────────────────────────────────────────────
   const [season,  setSeason]  = useState<Season>(() => (activeSave?.season as Season) ?? 'spring');
@@ -201,17 +203,19 @@ export function GiftGuidePage() {
     [myItemIds, allOptions],
   );
 
-  // ── Row computation ─────────────────────────────────────────────────────────
-  const marriedTo = settings.tailorToSave ? (activeSave?.marriedTo ?? null) : null;
+  // ── Game-state condition filters ────────────────────────────────────────────
+  const {
+    communityStatus, setCommunityStatus,
+    marriedTo:    marriedToFilter, setMarriedTo,
+    islandUnlocked, setIslandUnlocked,
+    saveCtx,
+    marriageableNpcs,
+  } = useScheduleFilters();
 
-  const saveCtx = useMemo<SaveContext>(() => {
-    if (!settings.tailorToSave || !activeSave) return {};
-    return {
-      communityStatus: activeSave.communityStatus,
-      heartLevels:     activeSave.heartLevels,
-      islandUnlocked:  Boolean(activeSave.islandFarmLayout),
-    };
-  }, [activeSave, settings.tailorToSave]);
+  // Resolve marriedTo as either the filter value or null
+  const marriedTo = marriedToFilter || null;
+
+  // ── Row computation ─────────────────────────────────────────────────────────
 
   const rows = useMemo<GiftRow[]>(() => {
     if (!data) return [];
@@ -264,7 +268,7 @@ export function GiftGuidePage() {
 
       return { npc, isBirthday, heartLevel, cap, isMaxed, hasSave, giftsThisWeek, canGift, lovedMatches, likedMatches, segments, priority };
     }).sort((a, b) => a.priority - b.priority || a.npc.name.localeCompare(b.npc.name));
-  }, [data, activeSave, season, day, year, weather, myItems, marriedTo, settings, saveCtx]);
+  }, [data, activeSave, season, day, year, weather, myItems, marriedTo, saveCtx]);
 
   if (loading) return <div className="page-loading">Loading</div>;
   if (error)   return <div className="page-error">{error}</div>;
@@ -293,6 +297,12 @@ export function GiftGuidePage() {
             showYear showWeather
           />
         </div>
+        <ScheduleFilters
+          communityStatus={communityStatus} onCommunityStatus={setCommunityStatus}
+          marriedTo={marriedToFilter}       onMarriedTo={setMarriedTo}
+          islandUnlocked={islandUnlocked}   onIslandUnlocked={setIslandUnlocked}
+          marriageableNpcs={marriageableNpcs}
+        />
         <ItemPicker
           options={allOptions}
           selected={myItemIds}
