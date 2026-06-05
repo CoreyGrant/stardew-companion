@@ -231,7 +231,7 @@ export function GiftGuidePage() {
     <div className="page page--gift-guide">
       <h1 className="page__title">Gift Guide</h1>
       <p className="page__subtitle">
-        Who to gift today — schedule, heart status, and which items to bring.
+        Who to gift today — find villagers by schedule, match items to their preferences.
         {birthdays.length > 0 && (
           <span className="gift-guide__birthday-hint">
             {' '}🎂 Birthday{birthdays.length > 1 ? 's' : ''}: {birthdays.map(r => r.npc.name).join(', ')}

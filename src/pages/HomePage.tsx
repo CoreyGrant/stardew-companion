@@ -27,7 +27,7 @@ function nextSeason(s: Season): Season {
 const HERO_LINKS = [
   { to: '/saves',        emoji: '💾', label: 'Saves',        desc: 'Manage your playthroughs' },
   { to: '/farm-planner', emoji: '🏡', label: 'Farm Planner', desc: 'Design your farm layout'  },
-  { to: '/gifts',        emoji: '🎁', label: 'Gift Guide',   desc: 'What every villager loves' },
+  { to: '/gifts',        emoji: '🎁', label: 'Gift Guide',   desc: 'Who to gift and when to find them' },
 ];
 
 export function HomePage() {
