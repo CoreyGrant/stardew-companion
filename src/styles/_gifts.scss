@@ -54,8 +54,10 @@
 
 .gift-controls {
   display: flex;
-  flex-direction: column;
-  gap: $space-3;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: $space-4;
   margin-bottom: $space-4;
   padding: $space-3 $space-4;
   background: var(--surface);
