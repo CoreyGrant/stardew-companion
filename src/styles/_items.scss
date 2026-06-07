@@ -102,14 +102,14 @@
   &__name {
     font-family: $font-pixel;
     font-size: 1rem;
-    color: var(--gold-text);
-    text-shadow: 1px 1px 0 $color-brown-dark;
+    color: var(--gold);           // --gold is "dark-background use only"; --gold-text is for parchment panels
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
   }
 
-  &__category  { font-size: 0.8rem; color: var(--text-light); text-transform: capitalize; }
-  &__value     { font-size: 0.85rem; color: var(--text); }
-  &__energy    { font-size: 0.85rem; color: #2d6a4f; }
-  &__cheat     { font-size: 0.8rem; color: var(--text-light); }
+  &__category  { font-size: 0.8rem; color: var(--label-muted); text-transform: capitalize; }
+  &__value     { font-size: 0.85rem; color: var(--label-muted); }
+  &__energy    { font-size: 0.85rem; color: var(--label-muted); }
+  &__cheat     { font-size: 0.8rem; color: var(--label-muted); }
 }
 
 // ── Crop growing information panel ───────────────────────────────────────────
