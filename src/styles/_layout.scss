@@ -347,5 +347,8 @@ body {
   color: var(--label-muted);  // body-bg text: dark-brown --text-light is invisible on dark green
   font-size: 0.85rem;
 
+  // <p> has its own color rule in _typography.scss that would otherwise win
+  p { color: inherit; }
+
   .btn { margin-top: $space-4; }
 }
