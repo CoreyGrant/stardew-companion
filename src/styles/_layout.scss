@@ -344,7 +344,7 @@ body {
 .empty-state {
   text-align: center;
   padding: $space-10 $space-4;
-  color: var(--text-light);
+  color: var(--label-muted);  // body-bg text: dark-brown --text-light is invisible on dark green
   font-size: 0.85rem;
 
   .btn { margin-top: $space-4; }

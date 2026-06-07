@@ -581,6 +581,7 @@
   .crop-table--with-harvests & { grid-template-columns: 1fr 64px 1fr 72px 60px 44px; }
 
   &--cant-plant { opacity: 0.45; }
+  &:hover { background: var(--surface-mid); }
 
   &__harvests {
     font-family: $font-pixel;
@@ -591,8 +592,6 @@
     &--zero { color: #a04040; font-size: 0.8rem; }
     &--na   { color: var(--text-light); }
   }
-
-  &:hover { background: rgba($color-parchment-dark, 0.15); }
 
   // Season-tinted left border
   border-left: 3px solid transparent;
@@ -861,7 +860,7 @@
   background: var(--surface);
   transition: background 0.1s;
 
-  &:hover { background: rgba($color-parchment-dark, 0.15); }
+  &:hover { background: var(--surface-mid); }
 
   &--legendary { border-left: 3px solid rgba($color-gold, 0.6); }
   &--trap      { border-left: 3px solid rgba($color-brown-mid, 0.6); opacity: 0.85; }
