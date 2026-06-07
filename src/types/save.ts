@@ -24,6 +24,22 @@ export type TreeType =
   | 'cherry' | 'apricot' | 'orange' | 'peach' | 'pomegranate' | 'apple' | 'banana' | 'mango';
 export type TapperType = 'tapper' | 'heavy-tapper';
 
+/** SDV resource clump category — drives colour/icon in the farm planner. */
+export type ClumpType = 'stump' | 'log' | 'meteorite' | 'weeds' | 'boulder' | 'unknown';
+
+/**
+ * A resource clump loaded from a save file (e.g. hardwood stump, hollow log,
+ * large boulder, meteorite). Always 2×2 tiles in SDV. Read-only in the planner
+ * — these cannot be manually placed, only shown from an imported save.
+ */
+export interface PlacedClump {
+  x: number;
+  y: number;
+  w: number; // tile width  (always 2 for SDV resource clumps)
+  h: number; // tile height (always 2 for SDV resource clumps)
+  clumpType: ClumpType;
+}
+
 // ── Farm layout types ─────────────────────────────────────────────────────────
 
 export interface TileRect { x: number; y: number; w: number; h: number; }
@@ -85,6 +101,8 @@ export interface FarmLayout {
   paths: PlacedPath[];
   items: PlacedItem[];
   trees: PlacedTree[];
+  /** Resource clumps from an imported save (stumps, logs, boulders). Read-only in the planner. */
+  clumps: PlacedClump[];
   interiors: Record<string, InteriorLayout>;
 }
 
@@ -95,6 +113,7 @@ export const DEFAULT_FARM_LAYOUT: FarmLayout = {
   paths: [],
   items: [],
   trees: [],
+  clumps: [],
   interiors: {},
 };
 
@@ -272,5 +291,7 @@ export function migrateFarmLayout(raw: unknown): FarmLayout {
       STATIC_BUILDING_IDS.has(b.buildingId) && !b.isStatic ? { ...b, isStatic: true } : b,
     ),
   };
+  // Ensure fields added after initial release are present
+  if (!Array.isArray(result.clumps)) result = { ...result, clumps: [] };
   return result;
 }

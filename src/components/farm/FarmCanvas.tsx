@@ -26,6 +26,7 @@ import {
   canPlaceBuilding, canPlaceItem, canPlacePath, canPlaceTree,
 } from '../../utils/farmPlacement';
 import { BuildingLayer } from './BuildingLayer';
+import { ClumpLayer } from './ClumpLayer';
 import { ZoneLayer } from './ZoneLayer';
 import { PathLayer } from './PathLayer';
 import { ItemLayer } from './ItemLayer';
@@ -33,6 +34,7 @@ import { TreeLayer } from './TreeLayer';
 import { SprinklerRangeLayer } from './SprinklerRangeLayer';
 import { ScarecrowRangeLayer } from './ScarecrowRangeLayer';
 import { HoverLayer } from './HoverLayer';
+import type { ClumpType } from '../../types/save';
 
 export { type ToolState } from './HoverLayer';
 export const TILE_SIZE = 16;
@@ -162,6 +164,20 @@ export function FarmCanvas({
       return name;
     }
 
+    // Resource clumps (2×2) — check full footprint
+    const CLUMP_LABELS: Record<ClumpType, string> = {
+      stump:     'Large Stump (Hardwood)',
+      log:       'Hollow Log (Hardwood)',
+      meteorite: 'Meteorite',
+      weeds:     'Giant Weeds',
+      boulder:   'Large Rock',
+      unknown:   'Resource Clump',
+    };
+    const clump = layout.clumps?.find(c =>
+      tx >= c.x && tx < c.x + c.w && ty >= c.y && ty < c.y + c.h,
+    );
+    if (clump) return CLUMP_LABELS[clump.clumpType] ?? 'Resource Clump';
+
     // Buildings — check full footprint
     for (const b of layout.buildings) {
       const def = buildingDefs.get(b.buildingId);
@@ -289,6 +305,11 @@ export function FarmCanvas({
 
         {/* Paths */}
         <PathLayer paths={layout.paths} tileSize={TILE_SIZE} />
+
+        {/* Resource clumps (stumps, logs, boulders) — above paths, below buildings; hidden in interior mode */}
+        {!interiorMode && layout.clumps?.length > 0 && (
+          <ClumpLayer clumps={layout.clumps} tileSize={TILE_SIZE} />
+        )}
 
         {/* Sprinkler ranges — hidden in interior mode */}
         {!interiorMode && (

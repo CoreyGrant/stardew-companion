@@ -10,6 +10,7 @@
 
 import type { Crop, GameData } from '../types/game';
 import type {
+  ClumpType,
   CropZone,
   FarmLayout,
   FarmType,
@@ -18,6 +19,7 @@ import type {
   InteriorLayout,
   PathType,
   PlacedBuilding,
+  PlacedClump,
   PlacedItem,
   PlacedPath,
   PlacedTree,
@@ -92,6 +94,22 @@ const FLOOR_TO_PATH: Record<number, PathType> = {
   10: 'cobblestone',
   11: 'dirt',
   12: 'wood_plank',
+};
+
+/**
+ * SDV ResourceClump.parentSheetIndex → our ClumpType.
+ * Sprites come from springobjects.png using formula x=(psi%24)*16, y=floor(psi/24)*16.
+ */
+const CLUMP_TYPE_MAP: Record<number, ClumpType> = {
+  600: 'stump',      // Large Stump (hardwood, 8 chops)
+  602: 'log',        // Hollow Log  (hardwood, 8 chops)
+  672: 'meteorite',  // Meteorite (bomb/pickaxe)
+  752: 'boulder',    // Large Boulder
+  754: 'boulder',    // Large Boulder (variant)
+  756: 'boulder',    // Large Boulder (variant)
+  758: 'boulder',    // Large Boulder (variant)
+  760: 'weeds',      // Giant Weeds (fiber)
+  78:  'boulder',    // Mine boulder
 };
 
 /** SDV fence object name → our PathType */
@@ -1301,6 +1319,26 @@ function parseLayout(
   const { items, paths: objPaths } = parseLocationObjects(loc, plannerBcIds, plannerObjIds);
   paths.push(...objPaths);
 
+  // ── Resource clumps: hardwood stumps, hollow logs, boulders ───────────────
+  // These are 2×2 tile objects stored in <resourceClumps> — completely separate
+  // from terrainFeatures. Sprites come from springobjects.png.
+  const clumps: PlacedClump[] = [];
+  const resourceClumpsEl = ch(loc, 'resourceClumps');
+  if (resourceClumpsEl) {
+    for (const clumpEl of chs(resourceClumpsEl, 'ResourceClump')) {
+      const psi    = parseInt(txt(clumpEl, 'parentSheetIndex') || '0', 10);
+      const w      = parseInt(txt(clumpEl, 'width')            || '2', 10);
+      const h      = parseInt(txt(clumpEl, 'height')           || '2', 10);
+      const tileEl = ch(clumpEl, 'tile');
+      if (!tileEl) continue;
+      const tx = parseInt(txt(tileEl, 'X') || '0', 10);
+      const ty = parseInt(txt(tileEl, 'Y') || '0', 10);
+      if (isNaN(tx) || isNaN(ty)) continue;
+      const clumpType: ClumpType = CLUMP_TYPE_MAP[psi] ?? 'unknown';
+      clumps.push({ x: tx, y: ty, w, h, clumpType });
+    }
+  }
+
   return {
     season,
     zones,
@@ -1308,6 +1346,7 @@ function parseLayout(
     paths,
     items,
     trees,
+    clumps,
     interiors,
   };
 }
