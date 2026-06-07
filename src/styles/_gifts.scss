@@ -71,6 +71,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  align-self: center;
   gap: $space-2;
 
   &__label {
