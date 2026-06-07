@@ -171,19 +171,22 @@ export function SavesPage() {
     <div className="page page--saves">
       <h1 className="page__title">Save Profiles</h1>
 
-      <Panel title="App Settings">
-        <label className="toggle-label">
-          <input
-            type="checkbox"
-            checked={tailorToSave}
-            onChange={(e) => setTailorToSave(e.target.checked)}
-          />
-          Tailor app to active save
-          <span className="toggle-label__hint">
-            Personalises crop quality, schedules, and quest tracking to match your profile.
-          </span>
-        </label>
-      </Panel>
+      {/* App Settings panel — hidden for now; logic/state kept in place */}
+      <div style={{ display: 'none' }}>
+        <Panel title="App Settings">
+          <label className="toggle-label">
+            <input
+              type="checkbox"
+              checked={tailorToSave}
+              onChange={(e) => setTailorToSave(e.target.checked)}
+            />
+            Tailor app to active save
+            <span className="toggle-label__hint">
+              Personalises crop quality, schedules, and quest tracking to match your profile.
+            </span>
+          </label>
+        </Panel>
+      </div>
 
       {editingId && (
         <Panel title={editingId === 'new' ? 'New Save Profile' : 'Edit Save Profile'} className="save-form-panel">
