@@ -63,8 +63,11 @@ export function CropsPage() {
   const [sorts,    setSorts]    = useState<ActiveSort[]>(DEFAULT_CROP_SORTS);
   const [viewMode, setViewMode] = useViewMode('crops', 'table');
 
+  // Exclude BigCraftables — they share numeric cheatIds with regular Objects
+  // (e.g. Bone Mill BC shares an ID with Garlic), so BCs would overwrite the
+  // correct Object entry and produce wrong sprites and sell values.
   const itemMap = useMemo(
-    () => new Map((data?.items ?? []).map((i) => [i.cheatId, i])),
+    () => new Map((data?.items ?? []).filter(i => !i.isBigCraftable).map((i) => [i.cheatId, i])),
     [data],
   );
 

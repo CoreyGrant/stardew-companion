@@ -157,9 +157,11 @@ export function FishPondPage() {
   const [sorts,    setSorts]    = useState<ActiveSort[]>(DEFAULT_POND_SORTS);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
+  // Non-BC only — BigCraftables share numeric cheatIds with Objects and would
+  // overwrite them, producing wrong sprites for pond produce and gate items.
   const itemMap = useMemo(() => {
     if (!data) return new Map<string, Item>();
-    return new Map(data.items.map(i => [i.cheatId, i]));
+    return new Map(data.items.filter(i => !i.isBigCraftable).map(i => [i.cheatId, i]));
   }, [data]);
 
   const { specific, generic } = useMemo(() => {

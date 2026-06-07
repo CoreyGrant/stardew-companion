@@ -54,8 +54,10 @@ export function RecipesPage() {
     [activeSave],
   );
 
+  // Non-BC only — BigCraftables share numeric cheatIds with Objects and would
+  // overwrite them in the map, producing wrong sprites for recipe results/ingredients.
   const itemMap = useMemo(
-    () => new Map((data?.items ?? []).map(i => [i.cheatId, i])),
+    () => new Map((data?.items ?? []).filter(i => !i.isBigCraftable).map(i => [i.cheatId, i])),
     [data],
   );
 
